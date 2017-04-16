@@ -16,16 +16,25 @@ call plug#begin('~/.vim/plugged')
 Plug 'ciaranm/securemodelines'
 Plug 'vim-scripts/localvimrc'
 Plug 'Shougo/neocomplete.vim'
+" change to https://github.com/ctrlpvim/ctrlp.vim
+" ctrlp ctrlpfunky
+Plug 'ctrlpvim/ctrlp.vim' | Plug 'tacahiroy/ctrlp-funky'
 
 " GUI enhancements
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'neomake/neomake'
 Plug 'kien/ctrlp.vim'
+Plug 'scrooloose/nerdtree' | Plug 'jistr/vim-nerdtree-tabs'
+
+" rainbow_parentheses
+Plug 'kien/rainbow_parentheses.vim'
 
 " Semantic language support
+Plug 'Raimondi/delimitMate'
 Plug 'phildawes/racer'
 Plug 'racer-rust/vim-racer'
+Plug 'majutsushi/tagbar'
 
 " for neovim and is disabled
 "Plug 'autozimu/LanguageClient-neovim', { 'do': ':UpdateRemotePlugins' }
@@ -45,23 +54,23 @@ Plug 'rust-lang/rust.vim'
 Plug 'fatih/vim-go'   " for golang
 Plug 'klen/python-mode'   " for python
 " install jedi-vim and let g:pymode_rope = 1
-"Plug 'dag/vim-fish'
+Plug 'dag/vim-fish'
 
 call plug#end()
 
 " Plugin settings
 let g:secure_modelines_allowed_items = [
-                \ "textwidth",   "tw",
-                \ "softtabstop", "sts",
-                \ "tabstop",     "ts",
-                \ "shiftwidth",  "sw",
-                \ "expandtab",   "et",   "noexpandtab", "noet",
-                \ "filetype",    "ft",
-                \ "foldmethod",  "fdm",
-                \ "readonly",    "ro",   "noreadonly", "noro",
-                \ "rightleft",   "rl",   "norightleft", "norl",
-                \ "colorcolumn"
-                \ ]
+			\ "textwidth",   "tw",
+			\ "softtabstop", "sts",
+			\ "tabstop",     "ts",
+			\ "shiftwidth",  "sw",
+			\ "expandtab",   "et",   "noexpandtab", "noet",
+			\ "filetype",    "ft",
+			\ "foldmethod",  "fdm",
+			\ "readonly",    "ro",   "noreadonly", "noro",
+			\ "rightleft",   "rl",   "norightleft", "norl",
+			\ "colorcolumn"
+			\ ]
 
 " Base16
 let base16colorspace=256
@@ -72,9 +81,9 @@ let g:airline_powerline_fonts = 1
 let g:airline_theme = "base16"
 let g:ctrlp_root_markers = ['.lvimrc', '.git']
 let g:ctrlp_custom_ignore = {
-  \ 'dir': '\.git$\|\.hg$\|\.svn$\|publish$\|intermediate$\|node_modules$\|components$\|target$',
-  \ 'file': '\~$\|\.png$\|\.jpg$\|\.gif$\|\.settings$\|Thumbs\.db\|\.min\.js$\|\.swp\|\.o$\|\.hi$\|.a$\|.sqlite3$\|.key$\|.pub$\|.racertmp$',
-  \ }
+			\ 'dir': '\.git$\|\.hg$\|\.svn$\|publish$\|intermediate$\|node_modules$\|components$\|target$',
+			\ 'file': '\~$\|\.png$\|\.jpg$\|\.gif$\|\.settings$\|Thumbs\.db\|\.min\.js$\|\.swp\|\.o$\|\.hi$\|.a$\|.sqlite3$\|.key$\|.pub$\|.racertmp$',
+			\ }
 
 " from http://sheerun.net/2014/03/21/how-to-boost-your-vim-productivity/
 let g:ctrlp_use_caching = 0
@@ -99,8 +108,8 @@ let javaScript_fold=0
 "let g:syntastic_sh_shellcheck_post_args = "-x"  " allow sourcing external files
 let g:neomake_verbose = 0
 let g:neomake_tex_proselint_maker = {
-	\ 'errorformat': '%f:%l:%c: %m'
-	\ }
+			\ 'errorformat': '%f:%l:%c: %m'
+			\ }
 let g:neomake_tex_enabled_makers = ['chktex', 'lacheck', 'proselint']
 let g:neomake_rust_enabled_makers = []
 let g:neomake_info_sign = {'text': '⚕', 'texthl': 'NeomakeInfoSign'}
@@ -144,36 +153,52 @@ let $RUST_SRC_PATH = systemlist("rustc --print sysroot")[0] . "/lib/rustlib/src/
 "		\ pumvisible() ? "\<C-n>" :
 "		\ <SID>check_back_space() ? "\<TAB>" :
 "		\ deoplete#mappings#manual_complete()
-	"	function! s:check_back_space() abort "{{{
-	"	let col = col('.') - 1
+"	function! s:check_back_space() abort "{{{
+"	let col = col('.') - 1
 "		return !col || getline('.')[col - 1]  =~ '\s'
 "		endfunction"}}}
 
 " Doxygen
 let mysyntaxfile='~/.vim/doxygen_load.vim'
 
-" Golang
+" ====================================
+" # Golang
+" ====================================
+" vimgo {{{
 let g:go_play_open_browser = 0
 let g:go_fmt_fail_silently = 1
 let g:go_fmt_command = "goimports"
-<<<<<<< HEAD
-let g:go_bin_path = expand("/usr/local/go/bin")
-=======
->>>>>>> 46963d4... oops!
-let g:go_highlight_functions = 1
-let g:go_highlight_methods = 1
-let g:go_highlight_structs = 1
+
+
+
 let g:go_highlight_interfaces = 1
-let g:go_highlight_operators = 1
-let g:go_highlight_build_constraints = 1
-<<<<<<< HEAD
+
+
 "au FileType go nmap <Leader>gD <Plug>(go-doc-vertical)
 "au FileType go nmap <Leader>gDB <Plug>(go-doc-browser)
 "au FileType go nmap <Leader>gR <Plug>(go-run)
-au FileType go nmap <Leader>gv <Plug>(go-build)
+au FileType go nmap <leader>gv <Plug>(go-build)
+au FileType go nmap <leader>gT <Plug>(go-test)
+au FileType go nmap <C-]> :GoDef<cr>
+au Filetype go nmap <C-j> :GoDecls<cr>
+    let g:go_highlight_functions = 1
+    let g:go_highlight_methods = 1
+    let g:go_highlight_structs = 1
+    let g:go_highlight_operators = 1
+    let g:go_highlight_build_constraints = 1
+
+    let g:go_fmt_fail_silently = 1
+    " format with goimports instead of gofmt
+    let g:go_fmt_command = "goimports"
+    let g:syntastic_go_checkers = ['golint', 'govet', 'errcheck']
+    let g:syntastic_mode_map = { 'mode': 'active', 'passive_filetypes': ['go', 'java'] }
+" }}}
 
 
-" Python-mode
+
+" ===================================
+" # Python-mode
+" ===================================
 " Activate rope
 " Keys:
 " K             Show python docs
@@ -186,7 +211,7 @@ au FileType go nmap <Leader>gv <Plug>(go-build)
 " ]]            Jump on next class or function (normal, visual, operator modes)
 " [M            Jump on previous class or method (normal, visual, operator modes)
 " ]M            Jump on next class or method (normal, visual, operator modes)
-let g:pymode_rope = 1
+let g:pymode_rope = 1 
 
 " Documentation
 let g:pymode_doc = 1
@@ -213,25 +238,33 @@ let g:pymode_syntax_space_errors = g:pymode_syntax_all
 
 " Don't autofold code
 let g:pymode_folding = 0
-=======
-au FileType go nmap <leader>gD <Plug>(go-doc-vertical)
-au FileType go nmap <leader>gDB <Plug>(go-doc-browser)
-au FileType go nmap <leader>gR <Plug>(go-run)
-au FileType go nmap <leader>gv <Plug>(go-build)
-au FileType go nmap <leader>gT <Plug>(go-test)
-au FileType go nmap <C-i> :GoDef<cr>
-au Filetype go nmap <C-j> :GoDecls<cr>
->>>>>>> 46963d4... oops!
+
+" Override go-to.definition key shortcut to Ctrl-]
+let g:pymode_rope_goto_definition_bind = "<C-]>"
+" Override run current python file key shortcut to Ctrl-Shift-e
+let g:pymode_run_bind = "<C-S-e>"
+" Override view python doc key shortcut to Ctrl-Shift-d
+let g:pymode_doc_bind = "<C-S-d>"
+let g:pymode_rope_show_doc_bind = '<leader>d'
+let g:pymode_rope_regenerate_on_write = 1
+let g:pymode_rope_rename_bind = '<leader>f'
+let g:pymode_rope_organize_imports_bind = '<leader>i'
+"let g:pymode_rope_autoimport_bind = '<leader>ci'
+" disable bunch of annoying things
+let g:pymode_rope_lookup_project = 0
+let g:pymode_rope_complete_on_dot = 0
+let g:pymode_rope_autoimport = 0
 
 
 " Don't gofmt Biscuit (yet)
-autocmd BufRead,BufNewFile /home/jon/dev/others/biscuit/** let [g:go_fmt_command, g:go_fmt_autosave]=["", 0]
+"autocmd BufRead,BufNewFile /home/jon/dev/others/biscuit/** let [g:go_fmt_command, g:go_fmt_autosave]=["", 0]
 
 " =============================================================================
 " # Editor settings
 " =============================================================================
 filetype plugin indent on
 set autoindent
+set smartindent
 set timeoutlen=300 " http://stackoverflow.com/questions/2158516/delay-before-o-opens-a-new-line
 set encoding=utf-8
 set scrolloff=3
@@ -310,7 +343,8 @@ set diffopt+=iwhite " No whitespace in vimdiff
 set colorcolumn=80 " and give me a colored column
 set showcmd " Show (partial) command in status line.
 set mouse=a " Enable mouse usage (all modes) in terminals
-set completeopt-=preview
+"set completeopt-=preview
+set completeopt=longest,menu
 
 " Colors
 set background=dark
@@ -335,9 +369,9 @@ inoremap <C-c> <Esc>
 vnoremap <C-c> <Esc>
 
 " Suspend with Ctrl+f
-inoremap <C-f> :sus<cr>
-vnoremap <C-f> :sus<cr>
-nnoremap <C-f> :sus<cr>
+inoremap <C-z> :sus<cr>
+vnoremap <C-z> :sus<cr>
+nnoremap <C-z> :sus<cr>
 
 " Jump to start and end of line using the home row keys
 map H ^
@@ -395,10 +429,124 @@ noremap M :!make -k -j4<cr>
 map <F1> <Esc>
 imap <F1> <Esc>
 
+" ctrlp ctrlpfunky{{{
+    let g:ctrlp_map = '<leader>p'
+    let g:ctrlp_cmd = 'CtrlP'
+    map <leader>f :CtrlPMRU<CR>
+    let g:ctrlp_custom_ignore = {
+        \ 'dir':  '\v[\/]\.(git|hg|svn|rvm)$',
+        \ 'file': '\v\.(exe|so|dll|zip|tar|tar.gz|pyc)$',
+        \ }
+    let g:ctrlp_working_path_mode=0
+    let g:ctrlp_match_window_bottom=1
+    let g:ctrlp_max_height=15
+    let g:ctrlp_match_window_reversed=0
+    let g:ctrlp_mruf_max=500
+    let g:ctrlp_follow_symlinks=1
+    " 如果安装了ag, 使用ag
+    " if executable('ag')
+    " " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
+    " let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+    " " ag is fast enough that CtrlP doesn't need to cache
+    " let g:ctrlp_use_caching = 0
+    " endif
+
+    " ctrlpfunky
+    " ctrlp插件1 - 不用ctag进行函数快速跳转
+    nnoremap <Leader>fu :CtrlPFunky<Cr>
+    " narrow the list down with a word under cursor
+    nnoremap <Leader>fU :execute 'CtrlPFunky ' . expand('<cword>')<Cr>
+    let g:ctrlp_funky_syntax_highlight = 1
+
+    let g:ctrlp_extensions = ['funky']
+" }}}
+
+" nerdtree nerdtreetabs {{{
+    " map <leader>n :NERDTreeToggle<CR>
+    let NERDTreeHighlightCursorline=1
+    let NERDTreeIgnore=[ '\.pyc$', '\.pyo$', '\.obj$', '\.o$', '\.so$', '\.egg$', '^\.git$', '^\.svn$', '^\.hg$' ]
+    "close vim if the only window left open is a NERDTree
+    autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | end
+    " s/v 分屏打开文件
+    let g:NERDTreeMapOpenSplit = 's'
+    let g:NERDTreeMapOpenVSplit = 'v'
+
+    " nerdtreetabs
+    map <Leader>n <plug>NERDTreeTabsToggle<CR>
+    " Turn off sync 
+    " let g:nerdtree_tabs_synchronize_view=0
+    " let g:nerdtree_tabs_synchronize_focus=0
+    " 是否自动开启nerdtree
+    " thank to @ListenerRi, see https://github.com/wklken/k-vim/issues/165
+    " let g:nerdtree_tabs_open_on_console_startup=0
+    " let g:nerdtree_tabs_open_on_gui_startup=0
+" }}}
+
+" tagbar {{{
+    nmap <F9> :TagbarToggle<CR>
+    let g:tagbar_autofocus = 1
+    " let g:tagbar_autoshowtag = 1
+    " let g:tagbar_show_visibility = 1
+    " for ruby
+    let g:tagbar_type_ruby = {
+        \ 'kinds' : [
+            \ 'm:modules',
+            \ 'c:classes',
+            \ 'd:describes',
+            \ 'C:contexts',
+            \ 'f:methods',
+            \ 'F:singleton methods'
+        \ ]
+    \ }
+
+    " go语言的tagbar配置
+    " 1. install gotags 'go get -u github.com/jstemmer/gotags'
+    " 2. make sure `gotags` in you shell PATH, you can call check it with `which gotags`
+    " for gotags. work with tagbar
+    let g:tagbar_type_go = {
+        \ 'ctagstype' : 'go',
+        \ 'kinds'     : [
+            \ 'p:package',
+            \ 'i:imports:1',
+            \ 'c:constants',
+            \ 'v:variables',
+            \ 't:types',
+            \ 'n:interfaces',
+            \ 'w:fields',
+            \ 'e:embedded',
+            \ 'm:methods',
+            \ 'r:constructor',
+            \ 'f:functions'
+        \ ],
+        \ 'sro' : '.',
+        \ 'kind2scope' : {
+            \ 't' : 'ctype',
+            \ 'n' : 'ntype'
+        \ },
+        \ 'scope2kind' : {
+            \ 'ctype' : 't',
+            \ 'ntype' : 'n'
+        \ },
+        \ 'ctagsbin'  : 'gotags',
+        \ 'ctagsargs' : '-sort -silent'
+    \ }
+" }}}
+
+" pythonsyntax {{{
+    let python_highlight_all = 1
+" }}}
 
 " =============================================================================
 " # Autocommands
 " =============================================================================
+
+" delimitMate {{{
+    " for python docstring ",优化输入
+    au FileType python let b:delimitMate_nesting_quotes = ['"']
+    au FileType php let delimitMate_matchpairs = "(:),[:],{:}"
+    " 关闭某些类型文件的自动补全
+    "au FileType mail let b:delimitMate_autoclose = 0
+" }}}
 
 " Prevent accidental writes to buffers that shouldn't be edited
 autocmd BufRead *.orig set readonly
@@ -516,3 +664,25 @@ let g:neocomplete#sources#omni#input_patterns.perl = '\h\w*->\h\w*\|\h\w*::'
 
 let g:acp_completeoptPreview = 1
 setlocal omnifunc=gocode#Complete
+
+" map wincmd
+nmap <silent> <A-Up> :wincmd k<CR>
+nmap <silent> <A-Down> :wincmd j<CR>
+nmap <silent> <A-Left> :wincmd h<CR>
+nmap <silent> <A-Right> :wincmd l<CR>
+
+function! HideNumber()
+  if(&relativenumber == &number)
+    set relativenumber! number!
+  elseif(&number)
+    set number!
+  else
+    set relativenumber!
+  endif
+  set number?
+endfunc
+nnoremap <F2> :call HideNumber()<CR>
+
+nnoremap <leader>w :w<CR>
+nnoremap <leader>q :q<CR>
+
