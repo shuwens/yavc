@@ -684,6 +684,14 @@ function! HideNumber()
 endfunc
 nnoremap <F2> :call HideNumber()<CR>
 
+if has("autocmd")
+  " Highlight TODO, FIXME, NOTE, etc.
+  if v:version > 701
+    autocmd Syntax * call matchadd('Todo',  '\W\zs\(TODO\|FIXME\|CHANGED\|DONE\|XXX\|BUG\|HACK\)')
+    autocmd Syntax * call matchadd('Debug', '\W\zs\(NOTE\|INFO\|IDEA\|NOTICE\)')
+  endif
+endif
+
 "cnoremap <leader>j <t_kd>
 "cnoremap <C-k> <t_ku>
 "cnoremap <leader>a <Home>
