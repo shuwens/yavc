@@ -129,6 +129,8 @@ nmap <leader>; :CtrlPBuffer<CR>
 nmap <leader>o :CtrlP<CR>
 nmap <leader>w :w<CR>
 nmap <leader>wq :wq<CR>
+"nnoremap <leader>w :w<CR>
+nnoremap <leader>q :q<CR>
 
 " Don't confirm .lvimrc
 let g:localvimrc_ask = 0
@@ -682,10 +684,7 @@ function! HideNumber()
 endfunc
 nnoremap <F2> :call HideNumber()<CR>
 
-"nnoremap <leader>w :w<CR>
-"nnoremap <leader>q :q<CR>
 "cnoremap <leader>j <t_kd>
 "cnoremap <C-k> <t_ku>
 "cnoremap <leader>a <Home>
 "cnoremap <leader>e <End>
-
