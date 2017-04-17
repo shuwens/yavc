@@ -426,7 +426,8 @@ noremap <leader>n ct-
 noremap M :!make -k -j4<cr>
 
 " I can type :help on my own, thanks.
-map <F1> <Esc>
+"map <F1> <Esc>
+noremap <F1> <Esc>"
 imap <F1> <Esc>
 
 " ctrlp ctrlpfunky{{{
