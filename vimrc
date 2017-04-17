@@ -485,6 +485,7 @@ map <Leader>n <plug>NERDTreeTabsToggle<CR>
 
 " tagbar {{{
 nmap <F9> :TagbarToggle<CR>
+noremap <leader>t :TagbarToggle<CR>
 let g:tagbar_autofocus = 1
 " let g:tagbar_autoshowtag = 1
 " let g:tagbar_show_visibility = 1
