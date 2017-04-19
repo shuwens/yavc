@@ -35,6 +35,7 @@ Plug 'Raimondi/delimitMate'
 Plug 'phildawes/racer'
 Plug 'racer-rust/vim-racer'
 Plug 'majutsushi/tagbar'
+Plug 'tpope/vim-surround'
 
 " for neovim and is disabled
 "Plug 'autozimu/LanguageClient-neovim', { 'do': ':UpdateRemotePlugins' }
@@ -692,8 +693,17 @@ if has("autocmd")
     autocmd Syntax * call matchadd('Debug', '\W\zs\(NOTE\|INFO\|IDEA\|NOTICE\)')
   endif
 endif
+" vim-surround {{{2
+let g:surround_42 = "**\r**"
+nnoremap ** :exe "norm v$hS*"<cr>
+nnoremap __ :exe "norm v$hS_"<cr>
+vmap * S*
+vmap _ S_
+vmap <leader>l <Plug>VSurround]%a(<C-r><C-p>+)<Esc>
 
 "cnoremap <leader>j <t_kd>
 "cnoremap <C-k> <t_ku>
 "cnoremap <leader>a <Home>
 "cnoremap <leader>e <End>
+"
+" end of vimrc
