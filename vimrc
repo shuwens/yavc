@@ -131,7 +131,7 @@ nmap <leader>o :CtrlP<CR>
 nmap <leader>w :w<CR>
 nmap <leader>wq :wq<CR>
 "nnoremap <leader>w :w<CR>
-nnoremap <leader>q :q<CR>
+nnoremap <leader>q :q!<CR>
 
 " Don't confirm .lvimrc
 let g:localvimrc_ask = 0
@@ -193,12 +193,9 @@ let g:syntastic_go_checkers = ['golint', 'govet', 'errcheck']
 let g:syntastic_mode_map = { 'mode': 'active', 'passive_filetypes': ['go', 'java'] }
 " }}}
 
-
-
 " ===================================
 " # Python-mode
 " ===================================
-
 " python-mode {{{
 " Activate rope
 " Keys:
@@ -213,33 +210,26 @@ let g:syntastic_mode_map = { 'mode': 'active', 'passive_filetypes': ['go', 'java
 " [M            Jump on previous class or method (normal, visual, operator modes)
 " ]M            Jump on next class or method (normal, visual, operator modes)
 let g:pymode_rope = 1 
-
 " Documentation
 let g:pymode_doc = 1
 let g:pymode_doc_key = 'K'
-
 "Linting
 let g:pymode_lint = 1
 let g:pymode_lint_checker = "pyflakes,pep8"
 " Auto check on save
 let g:pymode_lint_write = 1
-
 " Support virtualenv
 let g:pymode_virtualenv = 1
-
 " Enable breakpoints plugin
 let g:pymode_breakpoint = 1
 let g:pymode_breakpoint_bind = '<leader>b'
-
 " syntax highlighting
 let g:pymode_syntax = 1
 let g:pymode_syntax_all = 1
 let g:pymode_syntax_indent_errors = g:pymode_syntax_all
 let g:pymode_syntax_space_errors = g:pymode_syntax_all
-
 " Don't autofold code
 let g:pymode_folding = 0
-
 " Override go-to.definition key shortcut to Ctrl-]
 let g:pymode_rope_goto_definition_bind = "<C-]>"
 " Override run current python file key shortcut to Ctrl-Shift-e
@@ -410,7 +400,7 @@ nnoremap <C-l> :copen<cr>
 nnoremap <C-h> :cclose<cr>
 
 " ,, toggles between buffers
-nnoremap <leader><leader> <c-^>
+nnoremap ,, <c-^>
 
 " ,= indents current 'section' (e.g. HTML tag)
 nnoremap <leader>> Vat>
@@ -431,7 +421,7 @@ noremap M :!make -k -j4<cr>
 noremap <F1> <Esc>"
 imap <F1> <Esc>
 
-" ctrlp ctrlpfunky{{{
+" ctrlp ctrlpfunky {{{
 let g:ctrlp_map = '<leader>p'
 let g:ctrlp_cmd = 'CtrlP'
 map <leader>f :CtrlPMRU<CR>
@@ -445,13 +435,13 @@ let g:ctrlp_max_height=15
 let g:ctrlp_match_window_reversed=0
 let g:ctrlp_mruf_max=500
 let g:ctrlp_follow_symlinks=1
-" 如果安装了ag, 使用ag
-" if executable('ag')
-" " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
-" let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
-" " ag is fast enough that CtrlP doesn't need to cache
-" let g:ctrlp_use_caching = 0
-" endif
+" use ag if possible
+if executable('ag')
+	" Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
+	let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+	" ag is fast enough that CtrlP doesn't need to cache
+	let g:ctrlp_use_caching = 0
+endif
 
 " ctrlpfunky
 " ctrlp插件1 - 不用ctag进行函数快速跳转
@@ -488,7 +478,7 @@ map <Leader>n <plug>NERDTreeTabsToggle<CR>
 nmap <F9> :TagbarToggle<CR>
 noremap <leader>t :TagbarToggle<CR>
 let g:tagbar_autofocus = 1
-" let g:tagbar_autoshowtag = 1
+let g:tagbar_autoshowtag = 1
 " let g:tagbar_show_visibility = 1
 " for ruby
 let g:tagbar_type_ruby = {
@@ -501,8 +491,6 @@ let g:tagbar_type_ruby = {
 			\ 'F:singleton methods'
 			\ ]
 			\ }
-
-" go语言的tagbar配置
 " 1. install gotags 'go get -u github.com/jstemmer/gotags'
 " 2. make sure `gotags` in you shell PATH, you can call check it with `which gotags`
 " for gotags. work with tagbar
@@ -544,10 +532,8 @@ let python_highlight_all = 1
 " =============================================================================
 
 " delimitMate {{{
-" for python docstring ",优化输入
 au FileType python let b:delimitMate_nesting_quotes = ['"']
-au FileType php let delimitMate_matchpairs = "(:),[:],{:}"
-" 关闭某些类型文件的自动补全
+au FileType go,python,c,cpp let delimitMate_matchpairs = "(:),[:],{:}"
 "au FileType mail let b:delimitMate_autoclose = 0
 " }}}
 
@@ -668,12 +654,12 @@ let g:neocomplete#sources#omni#input_patterns.perl = '\h\w*->\h\w*\|\h\w*::'
 let g:acp_completeoptPreview = 1
 setlocal omnifunc=gocode#Complete
 
-" map wincmd
+" map wincmd {{{
 nmap <silent> <A-Up> :wincmd k<CR>
 nmap <silent> <A-Down> :wincmd j<CR>
 nmap <silent> <A-Left> :wincmd h<CR>
 nmap <silent> <A-Right> :wincmd l<CR>
-
+" DEPRECATED {{{
 function! HideNumber()
 	if(&relativenumber == &number)
 		set relativenumber! number!
@@ -685,13 +671,13 @@ function! HideNumber()
 	set number?
 endfunc
 "nnoremap <F2> :call HideNumber()<CR>
-
+" Add highlighting to TODO,NOTE,etc {{{
 if has("autocmd")
-  " Highlight TODO, FIXME, NOTE, etc.
-  if v:version > 701
-    autocmd Syntax * call matchadd('Todo',  '\W\zs\(TODO\|FIXME\|CHANGED\|DONE\|XXX\|BUG\|HACK\)')
-    autocmd Syntax * call matchadd('Debug', '\W\zs\(NOTE\|INFO\|IDEA\|NOTICE\)')
-  endif
+	" Highlight TODO, FIXME, NOTE, etc.
+	if v:version > 701
+		autocmd Syntax * call matchadd('Todo',  '\W\zs\(TODO\|FIXME\|CHANGED\|DONE\|XXX\|BUG\|HACK\)')
+		autocmd Syntax * call matchadd('Debug', '\W\zs\(NOTE\|INFO\|IDEA\|NOTICE\)')
+	endif
 endif
 " vim-surround {{{2
 let g:surround_42 = "**\r**"
