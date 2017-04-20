@@ -23,7 +23,7 @@ Plug 'ctrlpvim/ctrlp.vim' | Plug 'tacahiroy/ctrlp-funky'
 " GUI enhancements
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-Plug 'neomake/neomake'
+"Plug 'neomake/neomake'
 Plug 'kien/ctrlp.vim'
 Plug 'scrooloose/nerdtree' | Plug 'jistr/vim-nerdtree-tabs'
 
@@ -107,18 +107,18 @@ let javaScript_fold=0
 "let g:syntastic_enable_highlighting = 0
 "let g:syntastic_javascript_checkers = ['eslint']
 "let g:syntastic_sh_shellcheck_post_args = "-x"  " allow sourcing external files
-let g:neomake_verbose = 0
-let g:neomake_tex_proselint_maker = {
-			\ 'errorformat': '%f:%l:%c: %m'
-			\ }
-let g:neomake_tex_enabled_makers = ['chktex', 'lacheck', 'proselint']
-let g:neomake_rust_enabled_makers = []
-let g:neomake_info_sign = {'text': '⚕', 'texthl': 'NeomakeInfoSign'}
-autocmd! BufWritePost * Neomake
-autocmd BufWritePost *.rs Neomake! cargo
+"let g:neomake_verbose = 0
+"let g:neomake_tex_proselint_maker = {
+"			\ 'errorformat': '%f:%l:%c: %m'
+""			\ }
+"let g:neomake_tex_enabled_makers = ['chktex', 'lacheck', 'proselint']
+"let g:neomake_rust_enabled_makers = []
+"let g:neomake_info_sign = {'text': '⚕', 'texthl': 'NeomakeInfoSign'}
+":autocmd! BufWritePost * Neomake
+"autocmd BufWritePost *.rs Neomake! cargo
 "autocmd BufWritePost *.rs Neomake! clippy
-nnoremap <C-g> :Neomake!<CR>
-inoremap <C-g> :Neomake!<CR>
+"nnoremap <C-g> :Neomake!<CR>
+"inoremap <C-g> :Neomake!<CR>
 
 " Latex
 let g:latex_indent_enabled = 1
@@ -319,7 +319,7 @@ set gdefault
 " Search results centered please
 nnoremap <silent> n nzz
 nnoremap <silent> N Nzz
-nnoremap <silent> * *zz
+"nnoremap <silent> * *zz
 nnoremap <silent> # #zz
 nnoremap <silent> g* g*zz
 
@@ -684,7 +684,7 @@ function! HideNumber()
 	endif
 	set number?
 endfunc
-nnoremap <F2> :call HideNumber()<CR>
+"nnoremap <F2> :call HideNumber()<CR>
 
 if has("autocmd")
   " Highlight TODO, FIXME, NOTE, etc.
@@ -695,8 +695,11 @@ if has("autocmd")
 endif
 " vim-surround {{{2
 let g:surround_42 = "**\r**"
-nnoremap ** :exe "norm v$hS*"<cr>
-nnoremap __ :exe "norm v$hS_"<cr>
+nnoremap ** :exe "norm v$hS*"
+nnoremap __ :exe "norm v$hS_"
+nmap <leader>** ysiw**
+nmap <leader>__ ysid__
+nmap <leader>* ysiw*
 vmap * S*
 vmap _ S_
 vmap <leader>l <Plug>VSurround]%a(<C-r><C-p>+)<Esc>
