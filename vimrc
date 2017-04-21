@@ -132,6 +132,7 @@ nmap <leader>w :w<CR>
 nmap <leader>wq :wq<CR>
 "nnoremap <leader>w :w<CR>
 nnoremap <leader>q :q!<CR>
+nnoremap <leader>qq :q!<Esc>:q!<CR>
 
 " Don't confirm .lvimrc
 let g:localvimrc_ask = 0
@@ -212,12 +213,13 @@ let g:syntastic_mode_map = { 'mode': 'active', 'passive_filetypes': ['go', 'java
 let g:pymode_rope = 1 
 " Documentation
 let g:pymode_doc = 1
-let g:pymode_doc_key = 'K'
+"let g:pymode_doc_key = 'K'
 "Linting
-let g:pymode_lint = 1
-let g:pymode_lint_checker = "pyflakes,pep8"
+nmap <leader>l :PymodeLint<CR>
+"let g:pymode_lint = 1
+"let g:pymode_lint_checker = "pyflakes,pep8"
 " Auto check on save
-let g:pymode_lint_write = 1
+"let g:pymode_lint_write = 1
 " Support virtualenv
 let g:pymode_virtualenv = 1
 " Enable breakpoints plugin
@@ -659,7 +661,13 @@ nmap <silent> <A-Up> :wincmd k<CR>
 nmap <silent> <A-Down> :wincmd j<CR>
 nmap <silent> <A-Left> :wincmd h<CR>
 nmap <silent> <A-Right> :wincmd l<CR>
-" DEPRECATED {{{
+" using ctrl hj"
+nmap <leader>j :wincmd j<CR>
+nmap <leader>k :wincmd k<CR>
+nmap <leader>h :wincmd h<CR>
+nmap <leader>l :wincmd l<CR>
+
+" " DEPRECATED {{{
 function! HideNumber()
 	if(&relativenumber == &number)
 		set relativenumber! number!
