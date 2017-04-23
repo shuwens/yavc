@@ -56,6 +56,9 @@ Plug 'fatih/vim-go'   " for golang
 Plug 'klen/python-mode'   " for python
 " install jedi-vim and let g:pymode_rope = 1
 Plug 'dag/vim-fish'
+Plug 'vivien/vim-linux-coding-style'
+Plug 'rhysd/vim-clang-format'
+Plug 'szw/vim-tags'
 
 call plug#end()
 
@@ -256,6 +259,7 @@ let g:pymode_rope_autoimport = 0
 " # Editor settings
 " =============================================================================
 filetype plugin indent on
+set ts=2
 set autoindent
 set smartindent
 set timeoutlen=300 " http://stackoverflow.com/questions/2158516/delay-before-o-opens-a-new-line
@@ -702,5 +706,25 @@ vmap <leader>l <Plug>VSurround]%a(<C-r><C-p>+)<Esc>
 "cnoremap <C-k> <t_ku>
 "cnoremap <leader>a <Home>
 "cnoremap <leader>e <End>
-"
+
+" Linux Kernel Coding Style {{{
+nnoremap <silent> <leader>a :LinuxCodingStyle<cr>
+"let g:linuxsty_patterns = [ "~/git/kernels/" ]
+
+" clang {{{
+" ClangFormat, ClangFormatAutoToggle, ClangFormatAutoEnable, ClangFormatAutoDisable
+let g:clang_format#style_options = {
+            \ "AccessModifierOffset" : -4,
+            \ "AllowShortIfStatementsOnASingleLine" : "true",
+            \ "AlwaysBreakTemplateDeclarations" : "true",
+            \ "Standard" : "C++11"}
+" map to <Leader>cf in C++ code
+autocmd FileType c,cpp,objc nnoremap <buffer><leader>cf :<C-u>ClangFormat<CR>
+autocmd FileType c,cpp,objc vnoremap <buffer><leader>cf :ClangFormat<CR>
+" if you install vim-operator-user
+autocmd FileType c,cpp,objc map <buffer><leader>x <Plug>(operator-clang-format)
+" Toggle auto formatting:
+nmap <leader>c :ClangFormatAutoToggle<CR>
+autocmd FileType c ClangFormatAutoEnable
+
 " end of vimrc
