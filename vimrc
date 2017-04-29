@@ -727,4 +727,9 @@ autocmd FileType c,cpp,objc map <buffer><leader>x <Plug>(operator-clang-format)
 nmap <leader>c :ClangFormatAutoToggle<CR>
 autocmd FileType c ClangFormatAutoEnable
 
+set cursorline
+set cursorcolumn
+
+set listchars=tab:»\ ,eol:¬
+
 " end of vimrc
