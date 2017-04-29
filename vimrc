@@ -59,6 +59,7 @@ Plug 'dag/vim-fish'
 Plug 'vivien/vim-linux-coding-style'
 Plug 'rhysd/vim-clang-format'
 Plug 'szw/vim-tags'
+Plug 'jiangmiao/auto-pairs'
 
 call plug#end()
 
@@ -400,10 +401,16 @@ nnoremap j gj
 nnoremap k gk
 
 " Jump to next/previous error
-nnoremap <C-j> :cn<cr>
-nnoremap <C-k> :cp<cr>
-nnoremap <C-l> :copen<cr>
-nnoremap <C-h> :cclose<cr>
+nnoremap <leader>j :cn<cr>
+nnoremap <leader>k :cp<cr>
+nnoremap <leader>l :copen<cr>
+nnoremap <leader>h :cclose<cr>
+"noremap <C-j> :cn<cr>
+"nnoremap <C-k> :cp<cr>
+"nnoremap <C-l> :copen<cr>
+"nnoremap <C-h> :cclose<cr>
+
+
 
 " ,, toggles between buffers
 nnoremap ,, <c-^>
@@ -660,7 +667,7 @@ let g:neocomplete#sources#omni#input_patterns.perl = '\h\w*->\h\w*\|\h\w*::'
 let g:acp_completeoptPreview = 1
 setlocal omnifunc=gocode#Complete
 
-" map wincmd {{{
+" map wincmd {{
 nmap <silent> <A-Up> :wincmd k<CR>
 nmap <silent> <A-Down> :wincmd j<CR>
 nmap <silent> <A-Left> :wincmd h<CR>
@@ -671,7 +678,7 @@ nmap <leader>k :wincmd k<CR>
 nmap <leader>h :wincmd h<CR>
 nmap <leader>l :wincmd l<CR>
 
-" " DEPRECATED {{{
+"  DEPRECATED {
 function! HideNumber()
 	if(&relativenumber == &number)
 		set relativenumber! number!
@@ -707,11 +714,11 @@ vmap <leader>l <Plug>VSurround]%a(<C-r><C-p>+)<Esc>
 "cnoremap <leader>a <Home>
 "cnoremap <leader>e <End>
 
-" Linux Kernel Coding Style {{{
+" Linux Kernel Coding Style {
 nnoremap <silent> <leader>a :LinuxCodingStyle<cr>
 "let g:linuxsty_patterns = [ "~/git/kernels/" ]
 
-" clang {{{
+" clang {
 " ClangFormat, ClangFormatAutoToggle, ClangFormatAutoEnable, ClangFormatAutoDisable
 let g:clang_format#style_options = {
             \ "AccessModifierOffset" : -4,
@@ -726,10 +733,19 @@ autocmd FileType c,cpp,objc map <buffer><leader>x <Plug>(operator-clang-format)
 " Toggle auto formatting:
 nmap <leader>c :ClangFormatAutoToggle<CR>
 autocmd FileType c ClangFormatAutoEnable
-
+" cursor line and column
 set cursorline
 set cursorcolumn
-
+" char
 set listchars=tab:»\ ,eol:¬
+" Auto Pair
+let g:AutoPairsFlyMode = 0
+let g:AutoPairsShortcutBackInsert = '<M-b>'
+" move char in insert mode
+" provide hjkl movements in Insert mode via the <Alt> modifier key
+inoremap <C-h> <C-o>h
+inoremap <C-j> <C-o>j
+inoremap <C-k> <C-o>k
+inoremap <C-l> <C-o>l
 
 " end of vimrc
