@@ -401,14 +401,10 @@ nnoremap j gj
 nnoremap k gk
 
 " Jump to next/previous error
-nnoremap <leader>j :cn<cr>
-nnoremap <leader>k :cp<cr>
-nnoremap <leader>l :copen<cr>
-nnoremap <leader>h :cclose<cr>
-"noremap <C-j> :cn<cr>
-"nnoremap <C-k> :cp<cr>
-"nnoremap <C-l> :copen<cr>
-"nnoremap <C-h> :cclose<cr>
+noremap <C-j> :cn<cr>
+nnoremap <C-k> :cp<cr>
+nnoremap <C-l> :copen<cr>
+nnoremap <C-h> :cclose<cr>
 
 
 
@@ -741,11 +737,9 @@ set listchars=tab:»\ ,eol:¬
 " Auto Pair
 let g:AutoPairsFlyMode = 0
 let g:AutoPairsShortcutBackInsert = '<M-b>'
-" move char in insert mode
 " provide hjkl movements in Insert mode via the <Alt> modifier key
-inoremap <C-h> <C-o>h
-inoremap <C-j> <C-o>j
-inoremap <C-k> <C-o>k
-inoremap <C-l> <C-o>l
-
+inoremap <A-h> <C-o>h
+inoremap <A-j> <C-o>j
+inoremap <A-k> <C-o>k
+inoremap <A-l> <C-o>l
 " end of vimrc
