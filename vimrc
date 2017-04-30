@@ -37,6 +37,13 @@ Plug 'racer-rust/vim-racer'
 Plug 'majutsushi/tagbar'
 Plug 'tpope/vim-surround'
 
+" Neosnippet
+Plug 'Shougo/neocomplcache'
+Plug 'Shougo/neocomplete'
+Plug 'Shougo/neosnippet'
+Plug 'Shougo/neosnippet-snippets'
+Plug 'honza/vim-snippets'
+
 " for neovim and is disabled
 "Plug 'autozimu/LanguageClient-neovim', { 'do': ':UpdateRemotePlugins' }
 "if has('python3')
@@ -678,11 +685,12 @@ vmap <leader>l <Plug>VSurround]%a(<C-r><C-p>+)<Esc>
 "cnoremap <leader>a <Home>
 "cnoremap <leader>e <End>
 
-" Linux Kernel Coding Style {
+" Linux Kernel Coding Style {{{
 nnoremap <silent> <leader>a :LinuxCodingStyle<cr>
 "let g:linuxsty_patterns = [ "~/git/kernels/" ]
-
-" clang {
+" }}}
+"
+" clang {{{
 " ClangFormat, ClangFormatAutoToggle, ClangFormatAutoEnable, ClangFormatAutoDisable
 let g:clang_format#style_options = {
             \ "AccessModifierOffset" : -4,
@@ -697,6 +705,8 @@ autocmd FileType c,cpp,objc map <buffer><leader>x <Plug>(operator-clang-format)
 " Toggle auto formatting:
 nmap <leader>c :ClangFormatAutoToggle<CR>
 autocmd FileType c ClangFormatAutoEnable
+" }}}
+
 " cursor line and column
 set cursorline
 set cursorcolumn
@@ -710,4 +720,34 @@ inoremap <A-h> <C-o>h
 inoremap <A-j> <C-o>j
 inoremap <A-k> <C-o>k
 inoremap <A-l> <C-o>l
+
+" Neosnippet {{{1
+" Plugin key-mappings.
+" Note: It must be "imap" and "smap".  It uses <Plug> mappings.
+imap <C-k>     <Plug>(neosnippet_expand_or_jump)
+smap <C-k>     <Plug>(neosnippet_expand_or_jump)
+xmap <C-k>     <Plug>(neosnippet_expand_target)
+
+" SuperTab like snippets behavior.
+" Note: It must be "imap" and "smap".  It uses <Plug> mappings.
+imap <C-k>     <Plug>(neosnippet_expand_or_jump)
+"imap <expr><TAB>
+" \ pumvisible() ? "\<C-n>" :
+" \ neosnippet#expandable_or_jumpable() ?
+" \    "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
+smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
+\ "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
+
+" For conceal markers.
+if has('conceal')
+  set conceallevel=2 concealcursor=niv
+endif
+
+" More snippet
+"
+" Enable snipMate compatibility feature.
+let g:neosnippet#enable_snipmate_compatibility = 1
+" Tell Neosnippet about the other snippets
+let g:neosnippet#snippets_directory='~/.vim/plugged/vim-snippets/snippets'
+" }}}
 " end of vimrc
