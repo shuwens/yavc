@@ -67,6 +67,7 @@ Plug 'vivien/vim-linux-coding-style'
 Plug 'rhysd/vim-clang-format'
 Plug 'szw/vim-tags'
 Plug 'jiangmiao/auto-pairs'
+Plug 'AlessandroYorba/Sierra'  " colortheme 
 
 call plug#end()
 
@@ -750,4 +751,10 @@ let g:neosnippet#enable_snipmate_compatibility = 1
 " Tell Neosnippet about the other snippets
 let g:neosnippet#snippets_directory='~/.vim/plugged/vim-snippets/snippets'
 " }}}
+
+autocmd BufEnter *.tex colorscheme default
+autocmd BufEnter *.py colorscheme sierra
+autocmd BufEnter *.go colorscheme sierra 
+autocmd BufEnter *.tex colorscheme default
+
 " end of vimrc
