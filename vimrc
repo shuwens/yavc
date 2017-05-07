@@ -752,9 +752,7 @@ let g:neosnippet#enable_snipmate_compatibility = 1
 let g:neosnippet#snippets_directory='~/.vim/plugged/vim-snippets/snippets'
 " }}}
 
-autocmd BufEnter *.tex colorscheme default
 autocmd BufEnter *.py colorscheme sierra
 autocmd BufEnter *.go colorscheme sierra 
-autocmd BufEnter *.tex colorscheme default
 
 " end of vimrc
