@@ -31,7 +31,7 @@ Plug 'scrooloose/nerdtree' | Plug 'jistr/vim-nerdtree-tabs'
 Plug 'kien/rainbow_parentheses.vim'
 
 " Semantic language support
-Plug 'Raimondi/delimitMate'
+"Plug 'Raimondi/delimitMate'
 Plug 'phildawes/racer'
 Plug 'racer-rust/vim-racer'
 Plug 'majutsushi/tagbar'
