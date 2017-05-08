@@ -755,4 +755,9 @@ let g:neosnippet#snippets_directory='~/.vim/plugged/vim-snippets/snippets'
 autocmd BufEnter *.py colorscheme sierra
 autocmd BufEnter *.go colorscheme sierra 
 
+set list
+"set listchars=tab:»\ ,eol:¬
+set listchars=tab:▸\ ,eol:¬
+
+
 " end of vimrc
