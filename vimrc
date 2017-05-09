@@ -36,6 +36,7 @@ Plug 'phildawes/racer'
 Plug 'racer-rust/vim-racer'
 Plug 'majutsushi/tagbar'
 Plug 'tpope/vim-surround'
+Plug 'vim-syntastic/syntastic'
 
 " Neosnippet
 Plug 'Shougo/neocomplcache'
@@ -201,8 +202,10 @@ let g:go_highlight_operators = 1
 let g:go_highlight_build_constraints = 1
 let g:go_fmt_fail_silently = 1
 " format with goimports instead of gofmt
-let g:go_fmt_command = "goimports"
-let g:syntastic_go_checkers = ['golint', 'govet', 'errcheck']
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_go_checkers = ['go', 'golint', 'errcheck']
+
+"let g:syntastic_go_checkers = ['golint', 'govet', 'errcheck']
 let g:syntastic_mode_map = { 'mode': 'active', 'passive_filetypes': ['go', 'java'] }
 " }}}
 
@@ -228,6 +231,7 @@ let g:pymode_doc = 1
 "let g:pymode_doc_key = 'K'
 "Linting
 nmap <leader>l :PymodeLint<CR>
+let g:syntastic_python_checkers=['pyflakes']
 "let g:pymode_lint = 1
 "let g:pymode_lint_checker = "pyflakes,pep8"
 " Auto check on save
@@ -759,5 +763,16 @@ set list
 "set listchars=tab:»\ ,eol:¬
 set listchars=tab:▸\ ,eol:¬
 
+" ======================
+" Syntastic setting
+" ======================
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
 
 " end of vimrc
