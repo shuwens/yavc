@@ -184,6 +184,11 @@ let mysyntaxfile='~/.vim/doxygen_load.vim'
 " ====================================
 " vim-go {{{
 let g:go_play_open_browser = 0
+let g:go_highlight_functions = 1
+let g:go_highlight_methods = 1
+let g:go_highlight_structs = 1
+let g:go_highlight_operators = 1
+let g:go_highlight_build_constraints = 1
 let g:go_fmt_fail_silently = 1
 let g:go_fmt_command = "goimports"
 let g:go_highlight_interfaces = 1
@@ -195,18 +200,8 @@ au FileType go nmap <leader>gT <Plug>(go-test)
 " In case guru is not working, http://studygolang.com/articles/9718
 au FileType go nmap <C-]> :GoDef<cr> 
 au Filetype go nmap <leader>j :GoDecls<cr>
-let g:go_highlight_functions = 1
-let g:go_highlight_methods = 1
-let g:go_highlight_structs = 1
-let g:go_highlight_operators = 1
-let g:go_highlight_build_constraints = 1
-let g:go_fmt_fail_silently = 1
-" format with goimports instead of gofmt
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_go_checkers = ['go', 'golint', 'errcheck']
-
 "let g:syntastic_go_checkers = ['golint', 'govet', 'errcheck']
-let g:syntastic_mode_map = { 'mode': 'active', 'passive_filetypes': ['go', 'java'] }
+"let g:syntastic_mode_map = { 'mode': 'active', 'passive_filetypes': ['go', 'java'] }
 " }}}
 
 " ===================================
@@ -653,6 +648,11 @@ nmap <leader>j :wincmd j<CR>
 nmap <leader>k :wincmd k<CR>
 nmap <leader>h :wincmd h<CR>
 nmap <leader>l :wincmd l<CR>
+" The right windcmd 
+nmap <silent>J :wincmd j<CR>
+nmap <silent>K :wincmd k<CR>
+nmap <silent>H :wincmd h<CR>
+nmap <silent>L :wincmd l<CR>
 
 "  DEPRECATED {
 function! HideNumber()
@@ -766,13 +766,20 @@ set listchars=tab:▸\ ,eol:¬
 " ======================
 " Syntastic setting
 " ======================
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
-
-let g:syntastic_always_populate_loc_list = 1
+" Python
+let g:syntastic_python_checkers=['pyflakes']
+" Javascript
+let g:syntastic_javascript_checkers = ['jshint']
+" Go
 let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
+let g:syntastic_go_checkers = ['go', 'golint', 'errcheck']
+" Custom CoffeeScript SyntasticCheck
+func! SyntasticCheckCoffeescript()
+    let l:filename = substitute(expand("%:p"), '\(\w\+\)\.coffee', '.coffee.\1.js', '')
+    execute "tabedit " . l:filename
+    execute "SyntasticCheck"
+    execute "Errors"
+endfunc
+nnoremap <silent> <leader>c :call SyntasticCheckCoffeescript()<cr>
 
 " end of vimrc
