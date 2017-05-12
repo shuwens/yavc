@@ -70,6 +70,9 @@ Plug 'szw/vim-tags'
 Plug 'jiangmiao/auto-pairs'
 Plug 'AlessandroYorba/Sierra'  " colortheme 
 
+" Extra stuff
+Plug 'vivien/vim-linux-coding-style'
+
 call plug#end()
 
 " Plugin settings
@@ -358,8 +361,8 @@ hi Normal ctermbg=NONE
 
 " Show those damn hidden characters
 " Verbose: set listchars=nbsp:¬,eol:¶,extends:»,precedes:«,trail:•
-set nolist
-set listchars=nbsp:¬,extends:»,precedes:«,trail:•
+"set nolist
+"set listchars=nbsp:¬,extends:»,precedes:«,trail:•
 
 " =============================================================================
 " # Keyboard shortcuts
@@ -606,19 +609,19 @@ let g:neocomplete#data_directory = $HOME.'/.vim/tmp/neocomplete'
 " disable the auto select feature by default to speed up writing without
 " obstacles (is optimal for certain situations)
 let g:neocomplete#enable_auto_select = 0
-                                        
+
 " toggle the auto select feature
 function! ToggleNeoComplete()
-  if !g:neocomplete#disable_auto_complete && g:neocomplete#enable_auto_select
-      let g:neocomplete#disable_auto_complete = 0
-      let g:neocomplete#enable_auto_select = 0
-  elseif !g:neocomplete#disable_auto_complete && !g:neocomplete#enable_auto_select
-      let g:neocomplete#disable_auto_complete = 1
-      let g:neocomplete#enable_auto_select = 0
-  elseif g:neocomplete#disable_auto_complete && !g:neocomplete#enable_auto_select
-      let g:neocomplete#disable_auto_complete = 0
-      let g:neocomplete#enable_auto_select = 1
-  endif
+	if !g:neocomplete#disable_auto_complete && g:neocomplete#enable_auto_select
+		let g:neocomplete#disable_auto_complete = 0
+		let g:neocomplete#enable_auto_select = 0
+	elseif !g:neocomplete#disable_auto_complete && !g:neocomplete#enable_auto_select
+		let g:neocomplete#disable_auto_complete = 1
+		let g:neocomplete#enable_auto_select = 0
+	elseif g:neocomplete#disable_auto_complete && !g:neocomplete#enable_auto_select
+		let g:neocomplete#disable_auto_complete = 0
+		let g:neocomplete#enable_auto_select = 1
+	endif
 endfunction
 
 nnoremap <silent><Leader>ea :call ToggleNeoComplete()<CR>
@@ -632,7 +635,7 @@ autocmd FileType ruby setlocal omnifunc=rubycomplete#Complete
 autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
 
 if !exists('g:neocomplete#sources#omni#input_patterns')
-    let g:neocomplete#sources#omni#input_patterns = {}
+	let g:neocomplete#sources#omni#input_patterns = {}
 endif
 
 let g:neocomplete#sources#omni#input_patterns.python='[^. \t]\.\w*'
@@ -692,16 +695,17 @@ vmap <leader>l <Plug>VSurround]%a(<C-r><C-p>+)<Esc>
 
 " Linux Kernel Coding Style {{{
 nnoremap <silent> <leader>a :LinuxCodingStyle<cr>
+let g:linuxsty_patterns = [ "/kernels" ]
 "let g:linuxsty_patterns = [ "~/git/kernels/" ]
 " }}}
 "
 " clang {{{
 " ClangFormat, ClangFormatAutoToggle, ClangFormatAutoEnable, ClangFormatAutoDisable
 let g:clang_format#style_options = {
-            \ "AccessModifierOffset" : -4,
-            \ "AllowShortIfStatementsOnASingleLine" : "true",
-            \ "AlwaysBreakTemplateDeclarations" : "true",
-            \ "Standard" : "C++11"}
+			\ "AccessModifierOffset" : -4,
+			\ "AllowShortIfStatementsOnASingleLine" : "true",
+			\ "AlwaysBreakTemplateDeclarations" : "true",
+			\ "Standard" : "C++11"}
 " map to <Leader>cf in C++ code
 autocmd FileType c,cpp,objc nnoremap <buffer><leader>cf :<C-u>ClangFormat<CR>
 autocmd FileType c,cpp,objc vnoremap <buffer><leader>cf :ClangFormat<CR>
@@ -741,11 +745,11 @@ imap <C-k>     <Plug>(neosnippet_expand_or_jump)
 " \ neosnippet#expandable_or_jumpable() ?
 " \    "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
 smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
-\ "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
+			\ "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
 
 " For conceal markers.
 if has('conceal')
-  set conceallevel=2 concealcursor=niv
+	set conceallevel=2 concealcursor=niv
 endif
 
 " More snippet
@@ -756,16 +760,23 @@ let g:neosnippet#enable_snipmate_compatibility = 1
 let g:neosnippet#snippets_directory='~/.vim/plugged/vim-snippets/snippets'
 " }}}
 
+" =========================
+" Personal settings
+" =========================
 autocmd BufEnter *.py colorscheme sierra
 autocmd BufEnter *.go colorscheme sierra 
 
 set list
-"set listchars=tab:»\ ,eol:¬
-set listchars=tab:▸\ ,eol:¬
+"set listchars=tab:▸\ ,eol:¬
+set listchars=tab:»\ ,eol:¬
 
 " ======================
 " Syntastic setting
 " ======================
+" Define files to do type checking
+let g:syntastic_mode_map = {
+			\ "mode": "active",
+			\ "passive_filetypes": ["tex", "md"] }
 " Python
 let g:syntastic_python_checkers=['pyflakes']
 " Javascript
@@ -773,16 +784,24 @@ let g:syntastic_javascript_checkers = ['jshint']
 " Go
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_go_checkers = ['go', 'golint', 'errcheck']
- "Tex
-let g:syntastic_tex_checkers = ['lacheck', 'text/language_check']
-
+" Tex -- I dont really type checking for latex
+"let g:syntastic_tex_checkers = ['lacheck', 'text/language_check']
 " Custom CoffeeScript SyntasticCheck
 func! SyntasticCheckCoffeescript()
-    let l:filename = substitute(expand("%:p"), '\(\w\+\)\.coffee', '.coffee.\1.js', '')
-    execute "tabedit " . l:filename
-    execute "SyntasticCheck"
-    execute "Errors"
+	let l:filename = substitute(expand("%:p"), '\(\w\+\)\.coffee', '.coffee.\1.js', '')
+	execute "tabedit " . l:filename
+	execute "SyntasticCheck"
+	execute "Errors"
 endfunc
-nnoremap <silent> <leader>c :call SyntasticCheckCoffeescript()<cr>
+"nnoremap <silent> <leader>c :call SyntasticCheckCoffeescript()<cr>
+
+function! FindConfig(prefix, what, where)
+	let cfg = findfile(a:what, escape(a:where, ' ') . ';')
+	return cfg !=# '' ? ' ' . a:prefix . ' ' . shellescape(cfg) : ''
+endfunction
+autocmd FileType javascript let b:syntastic_javascript_jscs_args =
+			\ get(g:, 'syntastic_javascript_jscs_args', '') .
+			\ FindConfig('-c', '.jscsrc', expand('<afile>:p:h', 1))
+
 
 " end of vimrc
