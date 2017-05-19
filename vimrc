@@ -15,16 +15,11 @@ call plug#begin('~/.vim/plugged')
 " VIM enhancements
 Plug 'ciaranm/securemodelines'
 Plug 'vim-scripts/localvimrc'
-Plug 'Shougo/neocomplete.vim'
 " change to https://github.com/ctrlpvim/ctrlp.vim
-" ctrlp ctrlpfunky
-Plug 'ctrlpvim/ctrlp.vim' | Plug 'tacahiroy/ctrlp-funky'
 
 " GUI enhancements
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-"Plug 'neomake/neomake'
-Plug 'kien/ctrlp.vim'
 Plug 'scrooloose/nerdtree' | Plug 'jistr/vim-nerdtree-tabs'
 
 " rainbow_parentheses
@@ -45,12 +40,6 @@ Plug 'Shougo/neosnippet'
 Plug 'Shougo/neosnippet-snippets'
 Plug 'honza/vim-snippets'
 
-" for neovim and is disabled
-"Plug 'autozimu/LanguageClient-neovim', { 'do': ':UpdateRemotePlugins' }
-"if has('python3')
-"    Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-"endif
-
 " Syntactic language support
 " Plugin '~/dev/projects/simio', {'rtp': 'src/vim-syntax/'}
 Plug '~/dev/projects/api-soup', {'rtp': 'vim-syntax/'}
@@ -64,210 +53,30 @@ Plug 'fatih/vim-go'   " for golang
 Plug 'klen/python-mode'   " for python
 " install jedi-vim and let g:pymode_rope = 1
 Plug 'dag/vim-fish'
-Plug 'vivien/vim-linux-coding-style'
 Plug 'rhysd/vim-clang-format'
 Plug 'szw/vim-tags'
 Plug 'jiangmiao/auto-pairs'
+Plug 'jceb/vim-orgmode'  "org mode
+
+" Buffer 
+Plug 'ctrlpvim/ctrlp.vim' | Plug 'tacahiroy/ctrlp-funky'
+Plug 'jlanzarotta/bufexplorer'
+
+" Color scheme
+Plug 'morhetz/gruvbox'
 Plug 'AlessandroYorba/Sierra'  " colortheme 
 
-" Extra stuff
+" Linux kernel coding
 Plug 'vivien/vim-linux-coding-style'
 
+" Disdration free
+Plug 'junegunn/goyo.vim'
+Plug 'https://github.com/amix/vim-zenroom2'
 call plug#end()
 
-" Plugin settings
-let g:secure_modelines_allowed_items = [
-			\ "textwidth",   "tw",
-			\ "softtabstop", "sts",
-			\ "tabstop",     "ts",
-			\ "shiftwidth",  "sw",
-			\ "expandtab",   "et",   "noexpandtab", "noet",
-			\ "filetype",    "ft",
-			\ "foldmethod",  "fdm",
-			\ "readonly",    "ro",   "noreadonly", "noro",
-			\ "rightleft",   "rl",   "norightleft", "norl",
-			\ "colorcolumn"
-			\ ]
-
-" Base16
-let base16colorspace=256
-"let g:base16_shell_path="~/dev/others/base16/builder/templates/shell/scripts/"
-
-" Airline + CtrlP
-let g:airline_powerline_fonts = 1
-let g:airline_theme = "base16"
-let g:ctrlp_root_markers = ['.lvimrc', '.git']
-let g:ctrlp_custom_ignore = {
-			\ 'dir': '\.git$\|\.hg$\|\.svn$\|publish$\|intermediate$\|node_modules$\|components$\|target$',
-			\ 'file': '\~$\|\.png$\|\.jpg$\|\.gif$\|\.settings$\|Thumbs\.db\|\.min\.js$\|\.swp\|\.o$\|\.hi$\|.a$\|.sqlite3$\|.key$\|.pub$\|.racertmp$',
-			\ }
-
-" from http://sheerun.net/2014/03/21/how-to-boost-your-vim-productivity/
-let g:ctrlp_use_caching = 0
-if executable('ag')
-	set grepprg=ag\ --nogroup\ --nocolor
-	let g:ctrlp_user_command = 'ag %s -l --nocolor --ignore-dir node_modules --ignore-dir target -g ""'
-else
-	let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files . -co --exclude-standard', 'find %s -type f']
-endif
-if executable('rg')
-	set grepprg=rg\ --no-heading\ --vimgrep
-	set grepformat=%f:%l:%c:%m
-endif
-
-" Javascript
-let javaScript_fold=0
-
-" Neomake
-"let g:syntastic_always_populate_loc_list = 1
-"let g:syntastic_enable_highlighting = 0
-"let g:syntastic_javascript_checkers = ['eslint']
-"let g:syntastic_sh_shellcheck_post_args = "-x"  " allow sourcing external files
-"let g:neomake_verbose = 0
-"let g:neomake_tex_proselint_maker = {
-"			\ 'errorformat': '%f:%l:%c: %m'
-""			\ }
-"let g:neomake_tex_enabled_makers = ['chktex', 'lacheck', 'proselint']
-"let g:neomake_rust_enabled_makers = []
-"let g:neomake_info_sign = {'text': '⚕', 'texthl': 'NeomakeInfoSign'}
-":autocmd! BufWritePost * Neomake
-"autocmd BufWritePost *.rs Neomake! cargo
-"autocmd BufWritePost *.rs Neomake! clippy
-"nnoremap <C-g> :Neomake!<CR>
-"inoremap <C-g> :Neomake!<CR>
-
-" Latex
-let g:latex_indent_enabled = 1
-let g:latex_fold_envs = 0
-let g:latex_fold_sections = []
-
-" Per-buffer CtrlP hotkey
-nmap <leader>; :CtrlPBuffer<CR>
-nmap <leader>o :CtrlP<CR>
-nmap <leader>w :w<CR>
-nmap <leader>wq :wq<CR>
-"nnoremap <leader>w :w<CR>
-nnoremap <leader>q :q!<CR>
-nnoremap <leader>qq :q!<Esc>:q!<CR>
-
-" Don't confirm .lvimrc
-let g:localvimrc_ask = 0
-
-" language server protocol
-"let g:LanguageClient_serverCommands = {
-"    \ 'rust': ['rustup', 'run', 'nightly', 'cargo', 'run', '--release', '--manifest-path=/home/jon/dev/others/rls/Cargo.toml'],
-"    \ }
-"nnoremap <silent> K :call LanguageClient_textDocument_hover()<CR>
-"nnoremap <silent> gd :call LanguageClient_textDocument_definition()<CR>
-"nnoremap <silent> <F2> :call LanguageClient_textDocument_rename()<CR>
-
-" racer + rust
-let g:rustfmt_autosave = 1
-let g:rustfmt_fail_silently = 1
-let g:racer_cmd = "/usr/bin/racer"
-let g:racer_experimental_completer = 1
-let $RUST_SRC_PATH = systemlist("rustc --print sysroot")[0] . "/lib/rustlib/src/rust/src"
-
-" Completion
-"let g:deoplete#enable_at_startup = 1
-"inoremap <silent><expr> <TAB>
-"		\ pumvisible() ? "\<C-n>" :
-"		\ <SID>check_back_space() ? "\<TAB>" :
-"		\ deoplete#mappings#manual_complete()
-"	function! s:check_back_space() abort "{{{
-"	let col = col('.') - 1
-"		return !col || getline('.')[col - 1]  =~ '\s'
-"		endfunction"}}}
-
-" Doxygen
-let mysyntaxfile='~/.vim/doxygen_load.vim'
-
-" ====================================
-" # Golang
-" ====================================
-" vim-go {{{
-let g:go_play_open_browser = 0
-let g:go_highlight_functions = 1
-let g:go_highlight_methods = 1
-let g:go_highlight_structs = 1
-let g:go_highlight_operators = 1
-let g:go_highlight_build_constraints = 1
-let g:go_fmt_fail_silently = 1
-let g:go_fmt_command = "goimports"
-let g:go_highlight_interfaces = 1
-"au FileType go nmap <Leader>gD <Plug>(go-doc-vertical)
-"au FileType go nmap <Leader>gDB <Plug>(go-doc-browser)
-"au FileType go nmap <Leader>gR <Plug>(go-run)
-au FileType go nmap <leader>gv <Plug>(go-build)
-au FileType go nmap <leader>gT <Plug>(go-test)
-" In case guru is not working, http://studygolang.com/articles/9718
-au FileType go nmap <C-]> :GoDef<cr> 
-au Filetype go nmap <leader>j :GoDecls<cr>
-"let g:syntastic_go_checkers = ['golint', 'govet', 'errcheck']
-"let g:syntastic_mode_map = { 'mode': 'active', 'passive_filetypes': ['go', 'java'] }
-" }}}
-
-" ===================================
-" # Python-mode
-" ===================================
-" python-mode {{{
-" Activate rope
-" Keys:
-" K             Show python docs
-" <Ctrl-Space>  Rope autocomplete
-" <Ctrl-c>g     Rope goto definition
-" <Ctrl-c>d     Rope show documentation
-" <Ctrl-c>f     Rope find occurrences
-" <Leader>b     Set, unset breakpoint (g:pymode_breakpoint enabled)
-" [[            Jump on previous class or function (normal, visual, operator modes)
-" ]]            Jump on next class or function (normal, visual, operator modes)
-" [M            Jump on previous class or method (normal, visual, operator modes)
-" ]M            Jump on next class or method (normal, visual, operator modes)
-let g:pymode_rope = 1 
-" Documentation
-let g:pymode_doc = 1
-"let g:pymode_doc_key = 'K'
-"Linting
-nmap <leader>l :PymodeLint<CR>
-let g:syntastic_python_checkers=['pyflakes']
-"let g:pymode_lint = 1
-"let g:pymode_lint_checker = "pyflakes,pep8"
-" Auto check on save
-"let g:pymode_lint_write = 1
-" Support virtualenv
-let g:pymode_virtualenv = 1
-" Enable breakpoints plugin
-let g:pymode_breakpoint = 1
-let g:pymode_breakpoint_bind = '<leader>b'
-" syntax highlighting
-let g:pymode_syntax = 1
-let g:pymode_syntax_all = 1
-let g:pymode_syntax_indent_errors = g:pymode_syntax_all
-let g:pymode_syntax_space_errors = g:pymode_syntax_all
-" Don't autofold code
-let g:pymode_folding = 0
-" Override go-to.definition key shortcut to Ctrl-]
-let g:pymode_rope_goto_definition_bind = "<C-]>"
-" Override run current python file key shortcut to Ctrl-Shift-e
-let g:pymode_run_bind = "<C-S-e>"
-" Override view python doc key shortcut to Ctrl-Shift-d
-let g:pymode_doc_bind = "<C-S-d>"
-let g:pymode_rope_show_doc_bind = '<leader>d'
-let g:pymode_rope_regenerate_on_write = 1
-let g:pymode_rope_rename_bind = '<leader>f'
-let g:pymode_rope_organize_imports_bind = '<leader>i'
-"let g:pymode_rope_autoimport_bind = '<leader>ci'
-" disable bunch of annoying things
-let g:pymode_rope_lookup_project = 0
-let g:pymode_rope_complete_on_dot = 0
-let g:pymode_rope_autoimport = 0
-" }}}
-
-" Don't gofmt Biscuit (yet)
-"autocmd BufRead,BufNewFile /home/jon/dev/others/biscuit/** let [g:go_fmt_command, g:go_fmt_autosave]=["", 0]
 
 " =============================================================================
-" # Editor settings
+" Editor settings
 " =============================================================================
 filetype plugin indent on
 set ts=2
@@ -281,6 +90,11 @@ set hidden
 set nowrap
 set nojoinspaces
 set termguicolors
+
+" Turn backup off, since most things are in git 
+set nobackup
+set nowb
+set noswapfile
 
 " Settings needed for .lvimrc
 set exrc
@@ -343,38 +157,63 @@ set vb t_vb= " No more beeps
 set backspace=2 " Backspace over newlines
 set foldmethod=marker " Only fold on marks
 set ruler " Where am I?
+set number
 set ttyfast
 set lazyredraw
 set laststatus=2
+set cmdheight=2
+" cursor line and column
+set cursorline
+set cursorcolumn
 set relativenumber " Relative line numbers
 set diffopt+=iwhite " No whitespace in vimdiff
 set colorcolumn=80 " and give me a colored column
 set showcmd " Show (partial) command in status line.
+set mousehide
 set mouse=a " Enable mouse usage (all modes) in terminals
 "set completeopt-=preview
 set completeopt=longest,menu
+set complete=.,w,b,u,U
+" Tabs / Buffers settings
+tab sball
+set switchbuf=useopen
+
+" Add highlighting to TODO,NOTE,etc
+if has("autocmd")
+  " Highlight TODO, FIXME, NOTE, etc.
+  if v:version > 701
+    autocmd Syntax * call matchadd('Todo',  '\W\zs\(TODO\|FIXME\|CHANGED\|DONE\|XXX\|BUG\|HACK\)')
+    autocmd Syntax * call matchadd('Debug', '\W\zs\(NOTE\|INFO\|IDEA\|NOTICE\)')
+  endif
+endif
 
 " Colors
 set background=dark
 colorscheme base16-atelier-dune
 hi Normal ctermbg=NONE
 
+" Personal settings
+autocmd BufEnter *.go colorscheme sierra 
+autocmd BufEnter *.c  colorscheme sierra
+autocmd BufEnter *.py  colorscheme sierra
+autocmd BufEnter *.h  colorscheme sierra
+autocmd BufEnter *.hpp  colorscheme sierra
+autocmd BufEnter *.cpp  colorscheme sierra
+
 " Show those damn hidden characters
 " Verbose: set listchars=nbsp:¬,eol:¶,extends:»,precedes:«,trail:•
 "set nolist
 "set listchars=nbsp:¬,extends:»,precedes:«,trail:•
+set list
+"set listchars=tab:▸\ ,eol:¬
+set listchars=tab:»\ ,eol:¬
+
 
 " =============================================================================
-" # Keyboard shortcuts
+" Keyboard shortcuts
 " =============================================================================
 " ; as :
 nnoremap ; :
-
-" Ctrl+c and Ctrl+j as Esc
-"inoremap <C-j> <Esc>
-"vnoremap <C-j> <Esc>
-"inoremap <C-c> <Esc>
-"vnoremap <C-c> <Esc>
 
 " Suspend with Ctrl+f
 inoremap <C-z> :sus<cr>
@@ -391,9 +230,6 @@ map L $
 noremap <leader>p :read !xsel --clipboard --output<cr>
 noremap <leader>c :w !xsel -ib<cr><cr>
 
-" <leader>s for Ack/Ag search
-noremap <leader>s :Ag
-
 " No arrow keys --- force yourself to use the home row
 nnoremap <up> <nop>
 nnoremap <down> <nop>
@@ -402,20 +238,15 @@ inoremap <down> <nop>
 inoremap <left> <nop>
 inoremap <right> <nop>
 
-" Left and right can switch buffers
-"nnoremap <left> :bp<CR>
-"nnoremap <right> :bn<CR>
-
 " Move by line
 nnoremap j gj
 nnoremap k gk
 
-" Jump to next/previous error {{{
+" Jump to next/previous error
 noremap <C-j> :cn<cr>
 nnoremap <C-k> :cp<cr>
 "nnoremap <C-l> :copen<cr>
 "nnoremap <C-h> :cclose<cr>
-" }}}
 
 " ,, toggles between buffers
 nnoremap ,, <c-^>
@@ -436,17 +267,322 @@ noremap M :!make -k -j4<cr>
 
 " I can type :help on my own, thanks.
 "map <F1> <Esc>
-noremap <F1> <Esc>"
+noremap <F1> <Esc>
 imap <F1> <Esc>
+
+nmap <F9> :bprev<CR>
+nmap <F10> :bnext<CR>
+"nmap <silent> <leader>s :SyntasticCheck # <CR> :bp <BAR> bd #<CR>
+
+" ----------------------
+" From ultimate vim
+" ----------------------
+" Fast saving
+nmap <leader>w :w!<cr>
+
+" :W sudo saves the file 
+" (useful for handling the permission-denied error)
+command W w !sudo tee % > /dev/null
+
+" From ultimate vim
+map <leader>o :BufExplorer<cr>
+map <leader>f :MRU<CR>
+
+map <leader>z :Goyo<cr>
+
+" Close current buffer
+map <leader>bd :Bclose<cr>
+
+" Close all buffers
+map <leader>ba :1,1000 bd!<cr>
+
+map <leader>tn :tabnew<cr>
+map <leader>to :tabonly<cr>
+map <leader>tc :tabclose<cr>
+map <leader>tm :tabmove 
+
+" Opens a new tab with the current buffer's path
+" Super useful when editing files in the same directory
+map <leader>te :tabedit <c-r>=expand("%:p:h")<cr>/
+
+map <leader>cd :cd %:p:h<cr>:pwd<cr>
+
+map <leader>0 :e ~/buffer<cr>
+map <leader>pp :setlocal paste!<cr>
+
+" Visual mode mappings
+"vnoremap <silent> * :call VisualSelection('f')<CR>
+"vnoremap <silent> # :call VisualSelection('b')<CR>
+" Visual mode pressing * or # searches for the current selection
+" Super useful! From an idea by Michael Naumann
+vnoremap <silent> * :<C-u>call VisualSelection('', '')<CR>/<C-R>=@/<CR><CR>
+vnoremap <silent> # :<C-u>call VisualSelection('', '')<CR>?<C-R>=@/<CR><CR>
+
+" ALE
+let &runtimepath.=',~/.vim/bundle/ale'
+
+" cmd helper
+cno ' <C-\>eDeleteTillSlash()<cr>
+cnoremap <C-A>  <Home>
+cnoremap <C-E>  <End>
+cnoremap <C-K>  <C-U>
+
+cnoremap <C-P>  <Up>
+cnoremap <C-N>  <Down>  
+
+" Auto Pair
+let g:AutoPairsFlyMode = 0
+let g:AutoPairsShortcutBackInsert = '<M-b>'
+" provide hjkl movements in Insert mode via the <Alt> modifier key
+inoremap <A-h> <C-o>h
+inoremap <A-j> <C-o>j
+inoremap <A-k> <C-o>k
+inoremap <A-l> <C-o>l
+
+nmap <leader>w :w<CR>
+nmap <leader>wq :wq<CR>
+"nnoremap <leader>w :w<CR>
+nnoremap <leader>q :q!<CR>
+nnoremap <leader>qq :q!<Esc>:q!<CR>
+
+" map wincmd {{
+nmap <silent> <A-Up> :wincmd k<CR>
+nmap <silent> <A-Down> :wincmd j<CR>
+nmap <silent> <A-Left> :wincmd h<CR>
+nmap <silent> <A-Right> :wincmd l<CR>
+" using ctrl hj"
+nmap <leader>j :wincmd j<CR>
+nmap <leader>k :wincmd k<CR>
+nmap <leader>h :wincmd h<CR>
+nmap <leader>l :wincmd l<CR>
+" The right windcmd 
+nmap <silent>J :wincmd j<CR>
+nmap <silent>K :wincmd k<CR>
+nmap <silent>H :wincmd h<CR>
+nmap <silent>L :wincmd l<CR>
+
+" DEPRICATED
+" {{{
+" ====== Ctrl+c and Ctrl+j as Esc
+"inoremap <C-j> <Esc>
+"vnoremap <C-j> <Esc>
+"inoremap <C-c> <Esc>
+"vnoremap <C-c> <Esc>
+" ====== <leader>s for Ack/Ag search
+"noremap <leader>s :Ag
+" ====== Left and right can switch buffers
+"nnoremap <left> :bp<CR>
+"nnoremap <right> :bn<CR>
+
+"cnoremap <leader>j <t_kd>
+"cnoremap <C-k> <t_ku>
+"cnoremap <leader>a <Home>
+"cnoremap <leader>e <End>
+
+"nmap <leader>g :YcmCompleter GoTo<CR>
+"nmap <leader>d :YcmCompleter GoToDefinition<CR>
+" }}}
+
+" ----------------------
+" Plugin settings
+" ----------------------
+
+let g:secure_modelines_allowed_items = [
+      \ "textwidth",   "tw",
+      \ "softtabstop", "sts",
+      \ "tabstop",     "ts",
+      \ "shiftwidth",  "sw",
+      \ "expandtab",   "et",   "noexpandtab", "noet",
+      \ "filetype",    "ft",
+      \ "foldmethod",  "fdm",
+      \ "readonly",    "ro",   "noreadonly", "noro",
+      \ "rightleft",   "rl",   "norightleft", "norl",
+      \ "colorcolumn"
+      \ ]
+
+" Base16
+let base16colorspace=256
+"let g:base16_shell_path="~/dev/others/base16/builder/templates/shell/scripts/"
+
+" Airline + CtrlP
+let g:airline_powerline_fonts = 1
+let g:airline_theme = "base16"
+let g:ctrlp_root_markers = ['.lvimrc', '.git']
+let g:ctrlp_custom_ignore = {
+      \ 'dir': '\.git$\|\.hg$\|\.svn$\|publish$\|intermediate$\|node_modules$\|components$\|target$',
+      \ 'file': '\~$\|\.png$\|\.jpg$\|\.gif$\|\.settings$\|Thumbs\.db\|\.min\.js$\|\.swp\|\.o$\|\.hi$\|.a$\|.sqlite3$\|.key$\|.pub$\|.racertmp$',
+      \ }
+
+" from http://sheerun.net/2014/03/21/how-to-boost-your-vim-productivity/
+let g:ctrlp_use_caching = 0
+if executable('ag')
+  set grepprg=ag\ --nogroup\ --nocolor
+  let g:ctrlp_user_command = 'ag %s -l --nocolor --ignore-dir node_modules --ignore-dir target -g ""'
+else
+  let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files . -co --exclude-standard', 'find %s -type f']
+endif
+if executable('rg')
+  set grepprg=rg\ --no-heading\ --vimgrep
+  set grepformat=%f:%l:%c:%m
+endif
+
+" Javascript
+let javaScript_fold=0
+
+" Neomake
+" ...
+
+" Latex
+let g:latex_indent_enabled = 1
+let g:latex_fold_envs = 0
+let g:latex_fold_sections = []
+
+" Per-buffer CtrlP hotkey
+nmap <leader>; :CtrlPBuffer<CR>
+nmap <leader>o :CtrlP<CR>
+
+noremap <leader>fa :<c-u>CtrlPBookmarkDir<CR>
+noremap <leader>fb :<c-u>CtrlPBuffer<CR>
+noremap <leader>fc :<c-u>CtrlPChange<CR>
+noremap <leader>fd :<c-u>CtrlPDir<CR>
+noremap <leader>; :<c-u>CtrlP<CR>
+noremap <leader>fl :<c-u>CtrlPLine<CR>
+noremap <leader>fm :<c-u>CtrlPMRU<CR>
+noremap <leader>fr :<c-u>CtrlP <C-R>=expand('%:p:h')<CR><CR>
+noremap <leader>ft :<c-u>CtrlPTag<CR>
+noremap <leader>fq :<c-u>CtrlPQuickfix<CR>
+
+
+" Don't confirm .lvimrc
+let g:localvimrc_ask = 0
+
+" language server protocol
+"let g:LanguageClient_serverCommands = {
+"    \ 'rust': ['rustup', 'run', 'nightly', 'cargo', 'run', '--release', '--manifest-path=/home/jon/dev/others/rls/Cargo.toml'],
+"    \ }
+"nnoremap <silent> K :call LanguageClient_textDocument_hover()<CR>
+"nnoremap <silent> gd :call LanguageClient_textDocument_definition()<CR>
+"nnoremap <silent> <F2> :call LanguageClient_textDocument_rename()<CR>
+
+" racer + rust
+let g:rustfmt_autosave = 1
+let g:rustfmt_fail_silently = 1
+let g:racer_cmd = "/usr/bin/racer"
+let g:racer_experimental_completer = 1
+let $RUST_SRC_PATH = systemlist("rustc --print sysroot")[0] . "/lib/rustlib/src/rust/src"
+
+" Completion
+"let g:deoplete#enable_at_startup = 1
+"inoremap <silent><expr> <TAB>
+"		\ pumvisible() ? "\<C-n>" :
+"		\ <SID>check_back_space() ? "\<TAB>" :
+"		\ deoplete#mappings#manual_complete()
+"	function! s:check_back_space() abort "{{{
+"	let col = col('.') - 1
+"		return !col || getline('.')[col - 1]  =~ '\s'
+"		endfunction"}}}
+
+" Doxygen
+let mysyntaxfile='~/.vim/doxygen_load.vim'
+
+" ====================================
+" Golang
+" ====================================
+" vim-go {{{
+let g:go_play_open_browser = 0
+let g:go_highlight_functions = 1
+let g:go_highlight_methods = 1
+let g:go_highlight_structs = 1
+let g:go_highlight_operators = 1
+let g:go_highlight_build_constraints = 1
+let g:go_fmt_fail_silently = 1
+let g:go_fmt_command = "goimports"
+let g:go_highlight_interfaces = 1
+"au FileType go nmap <Leader>gD <Plug>(go-doc-vertical)
+"au FileType go nmap <Leader>gDB <Plug>(go-doc-browser)
+"au FileType go nmap <Leader>gR <Plug>(go-run)
+au FileType go nmap <leader>gv <Plug>(go-build)
+au FileType go nmap <leader>gT <Plug>(go-test)
+" In case guru is not working, http://studygolang.com/articles/9718
+au FileType go nmap <C-]> :GoDef<cr> 
+au Filetype go nmap <leader>j :GoDecls<cr>
+"let g:syntastic_go_checkers = ['golint', 'govet', 'errcheck']
+"let g:syntastic_mode_map = { 'mode': 'active', 'passive_filetypes': ['go', 'java'] }
+" }}}
+
+" ===================================
+" Python-mode
+" ===================================
+" python-mode {{{
+" Activate rope
+" Keys:
+" K             Show python docs
+" <Ctrl-Space>  Rope autocomplete
+" <Ctrl-c>g     Rope goto definition
+" <Ctrl-c>d     Rope show documentation
+" <Ctrl-c>f     Rope find occurrences
+" <Leader>b     Set, unset breakpoint (g:pymode_breakpoint enabled)
+" [[            Jump on previous class or function (normal, visual, operator modes)
+" ]]            Jump on next class or function (normal, visual, operator modes)
+" [M            Jump on previous class or method (normal, visual, operator modes)
+" ]M            Jump on next class or method (normal, visual, operator modes)
+let g:pymode_rope = 1 
+" Documentation
+let g:pymode_doc = 1
+"let g:pymode_doc_key = 'K'
+"Linting
+nmap <leader>l :PymodeLint<CR>
+"let g:pymode_lint = 1
+"let g:pymode_lint_checker = "pyflakes,pep8"
+" Auto check on save
+"let g:pymode_lint_write = 1
+" Support virtualenv
+let g:pymode_virtualenv = 1
+" Enable breakpoints plugin
+let g:pymode_breakpoint = 1
+let g:pymode_breakpoint_bind = '<leader>b'
+" syntax highlighting
+let g:pymode_syntax = 1
+let g:pymode_syntax_all = 1
+let g:pymode_syntax_indent_errors = g:pymode_syntax_all
+let g:pymode_syntax_space_errors = g:pymode_syntax_all
+" Don't autofold code
+let g:pymode_folding = 0
+" Override go-to.definition key shortcut to Ctrl-]
+let g:pymode_rope_goto_definition_bind = "<C-]>"
+" Override run current python file key shortcut to Ctrl-Shift-e
+let g:pymode_run_bind = "<C-S-e>"
+" Override view python doc key shortcut to Ctrl-Shift-d
+let g:pymode_doc_bind = "<C-S-d>"
+let g:pymode_rope_show_doc_bind = '<leader>d'
+let g:pymode_rope_regenerate_on_write = 1
+let g:pymode_rope_rename_bind = '<leader>f'
+let g:pymode_rope_organize_imports_bind = '<leader>i'
+"let g:pymode_rope_autoimport_bind = '<leader>ci'
+" disable bunch of annoying things
+let g:pymode_rope_lookup_project = 0
+let g:pymode_rope_complete_on_dot = 0
+let g:pymode_rope_autoimport = 0
+
+" Python mode
+let g:pymode_doc_key='K'
+let g:pymode_breakpoint_key='<leader>b'
+let g:pymode_run_bind='<F5>'
+
+" pythonsyntax 
+let python_highlight_all = 1
+
+" }}}
+
 
 " ctrlp ctrlpfunky {{{
 let g:ctrlp_map = '<leader>p'
 let g:ctrlp_cmd = 'CtrlP'
-map <leader>f :CtrlPMRU<CR>
+map <leader>f :CtrlPMRUFiles<CR>
 let g:ctrlp_custom_ignore = {
-			\ 'dir':  '\v[\/]\.(git|hg|svn|rvm)$',
-			\ 'file': '\v\.(exe|so|dll|zip|tar|tar.gz|pyc)$',
-			\ }
+      \ 'dir':  '\v[\/]\.(git|hg|svn|rvm)$',
+      \ 'file': '\v\.(exe|so|dll|zip|tar|tar.gz|pyc)$',
+      \ }
 let g:ctrlp_working_path_mode=0
 let g:ctrlp_match_window_bottom=1
 let g:ctrlp_max_height=15
@@ -455,10 +591,10 @@ let g:ctrlp_mruf_max=500
 let g:ctrlp_follow_symlinks=1
 " use ag if possible
 if executable('ag')
-	" Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
-	let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
-	" ag is fast enough that CtrlP doesn't need to cache
-	let g:ctrlp_use_caching = 0
+  " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
+  let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+  " ag is fast enough that CtrlP doesn't need to cache
+  let g:ctrlp_use_caching = 0
 endif
 
 " ctrlpfunky
@@ -473,6 +609,7 @@ let g:ctrlp_extensions = ['funky']
 
 " nerdtree nerdtreetabs {{{
 " map <leader>n :NERDTreeToggle<CR>
+nmap " :NERDTreeToggle<CR>
 let NERDTreeHighlightCursorline=1
 let NERDTreeIgnore=[ '\.pyc$', '\.pyo$', '\.obj$', '\.o$', '\.so$', '\.egg$', '^\.git$', '^\.svn$', '^\.hg$' ]
 "close vim if the only window left open is a NERDTree
@@ -482,6 +619,9 @@ let g:NERDTreeMapOpenSplit = 's'
 let g:NERDTreeMapOpenVSplit = 'v'
 
 " nerdtreetabs
+map <leader>nn :NERDTreeToggle<cr>
+map <leader>nb :NERDTreeFromBookmark 
+map <leader>nf :NERDTreeFind<cr>
 map <Leader>n <plug>NERDTreeTabsToggle<CR>
 " Turn off sync 
 " let g:nerdtree_tabs_synchronize_view=0
@@ -493,60 +633,57 @@ map <Leader>n <plug>NERDTreeTabsToggle<CR>
 " }}}
 
 " tagbar {{{
-nmap <F9> :TagbarToggle<CR>
+"nmap <F9> :TagbarToggle<CR>
 noremap <leader>t :TagbarToggle<CR>
 let g:tagbar_autofocus = 1
 let g:tagbar_autoshowtag = 1
 " let g:tagbar_show_visibility = 1
 " for ruby
 let g:tagbar_type_ruby = {
-			\ 'kinds' : [
-			\ 'm:modules',
-			\ 'c:classes',
-			\ 'd:describes',
-			\ 'C:contexts',
-			\ 'f:methods',
-			\ 'F:singleton methods'
-			\ ]
-			\ }
+      \ 'kinds' : [
+      \ 'm:modules',
+      \ 'c:classes',
+      \ 'd:describes',
+      \ 'C:contexts',
+      \ 'f:methods',
+      \ 'F:singleton methods'
+      \ ]
+      \ }
 " 1. install gotags 'go get -u github.com/jstemmer/gotags'
 " 2. make sure `gotags` in you shell PATH, you can call check it with `which gotags`
 " for gotags. work with tagbar
 let g:tagbar_type_go = {
-			\ 'ctagstype' : 'go',
-			\ 'kinds'     : [
-			\ 'p:package',
-			\ 'i:imports:1',
-			\ 'c:constants',
-			\ 'v:variables',
-			\ 't:types',
-			\ 'n:interfaces',
-			\ 'w:fields',
-			\ 'e:embedded',
-			\ 'm:methods',
-			\ 'r:constructor',
-			\ 'f:functions'
-			\ ],
-			\ 'sro' : '.',
-			\ 'kind2scope' : {
-			\ 't' : 'ctype',
-			\ 'n' : 'ntype'
-			\ },
-			\ 'scope2kind' : {
-			\ 'ctype' : 't',
-			\ 'ntype' : 'n'
-			\ },
-			\ 'ctagsbin'  : 'gotags',
-			\ 'ctagsargs' : '-sort -silent'
-			\ }
+      \ 'ctagstype' : 'go',
+      \ 'kinds'     : [
+      \ 'p:package',
+      \ 'i:imports:1',
+      \ 'c:constants',
+      \ 'v:variables',
+      \ 't:types',
+      \ 'n:interfaces',
+      \ 'w:fields',
+      \ 'e:embedded',
+      \ 'm:methods',
+      \ 'r:constructor',
+      \ 'f:functions'
+      \ ],
+      \ 'sro' : '.',
+      \ 'kind2scope' : {
+      \ 't' : 'ctype',
+      \ 'n' : 'ntype'
+      \ },
+      \ 'scope2kind' : {
+      \ 'ctype' : 't',
+      \ 'ntype' : 'n'
+      \ },
+      \ 'ctagsbin'  : 'gotags',
+      \ 'ctagsargs' : '-sort -silent'
+      \ }
 " }}}
 
-" pythonsyntax {{{
-let python_highlight_all = 1
-" }}}
 
 " =============================================================================
-" # Autocommands
+" Auto commands
 " =============================================================================
 
 " delimitMate {{{
@@ -564,8 +701,8 @@ autocmd InsertLeave * set nopaste
 
 " Jump to last edit position on opening file
 if has("autocmd")
-	" https://stackoverflow.com/questions/31449496/vim-ignore-specifc-file-in-autocommand
-	au BufReadPost * if expand('%:p') !~# '\m/\.git/' && line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
+  " https://stackoverflow.com/questions/31449496/vim-ignore-specifc-file-in-autocommand
+  au BufReadPost * if expand('%:p') !~# '\m/\.git/' && line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
 endif
 
 " Auto-make less files on save
@@ -587,17 +724,11 @@ autocmd BufRead *.xlsx.axlsx set filetype=ruby
 autocmd Filetype html,xml,xsl,php source ~/.vim/scripts/closetag.vim
 
 " =============================================================================
-" # Footer
+" Footer
 " =============================================================================
-
-" nvim
-"jif has('nvim')
-"	runtime! plugin/python_setup.vim
-"endif
 
 " neocomplete {{{
 " ----------------------------
-
 let g:neocomplete#enable_at_startup = 1
 let g:neocomplete#enable_smart_case = 1
 let g:neocomplete#enable_refresh_always = 1
@@ -612,16 +743,16 @@ let g:neocomplete#enable_auto_select = 0
 
 " toggle the auto select feature
 function! ToggleNeoComplete()
-	if !g:neocomplete#disable_auto_complete && g:neocomplete#enable_auto_select
-		let g:neocomplete#disable_auto_complete = 0
-		let g:neocomplete#enable_auto_select = 0
-	elseif !g:neocomplete#disable_auto_complete && !g:neocomplete#enable_auto_select
-		let g:neocomplete#disable_auto_complete = 1
-		let g:neocomplete#enable_auto_select = 0
-	elseif g:neocomplete#disable_auto_complete && !g:neocomplete#enable_auto_select
-		let g:neocomplete#disable_auto_complete = 0
-		let g:neocomplete#enable_auto_select = 1
-	endif
+  if !g:neocomplete#disable_auto_complete && g:neocomplete#enable_auto_select
+    let g:neocomplete#disable_auto_complete = 0
+    let g:neocomplete#enable_auto_select = 0
+  elseif !g:neocomplete#disable_auto_complete && !g:neocomplete#enable_auto_select
+    let g:neocomplete#disable_auto_complete = 1
+    let g:neocomplete#enable_auto_select = 0
+  elseif g:neocomplete#disable_auto_complete && !g:neocomplete#enable_auto_select
+    let g:neocomplete#disable_auto_complete = 0
+    let g:neocomplete#enable_auto_select = 1
+  endif
 endfunction
 
 nnoremap <silent><Leader>ea :call ToggleNeoComplete()<CR>
@@ -635,48 +766,26 @@ autocmd FileType ruby setlocal omnifunc=rubycomplete#Complete
 autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
 
 if !exists('g:neocomplete#sources#omni#input_patterns')
-	let g:neocomplete#sources#omni#input_patterns = {}
+  let g:neocomplete#sources#omni#input_patterns = {}
 endif
 
 let g:neocomplete#sources#omni#input_patterns.python='[^. \t]\.\w*'
 " }}}
 
-" map wincmd {{
-nmap <silent> <A-Up> :wincmd k<CR>
-nmap <silent> <A-Down> :wincmd j<CR>
-nmap <silent> <A-Left> :wincmd h<CR>
-nmap <silent> <A-Right> :wincmd l<CR>
-" using ctrl hj"
-nmap <leader>j :wincmd j<CR>
-nmap <leader>k :wincmd k<CR>
-nmap <leader>h :wincmd h<CR>
-nmap <leader>l :wincmd l<CR>
-" The right windcmd 
-nmap <silent>J :wincmd j<CR>
-nmap <silent>K :wincmd k<CR>
-nmap <silent>H :wincmd h<CR>
-nmap <silent>L :wincmd l<CR>
-
-"  DEPRECATED {
+"  DEPRECATED {{{
 function! HideNumber()
-	if(&relativenumber == &number)
-		set relativenumber! number!
-	elseif(&number)
-		set number!
-	else
-		set relativenumber!
-	endif
-	set number?
+  if(&relativenumber == &number)
+    set relativenumber! number!
+  elseif(&number)
+    set number!
+  else
+    set relativenumber!
+  endif
+  set number?
 endfunc
 "nnoremap <F2> :call HideNumber()<CR>
-" Add highlighting to TODO,NOTE,etc {{{
-if has("autocmd")
-	" Highlight TODO, FIXME, NOTE, etc.
-	if v:version > 701
-		autocmd Syntax * call matchadd('Todo',  '\W\zs\(TODO\|FIXME\|CHANGED\|DONE\|XXX\|BUG\|HACK\)')
-		autocmd Syntax * call matchadd('Debug', '\W\zs\(NOTE\|INFO\|IDEA\|NOTICE\)')
-	endif
-endif
+" }}}
+
 " vim-surround {{{2
 let g:surround_42 = "**\r**"
 nnoremap ** :exe "norm v$hS*"
@@ -688,11 +797,6 @@ vmap * S*
 vmap _ S_
 vmap <leader>l <Plug>VSurround]%a(<C-r><C-p>+)<Esc>
 
-"cnoremap <leader>j <t_kd>
-"cnoremap <C-k> <t_ku>
-"cnoremap <leader>a <Home>
-"cnoremap <leader>e <End>
-
 " Linux Kernel Coding Style {{{
 nnoremap <silent> <leader>a :LinuxCodingStyle<cr>
 let g:linuxsty_patterns = [ "/kernels" ]
@@ -702,10 +806,10 @@ let g:linuxsty_patterns = [ "/kernels" ]
 " clang {{{
 " ClangFormat, ClangFormatAutoToggle, ClangFormatAutoEnable, ClangFormatAutoDisable
 let g:clang_format#style_options = {
-			\ "AccessModifierOffset" : -4,
-			\ "AllowShortIfStatementsOnASingleLine" : "true",
-			\ "AlwaysBreakTemplateDeclarations" : "true",
-			\ "Standard" : "C++11"}
+      \ "AccessModifierOffset" : -4,
+      \ "AllowShortIfStatementsOnASingleLine" : "true",
+      \ "AlwaysBreakTemplateDeclarations" : "true",
+      \ "Standard" : "C++11"}
 " map to <Leader>cf in C++ code
 autocmd FileType c,cpp,objc nnoremap <buffer><leader>cf :<C-u>ClangFormat<CR>
 autocmd FileType c,cpp,objc vnoremap <buffer><leader>cf :ClangFormat<CR>
@@ -715,20 +819,6 @@ autocmd FileType c,cpp,objc map <buffer><leader>x <Plug>(operator-clang-format)
 nmap <leader>c :ClangFormatAutoToggle<CR>
 autocmd FileType c ClangFormatAutoEnable
 " }}}
-
-" cursor line and column
-set cursorline
-set cursorcolumn
-" char
-set listchars=tab:»\ ,eol:¬
-" Auto Pair
-let g:AutoPairsFlyMode = 0
-let g:AutoPairsShortcutBackInsert = '<M-b>'
-" provide hjkl movements in Insert mode via the <Alt> modifier key
-inoremap <A-h> <C-o>h
-inoremap <A-j> <C-o>j
-inoremap <A-k> <C-o>k
-inoremap <A-l> <C-o>l
 
 " Neosnippet {{{1
 " Plugin key-mappings.
@@ -745,11 +835,11 @@ imap <C-k>     <Plug>(neosnippet_expand_or_jump)
 " \ neosnippet#expandable_or_jumpable() ?
 " \    "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
 smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
-			\ "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
+      \ "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
 
 " For conceal markers.
 if has('conceal')
-	set conceallevel=2 concealcursor=niv
+  set conceallevel=2 concealcursor=niv
 endif
 
 " More snippet
@@ -760,23 +850,14 @@ let g:neosnippet#enable_snipmate_compatibility = 1
 let g:neosnippet#snippets_directory='~/.vim/plugged/vim-snippets/snippets'
 " }}}
 
-" =========================
-" Personal settings
-" =========================
-autocmd BufEnter *.py colorscheme sierra
-autocmd BufEnter *.go colorscheme sierra 
-
-set list
-"set listchars=tab:▸\ ,eol:¬
-set listchars=tab:»\ ,eol:¬
 
 " ======================
 " Syntastic setting
 " ======================
 " Define files to do type checking
 let g:syntastic_mode_map = {
-			\ "mode": "active",
-			\ "passive_filetypes": ["tex", "md"] }
+      \ "mode": "active",
+      \ "passive_filetypes": ["tex", "md"] }
 " Python
 let g:syntastic_python_checkers=['pyflakes']
 " Javascript
@@ -788,20 +869,19 @@ let g:syntastic_go_checkers = ['go', 'golint', 'errcheck']
 "let g:syntastic_tex_checkers = ['lacheck', 'text/language_check']
 " Custom CoffeeScript SyntasticCheck
 func! SyntasticCheckCoffeescript()
-	let l:filename = substitute(expand("%:p"), '\(\w\+\)\.coffee', '.coffee.\1.js', '')
-	execute "tabedit " . l:filename
-	execute "SyntasticCheck"
-	execute "Errors"
+  let l:filename = substitute(expand("%:p"), '\(\w\+\)\.coffee', '.coffee.\1.js', '')
+  execute "tabedit " . l:filename
+  execute "SyntasticCheck"
+  execute "Errors"
 endfunc
 "nnoremap <silent> <leader>c :call SyntasticCheckCoffeescript()<cr>
 
 function! FindConfig(prefix, what, where)
-	let cfg = findfile(a:what, escape(a:where, ' ') . ';')
-	return cfg !=# '' ? ' ' . a:prefix . ' ' . shellescape(cfg) : ''
+  let cfg = findfile(a:what, escape(a:where, ' ') . ';')
+  return cfg !=# '' ? ' ' . a:prefix . ' ' . shellescape(cfg) : ''
 endfunction
 autocmd FileType javascript let b:syntastic_javascript_jscs_args =
-			\ get(g:, 'syntastic_javascript_jscs_args', '') .
-			\ FindConfig('-c', '.jscsrc', expand('<afile>:p:h', 1))
-
+      \ get(g:, 'syntastic_javascript_jscs_args', '') .
+      \ FindConfig('-c', '.jscsrc', expand('<afile>:p:h', 1))
 
 " end of vimrc
