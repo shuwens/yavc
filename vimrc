@@ -15,12 +15,13 @@ call plug#begin('~/.vim/plugged')
 " VIM enhancements
 Plug 'ciaranm/securemodelines'
 Plug 'vim-scripts/localvimrc'
-" change to https://github.com/ctrlpvim/ctrlp.vim
 
 " GUI enhancements
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'scrooloose/nerdtree' | Plug 'jistr/vim-nerdtree-tabs'
+"Plug 'altercation/vim-colors-solarized'
+Plug 'Yggdroot/indentLine'
 
 " rainbow_parentheses
 Plug 'kien/rainbow_parentheses.vim'
@@ -32,6 +33,7 @@ Plug 'racer-rust/vim-racer'
 Plug 'majutsushi/tagbar'
 Plug 'tpope/vim-surround'
 Plug 'vim-syntastic/syntastic'
+Plug 'airblade/vim-rooter'
 
 " Neosnippet
 Plug 'Shougo/neocomplcache'
@@ -42,12 +44,13 @@ Plug 'honza/vim-snippets'
 
 " Syntactic language support
 " Plugin '~/dev/projects/simio', {'rtp': 'src/vim-syntax/'}
-Plug '~/dev/projects/api-soup', {'rtp': 'vim-syntax/'}
+"Plug '~/dev/projects/api-soup', {'rtp': 'vim-syntax/'}
 Plug 'vim-scripts/gnuplot-syntax-highlighting'
 "Plug 'treycordova/rustpeg.vim.git'
 Plug 'vim-scripts/haskell.vim'
 Plug 'cespare/vim-toml'
-Plug 'lervag/vim-latex'
+Plug 'lervag/vimtex'
+"Plug 'lervag/vim-latex'
 Plug 'rust-lang/rust.vim'
 Plug 'fatih/vim-go'   " for golang
 Plug 'klen/python-mode'   " for python
@@ -57,6 +60,7 @@ Plug 'rhysd/vim-clang-format'
 Plug 'szw/vim-tags'
 Plug 'jiangmiao/auto-pairs'
 Plug 'jceb/vim-orgmode'  "org mode
+Plug 'tpope/vim-speeddating'
 
 " Buffer 
 Plug 'ctrlpvim/ctrlp.vim' | Plug 'tacahiroy/ctrlp-funky'
@@ -89,8 +93,6 @@ set showmode
 set hidden
 set nowrap
 set nojoinspaces
-set termguicolors
-
 " Turn backup off, since most things are in git 
 set nobackup
 set nowb
@@ -164,14 +166,51 @@ set laststatus=2
 set cmdheight=2
 " cursor line and column
 set cursorline
-set cursorcolumn
+
+set tabstop=2
+set backspace=indent,eol,start " Delete everything with backspace
+set shiftwidth=2 " Tabs under smart indent
+set shiftround
+set cindent
+set autoindent
+set smarttab
+set expandtab
+
+" Note that using urxvt will need to get rid of it to make it work, but it is
+" required in xterm-256
+if $TERM=~"xterm-256color"
+  " Colors
+  set background=dark
+  colorscheme base16-atelier-dune
+  " Personal settings
+  autocmd BufEnter *.go colorscheme sierra 
+  autocmd BufEnter *.c  colorscheme sierra
+  autocmd BufEnter *.py  colorscheme sierra
+  autocmd BufEnter *.h  colorscheme sierra
+  autocmd BufEnter *.hpp  colorscheme sierra
+  autocmd BufEnter *.cpp  colorscheme sierra
+  hi Normal ctermbg=NONE
+  " Base16
+  "let base16colorspace=256
+  "set t_Co=256 
+  "let g:base16_shell_path="~/dev/others/base16/builder/templates/shell/scripts/"
+  set termguicolors
+  set cursorcolumn
+endif
+if $TERM=~"rxvt-unicode"
+  set background=dark
+  set t_Co=16
+  highlight SpecialKey ctermfg=11 ctermbg=8
+  colorscheme sierra
+endif 
+
 set relativenumber " Relative line numbers
 set diffopt+=iwhite " No whitespace in vimdiff
 set colorcolumn=80 " and give me a colored column
 set showcmd " Show (partial) command in status line.
 set mousehide
-set mouse=a " Enable mouse usage (all modes) in terminals
-"set completeopt-=preview
+"set mouse=a " Enable mouse usage (all modes) in terminals
+set completeopt-=preview
 set completeopt=longest,menu
 set complete=.,w,b,u,U
 " Tabs / Buffers settings
@@ -187,28 +226,31 @@ if has("autocmd")
   endif
 endif
 
-" Colors
-set background=dark
-colorscheme base16-atelier-dune
-hi Normal ctermbg=NONE
-
-" Personal settings
-autocmd BufEnter *.go colorscheme sierra 
-autocmd BufEnter *.c  colorscheme sierra
-autocmd BufEnter *.py  colorscheme sierra
-autocmd BufEnter *.h  colorscheme sierra
-autocmd BufEnter *.hpp  colorscheme sierra
-autocmd BufEnter *.cpp  colorscheme sierra
-
 " Show those damn hidden characters
 " Verbose: set listchars=nbsp:¬,eol:¶,extends:»,precedes:«,trail:•
 "set nolist
 "set listchars=nbsp:¬,extends:»,precedes:«,trail:•
 set list
 "set listchars=tab:▸\ ,eol:¬
-set listchars=tab:»\ ,eol:¬
+"set listchars=tab:»\ ,eol:¬
 
+" Show trailing spaces as dots and carrots for extended lines.
+" From Janus, http://git.io/PLbAlw
 
+" Reset the listchars
+set listchars=""
+" make tabs visible
+set listchars=tab:▸▸
+" show trailing spaces as dots
+set listchars+=trail:•
+" The character to show in the last column when wrap is off and the line
+" continues beyond the right of the screen
+set listchars+=extends:>
+" The character to show in the last column when wrap is off and the line
+" continues beyond the right of the screen
+set listchars+=precedes:<
+" I like my eol
+set listchars+=eol:¬
 " =============================================================================
 " Keyboard shortcuts
 " =============================================================================
@@ -282,7 +324,7 @@ nmap <leader>w :w!<cr>
 
 " :W sudo saves the file 
 " (useful for handling the permission-denied error)
-command W w !sudo tee % > /dev/null
+command SW w !sudo tee % > /dev/null
 
 " From ultimate vim
 map <leader>o :BufExplorer<cr>
@@ -361,6 +403,31 @@ nmap <silent>K :wincmd k<CR>
 nmap <silent>H :wincmd h<CR>
 nmap <silent>L :wincmd l<CR>
 
+" The Silver Searcher
+if executable('ag')
+  " Use ag over grep
+  set grepprg=ag\ --nogroup\ --nocolor
+
+  " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
+  let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+
+  " ag is fast enough that CtrlP doesn't need to cache
+  let g:ctrlp_use_caching = 0
+endif
+
+nnoremap <leader>* :grep! "\b<C-R><C-W>\b"<CR>:cw<CR>
+map <C-F12> :!ctags -R -f ./.git/tags .<CR>
+
+nnoremap <C-g> <C-]>
+vnoremap <C-g> <C-]>
+"map <C-h> :tn<CR>
+"map <C-f> :tp<CR>
+map <C-o> :CtrlPTag<CR>
+map <C-i> :TagbarToggle<CR>
+
+map <F4> :w<CR> :compiler gradle<CR> :make test<CR>:cw 4<CR>
+
+
 " DEPRICATED
 " {{{
 " ====== Ctrl+c and Ctrl+j as Esc
@@ -399,10 +466,6 @@ let g:secure_modelines_allowed_items = [
       \ "rightleft",   "rl",   "norightleft", "norl",
       \ "colorcolumn"
       \ ]
-
-" Base16
-let base16colorspace=256
-"let g:base16_shell_path="~/dev/others/base16/builder/templates/shell/scripts/"
 
 " Airline + CtrlP
 let g:airline_powerline_fonts = 1
@@ -883,5 +946,17 @@ endfunction
 autocmd FileType javascript let b:syntastic_javascript_jscs_args =
       \ get(g:, 'syntastic_javascript_jscs_args', '') .
       \ FindConfig('-c', '.jscsrc', expand('<afile>:p:h', 1))
+
+" ====================
+" Temp setup
+" ====================
+" vertical line indentation
+let g:indentLine_color_term = 239
+let g:indentLine_color_gui = '#09AA08'
+let g:indentLine_char = '│'
+
+
+
+
 
 " end of vimrc
