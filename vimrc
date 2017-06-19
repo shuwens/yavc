@@ -67,8 +67,9 @@ Plug 'ctrlpvim/ctrlp.vim' | Plug 'tacahiroy/ctrlp-funky'
 Plug 'jlanzarotta/bufexplorer'
 
 " Color scheme
+" https://github.com/morhetz/gruvbox/wiki/Configuration
 Plug 'morhetz/gruvbox'
-Plug 'AlessandroYorba/Sierra'  " colortheme 
+Plug 'AlessandroYorba/Sierra'
 
 " Linux kernel coding
 Plug 'vivien/vim-linux-coding-style'
@@ -76,6 +77,11 @@ Plug 'vivien/vim-linux-coding-style'
 " Disdration free
 Plug 'junegunn/goyo.vim'
 Plug 'https://github.com/amix/vim-zenroom2'
+
+" TESTING
+Plug 'LucHermitte/lh-vim-lib'
+Plug 'LucHermitte/local_vimrc'
+
 call plug#end()
 
 
@@ -201,7 +207,7 @@ if $TERM=~"rxvt-unicode"
   set background=dark
   set t_Co=16
   highlight SpecialKey ctermfg=11 ctermbg=8
-  colorscheme sierra
+  colorscheme gruvbox
 endif 
 
 set relativenumber " Relative line numbers
@@ -955,6 +961,8 @@ let g:indentLine_color_term = 239
 let g:indentLine_color_gui = '#09AA08'
 let g:indentLine_char = '│'
 
+" https://github.com/LucHermitte/local_vimrc
+let g:local_vimrc = ['.config', '_vimrc_local.vim']
 
 
 
