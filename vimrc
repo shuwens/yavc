@@ -205,7 +205,7 @@ if $TERM=~"terminator"
 endif
 if $TERM=~"rxvt-unicode"
   set background=dark
-  set t_Co=16
+  set t_Co=256
   highlight SpecialKey ctermfg=11 ctermbg=8
   colorscheme gruvbox
 endif 
@@ -215,10 +215,6 @@ if $TERM=~"xterm-256color"
   highlight SpecialKey ctermfg=11 ctermbg=8
   colorscheme gruvbox
 endif 
-
-
-
-
 
 
 set relativenumber " Relative line numbers
