@@ -184,7 +184,7 @@ set expandtab
 
 " Note that using urxvt will need to get rid of it to make it work, but it is
 " required in xterm-256
-if $TERM=~"xterm-256color"
+if $TERM=~"terminator"
   " Colors
   set background=dark
   colorscheme base16-atelier-dune
@@ -209,6 +209,17 @@ if $TERM=~"rxvt-unicode"
   highlight SpecialKey ctermfg=11 ctermbg=8
   colorscheme gruvbox
 endif 
+if $TERM=~"xterm-256color"
+  set background=dark
+  set t_Co=256
+  highlight SpecialKey ctermfg=11 ctermbg=8
+  colorscheme gruvbox
+endif 
+
+
+
+
+
 
 set relativenumber " Relative line numbers
 set diffopt+=iwhite " No whitespace in vimdiff
