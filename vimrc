@@ -25,8 +25,9 @@ Plug 'Yggdroot/indentLine'
 
 " rainbow_parentheses
 Plug 'kien/rainbow_parentheses.vim'
+Plug 'raymond-w-ko/vim-niji'
 
-" Semantic language support
+" Semantic support
 "Plug 'Raimondi/delimitMate'
 Plug 'phildawes/racer'
 Plug 'racer-rust/vim-racer'
@@ -34,6 +35,11 @@ Plug 'majutsushi/tagbar'
 Plug 'tpope/vim-surround'
 Plug 'vim-syntastic/syntastic'
 Plug 'airblade/vim-rooter'
+Plug 'szw/vim-tags'
+Plug 'jiangmiao/auto-pairs'    "vim-scripts/paredit.vi
+Plug 'tpope/vim-speeddating'
+Plug 'jgdavey/tslime.vim'
+Plug 'Shougo/vimproc.vim', {'do' : 'make'}
 
 " Neosnippet
 Plug 'Shougo/neocomplcache'
@@ -42,25 +48,42 @@ Plug 'Shougo/neosnippet'
 Plug 'Shougo/neosnippet-snippets'
 Plug 'honza/vim-snippets'
 
+" ================================
 " Syntactic language support
-" Plugin '~/dev/projects/simio', {'rtp': 'src/vim-syntax/'}
-"Plug '~/dev/projects/api-soup', {'rtp': 'vim-syntax/'}
+" ================================
 Plug 'vim-scripts/gnuplot-syntax-highlighting'
 "Plug 'treycordova/rustpeg.vim.git'
 Plug 'vim-scripts/haskell.vim'
 Plug 'cespare/vim-toml'
 Plug 'lervag/vimtex'
-"Plug 'lervag/vim-latex'
 Plug 'rust-lang/rust.vim'
+" Golang
 Plug 'fatih/vim-go'   " for golang
+Plug 'rjohnsondev/vim-compiler-go'
+Plug 'dgryski/vim-godef'
+" Python
 Plug 'klen/python-mode'   " for python
 " install jedi-vim and let g:pymode_rope = 1
 Plug 'dag/vim-fish'
 Plug 'rhysd/vim-clang-format'
-Plug 'szw/vim-tags'
-Plug 'jiangmiao/auto-pairs'
 Plug 'jceb/vim-orgmode'  "org mode
-Plug 'tpope/vim-speeddating'
+" SICP
+Plug 'kovisoft/slimv'
+Plug 'jpalardy/vim-slime'
+" Clojure
+Plug 'guns/vim-clojure-static'
+Plug 'tpope/vim-fireplace'
+" Haskell
+"Plug 'eagletmt/ghcmod-vim'
+"Plug 'eagletmt/neco-ghc'
+"Plug 'tomtom/tlib_vim'
+"Plug 'MarcWeber/vim-addon-mw-utils'
+"Plug 'garbas/vim-snipmate'
+"Plug 'scrooloose/nerdcommenter'
+"Plug 'bitc/vim-hdevtools'
+"Plug 'neovimhaskell/haskell-vim'
+"Plug 'kana/vim-filetype-haskell', {'do': 'make'}
+Plug 'dag/vim2hs'
 
 " Buffer 
 Plug 'ctrlpvim/ctrlp.vim' | Plug 'tacahiroy/ctrlp-funky'
@@ -78,9 +101,18 @@ Plug 'vivien/vim-linux-coding-style'
 Plug 'junegunn/goyo.vim'
 Plug 'https://github.com/amix/vim-zenroom2'
 
+" Tools
+Plug 'tpope/vim-fugitive'
+
 " TESTING
 Plug 'LucHermitte/lh-vim-lib'
 Plug 'LucHermitte/local_vimrc'
+
+"Plug 'ludovicchabant/vim-gutentags'
+Plug 'xolox/vim-easytags'
+Plug 'xolox/vim-misc'
+
+Plug 'mtth/scratch.vim'  " TODO
 
 call plug#end()
 
@@ -290,8 +322,9 @@ nnoremap <up> <nop>
 nnoremap <down> <nop>
 inoremap <up> <nop>
 inoremap <down> <nop>
-inoremap <left> <nop>
-inoremap <right> <nop>
+" Second thought: keep left and right in insert will be sane
+noremap <left> <nop>
+noremap <right> <nop>
 
 " Move by line
 nnoremap j gj
@@ -512,6 +545,8 @@ let javaScript_fold=0
 let g:latex_indent_enabled = 1
 let g:latex_fold_envs = 0
 let g:latex_fold_sections = []
+nmap <silent> dsa ds}dF\
+
 
 " Per-buffer CtrlP hotkey
 nmap <leader>; :CtrlPBuffer<CR>
@@ -650,6 +685,17 @@ let python_highlight_all = 1
 
 " }}}
 
+" ====================================
+" Clojure
+" ====================================
+let g:clojure_syntax_keywords = {
+      \ 'clojureMacro': ["defproject", "defcustom"],
+      \ 'clojureFunc': ["string/join", "string/replace"]
+      \ }
+
+" Scan lines
+let g:clojure_maxlines = 100
+
 
 " ctrlp ctrlpfunky {{{
 let g:ctrlp_map = '<leader>p'
@@ -755,6 +801,9 @@ let g:tagbar_type_go = {
       \ 'ctagsbin'  : 'gotags',
       \ 'ctagsargs' : '-sort -silent'
       \ }
+nmap <leader>= :TagbarToggle<CR>
+let g:tagbar_autofocus = 0
+
 " }}}
 
 
@@ -971,7 +1020,69 @@ let g:indentLine_char = '│'
 " https://github.com/LucHermitte/local_vimrc
 let g:local_vimrc = ['.config', '_vimrc_local.vim']
 
+" http://vim.wikia.com/wiki/Browsing_programs_with_tags
+autocmd FileType python let b:easytags_auto_highlight = 0
 
+" MIT Scheme
+"let g:slimv_swank_cmd = '! screen -d -m -t REPL-SBCL sbcl --load ~/.vim/bundle/slimv/slime/start-swank.lisp'
+
+" vim-slime {{{
+let g:slime_target = "tmux"
+let g:slime_paste_file = tempname()
+" }}}
+
+" Vim niji {{{
+let g:niji_dark_colours = [
+      \ [ '81', '#5fd7ff'],
+      \ [ '99', '#875fff'],
+      \ [ '1',  '#dc322f'],
+      \ [ '76', '#5fd700'],
+      \ [ '3',  '#b58900'],
+      \ [ '2',  '#859900'],
+      \ [ '6',  '#2aa198'],
+      \ [ '4',  '#268bd2'],
+      \ ]
+" }}}
+
+" tslime {{{
+let g:tslime_ensure_trailing_newlines = 1
+let g:tslime_normal_mapping = '<localleader>t'
+let g:tslime_visual_mapping = '<localleader>t'
+let g:tslime_vars_mapping = '<localleader>T'
+" }}}
+
+" Haskell {{{
+"au FileType haskell source ~/.vim/lang/haskell.vim
+" }}}
+
+" supertab
+let g:SuperTabDefaultCompletionType = '<c-x><c-o>'
+
+if has("gui_running")
+  imap <c-space> <c-r>=SuperTabAlternateCompletion("\<lt>c-x>\<lt>c-o>")<cr>
+else " no gui
+  if has("unix")
+    inoremap <Nul> <c-r>=SuperTabAlternateCompletion("\<lt>c-x>\<lt>c-o>")<cr>
+  endif
+endif
+
+" nerdtree
+map <Leader>n :NERDTreeToggle<CR>
+
+" tabularize
+let g:haskell_tabular = 1
+
+vmap a= :Tabularize /=<CR>
+vmap a; :Tabularize /::<CR>
+vmap a- :Tabularize /-><CR>
+vmap a, :Tabularize /<-<CR>
+vmap al :Tabularize /[\[\\|,]<CR>
+
+" CtrlP
+map <silent> <Leader>t :CtrlP()<CR>
+noremap <leader>b<space> :CtrlPBuffer<cr>
+let g:ctrlp_custom_ignore = '\v[\/]dist$'
+" }}}
 
 
 " end of vimrc
