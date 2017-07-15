@@ -1052,6 +1052,9 @@ let g:tslime_vars_mapping = '<localleader>T'
 " }}}
 
 " Haskell {{{
+"
+" By far the best solution is vim2hs
+"
 "au FileType haskell source ~/.vim/lang/haskell.vim
 " }}}
 
