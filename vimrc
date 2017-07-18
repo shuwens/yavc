@@ -84,6 +84,8 @@ Plug 'tpope/vim-fireplace'
 "Plug 'neovimhaskell/haskell-vim'
 "Plug 'kana/vim-filetype-haskell', {'do': 'make'}
 Plug 'dag/vim2hs'
+" Java
+" https://julien.ponge.org/blog/java-coding-with-style/
 
 " Buffer 
 Plug 'ctrlpvim/ctrlp.vim' | Plug 'tacahiroy/ctrlp-funky'
@@ -696,6 +698,14 @@ let g:clojure_syntax_keywords = {
 " Scan lines
 let g:clojure_maxlines = 100
 
+" =================================
+"   Markdown
+" =================================
+
+autocmd BufRead *.bib set  noai nocin nosi inde=
+
+
+
 
 " ctrlp ctrlpfunky {{{
 let g:ctrlp_map = '<leader>p'
@@ -818,8 +828,8 @@ let g:tagbar_autofocus = 0
 " }}}
 
 " Prevent accidental writes to buffers that shouldn't be edited
-autocmd BufRead *.orig set readonly
 autocmd BufRead *.pacnew set readonly
+autocmd BufRead *.orig set readonly
 
 " Leave paste mode when leaving insert mode
 autocmd InsertLeave * set nopaste
