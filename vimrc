@@ -87,7 +87,7 @@ Plug 'dag/vim2hs'
 " Java
 " https://julien.ponge.org/blog/java-coding-with-style/
 
-" Buffer 
+" Buffer
 Plug 'ctrlpvim/ctrlp.vim' | Plug 'tacahiroy/ctrlp-funky'
 Plug 'jlanzarotta/bufexplorer'
 
@@ -111,7 +111,7 @@ Plug 'LucHermitte/lh-vim-lib'
 Plug 'LucHermitte/local_vimrc'
 
 "Plug 'ludovicchabant/vim-gutentags'
-Plug 'xolox/vim-easytags'
+"Plug 'xolox/vim-easytags'
 Plug 'xolox/vim-misc'
 
 Plug 'mtth/scratch.vim'  " TODO
@@ -133,7 +133,7 @@ set showmode
 set hidden
 set nowrap
 set nojoinspaces
-" Turn backup off, since most things are in git 
+" Turn backup off, since most things are in git
 set nobackup
 set nowb
 set noswapfile
@@ -223,7 +223,7 @@ if $TERM=~"terminator"
   set background=dark
   colorscheme base16-atelier-dune
   " Personal settings
-  autocmd BufEnter *.go colorscheme sierra 
+  autocmd BufEnter *.go colorscheme sierra
   autocmd BufEnter *.c  colorscheme sierra
   autocmd BufEnter *.py  colorscheme sierra
   autocmd BufEnter *.h  colorscheme sierra
@@ -232,7 +232,7 @@ if $TERM=~"terminator"
   hi Normal ctermbg=NONE
   " Base16
   "let base16colorspace=256
-  "set t_Co=256 
+  "set t_Co=256
   "let g:base16_shell_path="~/dev/others/base16/builder/templates/shell/scripts/"
   set termguicolors
   set cursorcolumn
@@ -242,13 +242,13 @@ if $TERM=~"rxvt-unicode"
   set t_Co=256
   highlight SpecialKey ctermfg=11 ctermbg=8
   colorscheme gruvbox
-endif 
+endif
 if $TERM=~"xterm-256color"
   set background=dark
   set t_Co=256
   highlight SpecialKey ctermfg=11 ctermbg=8
   colorscheme gruvbox
-endif 
+endif
 
 
 set relativenumber " Relative line numbers
@@ -298,6 +298,7 @@ set listchars+=extends:>
 set listchars+=precedes:<
 " I like my eol
 set listchars+=eol:¬
+
 " =============================================================================
 " Keyboard shortcuts
 " =============================================================================
@@ -370,7 +371,7 @@ nmap <F10> :bnext<CR>
 " Fast saving
 nmap <leader>w :w!<cr>
 
-" :W sudo saves the file 
+" :W sudo saves the file
 " (useful for handling the permission-denied error)
 command SW w !sudo tee % > /dev/null
 
@@ -389,7 +390,7 @@ map <leader>ba :1,1000 bd!<cr>
 map <leader>tn :tabnew<cr>
 map <leader>to :tabonly<cr>
 map <leader>tc :tabclose<cr>
-map <leader>tm :tabmove 
+map <leader>tm :tabmove
 
 " Opens a new tab with the current buffer's path
 " Super useful when editing files in the same directory
@@ -418,7 +419,7 @@ cnoremap <C-E>  <End>
 cnoremap <C-K>  <C-U>
 
 cnoremap <C-P>  <Up>
-cnoremap <C-N>  <Down>  
+cnoremap <C-N>  <Down>
 
 " Auto Pair
 let g:AutoPairsFlyMode = 0
@@ -445,7 +446,7 @@ nmap <leader>j :wincmd j<CR>
 nmap <leader>k :wincmd k<CR>
 nmap <leader>h :wincmd h<CR>
 nmap <leader>l :wincmd l<CR>
-" The right windcmd 
+" The right windcmd
 nmap <silent>J :wincmd j<CR>
 nmap <silent>K :wincmd k<CR>
 nmap <silent>H :wincmd h<CR>
@@ -474,29 +475,6 @@ map <C-o> :CtrlPTag<CR>
 map <C-i> :TagbarToggle<CR>
 
 map <F4> :w<CR> :compiler gradle<CR> :make test<CR>:cw 4<CR>
-
-
-" DEPRICATED
-" {{{
-" ====== Ctrl+c and Ctrl+j as Esc
-"inoremap <C-j> <Esc>
-"vnoremap <C-j> <Esc>
-"inoremap <C-c> <Esc>
-"vnoremap <C-c> <Esc>
-" ====== <leader>s for Ack/Ag search
-"noremap <leader>s :Ag
-" ====== Left and right can switch buffers
-"nnoremap <left> :bp<CR>
-"nnoremap <right> :bn<CR>
-
-"cnoremap <leader>j <t_kd>
-"cnoremap <C-k> <t_ku>
-"cnoremap <leader>a <Home>
-"cnoremap <leader>e <End>
-
-"nmap <leader>g :YcmCompleter GoTo<CR>
-"nmap <leader>d :YcmCompleter GoToDefinition<CR>
-" }}}
 
 " ----------------------
 " Plugin settings
@@ -617,7 +595,7 @@ let g:go_highlight_interfaces = 1
 au FileType go nmap <leader>gv <Plug>(go-build)
 au FileType go nmap <leader>gT <Plug>(go-test)
 " In case guru is not working, http://studygolang.com/articles/9718
-au FileType go nmap <C-]> :GoDef<cr> 
+au FileType go nmap <C-]> :GoDef<cr>
 au Filetype go nmap <leader>j :GoDecls<cr>
 "let g:syntastic_go_checkers = ['golint', 'govet', 'errcheck']
 "let g:syntastic_mode_map = { 'mode': 'active', 'passive_filetypes': ['go', 'java'] }
@@ -639,7 +617,7 @@ au Filetype go nmap <leader>j :GoDecls<cr>
 " ]]            Jump on next class or function (normal, visual, operator modes)
 " [M            Jump on previous class or method (normal, visual, operator modes)
 " ]M            Jump on next class or method (normal, visual, operator modes)
-let g:pymode_rope = 1 
+let g:pymode_rope = 1
 " Documentation
 let g:pymode_doc = 1
 "let g:pymode_doc_key = 'K'
@@ -682,7 +660,7 @@ let g:pymode_doc_key='K'
 let g:pymode_breakpoint_key='<leader>b'
 let g:pymode_run_bind='<F5>'
 
-" pythonsyntax 
+" pythonsyntax
 let python_highlight_all = 1
 
 " }}}
@@ -698,15 +676,9 @@ let g:clojure_syntax_keywords = {
 " Scan lines
 let g:clojure_maxlines = 100
 
-" =================================
-"   Markdown
-" =================================
-
+" LaTex {{{
 autocmd BufRead *.bib set  noai nocin nosi inde=
-
-
-
-
+" }}}
 " ctrlp ctrlpfunky {{{
 let g:ctrlp_map = '<leader>p'
 let g:ctrlp_cmd = 'CtrlP'
@@ -738,7 +710,6 @@ let g:ctrlp_funky_syntax_highlight = 1
 
 let g:ctrlp_extensions = ['funky']
 " }}}
-
 " nerdtree nerdtreetabs {{{
 " map <leader>n :NERDTreeToggle<CR>
 nmap " :NERDTreeToggle<CR>
@@ -752,10 +723,10 @@ let g:NERDTreeMapOpenVSplit = 'v'
 
 " nerdtreetabs
 map <leader>nn :NERDTreeToggle<cr>
-map <leader>nb :NERDTreeFromBookmark 
+map <leader>nb :NERDTreeFromBookmark
 map <leader>nf :NERDTreeFind<cr>
 map <Leader>n <plug>NERDTreeTabsToggle<CR>
-" Turn off sync 
+" Turn off sync
 " let g:nerdtree_tabs_synchronize_view=0
 " let g:nerdtree_tabs_synchronize_focus=0
 " 是否自动开启nerdtree
@@ -763,7 +734,6 @@ map <Leader>n <plug>NERDTreeTabsToggle<CR>
 " let g:nerdtree_tabs_open_on_console_startup=0
 " let g:nerdtree_tabs_open_on_gui_startup=0
 " }}}
-
 " tagbar {{{
 "nmap <F9> :TagbarToggle<CR>
 noremap <leader>t :TagbarToggle<CR>
@@ -816,16 +786,16 @@ let g:tagbar_autofocus = 0
 
 " }}}
 
-
 " =============================================================================
 " Auto commands
 " =============================================================================
 
-" delimitMate {{{
-"au FileType python let b:delimitMate_nesting_quotes = ['"']
-"au FileType go,python,c,cpp let delimitMate_matchpairs = "(:),[:],{:}"
-"au FileType mail let b:delimitMate_autoclose = 0
-" }}}
+" helper function
+fu Map_ftype(ftypes, cmd)
+  for ftype in a:ftypes
+    execute 'au Filetype' ftype a:cmd
+  endfor
+endf
 
 " Prevent accidental writes to buffers that shouldn't be edited
 autocmd BufRead *.pacnew set readonly
@@ -906,7 +876,6 @@ endif
 
 let g:neocomplete#sources#omni#input_patterns.python='[^. \t]\.\w*'
 " }}}
-
 "  DEPRECATED {{{
 function! HideNumber()
   if(&relativenumber == &number)
@@ -920,7 +889,6 @@ function! HideNumber()
 endfunc
 "nnoremap <F2> :call HideNumber()<CR>
 " }}}
-
 " vim-surround {{{2
 let g:surround_42 = "**\r**"
 nnoremap ** :exe "norm v$hS*"
@@ -989,6 +957,15 @@ let g:neosnippet#snippets_directory='~/.vim/plugged/vim-snippets/snippets'
 " ======================
 " Syntastic setting
 " ======================
+" Recommanded setting
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 0  " no check on open
+let g:syntastic_check_on_wq = 1    " check when exit
+
 " Define files to do type checking
 let g:syntastic_mode_map = {
       \ "mode": "active",
@@ -998,7 +975,6 @@ let g:syntastic_python_checkers=['pyflakes']
 " Javascript
 let g:syntastic_javascript_checkers = ['jshint']
 " Go
-let g:syntastic_auto_loc_list = 1
 let g:syntastic_go_checkers = ['go', 'golint', 'errcheck']
 " Tex -- I dont really type checking for latex
 "let g:syntastic_tex_checkers = ['lacheck', 'text/language_check']
@@ -1031,7 +1007,7 @@ let g:indentLine_char = '│'
 let g:local_vimrc = ['.config', '_vimrc_local.vim']
 
 " http://vim.wikia.com/wiki/Browsing_programs_with_tags
-autocmd FileType python let b:easytags_auto_highlight = 0
+"autocmd FileType python let b:easytags_auto_highlight = 0
 
 " MIT Scheme
 "let g:slimv_swank_cmd = '! screen -d -m -t REPL-SBCL sbcl --load ~/.vim/bundle/slimv/slime/start-swank.lisp'
@@ -1097,5 +1073,37 @@ noremap <leader>b<space> :CtrlPBuffer<cr>
 let g:ctrlp_custom_ignore = '\v[\/]dist$'
 " }}}
 
+" repls {{{
+au FileType lisp nnoremap M :!clisp -repl %<cr><cr>
+au FileType python nnoremap M :!python -i %<cr><cr>
+au FileType scheme nnoremap M :!rlwrap guile -l %<cr><cr>
+" }}}
+" spell & prose {{{
+" RUN: :mkspell! %
+set spell
+set spelllang=en
+set spellfile=$HOME/.vim/spell/en.utf-8.add
+let prose_fts = ['gitcommit', 'mail',  'markdown',  'text' , 'org']
+" We want word wrapping for 'prose'. We also want spell check.
+au BufRead,BufNewFile /*.md set ft=markdown
+call Map_ftype(prose_fts, 'set tw=72 fo=aw2tq spell')
+au FileType help set nospell
+
+" }}}
+" Writing {{{
+func! WordProcessorMode() 
+  setlocal formatoptions=1 
+  setlocal noexpandtab 
+  map j gj 
+  map k gk
+  setlocal spell spelllang=en_us 
+  set thesaurus+=/Users/sbrown/.vim/thesaurus/mthesaur.txt
+  set complete+=s
+  set formatprg=par
+  setlocal wrap 
+  setlocal linebreak 
+endfu 
+com! WP call WordProcessorMode()
+" }}}
 
 " end of vimrc
