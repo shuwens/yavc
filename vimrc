@@ -1083,10 +1083,11 @@ au FileType scheme nnoremap M :!rlwrap guile -l %<cr><cr>
 set spell
 set spelllang=en
 set spellfile=$HOME/.vim/spell/en.utf-8.add
-let prose_fts = ['gitcommit', 'mail',  'markdown',  'text' , 'org']
+let prose_fts = ['gitcommit', 'mail',  'markdown',  'text' ]
 " We want word wrapping for 'prose'. We also want spell check.
 au BufRead,BufNewFile /*.md set ft=markdown
 call Map_ftype(prose_fts, 'set tw=72 fo=aw2tq spell')
+au FileType *.org fo=aw2tq spell
 au FileType help set nospell
 
 " }}}
