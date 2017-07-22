@@ -111,7 +111,8 @@ Plug 'LucHermitte/lh-vim-lib'
 Plug 'LucHermitte/local_vimrc'
 
 "Plug 'ludovicchabant/vim-gutentags'
-Plug 'xolox/vim-easytags'
+" vim easytags is very good however it is no longer maintained
+Plug 'xolox/vim-easytags' 
 Plug 'xolox/vim-misc'
 
 Plug 'mtth/scratch.vim'  " TODO
@@ -580,6 +581,44 @@ let mysyntaxfile='~/.vim/doxygen_load.vim'
 " Golang
 " ====================================
 " vim-go {{{
+
+" From https://gist.github.com/cridenour/74e7635275331d5afa6b
+" Disable AutoComplPop.
+let g:acp_enableAtStartup = 0
+" Use neocomplete.
+let g:neocomplete#enable_at_startup = 1
+" Use smartcase.
+let g:neocomplete#enable_smart_case = 1
+" Set minimum syntax keyword length.
+let g:neocomplete#sources#syntax#min_keyword_length = 3
+
+" Plugin key-mappings.
+inoremap <expr><C-g>     neocomplete#undo_completion()
+inoremap <expr><C-l>     neocomplete#complete_common_string()
+
+" Recommended key-mappings.
+" <CR>: close popup and save indent.
+inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
+function! s:my_cr_function()
+  return neocomplete#close_popup() . "\<CR>"
+endfunction
+" <TAB>: completion.
+inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
+" <C-h>, <BS>: close popup and delete backword char.
+inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
+inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
+inoremap <expr><C-y>  neocomplete#close_popup()
+inoremap <expr><C-e>  neocomplete#cancel_popup()
+
+" Go related mappings
+au FileType go nmap <Leader>i <Plug>(go-info)
+au FileType go nmap <Leader>gd <Plug>(go-doc)
+au FileType go nmap <Leader>r <Plug>(go-run)
+au FileType go nmap <Leader>b <Plug>(go-build)
+"au FileType go nmap <Leader>t <Plug>(go-test)
+au FileType go nmap gd <Plug>(go-def-tab)
+
+" my config 
 let g:go_play_open_browser = 0
 let g:go_highlight_functions = 1
 let g:go_highlight_methods = 1
@@ -597,8 +636,6 @@ au FileType go nmap <leader>gT <Plug>(go-test)
 " In case guru is not working, http://studygolang.com/articles/9718
 au FileType go nmap <C-]> :GoDef<cr>
 au Filetype go nmap <leader>j :GoDecls<cr>
-"let g:syntastic_go_checkers = ['golint', 'govet', 'errcheck']
-"let g:syntastic_mode_map = { 'mode': 'active', 'passive_filetypes': ['go', 'java'] }
 " }}}
 
 " ===================================
@@ -970,12 +1007,18 @@ let g:syntastic_check_on_wq = 1    " check when exit
 let g:syntastic_mode_map = {
       \ "mode": "active",
       \ "passive_filetypes": ["tex", "md"] }
+
 " Python
 let g:syntastic_python_checkers=['pyflakes']
+
 " Javascript
 let g:syntastic_javascript_checkers = ['jshint']
+
 " Go
 let g:syntastic_go_checkers = ['go', 'golint', 'errcheck']
+"let g:syntastic_go_checkers = ['golint', 'govet', 'errcheck']
+"let g:syntastic_mode_map = { 'mode': 'active', 'passive_filetypes': ['go', 'java'] }
+
 " Tex -- I dont really type checking for latex
 "let g:syntastic_tex_checkers = ['lacheck', 'text/language_check']
 " Custom CoffeeScript SyntasticCheck
@@ -1008,7 +1051,7 @@ let g:local_vimrc = ['.config', '_vimrc_local.vim']
 
 " vim easytags {{
 " http://vim.wikia.com/wiki/Browsing_programs_with_tags
-autocmd FileType python let b:easytags_auto_highlight = 0
+"autocmd FileType python let b:easytags_auto_highlight = 0
 
 " }}
 
