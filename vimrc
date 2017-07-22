@@ -111,7 +111,7 @@ Plug 'LucHermitte/lh-vim-lib'
 Plug 'LucHermitte/local_vimrc'
 
 "Plug 'ludovicchabant/vim-gutentags'
-"Plug 'xolox/vim-easytags'
+Plug 'xolox/vim-easytags'
 Plug 'xolox/vim-misc'
 
 Plug 'mtth/scratch.vim'  " TODO
@@ -1006,8 +1006,11 @@ let g:indentLine_char = '│'
 " https://github.com/LucHermitte/local_vimrc
 let g:local_vimrc = ['.config', '_vimrc_local.vim']
 
+" vim easytags {{
 " http://vim.wikia.com/wiki/Browsing_programs_with_tags
-"autocmd FileType python let b:easytags_auto_highlight = 0
+autocmd FileType python let b:easytags_auto_highlight = 0
+
+" }}
 
 " MIT Scheme
 "let g:slimv_swank_cmd = '! screen -d -m -t REPL-SBCL sbcl --load ~/.vim/bundle/slimv/slime/start-swank.lisp'
