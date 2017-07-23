@@ -112,10 +112,13 @@ Plug 'LucHermitte/local_vimrc'
 
 "Plug 'ludovicchabant/vim-gutentags'
 " vim easytags is very good however it is no longer maintained
-Plug 'xolox/vim-easytags' 
+"Plug 'xolox/vim-easytags' 
 Plug 'xolox/vim-misc'
 
 Plug 'mtth/scratch.vim'  " TODO
+
+" Arch Linux pkgbuild
+Plug 'dracorp/vim-pkgbuild'
 
 call plug#end()
 
@@ -465,6 +468,21 @@ if executable('ag')
   let g:ctrlp_use_caching = 0
 endif
 
+" Per-buffer CtrlP hotkey
+nmap <leader>; :CtrlPBuffer<CR>
+nmap <leader>o :CtrlP<CR>
+
+noremap <leader>fa :<c-u>CtrlPBookmarkDir<CR>
+noremap <leader>fb :<c-u>CtrlPBuffer<CR>
+noremap <leader>fc :<c-u>CtrlPChange<CR>
+noremap <leader>fd :<c-u>CtrlPDir<CR>
+noremap <leader>; :<c-u>CtrlP<CR>
+noremap <leader>fl :<c-u>CtrlPLine<CR>
+noremap <leader>fm :<c-u>CtrlPMRU<CR>
+noremap <leader>fr :<c-u>CtrlP <C-R>=expand('%:p:h')<CR><CR>
+noremap <leader>ft :<c-u>CtrlPTag<CR>
+noremap <leader>fq :<c-u>CtrlPQuickfix<CR>
+
 nnoremap <leader>* :grep! "\b<C-R><C-W>\b"<CR>:cw<CR>
 map <C-F12> :!ctags -R -f ./.git/tags .<CR>
 
@@ -522,32 +540,12 @@ let javaScript_fold=0
 " Neomake
 " ...
 
-" Latex
-let g:latex_indent_enabled = 1
-let g:latex_fold_envs = 0
-let g:latex_fold_sections = []
-nmap <silent> dsa ds}dF\
+" Doxygen
+let mysyntaxfile='~/.vim/doxygen_load.vim'
 
-
-" Per-buffer CtrlP hotkey
-nmap <leader>; :CtrlPBuffer<CR>
-nmap <leader>o :CtrlP<CR>
-
-noremap <leader>fa :<c-u>CtrlPBookmarkDir<CR>
-noremap <leader>fb :<c-u>CtrlPBuffer<CR>
-noremap <leader>fc :<c-u>CtrlPChange<CR>
-noremap <leader>fd :<c-u>CtrlPDir<CR>
-noremap <leader>; :<c-u>CtrlP<CR>
-noremap <leader>fl :<c-u>CtrlPLine<CR>
-noremap <leader>fm :<c-u>CtrlPMRU<CR>
-noremap <leader>fr :<c-u>CtrlP <C-R>=expand('%:p:h')<CR><CR>
-noremap <leader>ft :<c-u>CtrlPTag<CR>
-noremap <leader>fq :<c-u>CtrlPQuickfix<CR>
-
-
+" DEPRECATED {{{
 " Don't confirm .lvimrc
 let g:localvimrc_ask = 0
-
 " language server protocol
 "let g:LanguageClient_serverCommands = {
 "    \ 'rust': ['rustup', 'run', 'nightly', 'cargo', 'run', '--release', '--manifest-path=/home/jon/dev/others/rls/Cargo.toml'],
@@ -555,33 +553,22 @@ let g:localvimrc_ask = 0
 "nnoremap <silent> K :call LanguageClient_textDocument_hover()<CR>
 "nnoremap <silent> gd :call LanguageClient_textDocument_definition()<CR>
 "nnoremap <silent> <F2> :call LanguageClient_textDocument_rename()<CR>
+" }}}
 
-" racer + rust
+" ======================================
+"  Lang specific settings
+" ======================================
+
+" racer + rust {{{
 let g:rustfmt_autosave = 1
 let g:rustfmt_fail_silently = 1
 let g:racer_cmd = "/usr/bin/racer"
 let g:racer_experimental_completer = 1
 let $RUST_SRC_PATH = systemlist("rustc --print sysroot")[0] . "/lib/rustlib/src/rust/src"
+" }}}
 
-" Completion
-"let g:deoplete#enable_at_startup = 1
-"inoremap <silent><expr> <TAB>
-"		\ pumvisible() ? "\<C-n>" :
-"		\ <SID>check_back_space() ? "\<TAB>" :
-"		\ deoplete#mappings#manual_complete()
-"	function! s:check_back_space() abort "{{{
-"	let col = col('.') - 1
-"		return !col || getline('.')[col - 1]  =~ '\s'
-"		endfunction"}}}
-
-" Doxygen
-let mysyntaxfile='~/.vim/doxygen_load.vim'
-
-" ====================================
-" Golang
-" ====================================
-" vim-go {{{
-
+" Golang {{{
+" vim-go 
 " From https://gist.github.com/cridenour/74e7635275331d5afa6b
 " Disable AutoComplPop.
 let g:acp_enableAtStartup = 0
@@ -638,10 +625,8 @@ au FileType go nmap <C-]> :GoDef<cr>
 au Filetype go nmap <leader>j :GoDecls<cr>
 " }}}
 
-" ===================================
-" Python-mode
-" ===================================
 " python-mode {{{
+"
 " Activate rope
 " Keys:
 " K             Show python docs
@@ -702,9 +687,7 @@ let python_highlight_all = 1
 
 " }}}
 
-" ====================================
-" Clojure
-" ====================================
+" Clojure {{{
 let g:clojure_syntax_keywords = {
       \ 'clojureMacro': ["defproject", "defcustom"],
       \ 'clojureFunc': ["string/join", "string/replace"]
@@ -712,10 +695,38 @@ let g:clojure_syntax_keywords = {
 
 " Scan lines
 let g:clojure_maxlines = 100
+" }}}
+
+" clang {{{
+" ClangFormat, ClangFormatAutoToggle, ClangFormatAutoEnable, ClangFormatAutoDisable
+let g:clang_format#style_options = {
+      \ "AccessModifierOffset" : -4,
+      \ "AllowShortIfStatementsOnASingleLine" : "true",
+      \ "AlwaysBreakTemplateDeclarations" : "true",
+      \ "Standard" : "C++11"}
+" map to <Leader>cf in C++ code
+autocmd FileType c,cpp,objc nnoremap <buffer><leader>cf :<C-u>ClangFormat<CR>
+autocmd FileType c,cpp,objc vnoremap <buffer><leader>cf :ClangFormat<CR>
+" if you install vim-operator-user
+autocmd FileType c,cpp,objc map <buffer><leader>x <Plug>(operator-clang-format)
+" Toggle auto formatting:
+nmap <leader>c :ClangFormatAutoToggle<CR>
+autocmd FileType c ClangFormatAutoEnable
+" }}}
 
 " LaTex {{{
+let g:latex_indent_enabled = 1
+let g:latex_fold_envs = 0
+let g:latex_fold_sections = []
+nmap <silent> dsa ds}dF\
+
 autocmd BufRead *.bib set  noai nocin nosi inde=
 " }}}
+
+" =================================
+" END of language settings
+" =================================
+"
 " ctrlp ctrlpfunky {{{
 let g:ctrlp_map = '<leader>p'
 let g:ctrlp_cmd = 'CtrlP'
@@ -913,20 +924,8 @@ endif
 
 let g:neocomplete#sources#omni#input_patterns.python='[^. \t]\.\w*'
 " }}}
-"  DEPRECATED {{{
-function! HideNumber()
-  if(&relativenumber == &number)
-    set relativenumber! number!
-  elseif(&number)
-    set number!
-  else
-    set relativenumber!
-  endif
-  set number?
-endfunc
-"nnoremap <F2> :call HideNumber()<CR>
-" }}}
-" vim-surround {{{2
+"
+" vim-surround {{{
 let g:surround_42 = "**\r**"
 nnoremap ** :exe "norm v$hS*"
 nnoremap __ :exe "norm v$hS_"
@@ -936,31 +935,16 @@ nmap <leader>* ysiw*
 vmap * S*
 vmap _ S_
 vmap <leader>l <Plug>VSurround]%a(<C-r><C-p>+)<Esc>
-
+" }}}
+"
 " Linux Kernel Coding Style {{{
 nnoremap <silent> <leader>a :LinuxCodingStyle<cr>
 let g:linuxsty_patterns = [ "/kernels" ]
 "let g:linuxsty_patterns = [ "~/git/kernels/" ]
 " }}}
 "
-" clang {{{
-" ClangFormat, ClangFormatAutoToggle, ClangFormatAutoEnable, ClangFormatAutoDisable
-let g:clang_format#style_options = {
-      \ "AccessModifierOffset" : -4,
-      \ "AllowShortIfStatementsOnASingleLine" : "true",
-      \ "AlwaysBreakTemplateDeclarations" : "true",
-      \ "Standard" : "C++11"}
-" map to <Leader>cf in C++ code
-autocmd FileType c,cpp,objc nnoremap <buffer><leader>cf :<C-u>ClangFormat<CR>
-autocmd FileType c,cpp,objc vnoremap <buffer><leader>cf :ClangFormat<CR>
-" if you install vim-operator-user
-autocmd FileType c,cpp,objc map <buffer><leader>x <Plug>(operator-clang-format)
-" Toggle auto formatting:
-nmap <leader>c :ClangFormatAutoToggle<CR>
-autocmd FileType c ClangFormatAutoEnable
-" }}}
-
-" Neosnippet {{{1
+"
+"" Neosnippet {{{1
 " Plugin key-mappings.
 " Note: It must be "imap" and "smap".  It uses <Plug> mappings.
 imap <C-k>     <Plug>(neosnippet_expand_or_jump)
