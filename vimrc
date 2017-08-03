@@ -53,10 +53,11 @@ Plug 'honza/vim-snippets'
 " ================================
 Plug 'vim-scripts/gnuplot-syntax-highlighting'
 "Plug 'treycordova/rustpeg.vim.git'
-Plug 'vim-scripts/haskell.vim'
 Plug 'cespare/vim-toml'
 Plug 'lervag/vimtex'
 Plug 'rust-lang/rust.vim'
+" Be-trusted C/C++ FIXME
+Plug 'WolfgangMehner/c-support' 
 " Golang
 Plug 'fatih/vim-go'   " for golang
 Plug 'rjohnsondev/vim-compiler-go'
@@ -74,6 +75,8 @@ Plug 'jpalardy/vim-slime'
 Plug 'guns/vim-clojure-static'
 Plug 'tpope/vim-fireplace'
 " Haskell
+Plug 'dag/vim2hs'
+Plug 'vim-scripts/haskell.vim'
 "Plug 'eagletmt/ghcmod-vim'
 "Plug 'eagletmt/neco-ghc'
 "Plug 'tomtom/tlib_vim'
@@ -83,9 +86,9 @@ Plug 'tpope/vim-fireplace'
 "Plug 'bitc/vim-hdevtools'
 "Plug 'neovimhaskell/haskell-vim'
 "Plug 'kana/vim-filetype-haskell', {'do': 'make'}
-Plug 'dag/vim2hs'
-" Java
+" Java FIXME
 " https://julien.ponge.org/blog/java-coding-with-style/
+" eclim
 
 " Buffer
 Plug 'ctrlpvim/ctrlp.vim' | Plug 'tacahiroy/ctrlp-funky'
