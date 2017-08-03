@@ -364,6 +364,7 @@ SDN
 RDMA
 DPDK
 OmniPath
+SR-IOV
 
 NetEx
 tracepoint
