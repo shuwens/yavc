@@ -15,6 +15,11 @@ call plug#begin('~/.vim/plugged')
 " VIM enhancements
 Plug 'ciaranm/securemodelines'
 Plug 'vim-scripts/localvimrc'
+Plug 'tpope/vim-unimpaired'
+Plug 'NLKNguyen/easy-navigate.vim'
+Plug 'mileszs/ack.vim'
+Plug 'junegunn/vim-easy-align'
+Plug 'scrooloose/nerdcommenter'
 
 " GUI enhancements
 Plug 'vim-airline/vim-airline'
@@ -22,6 +27,8 @@ Plug 'vim-airline/vim-airline-themes'
 Plug 'scrooloose/nerdtree' | Plug 'jistr/vim-nerdtree-tabs'
 "Plug 'altercation/vim-colors-solarized'
 Plug 'Yggdroot/indentLine'
+"Plug 'mkitt/tabline.vim'
+Plug 'ap/vim-buftabline'
 
 " rainbow_parentheses
 Plug 'kien/rainbow_parentheses.vim'
@@ -48,6 +55,10 @@ Plug 'Shougo/neosnippet'
 Plug 'Shougo/neosnippet-snippets'
 Plug 'honza/vim-snippets'
 
+" Deoplete - Neovim
+"Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+"Plug 'nsf/gocode', { 'rtp': 'vim', 'do': '~/.vim/plugged/gocode/vim/symlink.sh' }
+
 " ================================
 " Syntactic language support
 " ================================
@@ -58,12 +69,15 @@ Plug 'lervag/vimtex'
 Plug 'rust-lang/rust.vim'
 " Be-trusted C/C++ FIXME
 Plug 'WolfgangMehner/c-support' 
+Plug 'NLKNguyen/c-syntax.vim'
+"Plug 'crosbymichael/vim-cfmt'
 " Golang
-Plug 'fatih/vim-go'   " for golang
-Plug 'rjohnsondev/vim-compiler-go'
+Plug 'fatih/vim-go', { 'do': ':GoInstallBinaries' }
+"Plug 'rjohnsondev/vim-compiler-go'         seem broken
 Plug 'dgryski/vim-godef'
 " Python
 Plug 'klen/python-mode'   " for python
+Plug 'Vimjas/vim-python-pep8-indent'
 " install jedi-vim and let g:pymode_rope = 1
 Plug 'dag/vim-fish'
 Plug 'rhysd/vim-clang-format'
@@ -87,6 +101,9 @@ Plug 'vim-scripts/haskell.vim'
 "Plug 'neovimhaskell/haskell-vim'
 "Plug 'kana/vim-filetype-haskell', {'do': 'make'}
 " Java FIXME
+"Plug 'mikelue/vim-maven-plugin'
+Plug 'NLKNguyen/vim-maven-syntax'
+Plug 'artur-shaik/vim-javacomplete2'
 " https://julien.ponge.org/blog/java-coding-with-style/
 " eclim
 
@@ -98,12 +115,24 @@ Plug 'jlanzarotta/bufexplorer'
 " https://github.com/morhetz/gruvbox/wiki/Configuration
 Plug 'morhetz/gruvbox'
 Plug 'AlessandroYorba/Sierra'
+Plug 'michalbachowski/vim-wombat256mod'
+Plug 'NLKNguyen/papercolor-theme'
+
+" ==================================
+" For different tools
+" ==================================
+Plug 'fatih/vim-nginx'
 
 " Linux kernel coding
 Plug 'vivien/vim-linux-coding-style'
 
-" Disdration free
-Plug 'junegunn/goyo.vim'
+" docker files -- lagging so temp disabled
+"Plug 'docker/docker' , {'rtp': '/contrib/syntax/vim/'}
+
+Plug 'moll/vim-bbye', {'do': 'make'}
+
+" Distraction free
+"Plug 'junegunn/goyo.vim'
 Plug 'https://github.com/amix/vim-zenroom2'
 
 " Tools
@@ -116,15 +145,36 @@ Plug 'LucHermitte/local_vimrc'
 "Plug 'ludovicchabant/vim-gutentags'
 " vim easytags is very good however it is no longer maintained
 "Plug 'xolox/vim-easytags' 
-Plug 'xolox/vim-misc'
+"Plug 'xolox/vim-misc'
 
 Plug 'mtth/scratch.vim'  " TODO
 
 " Arch Linux pkgbuild
 Plug 'dracorp/vim-pkgbuild'
 
-call plug#end()
+" ==================================
+"   Fancy on-demand loading
+" ==================================
+" NERD tree will be loaded on the first invocation of NERDTreeToggle command
+Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
 
+" Multiple commands
+Plug 'junegunn/vim-github-dashboard', { 'on': ['GHDashboard', 'GHActivity'] }
+
+" Loaded when clojure file is opened
+Plug 'tpope/vim-fireplace', { 'for': 'clojure' }
+
+" Multiple file types
+Plug 'kovisoft/paredit', { 'for': ['clojure', 'scheme'] }
+
+" On-demand loading on both conditions
+Plug 'junegunn/vader.vim',  { 'on': 'Vader', 'for': 'vader' }
+
+" Code to execute when the plugin is lazily loaded on demand
+Plug 'junegunn/goyo.vim', { 'for': 'markdown' }
+autocmd! User goyo.vim echom 'Goyo is now loaded!'
+
+call plug#end()
 
 " =============================================================================
 " Editor settings
@@ -223,40 +273,37 @@ set autoindent
 set smarttab
 set expandtab
 
+" justine sherry
+match ErrorMsg '\s\+$'
+
 " Note that using urxvt will need to get rid of it to make it work, but it is
 " required in xterm-256
-if $TERM=~"terminator"
+if $TERM=~"xterm-256color"
   " Colors
-  set background=dark
-  colorscheme base16-atelier-dune
+  set background=light
+  set t_Co=256
+  colorscheme PaperColor  "base16-atelier-dune
   " Personal settings
-  autocmd BufEnter *.go colorscheme sierra
-  autocmd BufEnter *.c  colorscheme sierra
-  autocmd BufEnter *.py  colorscheme sierra
-  autocmd BufEnter *.h  colorscheme sierra
-  autocmd BufEnter *.hpp  colorscheme sierra
-  autocmd BufEnter *.cpp  colorscheme sierra
-  hi Normal ctermbg=NONE
-  " Base16
-  "let base16colorspace=256
-  "set t_Co=256
-  "let g:base16_shell_path="~/dev/others/base16/builder/templates/shell/scripts/"
-  set termguicolors
   set cursorcolumn
+  "highlight SpecialKey ctermfg=11 ctermbg=8
 endif
 if $TERM=~"rxvt-unicode"
   set background=dark
   set t_Co=256
+  colorscheme PaperColor
   highlight SpecialKey ctermfg=11 ctermbg=8
-  colorscheme gruvbox
+  let g:PaperColor_Dark_Override = { 'background' : '#1c1c1c', 'cursorline' : '#abcdef', 'matchparen' : '#3a3a3a', 'comment' : '#5f875f' }
+  let g:PaperColor_Light_Override = { 'background' : '#abcdef', 'cursorline' : '#dfdfff', 'matchparen' : '#d6d6d6' , 'comment' : '#8e908c' }
+  autocmd BufEnter *.org colorscheme gruvbox
+  autocmd BufEnter *.bib colorscheme gruvbox
+  "autocmd BufEnter *.tex set background=light
 endif
-if $TERM=~"xterm-256color"
+if $TERM=~"terminator"
   set background=dark
   set t_Co=256
   highlight SpecialKey ctermfg=11 ctermbg=8
   colorscheme gruvbox
 endif
-
 
 set relativenumber " Relative line numbers
 set diffopt+=iwhite " No whitespace in vimdiff
@@ -517,7 +564,10 @@ let g:secure_modelines_allowed_items = [
 
 " Airline + CtrlP
 let g:airline_powerline_fonts = 1
-let g:airline_theme = "base16"
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#left_sep = ' '
+let g:airline#extensions#tabline#left_alt_sep = '|'
+let g:airline_theme = "papercolor"
 let g:ctrlp_root_markers = ['.lvimrc', '.git']
 let g:ctrlp_custom_ignore = {
       \ 'dir': '\.git$\|\.hg$\|\.svn$\|publish$\|intermediate$\|node_modules$\|components$\|target$',
@@ -563,13 +613,15 @@ let g:localvimrc_ask = 0
 " ======================================
 
 " racer + rust {{{
-let g:rustfmt_autosave = 1
-let g:rustfmt_fail_silently = 1
-let g:racer_cmd = "/usr/bin/racer"
-let g:racer_experimental_completer = 1
-let $RUST_SRC_PATH = systemlist("rustc --print sysroot")[0] . "/lib/rustlib/src/rust/src"
+autocmd FileType rust call s:rust_my_settings()
+function! s:rust_my_settings()
+  let g:rustfmt_autosave = 1
+  let g:rustfmt_fail_silently = 1
+  let g:racer_cmd = "/usr/bin/racer"
+  let g:racer_experimental_completer = 1
+  let $RUST_SRC_PATH = systemlist("rustc --print sysroot")[0] . "/lib/rustlib/src/rust/src"
+endfunction
 " }}}
-
 " Golang {{{
 " vim-go 
 " From https://gist.github.com/cridenour/74e7635275331d5afa6b
@@ -627,7 +679,6 @@ au FileType go nmap <leader>gT <Plug>(go-test)
 au FileType go nmap <C-]> :GoDef<cr>
 au Filetype go nmap <leader>j :GoDecls<cr>
 " }}}
-
 " python-mode {{{
 "
 " Activate rope
@@ -685,11 +736,48 @@ let g:pymode_doc_key='K'
 let g:pymode_breakpoint_key='<leader>b'
 let g:pymode_run_bind='<F5>'
 
-" pythonsyntax
+" python syntax
 let python_highlight_all = 1
 
-" }}}
 
+" Indent Python in the Google way.
+
+setlocal indentexpr=GetGooglePythonIndent(v:lnum)
+
+let s:maxoff = 50 " maximum number of lines to look backwards.
+
+function GetGooglePythonIndent(lnum)
+
+  " Indent inside parens.
+  " Align with the open paren unless it is at the end of the line.
+  " E.g.
+  "   open_paren_not_at_EOL(100,
+  "                         (200,
+  "                          300),
+  "                         400)
+  "   open_paren_at_EOL(
+  "       100, 200, 300, 400)
+  call cursor(a:lnum, 1)
+  let [par_line, par_col] = searchpairpos('(\|{\|\[', '', ')\|}\|\]', 'bW',
+        \ "line('.') < " . (a:lnum - s:maxoff) . " ? dummy :"
+        \ . " synIDattr(synID(line('.'), col('.'), 1), 'name')"
+        \ . " =~ '\\(Comment\\|String\\)$'")
+  if par_line > 0
+    call cursor(par_line, 1)
+    if par_col != col("$") - 1
+      return par_col
+    endif
+  endif
+
+  " Delegate the rest to the original function.
+  return GetPythonIndent(a:lnum)
+
+endfunction
+
+let pyindent_nested_paren="&sw*2"
+let pyindent_open_paren="&sw*2"
+
+" }}}
 " Clojure {{{
 let g:clojure_syntax_keywords = {
       \ 'clojureMacro': ["defproject", "defcustom"],
@@ -699,7 +787,6 @@ let g:clojure_syntax_keywords = {
 " Scan lines
 let g:clojure_maxlines = 100
 " }}}
-
 " clang {{{
 " ClangFormat, ClangFormatAutoToggle, ClangFormatAutoEnable, ClangFormatAutoDisable
 let g:clang_format#style_options = {
@@ -713,10 +800,10 @@ autocmd FileType c,cpp,objc vnoremap <buffer><leader>cf :ClangFormat<CR>
 " if you install vim-operator-user
 autocmd FileType c,cpp,objc map <buffer><leader>x <Plug>(operator-clang-format)
 " Toggle auto formatting:
-nmap <leader>c :ClangFormatAutoToggle<CR>
+" I dont need this to capture a Leader operation.
+"nmap <leader>c :ClangFormatAutoToggle<CR>
 autocmd FileType c ClangFormatAutoEnable
 " }}}
-
 " LaTex {{{
 let g:latex_indent_enabled = 1
 let g:latex_fold_envs = 0
@@ -724,6 +811,58 @@ let g:latex_fold_sections = []
 nmap <silent> dsa ds}dF\
 
 autocmd BufRead *.bib set  noai nocin nosi inde=
+" }}}
+" Java {{{
+autocmd FileType java call s:java_my_settings()
+function! s:java_my_settings()
+  setlocal omnifunc=javacomplete#Complete
+  nmap <F4> <Plug>(JavaComplete-Imports-AddSmart)
+  imap <F4> <Plug>(JavaComplete-Imports-AddSmart)
+  nmap <F5> <Plug>(JavaComplete-Imports-Add)
+  imap <F5> <Plug>(JavaComplete-Imports-Add)
+  nmap <F6> <Plug>(JavaComplete-Imports-AddMissing)
+  imap <F6> <Plug>(JavaComplete-Imports-AddMissing)
+  nmap <F7> <Plug>(JavaComplete-Imports-RemoveUnused)
+  imap <F7> <Plug>(JavaComplete-Imports-RemoveUnused)
+
+  nmap <leader>jI <Plug>(JavaComplete-Imports-AddMissing)
+  nmap <leader>jR <Plug>(JavaComplete-Imports-RemoveUnused)
+  nmap <leader>ji <Plug>(JavaComplete-Imports-AddSmart)
+  nmap <leader>jii <Plug>(JavaComplete-Imports-Add)
+
+  imap <C-j>I <Plug>(JavaComplete-Imports-AddMissing)
+  imap <C-j>R <Plug>(JavaComplete-Imports-RemoveUnused)
+  imap <C-j>i <Plug>(JavaComplete-Imports-AddSmart)
+  imap <C-j>ii <Plug>(JavaComplete-Imports-Add)
+
+  nmap <leader>jM <Plug>(JavaComplete-Generate-AbstractMethods)
+
+  imap <C-j>jM <Plug>(JavaComplete-Generate-AbstractMethods)
+
+  nmap <leader>jA <Plug>(JavaComplete-Generate-Accessors)
+  nmap <leader>js <Plug>(JavaComplete-Generate-AccessorSetter)
+  nmap <leader>jg <Plug>(JavaComplete-Generate-AccessorGetter)
+  nmap <leader>ja <Plug>(JavaComplete-Generate-AccessorSetterGetter)
+  nmap <leader>jts <Plug>(JavaComplete-Generate-ToString)
+  nmap <leader>jeq <Plug>(JavaComplete-Generate-EqualsAndHashCode)
+  nmap <leader>jc <Plug>(JavaComplete-Generate-Constructor)
+  nmap <leader>jcc <Plug>(JavaComplete-Generate-DefaultConstructor)
+
+  imap <C-j>s <Plug>(JavaComplete-Generate-AccessorSetter)
+  imap <C-j>g <Plug>(JavaComplete-Generate-AccessorGetter)
+  imap <C-j>a <Plug>(JavaComplete-Generate-AccessorSetterGetter)
+
+  vmap <leader>js <Plug>(JavaComplete-Generate-AccessorSetter)
+  vmap <leader>jg <Plug>(JavaComplete-Generate-AccessorGetter)
+  vmap <leader>ja <Plug>(JavaComplete-Generate-AccessorSetterGetter)
+
+  nmap <silent> <buffer> <leader>jn <Plug>(JavaComplete-Generate-NewClass)
+  nmap <silent> <buffer> <leader>jN <Plug>(JavaComplete-Generate-ClassInFile)
+endfunction
+" }}}
+" Extra {{{
+au BufNewFile,BufRead *.bess set filetype=python
+au BufNewFile,BufRead *.p4 set filetype=c
 " }}}
 
 " =================================
@@ -927,7 +1066,6 @@ endif
 
 let g:neocomplete#sources#omni#input_patterns.python='[^. \t]\.\w*'
 " }}}
-"
 " vim-surround {{{
 let g:surround_42 = "**\r**"
 nnoremap ** :exe "norm v$hS*"
@@ -939,15 +1077,12 @@ vmap * S*
 vmap _ S_
 vmap <leader>l <Plug>VSurround]%a(<C-r><C-p>+)<Esc>
 " }}}
-"
 " Linux Kernel Coding Style {{{
 nnoremap <silent> <leader>a :LinuxCodingStyle<cr>
 let g:linuxsty_patterns = [ "/kernels" ]
 "let g:linuxsty_patterns = [ "~/git/kernels/" ]
 " }}}
-"
-"
-"" Neosnippet {{{1
+" Neosnippet {{{
 " Plugin key-mappings.
 " Note: It must be "imap" and "smap".  It uses <Plug> mappings.
 imap <C-k>     <Plug>(neosnippet_expand_or_jump)
@@ -977,10 +1112,10 @@ let g:neosnippet#enable_snipmate_compatibility = 1
 let g:neosnippet#snippets_directory='~/.vim/plugged/vim-snippets/snippets'
 " }}}
 
-
 " ======================
 " Syntastic setting
 " ======================
+
 " Recommanded setting
 set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
@@ -1033,23 +1168,22 @@ let g:indentLine_color_term = 239
 let g:indentLine_color_gui = '#09AA08'
 let g:indentLine_char = '│'
 
-" https://github.com/LucHermitte/local_vimrc
-let g:local_vimrc = ['.config', '_vimrc_local.vim']
-
-" vim easytags {{
-" http://vim.wikia.com/wiki/Browsing_programs_with_tags
-"autocmd FileType python let b:easytags_auto_highlight = 0
-
-" }}
-
 " MIT Scheme
 "let g:slimv_swank_cmd = '! screen -d -m -t REPL-SBCL sbcl --load ~/.vim/bundle/slimv/slime/start-swank.lisp'
 
+" local_vimrc {{{
+" https://github.com/LucHermitte/local_vimrc
+let g:local_vimrc = ['.config', '_vimrc_local.vim']
+" }}}
+" vim easytags - deprecated{{{
+" http://vim.wikia.com/wiki/Browsing_programs_with_tags
+"autocmd FileType python let b:easytags_auto_highlight = 0
+
+" }}}
 " vim-slime {{{
 let g:slime_target = "tmux"
 let g:slime_paste_file = tempname()
 " }}}
-
 " Vim niji {{{
 let g:niji_dark_colours = [
       \ [ '81', '#5fd7ff'],
@@ -1062,22 +1196,19 @@ let g:niji_dark_colours = [
       \ [ '4',  '#268bd2'],
       \ ]
 " }}}
-
 " tslime {{{
 let g:tslime_ensure_trailing_newlines = 1
 let g:tslime_normal_mapping = '<localleader>t'
 let g:tslime_visual_mapping = '<localleader>t'
 let g:tslime_vars_mapping = '<localleader>T'
 " }}}
-
 " Haskell {{{
 "
 " By far the best solution is vim2hs
 "
 "au FileType haskell source ~/.vim/lang/haskell.vim
 " }}}
-
-" supertab
+" supertab {{{
 let g:SuperTabDefaultCompletionType = '<c-x><c-o>'
 
 if has("gui_running")
@@ -1087,11 +1218,11 @@ else " no gui
     inoremap <Nul> <c-r>=SuperTabAlternateCompletion("\<lt>c-x>\<lt>c-o>")<cr>
   endif
 endif
-
-" nerdtree
+" }}}
+" nerdtree {{{
 map <Leader>n :NERDTreeToggle<CR>
-
-" tabularize
+" }}}
+" tabularize {{{
 let g:haskell_tabular = 1
 
 vmap a= :Tabularize /=<CR>
@@ -1099,13 +1230,18 @@ vmap a; :Tabularize /::<CR>
 vmap a- :Tabularize /-><CR>
 vmap a, :Tabularize /<-<CR>
 vmap al :Tabularize /[\[\\|,]<CR>
-
-" CtrlP
+" }}}
+" CtrlP {{{
 map <silent> <Leader>t :CtrlP()<CR>
 noremap <leader>b<space> :CtrlPBuffer<cr>
 let g:ctrlp_custom_ignore = '\v[\/]dist$'
 " }}}
-
+" C-support {{{
+let g:C_MapLeader = ","
+"au FileType c let g:C_MapLeader=","
+let g:C_UseTool_cmake    = 'yes'
+let g:C_UseTool_doxygen  = 'yes'
+" }}}
 " repls {{{
 au FileType lisp nnoremap M :!clisp -repl %<cr><cr>
 au FileType python nnoremap M :!python -i %<cr><cr>
@@ -1116,7 +1252,7 @@ au FileType scheme nnoremap M :!rlwrap guile -l %<cr><cr>
 set spell
 set spelllang=en
 set spellfile=$HOME/.vim/spell/en.utf-8.add
-let prose_fts = ['gitcommit', 'mail',  'markdown',  'text' ]
+let prose_fts = ['gitcommit', 'mail',  'markdown', 'text', 'tex' ]
 " We want word wrapping for 'prose'. We also want spell check.
 au BufRead,BufNewFile /*.md set ft=markdown
 call Map_ftype(prose_fts, 'set tw=72 fo=aw2tq spell')
@@ -1139,5 +1275,47 @@ func! WordProcessorMode()
 endfu 
 com! WP call WordProcessorMode()
 " }}}
+" ack {{{
+nnoremap <C-s> :Ack 
+if executable('ag')
+  let g:ackprg = 'ag --vimgrep'
+endif
+" }}}
+" Text Alignment: {{{
+"start interactive EasyAlign in visual mode (e.g. vip<Enter>)
+vmap <Enter> <Plug>(EasyAlign)
+" " Start interactive EasyAlign for a motion/text object (e.g. gaip)
+nmap ga <Plug>(EasyAlign)
+" }}}
+" Nerd commenter{{{
+"
+" Add spaces after comment delimiters by default
+let g:NERDSpaceDelims = 1
+" Use compact syntax for prettified multi-line comments
+let g:NERDCompactSexyComs = 1
+" Align line-wise comment delimiters flush left instead of following code indentation
+let g:NERDDefaultAlign = 'left'
+" Set a language to use its alternate delimiters by default
+let g:NERDAltDelims_java = 1
+" Add your own custom formats or override the defaults
+let g:NERDCustomDelimiters = { 'c': { 'left': '/**','right': '*/' } }
+" Allow commenting and inverting empty lines (useful when commenting a region)
+let g:NERDCommentEmptyLines = 1
+" Enable trimming of trailing whitespace when uncommenting
+let g:NERDTrimTrailingWhitespace = 1
+" }}}
+" vim-bbye {{{
+nnoremap <Leader>q :Bdelete<CR>
+" }}}
+" buftabline {{{
+set hidden
+nnoremap <C-N> :bnext<CR>
+nnoremap <C-P> :bprev<CR>
+" }}}
+" Neovim and deoplete {{{
+" Use deoplete.
+"let g:deoplete#enable_at_startup = 1
+" }}}
+
 
 " end of vimrc

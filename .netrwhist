@@ -1,0 +1,10 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhist_cnt =8
+let g:netrw_dirhist_1='/home/jethros/Desktop'
+let g:netrw_dirhist_2='/home/jethros/git/dotfiles'
+let g:netrw_dirhist_3='/home/jethros/org'
+let g:netrw_dirhist_4='/Users/jethros/git/food-for-thoughts'
+let g:netrw_dirhist_5='/home/jethros/.vim/plugged/c-support/c-support/templates'
+let g:netrw_dirhist_6='/home/jethros/writing/my-latex-utils/sample_report'
+let g:netrw_dirhist_7='/home/jethros/git/dotfiles/X'
+let g:netrw_dirhist_8='/home/jethros/clean'
