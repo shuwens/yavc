@@ -17,6 +17,9 @@ Plug 'ciaranm/securemodelines'
 Plug 'vim-scripts/localvimrc'
 Plug 'tpope/vim-unimpaired'
 Plug 'NLKNguyen/easy-navigate.vim'
+Plug 'mileszs/ack.vim'
+Plug 'junegunn/vim-easy-align'
+Plug 'scrooloose/nerdcommenter'
 
 " GUI enhancements
 Plug 'vim-airline/vim-airline'
@@ -61,6 +64,7 @@ Plug 'lervag/vimtex'
 Plug 'rust-lang/rust.vim'
 " Be-trusted C/C++ FIXME
 Plug 'WolfgangMehner/c-support' 
+Plug 'NLKNguyen/c-syntax.vim'
 " Golang
 Plug 'fatih/vim-go', { 'do': ':GoInstallBinaries' }
 Plug 'rjohnsondev/vim-compiler-go'
@@ -95,9 +99,6 @@ Plug 'NLKNguyen/vim-maven-syntax'
 Plug 'artur-shaik/vim-javacomplete2'
 " https://julien.ponge.org/blog/java-coding-with-style/
 " eclim
-" C 
-Plug 'NLKNguyen/c-syntax.vim'
-
 
 " Buffer
 Plug 'ctrlpvim/ctrlp.vim' | Plug 'tacahiroy/ctrlp-funky'
@@ -261,22 +262,10 @@ if $TERM=~"xterm-256color"
   " Colors
   set background=light
   set t_Co=256
-  highlight SpecialKey ctermfg=11 ctermbg=8
   colorscheme PaperColor  "base16-atelier-dune
   " Personal settings
-  autocmd BufEnter *.go colorscheme sierra
-  autocmd BufEnter *.c  colorscheme sierra
-  autocmd BufEnter *.py  colorscheme sierra
-  autocmd BufEnter *.h  colorscheme sierra
-  autocmd BufEnter *.hpp  colorscheme sierra
-  autocmd BufEnter *.cpp  colorscheme sierra
-  hi Normal ctermbg=NONE
-  " Base16
-  "let base16colorspace=256
-  "set t_Co=256
-  "let g:base16_shell_path="~/dev/others/base16/builder/templates/shell/scripts/"
-  set termguicolors
   set cursorcolumn
+  "highlight SpecialKey ctermfg=11 ctermbg=8
 endif
 if $TERM=~"rxvt-unicode"
   set background=dark
@@ -753,7 +742,8 @@ autocmd FileType c,cpp,objc vnoremap <buffer><leader>cf :ClangFormat<CR>
 " if you install vim-operator-user
 autocmd FileType c,cpp,objc map <buffer><leader>x <Plug>(operator-clang-format)
 " Toggle auto formatting:
-nmap <leader>c :ClangFormatAutoToggle<CR>
+" I dont need this to capture a Leader operation.
+"nmap <leader>c :ClangFormatAutoToggle<CR>
 autocmd FileType c ClangFormatAutoEnable
 " }}}
 " LaTex {{{
@@ -1116,7 +1106,6 @@ let g:indentLine_color_term = 239
 let g:indentLine_color_gui = '#09AA08'
 let g:indentLine_char = '│'
 
-
 " MIT Scheme
 "let g:slimv_swank_cmd = '! screen -d -m -t REPL-SBCL sbcl --load ~/.vim/bundle/slimv/slime/start-swank.lisp'
 
@@ -1186,7 +1175,10 @@ noremap <leader>b<space> :CtrlPBuffer<cr>
 let g:ctrlp_custom_ignore = '\v[\/]dist$'
 " }}}
 " C-support {{{
-let g:C_MapLeader=","
+let g:C_MapLeader = ","
+"au FileType c let g:C_MapLeader=","
+let g:C_UseTool_cmake    = 'yes'
+let g:C_UseTool_doxygen  = 'yes'
 " }}}
 " repls {{{
 au FileType lisp nnoremap M :!clisp -repl %<cr><cr>
@@ -1221,5 +1213,34 @@ func! WordProcessorMode()
 endfu 
 com! WP call WordProcessorMode()
 " }}}
-
+" ack {{{
+nnoremap <C-s> :Ack 
+if executable('ag')
+  let g:ackprg = 'ag --vimgrep'
+endif
+" }}}
+" Text Alignment: {{{
+"start interactive EasyAlign in visual mode (e.g. vip<Enter>)
+vmap <Enter> <Plug>(EasyAlign)
+" " Start interactive EasyAlign for a motion/text object (e.g. gaip)
+nmap ga <Plug>(EasyAlign)
+" }}}
+" Nerd commenter{{{
+"
+" Add spaces after comment delimiters by default
+let g:NERDSpaceDelims = 1
+" Use compact syntax for prettified multi-line comments
+let g:NERDCompactSexyComs = 1
+" Align line-wise comment delimiters flush left instead of following code indentation
+let g:NERDDefaultAlign = 'left'
+" Set a language to use its alternate delimiters by default
+let g:NERDAltDelims_java = 1
+" Add your own custom formats or override the defaults
+let g:NERDCustomDelimiters = { 'c': { 'left': '/**','right': '*/' } }
+" Allow commenting and inverting empty lines (useful when commenting a region)
+let g:NERDCommentEmptyLines = 1
+" Enable trimming of trailing whitespace when uncommenting
+let g:NERDTrimTrailingWhitespace = 1
+" }}}
+"
 " end of vimrc
