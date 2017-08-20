@@ -28,6 +28,7 @@ Plug 'scrooloose/nerdtree' | Plug 'jistr/vim-nerdtree-tabs'
 "Plug 'altercation/vim-colors-solarized'
 Plug 'Yggdroot/indentLine'
 "Plug 'mkitt/tabline.vim'
+Plug 'ap/vim-buftabline'
 
 " rainbow_parentheses
 Plug 'kien/rainbow_parentheses.vim'
@@ -54,6 +55,10 @@ Plug 'Shougo/neosnippet'
 Plug 'Shougo/neosnippet-snippets'
 Plug 'honza/vim-snippets'
 
+" Deoplete - Neovim
+"Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+"Plug 'nsf/gocode', { 'rtp': 'vim', 'do': '~/.vim/plugged/gocode/vim/symlink.sh' }
+
 " ================================
 " Syntactic language support
 " ================================
@@ -65,12 +70,14 @@ Plug 'rust-lang/rust.vim'
 " Be-trusted C/C++ FIXME
 Plug 'WolfgangMehner/c-support' 
 Plug 'NLKNguyen/c-syntax.vim'
+"Plug 'crosbymichael/vim-cfmt'
 " Golang
 Plug 'fatih/vim-go', { 'do': ':GoInstallBinaries' }
-Plug 'rjohnsondev/vim-compiler-go'
+"Plug 'rjohnsondev/vim-compiler-go'         seem broken
 Plug 'dgryski/vim-godef'
 " Python
 Plug 'klen/python-mode'   " for python
+Plug 'Vimjas/vim-python-pep8-indent'
 " install jedi-vim and let g:pymode_rope = 1
 Plug 'dag/vim-fish'
 Plug 'rhysd/vim-clang-format'
@@ -111,8 +118,18 @@ Plug 'AlessandroYorba/Sierra'
 Plug 'michalbachowski/vim-wombat256mod'
 Plug 'NLKNguyen/papercolor-theme'
 
+" ==================================
+" For different tools
+" ==================================
+Plug 'fatih/vim-nginx'
+
 " Linux kernel coding
 Plug 'vivien/vim-linux-coding-style'
+
+" docker files -- lagging so temp disabled
+"Plug 'docker/docker' , {'rtp': '/contrib/syntax/vim/'}
+
+Plug 'moll/vim-bbye', {'do': 'make'}
 
 " Distraction free
 "Plug 'junegunn/goyo.vim'
@@ -255,6 +272,9 @@ set cindent
 set autoindent
 set smarttab
 set expandtab
+
+" justine sherry
+match ErrorMsg '\s\+$'
 
 " Note that using urxvt will need to get rid of it to make it work, but it is
 " required in xterm-256
@@ -716,8 +736,46 @@ let g:pymode_doc_key='K'
 let g:pymode_breakpoint_key='<leader>b'
 let g:pymode_run_bind='<F5>'
 
-" pythonsyntax
+" python syntax
 let python_highlight_all = 1
+
+
+" Indent Python in the Google way.
+
+setlocal indentexpr=GetGooglePythonIndent(v:lnum)
+
+let s:maxoff = 50 " maximum number of lines to look backwards.
+
+function GetGooglePythonIndent(lnum)
+
+  " Indent inside parens.
+  " Align with the open paren unless it is at the end of the line.
+  " E.g.
+  "   open_paren_not_at_EOL(100,
+  "                         (200,
+  "                          300),
+  "                         400)
+  "   open_paren_at_EOL(
+  "       100, 200, 300, 400)
+  call cursor(a:lnum, 1)
+  let [par_line, par_col] = searchpairpos('(\|{\|\[', '', ')\|}\|\]', 'bW',
+        \ "line('.') < " . (a:lnum - s:maxoff) . " ? dummy :"
+        \ . " synIDattr(synID(line('.'), col('.'), 1), 'name')"
+        \ . " =~ '\\(Comment\\|String\\)$'")
+  if par_line > 0
+    call cursor(par_line, 1)
+    if par_col != col("$") - 1
+      return par_col
+    endif
+  endif
+
+  " Delegate the rest to the original function.
+  return GetPythonIndent(a:lnum)
+
+endfunction
+
+let pyindent_nested_paren="&sw*2"
+let pyindent_open_paren="&sw*2"
 
 " }}}
 " Clojure {{{
@@ -801,6 +859,10 @@ function! s:java_my_settings()
   nmap <silent> <buffer> <leader>jn <Plug>(JavaComplete-Generate-NewClass)
   nmap <silent> <buffer> <leader>jN <Plug>(JavaComplete-Generate-ClassInFile)
 endfunction
+" }}}
+" Extra {{{
+au BufNewFile,BufRead *.bess set filetype=python
+au BufNewFile,BufRead *.p4 set filetype=c
 " }}}
 
 " =================================
@@ -1190,7 +1252,7 @@ au FileType scheme nnoremap M :!rlwrap guile -l %<cr><cr>
 set spell
 set spelllang=en
 set spellfile=$HOME/.vim/spell/en.utf-8.add
-let prose_fts = ['gitcommit', 'mail',  'markdown',  'text' ]
+let prose_fts = ['gitcommit', 'mail',  'markdown', 'text', 'tex' ]
 " We want word wrapping for 'prose'. We also want spell check.
 au BufRead,BufNewFile /*.md set ft=markdown
 call Map_ftype(prose_fts, 'set tw=72 fo=aw2tq spell')
@@ -1242,5 +1304,18 @@ let g:NERDCommentEmptyLines = 1
 " Enable trimming of trailing whitespace when uncommenting
 let g:NERDTrimTrailingWhitespace = 1
 " }}}
-"
+" vim-bbye {{{
+nnoremap <Leader>q :Bdelete<CR>
+" }}}
+" buftabline {{{
+set hidden
+nnoremap <C-N> :bnext<CR>
+nnoremap <C-P> :bprev<CR>
+" }}}
+" Neovim and deoplete {{{
+" Use deoplete.
+"let g:deoplete#enable_at_startup = 1
+" }}}
+
+
 " end of vimrc

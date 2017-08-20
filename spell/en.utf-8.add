@@ -316,6 +316,7 @@ W3C
 Krug
 Krug's
 Freenode
+evolvability
 Asheesh
 goroutine
 Janky
@@ -337,6 +338,7 @@ somesuch
 HIL
 parentheticals
 OwnCloud
+testbed
 
 Microsoft
 
@@ -350,6 +352,9 @@ AspectJ
 Python
 Haskell
 Java
+cpp
+gcc
+g++
 
 committee
 foreground
@@ -381,10 +386,16 @@ Hadoop
 datacenters
 middlebox
 middleboxes
+subtree
+subarray
 
 Raja 
 Sambasivan
 Orran
 Krieger
 Shuwen
-
+jethro
+sjs
+sun7
+j3throh4ck
+Rumpelstiltskin
