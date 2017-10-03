@@ -5,7 +5,6 @@ let mapleader = "\<Space>"
 " =============================================================================
 " # PLUGINS
 " =============================================================================
-" Load vundle
 set nocompatible
 filetype off
 "set rtp+=~/dev/others/base16/builder/templates/vim/
@@ -341,7 +340,7 @@ set list
 " Reset the listchars
 set listchars=""
 " make tabs visible
-set listchars=tab:▸▸
+set listchars=tab:▸\ 
 " show trailing spaces as dots
 set listchars+=trail:•
 " The character to show in the last column when wrap is off and the line
@@ -1316,6 +1315,13 @@ nnoremap <C-P> :bprev<CR>
 " Use deoplete.
 "let g:deoplete#enable_at_startup = 1
 " }}}
-
+" Delete trailing white space {{{
+func! DeleteTrailingWS()
+  exe "normal mz"
+  %s/\s\+$//ge
+  exe "normal `z"
+endfunc
+vnoremap <leader>w :call DeleteTrailingWS()<CR>
+" }}}
 
 " end of vimrc
