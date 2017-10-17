@@ -19,6 +19,7 @@ Plug 'NLKNguyen/easy-navigate.vim'
 Plug 'mileszs/ack.vim'
 Plug 'junegunn/vim-easy-align'
 Plug 'scrooloose/nerdcommenter'
+Plug 'editorconfig/editorconfig-vim'
 
 " GUI enhancements
 Plug 'vim-airline/vim-airline'
