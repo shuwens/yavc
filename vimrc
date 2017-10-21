@@ -20,6 +20,7 @@ Plug 'mileszs/ack.vim'
 Plug 'junegunn/vim-easy-align'
 Plug 'scrooloose/nerdcommenter'
 Plug 'editorconfig/editorconfig-vim'
+Plug 'airblade/vim-rooter'
 
 " GUI enhancements
 Plug 'vim-airline/vim-airline'
