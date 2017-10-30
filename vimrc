@@ -48,6 +48,9 @@ Plug 'jiangmiao/auto-pairs'    "vim-scripts/paredit.vi
 Plug 'tpope/vim-speeddating'
 Plug 'jgdavey/tslime.vim'
 Plug 'Shougo/vimproc.vim', {'do' : 'make'}
+Plug 'pocke/iro.vim'
+Plug 'jaxbot/semantic-highlight.vim'
+
 
 " Neosnippet
 Plug 'Shougo/neocomplcache'
@@ -69,6 +72,7 @@ Plug 'cespare/vim-toml'
 Plug 'lervag/vimtex'
 Plug 'rust-lang/rust.vim'
 " Be-trusted C/C++ FIXME
+Plug 'octol/vim-cpp-enhanced-highlight'
 Plug 'WolfgangMehner/c-support' 
 Plug 'NLKNguyen/c-syntax.vim'
 "Plug 'crosbymichael/vim-cfmt'
@@ -1132,7 +1136,8 @@ let g:syntastic_mode_map = {
       \ "passive_filetypes": ["tex", "md"] }
 
 " Python
-let g:syntastic_python_checkers=['pyflakes']
+"let g:syntastic_python_checkers=['pyflakes']
+let g:syntastic_python_checkers=['pylint']
 
 " Javascript
 let g:syntastic_javascript_checkers = ['jshint']
