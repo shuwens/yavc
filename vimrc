@@ -49,8 +49,10 @@ Plug 'tpope/vim-speeddating'
 Plug 'jgdavey/tslime.vim'
 Plug 'Shougo/vimproc.vim', {'do' : 'make'}
 Plug 'pocke/iro.vim'
+Plug 'jaxbot/semantic-highlight.vim'
 
-" Neosnippet
+
+ Neosnippet
 Plug 'Shougo/neocomplcache'
 Plug 'Shougo/neocomplete'
 Plug 'Shougo/neosnippet'
