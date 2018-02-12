@@ -23,6 +23,9 @@ Plug 'editorconfig/editorconfig-vim'
 Plug 'airblade/vim-rooter'
 
 " GUI enhancements
+Plug 'itchyny/lightline.vim'
+Plug 'w0rp/ale'
+Plug 'machakann/vim-highlightedyank'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'scrooloose/nerdtree' | Plug 'jistr/vim-nerdtree-tabs'
@@ -30,6 +33,9 @@ Plug 'scrooloose/nerdtree' | Plug 'jistr/vim-nerdtree-tabs'
 Plug 'Yggdroot/indentLine'
 "Plug 'mkitt/tabline.vim'
 Plug 'ap/vim-buftabline'
+Plug 'tenfyzhong/CompleteParameter.vim'
+Plug 'skywind3000/asyncrun.vim'
+"Plug 'ludovicchabant/vim-gutentags'
 
 " rainbow_parentheses
 Plug 'kien/rainbow_parentheses.vim'
@@ -43,14 +49,14 @@ Plug 'majutsushi/tagbar'
 Plug 'tpope/vim-surround'
 Plug 'vim-syntastic/syntastic'
 Plug 'airblade/vim-rooter'
-Plug 'szw/vim-tags'
+"Plug 'szw/vim-tags'
 Plug 'jiangmiao/auto-pairs'    "vim-scripts/paredit.vi
 Plug 'tpope/vim-speeddating'
 Plug 'jgdavey/tslime.vim'
 Plug 'Shougo/vimproc.vim', {'do' : 'make'}
 Plug 'pocke/iro.vim'
 Plug 'jaxbot/semantic-highlight.vim'
-
+Plug 'mattn/sonictemplate-vim'
 
 " Neosnippet
 Plug 'Shougo/neocomplcache'
@@ -83,7 +89,7 @@ Plug 'dgryski/vim-godef'
 " Python
 Plug 'klen/python-mode'   " for python
 Plug 'Vimjas/vim-python-pep8-indent'
-" install jedi-vim and let g:pymode_rope = 1
+" roxma/python-support-nvim
 Plug 'dag/vim-fish'
 Plug 'rhysd/vim-clang-format'
 Plug 'jceb/vim-orgmode'  "org mode
@@ -112,6 +118,12 @@ Plug 'artur-shaik/vim-javacomplete2'
 " https://julien.ponge.org/blog/java-coding-with-style/
 " eclim
 
+" For networking programming 
+" Click 
+Plug 'vim-scripts/click.vim'
+" P4 16
+Plug 'milad14000/vim_p4'
+
 " Buffer
 Plug 'ctrlpvim/ctrlp.vim' | Plug 'tacahiroy/ctrlp-funky'
 Plug 'jlanzarotta/bufexplorer'
@@ -122,6 +134,7 @@ Plug 'morhetz/gruvbox'
 Plug 'AlessandroYorba/Sierra'
 Plug 'michalbachowski/vim-wombat256mod'
 Plug 'NLKNguyen/papercolor-theme'
+Plug 'roosta/srcery'
 
 " ==================================
 " For different tools
@@ -156,6 +169,9 @@ Plug 'mtth/scratch.vim'  " TODO
 
 " Arch Linux pkgbuild
 Plug 'dracorp/vim-pkgbuild'
+
+" LanguageClient
+Plug 'Shougo/echodoc.vim'
 
 " ==================================
 "   Fancy on-demand loading
@@ -204,7 +220,7 @@ set noswapfile
 set exrc
 set secure
 
-set tags=.git/tags
+"set tags=.git/tags
 
 " Sane splits
 set splitright
@@ -283,6 +299,15 @@ match ErrorMsg '\s\+$'
 
 " Note that using urxvt will need to get rid of it to make it work, but it is
 " required in xterm-256
+if $TERM=~"tmux-256color"
+  " Colors
+  set background=light
+  set t_Co=256
+  colorscheme PaperColor  "base16-atelier-dune
+  " Personal settings
+  set cursorcolumn
+  "highlight SpecialKey ctermfg=11 ctermbg=8
+endif
 if $TERM=~"xterm-256color"
   " Colors
   set background=light
@@ -468,8 +493,18 @@ map <leader>pp :setlocal paste!<cr>
 vnoremap <silent> * :<C-u>call VisualSelection('', '')<CR>/<C-R>=@/<CR><CR>
 vnoremap <silent> # :<C-u>call VisualSelection('', '')<CR>?<C-R>=@/<CR><CR>
 
-" ALE
-let &runtimepath.=',~/.vim/bundle/ale'
+" Linter
+" fix conflicts
+let g:ale_emit_conflict_warnings = 0
+let g:ale_sign_column_always = 1
+" only lint on save
+let g:ale_lint_on_text_changed = 'never'
+let g:ale_lint_on_save = 0
+let g:ale_lint_on_enter = 0
+let g:ale_rust_cargo_use_check = 1
+let g:ale_rust_cargo_check_all_targets = 1
+" let g:neomake_info_sign = {'text': '⚕', 'texthl': 'NeomakeInfoSign'}"
+
 
 " cmd helper
 cno ' <C-\>eDeleteTillSlash()<cr>
@@ -698,9 +733,11 @@ au Filetype go nmap <leader>j :GoDecls<cr>
 " ]]            Jump on next class or function (normal, visual, operator modes)
 " [M            Jump on previous class or method (normal, visual, operator modes)
 " ]M            Jump on next class or method (normal, visual, operator modes)
-let g:pymode_rope = 1
+"
+" Turned off rope because it is freaking slow
+"let g:pymode_rope = 1
 " Documentation
-let g:pymode_doc = 1
+"let g:pymode_doc = 1
 "let g:pymode_doc_key = 'K'
 "Linting
 nmap <leader>l :PymodeLint<CR>
@@ -792,6 +829,11 @@ let g:clojure_syntax_keywords = {
 " Scan lines
 let g:clojure_maxlines = 100
 " }}}
+" C++ {{{
+"https://stackoverflow.com/questions/2272759/looking-up-c-documentation-inside-of-vim
+""https://www.vim.org/scripts/script.php?script_id=614"
+
+" }}}
 " clang {{{
 " ClangFormat, ClangFormatAutoToggle, ClangFormatAutoEnable, ClangFormatAutoDisable
 let g:clang_format#style_options = {
@@ -865,9 +907,23 @@ function! s:java_my_settings()
   nmap <silent> <buffer> <leader>jN <Plug>(JavaComplete-Generate-ClassInFile)
 endfunction
 " }}}
+" jemdoc {{{
+filetype plugin on
+augroup filetypedetect
+  au! BufNewFile,BufRead *.jemdoc setf jemdoc
+augroup END
+
+" Last line is for proper wrapping of jemdoc lists, etc.
+autocmd Filetype jemdoc setlocal comments=:#,fb:-,fb:.,fb:--,fb:..,fb:\:
+" }}}
 " Extra {{{
 au BufNewFile,BufRead *.bess set filetype=python
 au BufNewFile,BufRead *.p4 set filetype=c
+" }}}
+" fish {{{
+autocmd FileType fish  compiler fish 
+autocmd FileType fish  setlocal textwidth=79
+"autocmd FileType fish  setlocal foldmethod=expr
 " }}}
 
 " =================================
@@ -1116,6 +1172,7 @@ let g:neosnippet#enable_snipmate_compatibility = 1
 " Tell Neosnippet about the other snippets
 let g:neosnippet#snippets_directory='~/.vim/plugged/vim-snippets/snippets'
 " }}}
+"""{}
 
 " ======================
 " Syntastic setting
@@ -1329,6 +1386,13 @@ func! DeleteTrailingWS()
   exe "normal `z"
 endfunc
 vnoremap <leader>w :call DeleteTrailingWS()<CR>
+" }}}
+" auto spell {{{
+for d in glob('~/.vim/spell/*.add', 1, 1)
+  if filereadable(d) && (!filereadable(d . '.spl') || getftime(d) > getftime(d . '.spl'))
+    exec 'mkspell! ' . fnameescape(d)
+  endif
+endfor
 " }}}
 
 " end of vimrc
