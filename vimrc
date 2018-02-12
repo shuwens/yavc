@@ -865,10 +865,20 @@ function! s:java_my_settings()
   nmap <silent> <buffer> <leader>jN <Plug>(JavaComplete-Generate-ClassInFile)
 endfunction
 " }}}
+" jemdoc {{{
+filetype plugin on
+augroup filetypedetect
+  au! BufNewFile,BufRead *.jemdoc setf jemdoc
+augroup END
+
+" Last line is for proper wrapping of jemdoc lists, etc.
+autocmd Filetype jemdoc setlocal comments=:#,fb:-,fb:.,fb:--,fb:..,fb:\:
+" }}}
 " Extra {{{
 au BufNewFile,BufRead *.bess set filetype=python
 au BufNewFile,BufRead *.p4 set filetype=c
 " }}}
+"
 
 " =================================
 " END of language settings
