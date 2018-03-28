@@ -30,6 +30,7 @@ Plug 'scrooloose/nerdtree' | Plug 'jistr/vim-nerdtree-tabs'
 Plug 'Yggdroot/indentLine'
 "Plug 'mkitt/tabline.vim'
 Plug 'ap/vim-buftabline'
+Plug 'tenfyzhong/CompleteParameter.vim'
 
 " rainbow_parentheses
 Plug 'kien/rainbow_parentheses.vim'
@@ -698,9 +699,11 @@ au Filetype go nmap <leader>j :GoDecls<cr>
 " ]]            Jump on next class or function (normal, visual, operator modes)
 " [M            Jump on previous class or method (normal, visual, operator modes)
 " ]M            Jump on next class or method (normal, visual, operator modes)
-let g:pymode_rope = 1
+"
+" Turned off rope because it is freaking slow
+"let g:pymode_rope = 1
 " Documentation
-let g:pymode_doc = 1
+"let g:pymode_doc = 1
 "let g:pymode_doc_key = 'K'
 "Linting
 nmap <leader>l :PymodeLint<CR>
@@ -791,6 +794,11 @@ let g:clojure_syntax_keywords = {
 
 " Scan lines
 let g:clojure_maxlines = 100
+" }}}
+" C++ {{{
+"https://stackoverflow.com/questions/2272759/looking-up-c-documentation-inside-of-vim
+""https://www.vim.org/scripts/script.php?script_id=614"
+
 " }}}
 " clang {{{
 " ClangFormat, ClangFormatAutoToggle, ClangFormatAutoEnable, ClangFormatAutoDisable
