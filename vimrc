@@ -51,7 +51,7 @@ Plug 'jgdavey/tslime.vim'
 Plug 'Shougo/vimproc.vim', {'do' : 'make'}
 Plug 'pocke/iro.vim'
 Plug 'jaxbot/semantic-highlight.vim'
-
+Plug 'mattn/sonictemplate-vim'
 
 " Neosnippet
 Plug 'Shougo/neocomplcache'
@@ -123,6 +123,7 @@ Plug 'morhetz/gruvbox'
 Plug 'AlessandroYorba/Sierra'
 Plug 'michalbachowski/vim-wombat256mod'
 Plug 'NLKNguyen/papercolor-theme'
+Plug 'roosta/srcery'
 
 " ==================================
 " For different tools
@@ -284,6 +285,15 @@ match ErrorMsg '\s\+$'
 
 " Note that using urxvt will need to get rid of it to make it work, but it is
 " required in xterm-256
+if $TERM=~"screen"
+  " Colors
+  set background=light
+  set t_Co=256
+  colorscheme PaperColor  "base16-atelier-dune
+  " Personal settings
+  set cursorcolumn
+  "highlight SpecialKey ctermfg=11 ctermbg=8
+endif
 if $TERM=~"xterm-256color"
   " Colors
   set background=light
@@ -886,7 +896,11 @@ autocmd Filetype jemdoc setlocal comments=:#,fb:-,fb:.,fb:--,fb:..,fb:\:
 au BufNewFile,BufRead *.bess set filetype=python
 au BufNewFile,BufRead *.p4 set filetype=c
 " }}}
-"
+" fish {{{
+autocmd FileType fish  compiler fish 
+autocmd FileType fish  setlocal textwidth=79
+"autocmd FileType fish  setlocal foldmethod=expr
+" }}}
 
 " =================================
 " END of language settings
@@ -1134,6 +1148,7 @@ let g:neosnippet#enable_snipmate_compatibility = 1
 " Tell Neosnippet about the other snippets
 let g:neosnippet#snippets_directory='~/.vim/plugged/vim-snippets/snippets'
 " }}}
+"""{}
 
 " ======================
 " Syntastic setting
@@ -1347,6 +1362,13 @@ func! DeleteTrailingWS()
   exe "normal `z"
 endfunc
 vnoremap <leader>w :call DeleteTrailingWS()<CR>
+" }}}
+" auto spell {{{
+for d in glob('~/.vim/spell/*.add', 1, 1)
+  if filereadable(d) && (!filereadable(d . '.spl') || getftime(d) > getftime(d . '.spl'))
+    exec 'mkspell! ' . fnameescape(d)
+  endif
+endfor
 " }}}
 
 " end of vimrc
