@@ -23,6 +23,9 @@ Plug 'editorconfig/editorconfig-vim'
 Plug 'airblade/vim-rooter'
 
 " GUI enhancements
+Plug 'itchyny/lightline.vim'
+Plug 'w0rp/ale'
+Plug 'machakann/vim-highlightedyank'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'scrooloose/nerdtree' | Plug 'jistr/vim-nerdtree-tabs'
@@ -84,7 +87,7 @@ Plug 'dgryski/vim-godef'
 " Python
 Plug 'klen/python-mode'   " for python
 Plug 'Vimjas/vim-python-pep8-indent'
-" install jedi-vim and let g:pymode_rope = 1
+" roxma/python-support-nvim
 Plug 'dag/vim-fish'
 Plug 'rhysd/vim-clang-format'
 Plug 'jceb/vim-orgmode'  "org mode
@@ -158,6 +161,9 @@ Plug 'mtth/scratch.vim'  " TODO
 
 " Arch Linux pkgbuild
 Plug 'dracorp/vim-pkgbuild'
+
+" LanguageClient
+Plug 'Shougo/echodoc.vim'
 
 " ==================================
 "   Fancy on-demand loading
@@ -285,7 +291,7 @@ match ErrorMsg '\s\+$'
 
 " Note that using urxvt will need to get rid of it to make it work, but it is
 " required in xterm-256
-if $TERM=~"screen"
+if $TERM=~"tmux-256color"
   " Colors
   set background=light
   set t_Co=256
@@ -479,8 +485,18 @@ map <leader>pp :setlocal paste!<cr>
 vnoremap <silent> * :<C-u>call VisualSelection('', '')<CR>/<C-R>=@/<CR><CR>
 vnoremap <silent> # :<C-u>call VisualSelection('', '')<CR>?<C-R>=@/<CR><CR>
 
-" ALE
-let &runtimepath.=',~/.vim/bundle/ale'
+" Linter
+" fix conflicts
+let g:ale_emit_conflict_warnings = 0
+let g:ale_sign_column_always = 1
+" only lint on save
+let g:ale_lint_on_text_changed = 'never'
+let g:ale_lint_on_save = 0
+let g:ale_lint_on_enter = 0
+let g:ale_rust_cargo_use_check = 1
+let g:ale_rust_cargo_check_all_targets = 1
+" let g:neomake_info_sign = {'text': '⚕', 'texthl': 'NeomakeInfoSign'}"
+
 
 " cmd helper
 cno ' <C-\>eDeleteTillSlash()<cr>
