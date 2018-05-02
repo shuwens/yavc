@@ -34,6 +34,8 @@ Plug 'Yggdroot/indentLine'
 "Plug 'mkitt/tabline.vim'
 Plug 'ap/vim-buftabline'
 Plug 'tenfyzhong/CompleteParameter.vim'
+Plug 'skywind3000/asyncrun.vim'
+"Plug 'ludovicchabant/vim-gutentags'
 
 " rainbow_parentheses
 Plug 'kien/rainbow_parentheses.vim'
@@ -47,7 +49,7 @@ Plug 'majutsushi/tagbar'
 Plug 'tpope/vim-surround'
 Plug 'vim-syntastic/syntastic'
 Plug 'airblade/vim-rooter'
-Plug 'szw/vim-tags'
+"Plug 'szw/vim-tags'
 Plug 'jiangmiao/auto-pairs'    "vim-scripts/paredit.vi
 Plug 'tpope/vim-speeddating'
 Plug 'jgdavey/tslime.vim'
@@ -115,6 +117,12 @@ Plug 'NLKNguyen/vim-maven-syntax'
 Plug 'artur-shaik/vim-javacomplete2'
 " https://julien.ponge.org/blog/java-coding-with-style/
 " eclim
+
+" For networking programming 
+" Click 
+Plug 'vim-scripts/click.vim'
+" P4 16
+Plug 'milad14000/vim_p4'
 
 " Buffer
 Plug 'ctrlpvim/ctrlp.vim' | Plug 'tacahiroy/ctrlp-funky'
@@ -212,7 +220,7 @@ set noswapfile
 set exrc
 set secure
 
-set tags=.git/tags
+"set tags=.git/tags
 
 " Sane splits
 set splitright
