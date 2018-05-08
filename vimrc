@@ -1234,6 +1234,15 @@ let g:indentLine_char = '│'
 " MIT Scheme
 "let g:slimv_swank_cmd = '! screen -d -m -t REPL-SBCL sbcl --load ~/.vim/bundle/slimv/slime/start-swank.lisp'
 
+" =============================================================================
+"    My Coding setup
+" ============================================================================
+" C++ reference look up  {{{
+" https://stackoverflow.com/questions/2272759/looking-up-c-documentation-inside-of-vim?utm_medium=organic&utm_source=google_rich_qa&utm_campaign=google_rich_qa
+command! -nargs=+ Cppman silent! call system("tmux split-window cppman " . expand(<q-args>))
+autocmd FileType cpp nnoremap <silent><buffer> K <Esc>:Cppman <cword><CR>
+" }}}
+
 " local_vimrc {{{
 " https://github.com/LucHermitte/local_vimrc
 let g:local_vimrc = ['.config', '_vimrc_local.vim']
