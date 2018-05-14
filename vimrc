@@ -401,7 +401,7 @@ map L $
 " Neat X clipboard integration
 " ,p will paste clipboard into buffer
 " ,c will copy entire buffer into clipboard
-noremap <leader>p :read !xsel --clipboard --output<cr>
+noremap <leader>pp :read !xsel --clipboard --output<cr>
 noremap <leader>c :w !xsel -ib<cr><cr>
 
 " No arrow keys --- force yourself to use the home row
@@ -483,7 +483,7 @@ map <leader>te :tabedit <c-r>=expand("%:p:h")<cr>/
 map <leader>cd :cd %:p:h<cr>:pwd<cr>
 
 map <leader>0 :e ~/buffer<cr>
-map <leader>pp :setlocal paste!<cr>
+"map <leader>pp :setlocal paste!<cr>
 
 " Visual mode mappings
 "vnoremap <silent> * :call VisualSelection('f')<CR>
