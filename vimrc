@@ -30,21 +30,39 @@ Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'scrooloose/nerdtree' | Plug 'jistr/vim-nerdtree-tabs'
 "Plug 'altercation/vim-colors-solarized'
-Plug 'Yggdroot/indentLine'
+"Plug 'Yggdroot/indentLine'  " redundent
 "Plug 'mkitt/tabline.vim'
 Plug 'ap/vim-buftabline'
 Plug 'tenfyzhong/CompleteParameter.vim'
 Plug 'skywind3000/asyncrun.vim'
 "Plug 'ludovicchabant/vim-gutentags'
-
+"Plug 'Raimondi/delimitMate'
 " rainbow_parentheses
 Plug 'kien/rainbow_parentheses.vim'
 Plug 'raymond-w-ko/vim-niji'
+Plug 'severin-lemaignan/vim-minimap'
 
 " Semantic support
-"Plug 'Raimondi/delimitMate'
-Plug 'phildawes/racer'
-Plug 'racer-rust/vim-racer'
+
+" LSP
+Plug 'autozimu/LanguageClient-neovim', {
+    \ 'branch': 'next',
+    \ 'do': 'bash install.sh',
+\ }
+" (Optional) Multi-entry selection UI.
+Plug 'junegunn/fzf'
+
+
+if has('nvim')
+  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+else
+  Plug 'Shougo/deoplete.nvim'
+  Plug 'roxma/nvim-yarp'
+  Plug 'roxma/vim-hug-neovim-rpc'
+endif
+let g:deoplete#enable_at_startup = 1
+
+
 Plug 'majutsushi/tagbar'
 Plug 'tpope/vim-surround'
 Plug 'vim-syntastic/syntastic'
@@ -73,10 +91,8 @@ Plug 'honza/vim-snippets'
 " Syntactic language support
 " ================================
 Plug 'vim-scripts/gnuplot-syntax-highlighting'
-"Plug 'treycordova/rustpeg.vim.git'
 Plug 'cespare/vim-toml'
 Plug 'lervag/vimtex'
-Plug 'rust-lang/rust.vim'
 " Be-trusted C/C++ FIXME
 Plug 'octol/vim-cpp-enhanced-highlight'
 Plug 'WolfgangMehner/c-support' 
@@ -86,6 +102,13 @@ Plug 'NLKNguyen/c-syntax.vim'
 Plug 'fatih/vim-go', { 'do': ':GoInstallBinaries' }
 "Plug 'rjohnsondev/vim-compiler-go'         seem broken
 Plug 'dgryski/vim-godef'
+
+" Rust
+Plug 'rust-lang/rust.vim'
+"Plug 'phildawes/racer'
+"Plug 'treycordova/rustpeg.vim.git'
+"Plug 'racer-rust/vim-racer'
+
 " Python
 Plug 'klen/python-mode'   " for python
 Plug 'Vimjas/vim-python-pep8-indent'
@@ -301,7 +324,7 @@ match ErrorMsg '\s\+$'
 " required in xterm-256
 if $TERM=~"tmux-256color"
   " Colors
-  set background=light
+  set background=dark
   set t_Co=256
   colorscheme PaperColor  "base16-atelier-dune
   " Personal settings
@@ -326,7 +349,7 @@ if $TERM=~"rxvt-unicode"
   let g:PaperColor_Light_Override = { 'background' : '#abcdef', 'cursorline' : '#dfdfff', 'matchparen' : '#d6d6d6' , 'comment' : '#8e908c' }
   autocmd BufEnter *.org colorscheme gruvbox
   autocmd BufEnter *.bib colorscheme gruvbox
-  "autocmd BufEnter *.tex set background=light
+  autocmd BufEnter *.tex set background=light
 endif
 if $TERM=~"terminator"
   set background=dark
@@ -401,7 +424,7 @@ map L $
 " Neat X clipboard integration
 " ,p will paste clipboard into buffer
 " ,c will copy entire buffer into clipboard
-noremap <leader>p :read !xsel --clipboard --output<cr>
+noremap <leader>pp :read !xsel --clipboard --output<cr>
 noremap <leader>c :w !xsel -ib<cr><cr>
 
 " No arrow keys --- force yourself to use the home row
@@ -483,7 +506,7 @@ map <leader>te :tabedit <c-r>=expand("%:p:h")<cr>/
 map <leader>cd :cd %:p:h<cr>:pwd<cr>
 
 map <leader>0 :e ~/buffer<cr>
-map <leader>pp :setlocal paste!<cr>
+"map <leader>pp :setlocal paste!<cr>
 
 " Visual mode mappings
 "vnoremap <silent> * :call VisualSelection('f')<CR>
@@ -636,24 +659,48 @@ let javaScript_fold=0
 " Doxygen
 let mysyntaxfile='~/.vim/doxygen_load.vim'
 
-" DEPRECATED {{{
-" Don't confirm .lvimrc
-let g:localvimrc_ask = 0
-" language server protocol
-"let g:LanguageClient_serverCommands = {
-"    \ 'rust': ['rustup', 'run', 'nightly', 'cargo', 'run', '--release', '--manifest-path=/home/jon/dev/others/rls/Cargo.toml'],
-"    \ }
-"nnoremap <silent> K :call LanguageClient_textDocument_hover()<CR>
-"nnoremap <silent> gd :call LanguageClient_textDocument_definition()<CR>
-"nnoremap <silent> <F2> :call LanguageClient_textDocument_rename()<CR>
-" }}}
-
 " ======================================
 "  Lang specific settings
 " ======================================
 
+
+" language server protocol
+set hidden
+let g:LanguageClient_serverCommands = {
+    \ 'python': ['pyls'],
+    \ 'go': ['go-langserver'],
+    \ 'rust': ['rustup', 'run', 'nightly', 'rls'],
+    \ }
+let g:LanguageClient_autoStart = 1
+
+nnoremap <silent> K :call LanguageClient_textDocument_hover()<CR>
+nnoremap <silent> gd :call LanguageClient_textDocument_definition()<CR>
+nnoremap <silent> <F2> :call LanguageClient_textDocument_rename()<CR>
+noremap <silent> H :call LanguageClient_textDocument_hover()<CR>
+noremap <silent> Z :call LanguageClient_textDocument_definition()<CR>
+noremap <silent> R :call LanguageClient_textDocument_rename()<CR>
+noremap <silent> S :call LanugageClient_textDocument_documentSymbol()<CR>
+
+
+au FileType rust nmap gd <Plug>(rust-def)
+au FileType rust nmap gs <Plug>(rust-def-split)
+au FileType rust nmap gx <Plug>(rust-def-vertical)
+au FileType rust nmap <leader>gd <Plug>(rust-doc)
+
 " racer + rust {{{
-autocmd FileType rust call s:rust_my_settings()
+" https://github.com/rust-lang/rust.vim/issues/192
+let $RUST_SRC_PATH = glob("$HOME/.rustup/toolchains/nightly*/lib/rustlib/src/rust/src")
+
+let g:rustfmt_command = "rustfmt +nightly"
+let g:rustfmt_options = "--emit files"
+let g:rustfmt_autosave = 1
+let g:rustfmt_fail_silently = 0
+let g:rust_clip_command = 'xclip -selection clipboard'
+"let g:racer_cmd = "/usr/bin/racer"
+"let g:racer_experimental_completer = 1
+"let $RUST_SRC_PATH = systemlist("rustc --print sysroot")[0] . "/lib/rustlib/src/rust/src"
+
+"autocmd FileType rust call s:rust_my_settings()
 function! s:rust_my_settings()
   let g:rustfmt_autosave = 1
   let g:rustfmt_fail_silently = 1
@@ -1402,6 +1449,13 @@ for d in glob('~/.vim/spell/*.add', 1, 1)
     exec 'mkspell! ' . fnameescape(d)
   endif
 endfor
+" }}}
+" {{{ Mini map
+let g:minimap_highlight='Visual'
+let g:minimap_show='<leader>ms'
+let g:minimap_update='<leader>mu'
+let g:minimap_close='<leader>gc'
+let g:minimap_toggle='<leader>gt'
 " }}}
 
 " end of vimrc
