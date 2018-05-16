@@ -30,7 +30,7 @@ Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'scrooloose/nerdtree' | Plug 'jistr/vim-nerdtree-tabs'
 "Plug 'altercation/vim-colors-solarized'
-Plug 'Yggdroot/indentLine'
+"Plug 'Yggdroot/indentLine'  " redundent
 "Plug 'mkitt/tabline.vim'
 Plug 'ap/vim-buftabline'
 Plug 'tenfyzhong/CompleteParameter.vim'
