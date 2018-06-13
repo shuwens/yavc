@@ -320,18 +320,31 @@ set expandtab
 " justine sherry
 match ErrorMsg '\s\+$'
 
+" Test status line
+
+set statusline=
+      \\ %{&filetype!=#''?&filetype:'none'}
+      \\ %{&readonly\|\|!&modifiable?&modified?'%*':'%%':&modified?'**':'--'}
+      \\ %{expand('%:~:.')!=#''?expand('%:~:.'):'[No\ Name]'}
+      \%=
+      \%<\ C%c%3(%)L%l/%L%2(%)
+      \%6(%p%%\ %)
+
 " Note that using urxvt will need to get rid of it to make it work, but it is
 " required in xterm-256
 if $TERM=~"tmux-256color"
-  " Colors
   set background=dark
   set t_Co=256
-  colorscheme PaperColor  "base16-atelier-dune
-  " Personal settings
-  set cursorcolumn
+  colorscheme PaperColor
   "highlight SpecialKey ctermfg=11 ctermbg=8
+  "let g:PaperColor_Dark_Override = { 'background' : '#1c1c1c', 'cursorline' : '#abcdef', 'matchparen' : '#3a3a3a', 'comment' : '#5f875f' }
+  "let g:PaperColor_Light_Override = { 'background' : '#abcdef', 'cursorline' : '#dfdfff', 'matchparen' : '#d6d6d6' , 'comment' : '#8e908c' }
+  autocmd BufEnter *.md  set background=light
+  autocmd BufEnter *.org set background=light
+  autocmd BufEnter *.bib set background=light
+  autocmd BufEnter *.tex set background=light
 endif
-if $TERM=~"xterm-256color"
+if $TERM=~"alacritty-256color"
   " Colors
   set background=light
   set t_Co=256
@@ -340,16 +353,25 @@ if $TERM=~"xterm-256color"
   set cursorcolumn
   "highlight SpecialKey ctermfg=11 ctermbg=8
 endif
-if $TERM=~"rxvt-unicode"
+" ------------------------------------------
+if $TERM=~"tmux"
+  " Colors
   set background=dark
   set t_Co=256
-  colorscheme PaperColor
-  highlight SpecialKey ctermfg=11 ctermbg=8
-  let g:PaperColor_Dark_Override = { 'background' : '#1c1c1c', 'cursorline' : '#abcdef', 'matchparen' : '#3a3a3a', 'comment' : '#5f875f' }
-  let g:PaperColor_Light_Override = { 'background' : '#abcdef', 'cursorline' : '#dfdfff', 'matchparen' : '#d6d6d6' , 'comment' : '#8e908c' }
-  autocmd BufEnter *.org colorscheme gruvbox
-  autocmd BufEnter *.bib colorscheme gruvbox
-  autocmd BufEnter *.tex set background=light
+  colorscheme PaperColor  "base16-atelier-dune
+  " Personal settings
+  set cursorcolumn
+  "highlight SpecialKey ctermfg=11 ctermbg=8
+endif
+
+if $TERM=~"xterm-256color"
+  " Colors
+  set background=light
+  set t_Co=256
+  colorscheme PaperColor  "base16-atelier-dune
+  " Personal settings
+  set cursorcolumn
+  "highlight SpecialKey ctermfg=11 ctermbg=8
 endif
 if $TERM=~"terminator"
   set background=dark
