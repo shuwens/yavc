@@ -7,7 +7,7 @@ let mapleader = "\<Space>"
 " =============================================================================
 set nocompatible
 filetype off
-"set rtp+=~/dev/others/base16/builder/templates/vim/
+set rtp+=~/dev/others/base16/builder/templates/vim/
 call plug#begin('~/.vim/plugged')
 
 " Load plugins
@@ -46,9 +46,9 @@ Plug 'severin-lemaignan/vim-minimap'
 
 " LSP
 Plug 'autozimu/LanguageClient-neovim', {
-    \ 'branch': 'next',
-    \ 'do': 'bash install.sh',
-\ }
+      \ 'branch': 'next',
+      \ 'do': 'bash install.sh',
+      \ }
 " (Optional) Multi-entry selection UI.
 Plug 'junegunn/fzf'
 
@@ -158,6 +158,7 @@ Plug 'AlessandroYorba/Sierra'
 Plug 'michalbachowski/vim-wombat256mod'
 Plug 'NLKNguyen/papercolor-theme'
 Plug 'roosta/srcery'
+Plug 'chriskempson/base16-vim'
 
 " ==================================
 " For different tools
@@ -317,35 +318,41 @@ set autoindent
 set smarttab
 set expandtab
 
+" Base16
+let base16colorspace=256
+let g:base16_shell_path="~/dev/others/base16/shell/scripts"
+
 " justine sherry
 match ErrorMsg '\s\+$'
 
 " Test status line
-
-set statusline=
-      \\ %{&filetype!=#''?&filetype:'none'}
-      \\ %{&readonly\|\|!&modifiable?&modified?'%*':'%%':&modified?'**':'--'}
-      \\ %{expand('%:~:.')!=#''?expand('%:~:.'):'[No\ Name]'}
-      \%=
-      \%<\ C%c%3(%)L%l/%L%2(%)
-      \%6(%p%%\ %)
+"set statusline=
+"      \\ %{&filetype!=#''?&filetype:'none'}
+"      \\ %{&readonly\|\|!&modifiable?&modified?'%*':'%%':&modified?'**':'--'}
+"      \\ %{expand('%:~:.')!=#''?expand('%:~:.'):'[No\ Name]'}
+"      \%=
+"      \%<\ C%c%3(%)L%l/%L%2(%)
+"      \%6(%p%%\ %)
 
 " Note that using urxvt will need to get rid of it to make it work, but it is
 " required in xterm-256
 if $TERM=~"tmux-256color"
+  "set termguicolors
   set background=dark
-  set t_Co=256
-  colorscheme PaperColor
-  "highlight SpecialKey ctermfg=11 ctermbg=8
-  "let g:PaperColor_Dark_Override = { 'background' : '#1c1c1c', 'cursorline' : '#abcdef', 'matchparen' : '#3a3a3a', 'comment' : '#5f875f' }
-  "let g:PaperColor_Light_Override = { 'background' : '#abcdef', 'cursorline' : '#dfdfff', 'matchparen' : '#d6d6d6' , 'comment' : '#8e908c' }
+  "set t_Co=256
+  "let base16colorspace=256
+  colorscheme base16-atelier-dune
+  "colorscheme PaperColor
+endif
+if $TERM=~"alacritty-256color"
+  " Colors
   autocmd BufEnter *.md  set background=light
   autocmd BufEnter *.org set background=light
   autocmd BufEnter *.bib set background=light
   autocmd BufEnter *.tex set background=light
-endif
-if $TERM=~"alacritty-256color"
-  " Colors
+  "highlight SpecialKey ctermfg=11 ctermbg=8
+  "let g:PaperColor_Dark_Override = { 'background' : '#1c1c1c', 'cursorline' : '#abcdef', 'matchparen' : '#3a3a3a', 'comment' : '#5f875f' }
+  "let g:PaperColor_Light_Override = { 'background' : '#abcdef', 'cursorline' : '#dfdfff', 'matchparen' : '#d6d6d6' , 'comment' : '#8e908c' }
   set background=light
   set t_Co=256
   colorscheme PaperColor  "base16-atelier-dune
@@ -354,7 +361,7 @@ if $TERM=~"alacritty-256color"
   "highlight SpecialKey ctermfg=11 ctermbg=8
 endif
 " ------------------------------------------
-if $TERM=~"tmux"
+if $TERM=~"xxxxxtmux"
   " Colors
   set background=dark
   set t_Co=256
@@ -363,7 +370,6 @@ if $TERM=~"tmux"
   set cursorcolumn
   "highlight SpecialKey ctermfg=11 ctermbg=8
 endif
-
 if $TERM=~"xterm-256color"
   " Colors
   set background=light
@@ -689,10 +695,10 @@ let mysyntaxfile='~/.vim/doxygen_load.vim'
 " language server protocol
 set hidden
 let g:LanguageClient_serverCommands = {
-    \ 'python': ['pyls'],
-    \ 'go': ['go-langserver'],
-    \ 'rust': ['rustup', 'run', 'nightly', 'rls'],
-    \ }
+      \ 'python': ['pyls'],
+      \ 'go': ['go-langserver'],
+      \ 'rust': ['rustup', 'run', 'nightly', 'rls'],
+      \ }
 let g:LanguageClient_autoStart = 1
 
 nnoremap <silent> K :call LanguageClient_textDocument_hover()<CR>
@@ -1390,7 +1396,7 @@ au FileType scheme nnoremap M :!rlwrap guile -l %<cr><cr>
 " }}}
 " spell & prose {{{
 " RUN: :mkspell! %
-set spell
+set nospell
 set spelllang=en
 set spellfile=$HOME/.vim/spell/en.utf-8.add
 let prose_fts = ['gitcommit', 'mail',  'markdown', 'text', 'tex' ]
