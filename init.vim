@@ -70,16 +70,12 @@ let g:spacehi_tabcolor="ctermfg=White ctermbg=Red guifg=White guibg=Red"
 let g:spacehi_spacecolor="ctermfg=Black ctermbg=Yellow guifg=Blue guibg=Yellow"
 let g:spacehi_nbspcolor="ctermfg=White ctermbg=Red guifg=White guibg=Red"
 
-"Plug 'chriskempson/base16-vim'
-"Plug 'Soares/base16.nvim'
-"Plug 'atelierbram/vim-colors_atelier-schemes'
-
 call plug#end()
 
 runtime macros/matchit.vim
 
 if has('nvim')
-  "set guicursor=n-v-c:block-Cursor/lCursor-blinkon0,i-ci:ver25-Cursor/lCursor,r-cr:hor20-Cursor/lCursor
+  set guicursor=n-v-c:block-Cursor/lCursor-blinkon0,i-ci:ver25-Cursor/lCursor,r-cr:hor20-Cursor/lCursor
   set inccommand=nosplit
   noremap <C-q> :confirm qall<CR>
 end
@@ -88,9 +84,6 @@ if !has('gui_running')
   set t_Co=256
 endif
 
-if $TERM == "xterm-256color"
-  set t_Co=256
-endif
 
 " Plugin settings
 let g:secure_modelines_allowed_items = [
@@ -108,7 +101,7 @@ let g:secure_modelines_allowed_items = [
 
 " Base16
 let base16colorspace=256
-let g:base16_shell_path="~/dev/others/base16/shell/scripts/"
+let g:base16_shell_path="$HOME/dev/others/base16/shell/scripts/"
 
 " Lightline
 " let g:lightline = { 'colorscheme': 'wombat' }
@@ -185,13 +178,13 @@ inoremap <expr><Tab> (pumvisible()?(empty(v:completed_item)?"\<C-n>":"\<C-y>"):"
 inoremap <expr><CR> (pumvisible()?(empty(v:completed_item)?"\<CR>\<CR>":"\<C-y>"):"\<CR>")
 
 " Doxygen
-let mysyntaxfile='~/.vim/doxygen_load.vim'
+let mysyntaxfile='$HOME/.config/nvim/doxygen_load.vim'
 
 " Golang
 let g:go_play_open_browser = 0
 let g:go_fmt_fail_silently = 1
 let g:go_fmt_command = "goimports"
-let g:go_bin_path = expand("~/dev/go/bin")
+let g:go_bin_path = expand("~/dev/r/bin")
 
 " Don't gofmt Biscuit (yet)
 autocmd BufRead,BufNewFile /home/jon/dev/others/biscuit/** let [g:go_fmt_command, g:go_fmt_autosave]=["", 0]
@@ -208,7 +201,7 @@ set noshowmode
 set hidden
 set nowrap
 set nojoinspaces
-if (match($TERM, "-256color") != -1) && (match($TERM, "screen-256color") == -1)
+if (match($TERM, "-256color") != -1) && (match($TERM, "tmux-256color") == -1)
   " screen does not (yet) support truecolor
   set termguicolors
 endif
@@ -233,9 +226,9 @@ set wildmode=list:longest
 set wildignore=.hg,.svn,*~,*.png,*.jpg,*.gif,*.settings,Thumbs.db,*.min.js,*.swp,publish/*,intermediate/*,*.o,*.hi,Zend,vendor
 
 " Use wide tabs
-set shiftwidth=8
-set softtabstop=8
-set tabstop=8
+set shiftwidth=2
+set softtabstop=2
+set tabstop=2
 set noexpandtab
 
 " Get syntax
@@ -419,7 +412,7 @@ autocmd BufRead *.trm set filetype=c
 autocmd BufRead *.xlsx.axlsx set filetype=ruby
 
 " Script plugins
-autocmd Filetype html,xml,xsl,php source ~/.vim/scripts/closetag.vim
+autocmd Filetype html,xml,xsl,php source $HOME/.config/nvim/scripts/closetag.vim
 
 " =============================================================================
 " # Footer
@@ -429,3 +422,4 @@ autocmd Filetype html,xml,xsl,php source ~/.vim/scripts/closetag.vim
 if has('nvim')
   runtime! plugin/python_setup.vim
 endif
+set nospell
