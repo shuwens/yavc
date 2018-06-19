@@ -70,7 +70,27 @@ let g:spacehi_tabcolor="ctermfg=White ctermbg=Red guifg=White guibg=Red"
 let g:spacehi_spacecolor="ctermfg=Black ctermbg=Yellow guifg=Blue guibg=Yellow"
 let g:spacehi_nbspcolor="ctermfg=White ctermbg=Red guifg=White guibg=Red"
 
+"Plug 'google/yapf', { 'rtp': 'plugins/vim', 'for': 'python' }
+
+Plug 'bennyyip/vim-yapf' "forked from rhysd/vim-clang-format
+
+Plug 'nathanaelkane/vim-indent-guides'
+
+" Add maktaba and codefmt to the runtimepath.
+" (The latter must be installed before it can be used.)
+Plug 'google/vim-maktaba'
+Plug 'google/vim-codefmt'
+" Also add Glaive, which is used to configure codefmt's maktaba flags. See
+" `:help :Glaive` for usage.
+Plug 'google/vim-glaive'
+
 call plug#end()
+" ...
+" the glaive#Install() should go after the "call vundle#end()"
+call glaive#Install()
+" Optional: Enable codefmt's default mappings on the <Leader>= prefix.
+Glaive codefmt plugin[mappings]
+
 
 runtime macros/matchit.vim
 
@@ -359,7 +379,7 @@ nnoremap <C-g> :cclose<cr>
 nnoremap <leader><leader> <c-^>
 
 " <leader>= reformats current tange
-nnoremap <leader>= :'<,'>RustFmtRange<cr>
+autocmd FileType rust nnoremap <leader>= :'<,'>RustFmtRange<cr>
 
 " <leader>, shows/hides hidden characters
 nnoremap <leader>, :set invlist<cr>
@@ -414,6 +434,66 @@ autocmd BufRead *.xlsx.axlsx set filetype=ruby
 " Script plugins
 autocmd Filetype html,xml,xsl,php source $HOME/.config/nvim/scripts/closetag.vim
 
+
+" =============================================================================
+" # Personal
+" =============================================================================
+
+" provide hjkl movements in Insert mode via the <Alt> modifier key
+inoremap <A-h> <C-o>h
+inoremap <A-j> <C-o>j
+inoremap <A-k> <C-o>k
+inoremap <A-l> <C-o>l
+
+nmap <leader>w :w<CR>
+nmap <leader>wq :wq<CR>
+"nnoremap <leader>w :w<CR>
+nnoremap <leader>q :q!<CR>
+nnoremap <leader>qq :q!<Esc>:q!<CR>
+
+" map wincmd {{
+nmap <silent> <A-Up> :wincmd k<CR>
+nmap <silent> <A-Down> :wincmd j<CR>
+nmap <silent> <A-Left> :wincmd h<CR>
+nmap <silent> <A-Right> :wincmd l<CR>
+" using ctrl hj"
+nmap <leader>j :wincmd j<CR>
+nmap <leader>k :wincmd k<CR>
+nmap <leader>h :wincmd h<CR>
+nmap <leader>l :wincmd l<CR>
+" The right windcmd
+nmap <silent>J :wincmd j<CR>
+nmap <silent>K :wincmd k<CR>
+nmap <silent>H :wincmd h<CR>
+nmap <silent>L :wincmd l<CR>
+
+" yapf -- google
+"map <C-Y> :call yapf#YAPF()<cr>
+"imap <C-Y> <c-o>:call yapf#YAPF()<cr>
+
+" map to <Leader>cf in python code
+autocmd FileType python nnoremap <buffer><Leader>cf :<C-u>Yapf<CR>
+autocmd FileType python vnoremap <buffer><Leader>cf :Yapf<CR>
+" if you install vim-operator-user
+autocmd FileType python map <buffer><Leader>x <Plug>(operator-clang-format)
+" Toggle auto formatting:
+nmap <Leader>C :YapfAutoToggle<CR>
+
+" indent line
+let g:indent_guides_enable_on_vim_startup = 1
+
+augroup autoformat_settings
+  autocmd FileType bzl AutoFormatBuffer buildifier
+  autocmd FileType c,cpp,proto,javascript AutoFormatBuffer clang-format
+  autocmd FileType dart AutoFormatBuffer dartfmt
+  autocmd FileType go AutoFormatBuffer gofmt
+  autocmd FileType gn AutoFormatBuffer gn
+  autocmd FileType html,css,json AutoFormatBuffer js-beautify
+  "autocmd FileType java AutoFormatBuffer google-java-format
+  autocmd FileType python AutoFormatBuffer yapf
+  " Alternative: autocmd FileType python AutoFormatBuffer autopep8
+augroup END
+
 " =============================================================================
 " # Footer
 " =============================================================================
@@ -422,4 +502,3 @@ autocmd Filetype html,xml,xsl,php source $HOME/.config/nvim/scripts/closetag.vim
 if has('nvim')
   runtime! plugin/python_setup.vim
 endif
-set nospell
