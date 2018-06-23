@@ -30,9 +30,9 @@ Plug 'junegunn/fzf.vim'
 "Plug 'phildawes/racer'
 "Plug 'racer-rust/vim-racer'
 Plug 'autozimu/LanguageClient-neovim', {
-      \ 'branch': 'next',
-      \ 'do': 'bash install.sh',
-      \ }
+			\ 'branch': 'next',
+			\ 'do': 'bash install.sh',
+			\ }
 Plug 'mattn/webapi-vim'
 Plug 'roxma/nvim-completion-manager'
 "Plug 'roxma/nvim-cm-racer'
@@ -84,6 +84,8 @@ Plug 'google/vim-codefmt'
 " `:help :Glaive` for usage.
 Plug 'google/vim-glaive'
 
+Plug 'neomake/neomake'
+
 call plug#end()
 " ...
 " the glaive#Install() should go after the "call vundle#end()"
@@ -95,29 +97,29 @@ Glaive codefmt plugin[mappings]
 runtime macros/matchit.vim
 
 if has('nvim')
-  set guicursor=n-v-c:block-Cursor/lCursor-blinkon0,i-ci:ver25-Cursor/lCursor,r-cr:hor20-Cursor/lCursor
-  set inccommand=nosplit
-  noremap <C-q> :confirm qall<CR>
+	set guicursor=n-v-c:block-Cursor/lCursor-blinkon0,i-ci:ver25-Cursor/lCursor,r-cr:hor20-Cursor/lCursor
+	set inccommand=nosplit
+	noremap <C-q> :confirm qall<CR>
 end
 
 if !has('gui_running')
-  set t_Co=256
+	set t_Co=256
 endif
 
 
 " Plugin settings
 let g:secure_modelines_allowed_items = [
-      \ "textwidth",   "tw",
-      \ "softtabstop", "sts",
-      \ "tabstop",     "ts",
-      \ "shiftwidth",  "sw",
-      \ "expandtab",   "et",   "noexpandtab", "noet",
-      \ "filetype",    "ft",
-      \ "foldmethod",  "fdm",
-      \ "readonly",    "ro",   "noreadonly", "noro",
-      \ "rightleft",   "rl",   "norightleft", "norl",
-      \ "colorcolumn"
-      \ ]
+			\ "textwidth",   "tw",
+			\ "softtabstop", "sts",
+			\ "tabstop",     "ts",
+			\ "shiftwidth",  "sw",
+			\ "expandtab",   "et",   "noexpandtab", "noet",
+			\ "filetype",    "ft",
+			\ "foldmethod",  "fdm",
+			\ "readonly",    "ro",   "noreadonly", "noro",
+			\ "rightleft",   "rl",   "norightleft", "norl",
+			\ "colorcolumn"
+			\ ]
 
 " Base16
 let base16colorspace=256
@@ -126,21 +128,21 @@ let g:base16_shell_path="$HOME/dev/others/base16/shell/scripts/"
 " Lightline
 " let g:lightline = { 'colorscheme': 'wombat' }
 let g:lightline = {
-      \ 'component_function': {
-      \   'filename': 'LightlineFilename',
-      \ },
-      \ }
+			\ 'component_function': {
+			\   'filename': 'LightlineFilename',
+			\ },
+			\ }
 function! LightlineFilename()
-  return expand('%:t') !=# '' ? @% : '[No Name]'
+	return expand('%:t') !=# '' ? @% : '[No Name]'
 endfunction
 
 " from http://sheerun.net/2014/03/21/how-to-boost-your-vim-productivity/
 if executable('ag')
-  set grepprg=ag\ --nogroup\ --nocolor
+	set grepprg=ag\ --nogroup\ --nocolor
 endif
 if executable('rg')
-  set grepprg=rg\ --no-heading\ --vimgrep
-  set grepformat=%f:%l:%c:%m
+	set grepprg=rg\ --no-heading\ --vimgrep
+	set grepformat=%f:%l:%c:%m
 endif
 
 " Javascript
@@ -173,8 +175,8 @@ let g:localvimrc_ask = 0
 
 " language server protocol
 let g:LanguageClient_serverCommands = {
-      \ 'rust': ['env', 'CARGO_TARGET_DIR=/home/jon/dev/tmp/cargo-target/rls', 'rls'],
-      \ }
+			\ 'rust': ['env', 'CARGO_TARGET_DIR=/home/jon/dev/tmp/cargo-target/rls', 'rls'],
+			\ }
 let g:LanguageClient_autoStart = 1
 nnoremap <silent> K :call LanguageClient_textDocument_hover()<CR>
 nnoremap <silent> gd :call LanguageClient_textDocument_definition()<CR>
@@ -222,8 +224,8 @@ set hidden
 set nowrap
 set nojoinspaces
 if (match($TERM, "-256color") != -1) && (match($TERM, "tmux-256color") == -1)
-  " screen does not (yet) support truecolor
-  set termguicolors
+	" screen does not (yet) support truecolor
+	set termguicolors
 endif
 
 " Settings needed for .lvimrc
@@ -341,11 +343,11 @@ noremap <leader>c :w !xsel -ib<cr><cr>
 noremap <leader>s :Rg
 let g:fzf_layout = { 'down': '~20%' }
 command! -bang -nargs=* Rg
-      \ call fzf#vim#grep(
-      \   'rg --column --line-number --no-heading --color=always '.shellescape(<q-args>), 1,
-      \   <bang>0 ? fzf#vim#with_preview('up:60%')
-      \           : fzf#vim#with_preview('right:50%:hidden', '?'),
-      \   <bang>0)
+			\ call fzf#vim#grep(
+			\   'rg --column --line-number --no-heading --color=always '.shellescape(<q-args>), 1,
+			\   <bang>0 ? fzf#vim#with_preview('up:60%')
+			\           : fzf#vim#with_preview('right:50%:hidden', '?'),
+			\   <bang>0)
 
 " Open new file adjacent to current file
 nnoremap <leader>e :e <C-R>=expand("%:p:h") . "/" <CR>
@@ -412,15 +414,15 @@ autocmd InsertLeave * set nopaste
 
 " Jump to last edit position on opening file
 if has("autocmd")
-  " https://stackoverflow.com/questions/31449496/vim-ignore-specifc-file-in-autocommand
-  au BufReadPost * if expand('%:p') !~# '\m/\.git/' && line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
+	" https://stackoverflow.com/questions/31449496/vim-ignore-specifc-file-in-autocommand
+	au BufReadPost * if expand('%:p') !~# '\m/\.git/' && line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
 endif
 
 " Auto-make less files on save
 autocmd BufWritePost *.less if filereadable("Makefile") | make | endif
 
 " Follow Rust code style rules
-au Filetype rust source ~/.vim/scripts/spacetab.vim
+au Filetype rust source $HOME/.config/nvim/scripts/spacetab.vim
 au Filetype rust set colorcolumn=100
 
 " Help filetype detection
@@ -483,16 +485,55 @@ nmap <Leader>C :YapfAutoToggle<CR>
 let g:indent_guides_enable_on_vim_startup = 1
 
 augroup autoformat_settings
-  autocmd FileType bzl AutoFormatBuffer buildifier
-  autocmd FileType c,cpp,proto,javascript AutoFormatBuffer clang-format
-  autocmd FileType dart AutoFormatBuffer dartfmt
-  autocmd FileType go AutoFormatBuffer gofmt
-  autocmd FileType gn AutoFormatBuffer gn
-  autocmd FileType html,css,json AutoFormatBuffer js-beautify
-  "autocmd FileType java AutoFormatBuffer google-java-format
-  autocmd FileType python AutoFormatBuffer yapf
-  " Alternative: autocmd FileType python AutoFormatBuffer autopep8
+	autocmd FileType bzl AutoFormatBuffer buildifier
+	autocmd FileType c,cpp,proto,javascript AutoFormatBuffer clang-format
+	autocmd FileType dart AutoFormatBuffer dartfmt
+	autocmd FileType go AutoFormatBuffer gofmt
+	autocmd FileType gn AutoFormatBuffer gn
+	autocmd FileType html,css,json AutoFormatBuffer js-beautify
+	"autocmd FileType java AutoFormatBuffer google-java-format
+	autocmd FileType python AutoFormatBuffer yapf
+	" Alternative: autocmd FileType python AutoFormatBuffer autopep8
 augroup END
+
+" Rewrap is similar to the gqq command with textwidth, but it also uses a hanging
+"   indent and can be used on multiple lines of text.  And note that textwidth needs
+"   to be set beforehand.
+" Probably generally best to use with the F3 hotkey defined below.  Can use
+"   count to determine how many rows below to include.  Cannot use directions.
+" Very, very useful for docblocks and if not using a version of Vim with the
+"   breakindent patch
+"
+" From https://github.com/anorman728/vimprojects/blob/master/Rewrap.vim
+function! RewrapFunc() range
+	let lines = a:lastline-a:firstline+1
+	if lines!=1
+		let joinlines = lines-1
+		exe ":normal ".lines."J"
+	endif
+	exe ":normal gqq"
+	while line('.')!=a:firstline
+		exe ":normal I  "
+		exe ":normal k"
+	endwhile
+endfunction
+
+command! -range RewrapCmd <line1>,<line2>call RewrapFunc()
+
+nmap Q :RewrapCmd<CR>
+
+" For NeoMake
+" When writing a buffer (no delay).
+"call neomake#configure#automake('w')
+" When writing a buffer (no delay), and on normal mode changes (after 750ms).
+call neomake#configure#automake('nw', 750)
+" When reading a buffer (after 1s), and when writing (no delay).
+call neomake#configure#automake('rw', 1000)
+" Full config: when writing or reading a buffer, and on changes in insert and
+" normal mode (after 1s; no delay when writing).
+call neomake#configure#automake('nrwi', 500)
+
+"let g:neomake_open_list = 2
 
 " =============================================================================
 " # Footer
@@ -500,5 +541,5 @@ augroup END
 
 " nvim
 if has('nvim')
-  runtime! plugin/python_setup.vim
+	runtime! plugin/python_setup.vim
 endif
