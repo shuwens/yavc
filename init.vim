@@ -294,7 +294,9 @@ set ttyfast
 set lazyredraw
 set synmaxcol=200
 set laststatus=2
-set relativenumber " Relative line numbers
+set relativenumber                 " Relative line numbers
+autocmd InsertEnter * :set number  " Now it is hybrid!
+autocmd InsertLeave * :set nonumber 
 set diffopt+=iwhite " No whitespace in vimdiff
 set colorcolumn=80 " and give me a colored column
 set showcmd " Show (partial) command in status line.
