@@ -37,6 +37,18 @@ Plug 'mattn/webapi-vim'
 Plug 'roxma/nvim-completion-manager'
 "Plug 'roxma/nvim-cm-racer'
 Plug 'junegunn/vader.vim'
+Plug 'reedes/vim-lexical' " lexical/spell
+
+
+Plug 'ncm2/ncm2'
+Plug 'roxma/nvim-yarp'
+"Plug 'roxma/nvim-cm-racer'
+Plug 'junegunn/vader.vim'
+
+" Completion plugins
+Plug 'ncm2/ncm2-bufword'
+Plug 'ncm2/ncm2-tmux'
+Plug 'ncm2/ncm2-path'
 
 " Completion manager plugins
 Plug 'roxma/python-support.nvim'
@@ -53,28 +65,31 @@ let g:python_support_python3_requirements = add(get(g:,'python_support_python3_r
 Plug 'Shougo/echodoc.vim'
 
 " Syntactic language support
-" Plugin '~/dev/projects/simio', {'rtp': 'src/vim-syntax/'}
+" Plug '~/dev/projects/simio', {'rtp': 'src/vim-syntax/'}
 Plug '~/dev/projects/api-soup', {'rtp': 'vim-syntax/'}
-" Plugin 'vim-scripts/gnuplot-syntax-highlighting'
-" Plugin 'treycordova/rustpeg.vim.git'
-" Plugin 'vim-scripts/haskell.vim'
+Plug 'vim-scripts/gnuplot-syntax-highlighting'
+" Plug 'treycordova/rustpeg.vim.git'
+" Plug 'vim-scripts/haskell.vim'
 Plug 'cespare/vim-toml'
-" Plugin 'lervag/vim-latex'
+" Plug 'lervag/vim-latex'
 Plug 'rust-lang/rust.vim'
 Plug 'fatih/vim-go'
 Plug 'dag/vim-fish'
 
 " JETHRO
-Plug 'jpalardy/spacehi.vim'
-let g:spacehi_tabcolor="ctermfg=White ctermbg=Red guifg=White guibg=Red"
-let g:spacehi_spacecolor="ctermfg=Black ctermbg=Yellow guifg=Blue guibg=Yellow"
-let g:spacehi_nbspcolor="ctermfg=White ctermbg=Red guifg=White guibg=Red"
-
+"Plug 'jpalardy/spacehi.vim'
+"let g:spacehi_tabcolor="ctermfg=White ctermbg=Red guifg=White guibg=Red"
+"let g:spacehi_spacecolor="ctermfg=Black ctermbg=Yellow guifg=Blue guibg=Yellow"
+"let g:spacehi_nbspcolor="ctermfg=White ctermbg=Red guifg=White guibg=Red"
+"
+Plug 'Yilin-Yang/vim-markbar'
 "Plug 'google/yapf', { 'rtp': 'plugins/vim', 'for': 'python' }
 
 Plug 'bennyyip/vim-yapf' "forked from rhysd/vim-clang-format
-
 Plug 'nathanaelkane/vim-indent-guides'
+" Color 
+Plug 'rakr/vim-one'
+Plug 'kristijanhusak/vim-hybrid-material'
 
 " Add maktaba and codefmt to the runtimepath.
 " (The latter must be installed before it can be used.)
@@ -84,7 +99,7 @@ Plug 'google/vim-codefmt'
 " `:help :Glaive` for usage.
 Plug 'google/vim-glaive'
 
-Plug 'neomake/neomake'
+"Plug 'neomake/neomake'
 
 call plug#end()
 " ...
@@ -175,8 +190,13 @@ let g:localvimrc_ask = 0
 
 " language server protocol
 let g:LanguageClient_serverCommands = {
-			\ 'rust': ['env', 'CARGO_TARGET_DIR=/home/jon/dev/tmp/cargo-target/rls', 'rls'],
+			\ 'rust': ['rustup', 'run', 'nightly', 'rls'],
+			\ 'javascript': ['javascript-typescript-stdio'],
+			\ 'javascript.jsx': ['tcp://127.0.0.1:2089'],
+			\ 'python': ['pyls'],
 			\ }
+nnoremap <F5> :call LanguageClient_contextMenu()<CR>
+" Or map each action separately
 let g:LanguageClient_autoStart = 1
 nnoremap <silent> K :call LanguageClient_textDocument_hover()<CR>
 nnoremap <silent> gd :call LanguageClient_textDocument_definition()<CR>
@@ -524,18 +544,34 @@ command! -range RewrapCmd <line1>,<line2>call RewrapFunc()
 
 nmap Q :RewrapCmd<CR>
 
-" For NeoMake
-" When writing a buffer (no delay).
-"call neomake#configure#automake('w')
-" When writing a buffer (no delay), and on normal mode changes (after 750ms).
-call neomake#configure#automake('nw', 750)
-" When reading a buffer (after 1s), and when writing (no delay).
-call neomake#configure#automake('rw', 1000)
-" Full config: when writing or reading a buffer, and on changes in insert and
-" normal mode (after 1s; no delay when writing).
-call neomake#configure#automake('nrwi', 500)
+" C++ reference look up  {{{
+" https://stackoverflow.com/questions/2272759/looking-up-c-documentation-inside-of-vim?utm_medium=organic&utm_source=google_rich_qa&utm_campaign=google_rich_qa
+command! -nargs=+ Cppman silent! call system("tmux split-window cppman " . expand(<q-args>))
+autocmd FileType cpp nnoremap <silent><buffer> K <Esc>:Cppman <cword><CR>
+" }}}
 
-"let g:neomake_open_list = 2
+" vim makebar
+map <Leader>mm <Plug>ToggleMarkbar
+" the following are unneeded if ToggleMarkbar is mapped
+map <Leader>mo <Plug>OpenMarkbar
+map <Leader>mc <Plug>CloseMarkbar
+
+" vim spell
+for d in glob('~/.config/nvim/spell/*.add', 1, 1)
+    if filereadable(d) && (!filereadable(d . '.spl') || getftime(d) > getftime(d . '.spl'))
+        exec 'mkspell! ' . fnameescape(d)
+    endif
+endfor
+
+" vim lexical
+augroup lexical
+  autocmd!
+  autocmd FileType markdown,mkd call lexical#init()
+  autocmd FileType textile call lexical#init()
+  autocmd FileType text call lexical#init({ 'spell': 0 })
+augroup END
+let g:lexical#thesaurus = ['~/.config/nvim/thesaurus/mthesaur.txt',]
+let g:lexical#spellfile = ['~/.config/nvim/spell/en.utf-8.add',]
 
 " =============================================================================
 " # Footer
