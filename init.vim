@@ -539,10 +539,41 @@ function! RewrapFunc() range
 		exe ":normal k"
 	endwhile
 endfunction
-
 command! -range RewrapCmd <line1>,<line2>call RewrapFunc()
+" FIXME: not good
+"nmap Q :RewrapCmd<CR>
 
-nmap Q :RewrapCmd<CR>
+
+" A second kind of re-wrap
+" Reformat lines (getting the spacing correct) {{{
+"
+" https://tex.stackexchange.com/questions/1548/intelligent-paragraph-reflowing-in-vim
+fun! TeX_fmt()
+    if (getline(".") != "")
+    let save_cursor = getpos(".")
+        let op_wrapscan = &wrapscan
+        set nowrapscan
+				let par_begin = '^\(%D\)\=\s*\($\||\\begin\|\\end\|\\[\|\\]\|\\\(sub\)*section\>\|\\item\>\|\\NC\>\|\\blank\>\|\\noindent\>\)'
+        let par_end   = '^\(%D\)\=\s*\($\||\\begin\|\\end\|\\[\|\\]\|\\place\|\\\(sub\)*section\>\|\\item\>\|\\NC\>\|\\blank\>\)'
+    try
+      exe '?'.par_begin.'?+'
+    catch /E384/
+      1
+    endtry
+        norm V
+    try
+      exe '/'.par_end.'/-'
+    catch /E385/
+      $
+    endtry
+    norm gq
+        let &wrapscan = op_wrapscan
+    call setpos('.', save_cursor) 
+    endif
+endfun
+" }}}
+nmap Q :call TeX_fmt()<CR>
+
 
 " C++ reference look up  {{{
 " https://stackoverflow.com/questions/2272759/looking-up-c-documentation-inside-of-vim?utm_medium=organic&utm_source=google_rich_qa&utm_campaign=google_rich_qa
@@ -572,6 +603,10 @@ augroup lexical
 augroup END
 let g:lexical#thesaurus = ['~/.config/nvim/thesaurus/mthesaur.txt',]
 let g:lexical#spellfile = ['~/.config/nvim/spell/en.utf-8.add',]
+
+" Personal config
+set shortmess=at
+
 
 " =============================================================================
 " # Footer
