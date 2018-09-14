@@ -38,6 +38,7 @@ Plug 'roxma/nvim-completion-manager'
 "Plug 'roxma/nvim-cm-racer'
 Plug 'junegunn/vader.vim'
 Plug 'reedes/vim-lexical' " lexical/spell
+Plug 'jceb/vim-orgmode'
 
 
 Plug 'ncm2/ncm2'
