@@ -85,6 +85,7 @@ Plug 'dag/vim-fish'
 "
 Plug 'Yilin-Yang/vim-markbar'
 "Plug 'google/yapf', { 'rtp': 'plugins/vim', 'for': 'python' }
+Plug 'tpope/vim-speeddating'
 
 Plug 'bennyyip/vim-yapf' "forked from rhysd/vim-clang-format
 Plug 'nathanaelkane/vim-indent-guides'
