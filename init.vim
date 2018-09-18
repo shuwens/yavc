@@ -34,17 +34,15 @@ Plug 'autozimu/LanguageClient-neovim', {
 			\ 'do': 'bash install.sh',
 			\ }
 Plug 'mattn/webapi-vim'
-Plug 'roxma/nvim-completion-manager'
 "Plug 'roxma/nvim-cm-racer'
 Plug 'junegunn/vader.vim'
 Plug 'reedes/vim-lexical' " lexical/spell
 Plug 'jceb/vim-orgmode'
 
-
+" ncm2
 Plug 'ncm2/ncm2'
 Plug 'roxma/nvim-yarp'
 "Plug 'roxma/nvim-cm-racer'
-Plug 'junegunn/vader.vim'
 
 " Completion plugins
 Plug 'ncm2/ncm2-bufword'
@@ -551,31 +549,71 @@ command! -range RewrapCmd <line1>,<line2>call RewrapFunc()
 "
 " https://tex.stackexchange.com/questions/1548/intelligent-paragraph-reflowing-in-vim
 fun! TeX_fmt()
-    if (getline(".") != "")
-    let save_cursor = getpos(".")
-        let op_wrapscan = &wrapscan
-        set nowrapscan
-				let par_begin = '^\(%D\)\=\s*\($\||\\begin\|\\end\|\\[\|\\]\|\\\(sub\)*section\>\|\\item\>\|\\NC\>\|\\blank\>\|\\noindent\>\)'
-        let par_end   = '^\(%D\)\=\s*\($\||\\begin\|\\end\|\\[\|\\]\|\\place\|\\\(sub\)*section\>\|\\item\>\|\\NC\>\|\\blank\>\)'
-    try
-      exe '?'.par_begin.'?+'
-    catch /E384/
-      1
-    endtry
-        norm V
-    try
-      exe '/'.par_end.'/-'
-    catch /E385/
-      $
-    endtry
-    norm gq
-        let &wrapscan = op_wrapscan
-    call setpos('.', save_cursor) 
-    endif
+	if (getline(".") != "")
+		let save_cursor = getpos(".")
+		let op_wrapscan = &wrapscan
+		set nowrapscan
+		let par_begin = '^\(%D\)\=\s*\($\||\\begin\|\\end\|\\[\|\\]\|\\\(sub\)*section\>\|\\item\>\|\\NC\>\|\\blank\>\|\\noindent\>\)'
+		let par_end   = '^\(%D\)\=\s*\($\||\\begin\|\\end\|\\[\|\\]\|\\place\|\\\(sub\)*section\>\|\\item\>\|\\NC\>\|\\blank\>\)'
+		try
+			exe '?'.par_begin.'?+'
+		catch /E384/
+			1
+		endtry
+		norm V
+		try
+			exe '/'.par_end.'/-'
+		catch /E385/
+			$
+		endtry
+		norm gq
+		let &wrapscan = op_wrapscan
+		call setpos('.', save_cursor) 
+	endif
 endfun
 " }}}
 nmap Q :call TeX_fmt()<CR>
 
+" ncm2 {{{
+" enable ncm2 for all buffers
+autocmd BufEnter * call ncm2#enable_for_buffer()
+
+" IMPORTANTE: :help Ncm2PopupOpen for more information
+set completeopt=noinsert,menuone,noselect
+
+" suppress the annoying 'match x of y', 'The only match' and 'Pattern not
+" found' messages
+set shortmess+=c
+
+" CTRL-C doesn't trigger the InsertLeave autocmd . map to <ESC> instead.
+inoremap <c-c> <ESC>
+
+" When the <Enter> key is pressed while the popup menu is visible, it only
+" hides the menu. Use this mapping to close the menu and also start a new
+" line.
+inoremap <expr> <CR> (pumvisible() ? "\<c-y>\<cr>" : "\<CR>")
+
+" Use <TAB> to select the popup menu:
+inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+
+" wrap existing omnifunc
+" Note that omnifunc does not run in background and may probably block the
+" editor. If you don't want to be blocked by omnifunc too often, you could
+" add 180ms delay before the omni wrapper:
+"  'on_complete': ['ncm2#on_complete#delay', 180,
+"               \ 'ncm2#on_complete#omni', 'csscomplete#CompleteCSS'],
+au User Ncm2Plugin call ncm2#register_source({
+			\ 'name' : 'css',
+			\ 'priority': 9, 
+			\ 'subscope_enable': 1,
+			\ 'scope': ['css','scss'],
+			\ 'mark': 'css',
+			\ 'word_pattern': '[\w\-]+',
+			\ 'complete_pattern': ':\s*',
+			\ 'on_complete': ['ncm2#on_complete#omni', 'csscomplete#CompleteCSS'],
+			\ })
+" }}}
 
 " C++ reference look up  {{{
 " https://stackoverflow.com/questions/2272759/looking-up-c-documentation-inside-of-vim?utm_medium=organic&utm_source=google_rich_qa&utm_campaign=google_rich_qa
@@ -591,17 +629,17 @@ map <Leader>mc <Plug>CloseMarkbar
 
 " vim spell
 for d in glob('~/.config/nvim/spell/*.add', 1, 1)
-    if filereadable(d) && (!filereadable(d . '.spl') || getftime(d) > getftime(d . '.spl'))
-        exec 'mkspell! ' . fnameescape(d)
-    endif
+	if filereadable(d) && (!filereadable(d . '.spl') || getftime(d) > getftime(d . '.spl'))
+		exec 'mkspell! ' . fnameescape(d)
+	endif
 endfor
 
 " vim lexical
 augroup lexical
-  autocmd!
-  autocmd FileType markdown,mkd call lexical#init()
-  autocmd FileType textile call lexical#init()
-  autocmd FileType text call lexical#init({ 'spell': 0 })
+	autocmd!
+	autocmd FileType markdown,mkd call lexical#init()
+	autocmd FileType textile call lexical#init()
+	autocmd FileType text call lexical#init({ 'spell': 0 })
 augroup END
 let g:lexical#thesaurus = ['~/.config/nvim/thesaurus/mthesaur.txt',]
 let g:lexical#spellfile = ['~/.config/nvim/spell/en.utf-8.add',]
