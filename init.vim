@@ -15,6 +15,7 @@ call plug#begin('~/.local/share/nvim/plugged')
 " VIM enhancements
 Plug 'ciaranm/securemodelines'
 Plug 'vim-scripts/localvimrc'
+Plug 'Shougo/unite.vim'
 
 " GUI enhancements
 Plug 'itchyny/lightline.vim'
@@ -84,7 +85,7 @@ Plug 'dag/vim-fish'
 Plug 'Yilin-Yang/vim-markbar'
 "Plug 'google/yapf', { 'rtp': 'plugins/vim', 'for': 'python' }
 Plug 'tpope/vim-speeddating'
-
+Plug 'jiangmiao/auto-pairs'
 Plug 'bennyyip/vim-yapf' "forked from rhysd/vim-clang-format
 Plug 'nathanaelkane/vim-indent-guides'
 " Color 
@@ -98,6 +99,10 @@ Plug 'google/vim-codefmt'
 " Also add Glaive, which is used to configure codefmt's maktaba flags. See
 " `:help :Glaive` for usage.
 Plug 'google/vim-glaive'
+
+" writing
+Plug 'rhysd/vim-grammarous'
+
 
 "Plug 'neomake/neomake'
 
@@ -358,8 +363,8 @@ map L $
 " Neat X clipboard integration
 " ,p will paste clipboard into buffer
 " ,c will copy entire buffer into clipboard
-noremap <leader>p :read !xsel --clipboard --output<cr>
-noremap <leader>c :w !xsel -ib<cr><cr>
+"noremap <leader>p :read !xsel --clipboard --output<cr>
+"noremap <leader>c :w !xsel -ib<cr><cr>
 
 " <leader>s for Rg search
 noremap <leader>s :Rg
@@ -484,7 +489,7 @@ nmap <silent> <A-Right> :wincmd l<CR>
 nmap <leader>j :wincmd j<CR>
 nmap <leader>k :wincmd k<CR>
 nmap <leader>h :wincmd h<CR>
-nmap <leader>l :wincmd l<CR>
+"nmap <leader>l :wincmd l<CR>
 " The right windcmd
 nmap <silent>J :wincmd j<CR>
 nmap <silent>K :wincmd k<CR>
@@ -644,13 +649,38 @@ augroup END
 let g:lexical#thesaurus = ['~/.config/nvim/thesaurus/mthesaur.txt',]
 let g:lexical#spellfile = ['~/.config/nvim/spell/en.utf-8.add',]
 
-" Personal config
+" =============================================================================
+"    Personal config
+" =============================================================================
 set shortmess=at
 
+set cursorline
+set cursorcolumn
+"hi CursorLine   cterm=NONE ctermbg=232 guibg=#050505
+"hi CursorColumn cterm=NONE ctermbg=232 guibg=#050505
+hi Folded ctermbg=234 ctermfg=red
 
-" =============================================================================
+" vim-grammarous
+nmap <Leader>L <Plug>(grammarous-move-to-info-window)<CR>
+nmap <leader>l :GrammarousCheck --lang=en-US --preview<CR>
+"nnoremap <buffer> ]g <Plug>(grammarous-move-to-next-error)
+"nnoremap <buffer> [g <Plug>(grammarous-move-to-previous-error)
+
+" Grammarous
+let g:grammarous#hooks = {}
+function! g:grammarous#hooks.on_check(errs) abort
+    nmap <buffer><C-n> <Plug>(grammarous-move-to-next-error)
+    nmap <buffer><C-P> <Plug>(grammarous-move-to-previous-error)
+    nmap <buffer><C-f> <Plug>(grammarous-fixit)
+endfunction
+
+function! g:grammarous#hooks.on_reset(errs) abort
+    nunmap <buffer><C-n>
+    nunmap <buffer><C-p>
+    nunmap <buffer><C-f>
+	endfunction
+
 " # Footer
-" =============================================================================
 
 " nvim
 if has('nvim')
