@@ -91,6 +91,7 @@ Plug 'nathanaelkane/vim-indent-guides'
 " Color 
 Plug 'rakr/vim-one'
 Plug 'kristijanhusak/vim-hybrid-material'
+Plug 'ambv/black'
 
 " Add maktaba and codefmt to the runtimepath.
 " (The latter must be installed before it can be used.)
@@ -102,7 +103,8 @@ Plug 'google/vim-glaive'
 
 " writing
 Plug 'rhysd/vim-grammarous'
-
+Plug 'xuhdev/vim-latex-live-preview'
+Plug 'lervag/vimtex'
 
 "Plug 'neomake/neomake'
 
@@ -679,6 +681,15 @@ function! g:grammarous#hooks.on_reset(errs) abort
     nunmap <buffer><C-p>
     nunmap <buffer><C-f>
 	endfunction
+
+
+" LaTeX
+autocmd Filetype tex setl updatetime=1
+let g:livepreview_previewer = 'open -a Preview'
+
+" black for python
+let g:black_linelength = 80
+autocmd BufWritePre *.py execute ':Black' 
 
 " # Footer
 
