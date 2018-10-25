@@ -109,11 +109,9 @@ Plug 'lervag/vimtex'
 "Plug 'neomake/neomake'
 
 call plug#end()
-" ...
+
 " the glaive#Install() should go after the "call vundle#end()"
 call glaive#Install()
-" Optional: Enable codefmt's default mappings on the <Leader>= prefix.
-Glaive codefmt plugin[mappings]
 
 
 runtime macros/matchit.vim
@@ -478,6 +476,7 @@ inoremap <A-l> <C-o>l
 
 nmap <leader>w :w<CR>
 nmap <leader>wq :wq<CR>
+nmap <silent>:Wq :wq<CR>
 "nnoremap <leader>w :w<CR>
 nnoremap <leader>q :q!<CR>
 nnoremap <leader>qq :q!<Esc>:q!<CR>
@@ -692,6 +691,26 @@ let g:black_linelength = 80
 autocmd BufWritePre *.py execute ':Black' 
 
 " # Footer
+
+" Google codefmt
+augroup autoformat_settings
+  autocmd FileType python AutoFormatBuffer yapf
+  autocmd FileType c,cpp,proto,javascript AutoFormatBuffer clang-format
+  autocmd FileType go AutoFormatBuffer gofmt
+  autocmd FileType rust AutoFormatBuffer rustfmt
+	" ===================
+  autocmd FileType bzl AutoFormatBuffer buildifier
+  "autocmd FileType dart AutoFormatBuffer dartfmt
+  "autocmd FileType gn AutoFormatBuffer gn
+  autocmd FileType html,css,json AutoFormatBuffer js-beautify
+  autocmd FileType java AutoFormatBuffer google-java-format
+  " Alternative: autocmd FileType python AutoFormatBuffer autopep8
+augroup END
+" Optional: Enable codefmt's default mappings on the <Leader>= prefix.
+Glaive codefmt plugin[mappings]
+
+
+
 
 " nvim
 if has('nvim')
