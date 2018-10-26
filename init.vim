@@ -88,10 +88,15 @@ Plug 'tpope/vim-speeddating'
 Plug 'jiangmiao/auto-pairs'
 Plug 'bennyyip/vim-yapf' "forked from rhysd/vim-clang-format
 Plug 'nathanaelkane/vim-indent-guides'
+Plug 'octol/vim-cpp-enhanced-highlight'
+Plug 'sheerun/vim-polyglot'
+Plug 'Shougo/vimproc.vim', {'do' : 'make'}
+Plug 'eagletmt/coqtop-vim'
 " Color 
 Plug 'rakr/vim-one'
 Plug 'kristijanhusak/vim-hybrid-material'
 Plug 'ambv/black'
+Plug 'dpelle/vim-LanguageTool'
 
 " Add maktaba and codefmt to the runtimepath.
 " (The latter must be installed before it can be used.)
@@ -204,8 +209,14 @@ nnoremap <F5> :call LanguageClient_contextMenu()<CR>
 " Or map each action separately
 let g:LanguageClient_autoStart = 1
 nnoremap <silent> K :call LanguageClient_textDocument_hover()<CR>
+noremap <silent> H :call LanguageClient_textDocument_hover()<CR>
+noremap <silent> Z :call LanguageClient_textDocument_definition()<CR>
 nnoremap <silent> gd :call LanguageClient_textDocument_definition()<CR>
+nnoremap <silent> <leader>] :call LanguageClient_textDocument_definition()<CR>
+noremap <silent> R :call LanguageClient_textDocument_rename()<CR>
 nnoremap <silent> <F2> :call LanguageClient_textDocument_rename()<CR>
+nnoremap <silent> <leader>r :call LanguageClient_textDocument_rename()<CR>
+noremap <silent> S :call LanugageClient_textDocument_documentSymbol()<CR>
 
 " racer + rust
 " https://github.com/rust-lang/rust.vim/issues/192
@@ -476,10 +487,12 @@ inoremap <A-l> <C-o>l
 
 nmap <leader>w :w<CR>
 nmap <leader>wq :wq<CR>
-nmap <silent>:Wq :wq<CR>
 "nnoremap <leader>w :w<CR>
 nnoremap <leader>q :q!<CR>
 nnoremap <leader>qq :q!<Esc>:q!<CR>
+command! W w
+command! Wq wq
+command! WQ wq
 
 " map wincmd {{
 nmap <silent> <A-Up> :wincmd k<CR>
@@ -709,8 +722,44 @@ augroup END
 " Optional: Enable codefmt's default mappings on the <Leader>= prefix.
 Glaive codefmt plugin[mappings]
 
+set cmdheight=2
+" Visual mode pressing * or # searches for the current selection
+vnoremap <silent> * :call VisualSelection('f')<CR>
+vnoremap <silent> # :call VisualSelection('b')<CR>
 
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Editing mappings
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Remap VIM 0 to first non-blank character
+map 0 ^
 
+" Move a line of text using ALT+[jk] or Comamnd+[jk] on mac
+nmap <M-j> mz:m+<cr>`z
+nmap <M-k> mz:m-2<cr>`z
+vmap <M-j> :m'>+<cr>`<my`>mzgv`yo`z
+vmap <M-k> :m'<-2<cr>`>my`<mzgv`yo`z
+
+if has("mac") || has("macunix")
+  nmap <D-j> <M-j>
+  nmap <D-k> <M-k>
+  vmap <D-j> <M-j>
+  vmap <D-k> <M-k>
+endif
+
+" Delete trailing white space on save, useful for Python and CoffeeScript ;)
+func! DeleteTrailingWS()
+  exe "normal mz"
+  %s/\s\+$//ge
+  exe "normal `z"
+endfunc
+autocmd BufWrite *.py :call DeleteTrailingWS()
+autocmd BufWrite *.coffee :call DeleteTrailingWS()
+
+" Language Tool
+let g:languagetool_jar='$HOME/dev/others/LanguageTool-4.2/languagetool-commandline.jar'
+
+" polyglot
+let g:polyglot_disabled = ['latex']
 
 " nvim
 if has('nvim')
