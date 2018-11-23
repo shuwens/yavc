@@ -107,9 +107,9 @@ Plug 'google/vim-codefmt'
 Plug 'google/vim-glaive'
 
 " writing
-Plug 'rhysd/vim-grammarous'
 Plug 'xuhdev/vim-latex-live-preview'
 Plug 'lervag/vimtex'
+Plug 'rhysd/vim-grammarous'
 
 "Plug 'neomake/neomake'
 
@@ -675,25 +675,22 @@ set cursorcolumn
 hi Folded ctermbg=234 ctermfg=red
 
 " vim-grammarous
-nmap <Leader>L <Plug>(grammarous-move-to-info-window)<CR>
 nmap <leader>l :GrammarousCheck --lang=en-US --preview<CR>
-"nnoremap <buffer> ]g <Plug>(grammarous-move-to-next-error)
-"nnoremap <buffer> [g <Plug>(grammarous-move-to-previous-error)
 
-" Grammarous
 let g:grammarous#hooks = {}
 function! g:grammarous#hooks.on_check(errs) abort
+		nmap <buffer><C-i> <Plug>(grammarous-move-to-info-window)
     nmap <buffer><C-n> <Plug>(grammarous-move-to-next-error)
     nmap <buffer><C-P> <Plug>(grammarous-move-to-previous-error)
     nmap <buffer><C-f> <Plug>(grammarous-fixit)
 endfunction
-
 function! g:grammarous#hooks.on_reset(errs) abort
     nunmap <buffer><C-n>
     nunmap <buffer><C-p>
     nunmap <buffer><C-f>
-	endfunction
-
+endfunction
+"nnoremap <buffer> ]g <Plug>(grammarous-move-to-next-error)
+"nnoremap <buffer> [g <Plug>(grammarous-move-to-previous-error)
 
 " LaTeX
 autocmd Filetype tex setl updatetime=1
