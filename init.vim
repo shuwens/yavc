@@ -34,6 +34,9 @@ Plug 'autozimu/LanguageClient-neovim', {
 			\ 'branch': 'next',
 			\ 'do': 'bash install.sh',
 			\ }
+" (Optional) Multi-entry selection UI.
+Plug 'junegunn/fzf'
+Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'mattn/webapi-vim'
 "Plug 'roxma/nvim-cm-racer'
 Plug 'junegunn/vader.vim'
@@ -75,6 +78,7 @@ Plug 'cespare/vim-toml'
 Plug 'rust-lang/rust.vim'
 Plug 'fatih/vim-go'
 Plug 'dag/vim-fish'
+Plug 'tweekmonster/impsort.vim'
 
 " JETHRO
 "Plug 'jpalardy/spacehi.vim'
@@ -199,6 +203,8 @@ nmap <leader>w :w<CR>
 let g:localvimrc_ask = 0
 
 " language server protocol
+" Required for operations modifying multiple buffers like rename.
+set hidden
 let g:LanguageClient_serverCommands = {
 			\ 'rust': ['rustup', 'run', 'nightly', 'rls'],
 			\ 'javascript': ['javascript-typescript-stdio'],
@@ -206,17 +212,22 @@ let g:LanguageClient_serverCommands = {
 			\ 'python': ['pyls'],
 			\ }
 nnoremap <F5> :call LanguageClient_contextMenu()<CR>
+nnoremap <leader>m :call LanguageClient_contextMenu()<CR>
 " Or map each action separately
 let g:LanguageClient_autoStart = 1
 nnoremap <silent> K :call LanguageClient_textDocument_hover()<CR>
-noremap <silent> H :call LanguageClient_textDocument_hover()<CR>
-noremap <silent> Z :call LanguageClient_textDocument_definition()<CR>
+nnoremap <silent> H :call LanguageClient_textDocument_hover()<CR>
+nnoremap <leader>n :call LanguageClient#textDocument_rename()<cr>
+nnoremap <silent> Z :call LanguageClient_textDocument_definition()<CR>
 nnoremap <silent> gd :call LanguageClient_textDocument_definition()<CR>
+nnoremap <leader>d :call LanguageClient#textDocument_definition()<cr>
+nnoremap <leader>e :call LanguageClient#textDocument_references()<cr>
 nnoremap <silent> <leader>] :call LanguageClient_textDocument_definition()<CR>
-noremap <silent> R :call LanguageClient_textDocument_rename()<CR>
+nnoremap <silent> R :call LanguageClient_textDocument_rename()<CR>
+nnoremap <leader>n :call LanguageClient#textDocument_rename()<cr>
 nnoremap <silent> <F2> :call LanguageClient_textDocument_rename()<CR>
 nnoremap <silent> <leader>r :call LanguageClient_textDocument_rename()<CR>
-noremap <silent> S :call LanugageClient_textDocument_documentSymbol()<CR>
+nnoremap <silent> S :call LanugageClient_textDocument_documentSymbol()<CR>
 
 " racer + rust
 " https://github.com/rust-lang/rust.vim/issues/192
@@ -428,7 +439,7 @@ nnoremap <leader>, :set invlist<cr>
 nnoremap <leader>q g<c-g>
 
 " Keymap for replacing up to next _ or -
-noremap <leader>m ct_
+"noremap <leader>m ct_   " choosing over lsp ctx menu
 noremap <leader>n ct-
 
 " M to make
@@ -533,8 +544,9 @@ augroup autoformat_settings
 	autocmd FileType gn AutoFormatBuffer gn
 	autocmd FileType html,css,json AutoFormatBuffer js-beautify
 	"autocmd FileType java AutoFormatBuffer google-java-format
-	autocmd FileType python AutoFormatBuffer yapf
 	" Alternative: autocmd FileType python AutoFormatBuffer autopep8
+	autocmd FileType python AutoFormatBuffer yapf
+	autocmd BufWritePre *.py ImpSort!
 augroup END
 
 " Rewrap is similar to the gqq command with textwidth, but it also uses a hanging
