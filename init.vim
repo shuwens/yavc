@@ -18,9 +18,11 @@ Plug 'vim-scripts/localvimrc'
 Plug 'Shougo/unite.vim'
 
 " GUI enhancements
-Plug 'itchyny/lightline.vim'
 Plug 'w0rp/ale'
 Plug 'machakann/vim-highlightedyank'
+"Plug 'itchyny/lightline.vim'   " use air line ?
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
 
 " Fuzzy finder
 Plug 'airblade/vim-rooter'
@@ -86,7 +88,9 @@ Plug 'tweekmonster/impsort.vim'
 "let g:spacehi_spacecolor="ctermfg=Black ctermbg=Yellow guifg=Blue guibg=Yellow"
 "let g:spacehi_nbspcolor="ctermfg=White ctermbg=Red guifg=White guibg=Red"
 "Plug 'fcangialosi/bootlin.vim'
-"
+
+Plug 'tpope/vim-fugitive'
+"Plug 'jreybert/vimagit'
 Plug 'Yilin-Yang/vim-markbar'
 "Plug 'google/yapf', { 'rtp': 'plugins/vim', 'for': 'python' }
 Plug 'tpope/vim-speeddating'
@@ -155,16 +159,22 @@ let g:secure_modelines_allowed_items = [
 let base16colorspace=256
 let g:base16_shell_path="$HOME/dev/others/base16/shell/scripts/"
 
-" Lightline
+" Lightline (Deprecated) {{{
 " let g:lightline = { 'colorscheme': 'wombat' }
-let g:lightline = {
-			\ 'component_function': {
-			\   'filename': 'LightlineFilename',
-			\ },
-			\ }
-function! LightlineFilename()
-	return expand('%:t') !=# '' ? @% : '[No Name]'
-endfunction
+"let g:lightline = {
+"			\ 'component_function': {
+"			\   'filename': 'LightlineFilename',
+"			\ },
+"			\ }
+"function! LightlineFilename()
+"	return expand('%:t') !=# '' ? @% : '[No Name]'
+"endfunction
+" }}}
+
+" Airline
+let g:airline#extensions#tabline#formatter = 'default'
+let g:airline_powerline_fonts = 1
+let g:airline_theme='base16_atelierdune'
 
 " from http://sheerun.net/2014/03/21/how-to-boost-your-vim-productivity/
 if executable('ag')
