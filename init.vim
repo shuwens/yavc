@@ -85,6 +85,7 @@ Plug 'tweekmonster/impsort.vim'
 "let g:spacehi_tabcolor="ctermfg=White ctermbg=Red guifg=White guibg=Red"
 "let g:spacehi_spacecolor="ctermfg=Black ctermbg=Yellow guifg=Blue guibg=Yellow"
 "let g:spacehi_nbspcolor="ctermfg=White ctermbg=Red guifg=White guibg=Red"
+"Plug 'fcangialosi/bootlin.vim'
 "
 Plug 'Yilin-Yang/vim-markbar'
 "Plug 'google/yapf', { 'rtp': 'plugins/vim', 'for': 'python' }
@@ -217,13 +218,14 @@ nnoremap <leader>m :call LanguageClient_contextMenu()<CR>
 let g:LanguageClient_autoStart = 1
 nnoremap <silent> K :call LanguageClient_textDocument_hover()<CR>
 nnoremap <silent> H :call LanguageClient_textDocument_hover()<CR>
-nnoremap <leader>n :call LanguageClient#textDocument_rename()<cr>
+nnoremap <silent> D :call LanguageClient_textDocument_definition()<CR>
+nnoremap <leader>d :call LanguageClient#textDocument_definition()<cr>
 nnoremap <silent> Z :call LanguageClient_textDocument_definition()<CR>
 nnoremap <silent> gd :call LanguageClient_textDocument_definition()<CR>
-nnoremap <leader>d :call LanguageClient#textDocument_definition()<cr>
-nnoremap <leader>e :call LanguageClient#textDocument_references()<cr>
 nnoremap <silent> <leader>] :call LanguageClient_textDocument_definition()<CR>
-nnoremap <silent> R :call LanguageClient_textDocument_rename()<CR>
+nnoremap <silent> R :call LanguageClient#textDocument_references()<cr>
+nnoremap <leader>e :call LanguageClient#textDocument_references()<cr>
+nnoremap <silent> N :call LanguageClient_textDocument_rename()<CR>
 nnoremap <leader>n :call LanguageClient#textDocument_rename()<cr>
 nnoremap <silent> <F2> :call LanguageClient_textDocument_rename()<CR>
 nnoremap <silent> <leader>r :call LanguageClient_textDocument_rename()<CR>
