@@ -551,6 +551,7 @@ augroup autoformat_settings
 	autocmd BufWritePre *.py ImpSort!
 augroup END
 
+" Rewrap (Deprecated) {{{
 " Rewrap is similar to the gqq command with textwidth, but it also uses a hanging
 "   indent and can be used on multiple lines of text.  And note that textwidth needs
 "   to be set beforehand.
@@ -574,9 +575,9 @@ function! RewrapFunc() range
 endfunction
 command! -range RewrapCmd <line1>,<line2>call RewrapFunc()
 " FIXME: not good
-"nmap Q :RewrapCmd<CR>
-
-
+"nmap Q :RewrapCmd<CR> 
+" }}}
+"
 " A second kind of re-wrap
 " Reformat lines (getting the spacing correct) {{{
 "
@@ -605,7 +606,8 @@ fun! TeX_fmt()
 	endif
 endfun
 " }}}
-nmap Q :call TeX_fmt()<CR>
+autocmd Filetype tex nmap Q :call TeX_fmt()<CR>
+autocmd Filetype markdown nmap Q :call TeX_fmt()<CR>
 
 " ncm2 {{{
 " enable ncm2 for all buffers
@@ -682,6 +684,7 @@ let g:lexical#spellfile = ['~/.config/nvim/spell/en.utf-8.add',]
 " =============================================================================
 set shortmess=at
 
+set tw=79
 set cursorline
 set cursorcolumn
 "hi CursorLine   cterm=NONE ctermbg=232 guibg=#050505
