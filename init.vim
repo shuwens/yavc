@@ -26,7 +26,8 @@ Plug 'vim-airline/vim-airline-themes'
 
 " Fuzzy finder
 Plug 'airblade/vim-rooter'
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+"Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --bin' }
+Plug '/usr/local/opt/fzf'
 Plug 'junegunn/fzf.vim'
 
 " Semantic language support
@@ -37,7 +38,6 @@ Plug 'autozimu/LanguageClient-neovim', {
 			\ 'do': 'bash install.sh',
 			\ }
 " (Optional) Multi-entry selection UI.
-Plug 'junegunn/fzf'
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'mattn/webapi-vim'
 "Plug 'roxma/nvim-cm-racer'
@@ -204,8 +204,10 @@ let g:latex_fold_envs = 0
 let g:latex_fold_sections = []
 
 " Open hotkeys
-map <C-p> :Files<CR>
+nmap <leader>p :Files<CR> 
 nmap <leader>; :Buffers<CR>
+nnoremap <leader>o :GFiles<CR> 
+nmap <leader>g :GFiles?<CR> 
 
 " Quick-save
 nmap <leader>w :w<CR>
@@ -401,14 +403,50 @@ map L $
 "noremap <leader>c :w !xsel -ib<cr><cr>
 
 " <leader>s for Rg search
-noremap <leader>s :Rg
+noremap <leader>s :Rg<CR>
 let g:fzf_layout = { 'down': '~20%' }
+
+" fzf helper methods{{{
+" Command for git grep
+" - fzf#vim#grep(command, with_column, [options], [fullscreen])
+command! -bang -nargs=* GGrep
+  \ call fzf#vim#grep(
+  \   'git grep --line-number '.shellescape(<q-args>), 0,
+  \   { 'dir': systemlist('git rev-parse --show-toplevel')[0] }, <bang>0)
+
+" Override Colors command. You can safely do this in your .vimrc as fzf.vim
+" will not override existing commands.
+command! -bang Colors
+  \ call fzf#vim#colors({'left': '15%', 'options': '--reverse --margin 30%,0'}, <bang>0)
+
+" Augmenting Ag command using fzf#vim#with_preview function
+"   * fzf#vim#with_preview([[options], [preview window], [toggle keys...]])
+"     * For syntax-highlighting, Ruby and any of the following tools are required:
+"       - Bat: https://github.com/sharkdp/bat
+"       - Highlight: http://www.andre-simon.de/doku/highlight/en/highlight.php
+"       - CodeRay: http://coderay.rubychan.de/
+"       - Rouge: https://github.com/jneen/rouge
+"
+"   :Ag  - Start fzf with hidden preview window that can be enabled with "?" key
+"   :Ag! - Start fzf in fullscreen and display the preview window above
+command! -bang -nargs=* Ag
+  \ call fzf#vim#ag(<q-args>,
+  \                 <bang>0 ? fzf#vim#with_preview('up:60%')
+  \                         : fzf#vim#with_preview('right:50%:hidden', '?'),
+  \                 <bang>0)
+
+" Similarly, we can apply it to fzf#vim#grep. To use ripgrep instead of ag:
 command! -bang -nargs=* Rg
-			\ call fzf#vim#grep(
-			\   'rg --column --line-number --no-heading --color=always '.shellescape(<q-args>), 1,
-			\   <bang>0 ? fzf#vim#with_preview('up:60%')
-			\           : fzf#vim#with_preview('right:50%:hidden', '?'),
-			\   <bang>0)
+  \ call fzf#vim#grep(
+  \   'rg --column --line-number --no-heading --color=always --smart-case '.shellescape(<q-args>), 1,
+  \   <bang>0 ? fzf#vim#with_preview('up:60%')
+  \           : fzf#vim#with_preview('right:50%:hidden', '?'),
+  \   <bang>0)
+
+" Likewise, Files command with preview window
+command! -bang -nargs=? -complete=dir Files
+  \ call fzf#vim#files(<q-args>, fzf#vim#with_preview(), <bang>0)
+" }}}
 
 " Open new file adjacent to current file
 nnoremap <leader>e :e <C-R>=expand("%:p:h") . "/" <CR>
