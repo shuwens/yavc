@@ -37,23 +37,18 @@ Plug 'autozimu/LanguageClient-neovim', {
 			\ 'branch': 'next',
 			\ 'do': 'bash install.sh',
 			\ }
-" (Optional) Multi-entry selection UI.
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+" (Enhancement) Multi-entry selection UI.
+"Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+
 Plug 'mattn/webapi-vim'
 "Plug 'roxma/nvim-cm-racer'
 Plug 'junegunn/vader.vim'
 Plug 'reedes/vim-lexical' " lexical/spell
 Plug 'jceb/vim-orgmode'
 
-" ncm2
-Plug 'ncm2/ncm2'
-Plug 'roxma/nvim-yarp'
-"Plug 'roxma/nvim-cm-racer'
-
 " Completion plugins
-Plug 'ncm2/ncm2-bufword'
-Plug 'ncm2/ncm2-tmux'
-Plug 'ncm2/ncm2-path'
+"-- NOTE: I give up on ncm2 because it crashes a lot :(
+Plug 'Shougo/deoplete.nvim', {'do': ':UpdateRemotePlugins'}
 
 " Completion manager plugins
 Plug 'roxma/python-support.nvim'
@@ -83,14 +78,8 @@ Plug 'dag/vim-fish'
 Plug 'tweekmonster/impsort.vim'
 
 " JETHRO
-"Plug 'jpalardy/spacehi.vim'
-"let g:spacehi_tabcolor="ctermfg=White ctermbg=Red guifg=White guibg=Red"
-"let g:spacehi_spacecolor="ctermfg=Black ctermbg=Yellow guifg=Blue guibg=Yellow"
-"let g:spacehi_nbspcolor="ctermfg=White ctermbg=Red guifg=White guibg=Red"
 "Plug 'fcangialosi/bootlin.vim'
-
 Plug 'tpope/vim-fugitive'
-"Plug 'jreybert/vimagit'
 Plug 'Yilin-Yang/vim-markbar'
 "Plug 'google/yapf', { 'rtp': 'plugins/vim', 'for': 'python' }
 Plug 'tpope/vim-speeddating'
@@ -101,11 +90,11 @@ Plug 'octol/vim-cpp-enhanced-highlight'
 Plug 'sheerun/vim-polyglot'
 Plug 'Shougo/vimproc.vim', {'do' : 'make'}
 Plug 'eagletmt/coqtop-vim'
+
 " Color 
 Plug 'rakr/vim-one'
 Plug 'kristijanhusak/vim-hybrid-material'
 Plug 'ambv/black'
-Plug 'dpelle/vim-LanguageTool'
 
 " Add maktaba and codefmt to the runtimepath.
 " (The latter must be installed before it can be used.)
@@ -198,7 +187,7 @@ let g:ale_rust_cargo_use_check = 1
 let g:ale_rust_cargo_check_all_targets = 1
 " let g:neomake_info_sign = {'text': '⚕', 'texthl': 'NeomakeInfoSign'}
 
-" Latex
+" LaTeX
 let g:latex_indent_enabled = 1
 let g:latex_fold_envs = 0
 let g:latex_fold_sections = []
@@ -228,6 +217,8 @@ nnoremap <F5> :call LanguageClient_contextMenu()<CR>
 nnoremap <leader>m :call LanguageClient_contextMenu()<CR>
 " Or map each action separately
 let g:LanguageClient_autoStart = 1
+set omnifunc=LanguageClient#complete
+let deoplete#enable_at_startup = 1
 nnoremap <silent> K :call LanguageClient_textDocument_hover()<CR>
 nnoremap <silent> H :call LanguageClient_textDocument_hover()<CR>
 nnoremap <silent> D :call LanguageClient_textDocument_definition()<CR>
@@ -246,8 +237,8 @@ nnoremap <silent> S :call LanugageClient_textDocument_documentSymbol()<CR>
 " racer + rust
 " https://github.com/rust-lang/rust.vim/issues/192
 let g:rustfmt_command = "rustfmt +nightly"
-let g:rustfmt_options = "--emit files"
 let g:rustfmt_autosave = 1
+let g:rustfmt_emit_files = 1
 let g:rustfmt_fail_silently = 0
 let g:rust_clip_command = 'xclip -selection clipboard'
 "let g:racer_cmd = "/usr/bin/racer"
@@ -404,7 +395,8 @@ map L $
 
 " <leader>s for Rg search
 noremap <leader>s :Rg<CR>
-let g:fzf_layout = { 'down': '~20%' }
+"let g:fzf_layout = { 'down': '~20%' }
+let g:fzf_layout = { 'down': '~35%' }
 
 " fzf helper methods{{{
 " Command for git grep
@@ -446,6 +438,14 @@ command! -bang -nargs=* Rg
 " Likewise, Files command with preview window
 command! -bang -nargs=? -complete=dir Files
   \ call fzf#vim#files(<q-args>, fzf#vim#with_preview(), <bang>0)
+
+" TODO(jethros): write a GitFiles method that start fzf in full screen and
+" display GFiles
+command! -bang -nargs=? GitFiles
+  \ call fzf#vim#gitfiles('?',
+  \                 <bang>0 ? fzf#vim#with_preview('up:60%')
+  \                         : fzf#vim#with_preview('up:60%:hidden', '?'),
+  \                 <bang>0)
 " }}}
 
 " Open new file adjacent to current file
@@ -659,7 +659,7 @@ autocmd Filetype markdown nmap Q :call TeX_fmt()<CR>
 
 " ncm2 {{{
 " enable ncm2 for all buffers
-autocmd BufEnter * call ncm2#enable_for_buffer()
+"autocmd BufEnter * call ncm2#enable_for_buffer()
 
 " IMPORTANTE: :help Ncm2PopupOpen for more information
 set completeopt=noinsert,menuone,noselect
@@ -772,7 +772,7 @@ augroup autoformat_settings
   autocmd FileType python AutoFormatBuffer yapf
   autocmd FileType c,cpp,proto,javascript AutoFormatBuffer clang-format
   autocmd FileType go AutoFormatBuffer gofmt
-  autocmd FileType rust AutoFormatBuffer rustfmt
+  "autocmd FileType rust AutoFormatBuffer rustfmt +nightly
 	" ===================
   autocmd FileType bzl AutoFormatBuffer buildifier
   "autocmd FileType dart AutoFormatBuffer dartfmt
@@ -818,7 +818,7 @@ autocmd BufWrite *.py :call DeleteTrailingWS()
 autocmd BufWrite *.coffee :call DeleteTrailingWS()
 
 " Language Tool
-let g:languagetool_jar='$HOME/dev/others/LanguageTool-4.2/languagetool-commandline.jar'
+"let g:languagetool_jar='$HOME/dev/others/LanguageTool-4.2/languagetool-commandline.jar'
 
 " polyglot
 let g:polyglot_disabled = ['latex']
