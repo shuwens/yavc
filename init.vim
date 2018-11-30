@@ -219,20 +219,22 @@ nnoremap <leader>m :call LanguageClient_contextMenu()<CR>
 let g:LanguageClient_autoStart = 1
 set omnifunc=LanguageClient#complete
 let deoplete#enable_at_startup = 1
-nnoremap <silent> K :call LanguageClient_textDocument_hover()<CR>
-nnoremap <silent> H :call LanguageClient_textDocument_hover()<CR>
-nnoremap <silent> D :call LanguageClient_textDocument_definition()<CR>
+nnoremap <leader>k :call LanguageClient#textDocument_hover()<CR>
+"nnoremap <silent> K :call LanguageClient#textDocument_hover()<CR>
+"nnoremap <silent> H :call LanguageClient#textDocument_hover()<CR>
+nnoremap <silent> D :call LanguageClient#textDocument_definition()<CR>
 nnoremap <leader>d :call LanguageClient#textDocument_definition()<cr>
-nnoremap <silent> Z :call LanguageClient_textDocument_definition()<CR>
-nnoremap <silent> gd :call LanguageClient_textDocument_definition()<CR>
-nnoremap <silent> <leader>] :call LanguageClient_textDocument_definition()<CR>
+nnoremap <silent> Z :call LanguageClient#textDocument_definition()<CR>
+nnoremap <silent> gd :call LanguageClient#textDocument_definition()<CR>
+nnoremap <silent> <leader>] :call LanguageClient#textDocument_definition()<CR>
 nnoremap <silent> R :call LanguageClient#textDocument_references()<cr>
-nnoremap <leader>e :call LanguageClient#textDocument_references()<cr>
-nnoremap <silent> N :call LanguageClient_textDocument_rename()<CR>
+nnoremap <leader>r :call LanguageClient#textDocument_references()<cr>
+nnoremap <silent> N :call LanguageClient#textDocument_rename()<CR>
 nnoremap <leader>n :call LanguageClient#textDocument_rename()<cr>
-nnoremap <silent> <F2> :call LanguageClient_textDocument_rename()<CR>
-nnoremap <silent> <leader>r :call LanguageClient_textDocument_rename()<CR>
-nnoremap <silent> S :call LanugageClient_textDocument_documentSymbol()<CR>
+nnoremap <silent> <F2> :call LanguageClient#textDocument_rename()<CR>
+"nnoremap <silent> <leader>r :call LanguageClient#textDocument_rename()<CR>
+nnoremap <silent> S :call LanugageClient#textDocument_documentSymbol()<CR>
+nnoremap <leader>s :call LanugageClient#textDocument_documentSymbol()<CR>
 
 " racer + rust
 " https://github.com/rust-lang/rust.vim/issues/192
@@ -561,9 +563,9 @@ nmap <silent> <A-Down> :wincmd j<CR>
 nmap <silent> <A-Left> :wincmd h<CR>
 nmap <silent> <A-Right> :wincmd l<CR>
 " using ctrl hj"
-nmap <leader>j :wincmd j<CR>
-nmap <leader>k :wincmd k<CR>
-nmap <leader>h :wincmd h<CR>
+"nmap <leader>j :wincmd j<CR>
+"nmap <leader>k :wincmd k<CR>
+"nmap <leader>h :wincmd h<CR>
 "nmap <leader>l :wincmd l<CR>
 " The right windcmd
 nmap <silent>J :wincmd j<CR>
@@ -656,6 +658,7 @@ endfun
 " }}}
 autocmd Filetype tex nmap Q :call TeX_fmt()<CR>
 autocmd Filetype markdown nmap Q :call TeX_fmt()<CR>
+autocmd Filetype org nmap Q :call TeX_fmt()<CR>
 
 " ncm2 {{{
 " enable ncm2 for all buffers
