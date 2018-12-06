@@ -204,7 +204,7 @@ nmap <leader>w :w<CR>
 " Don't confirm .lvimrc
 let g:localvimrc_ask = 0
 
-" language server protocol
+" language server protocol - LSP
 " Required for operations modifying multiple buffers like rename.
 set hidden
 let g:LanguageClient_serverCommands = {
@@ -404,14 +404,14 @@ let g:fzf_layout = { 'down': '~35%' }
 " Command for git grep
 " - fzf#vim#grep(command, with_column, [options], [fullscreen])
 command! -bang -nargs=* GGrep
-  \ call fzf#vim#grep(
-  \   'git grep --line-number '.shellescape(<q-args>), 0,
-  \   { 'dir': systemlist('git rev-parse --show-toplevel')[0] }, <bang>0)
+			\ call fzf#vim#grep(
+			\   'git grep --line-number '.shellescape(<q-args>), 0,
+			\   { 'dir': systemlist('git rev-parse --show-toplevel')[0] }, <bang>0)
 
 " Override Colors command. You can safely do this in your .vimrc as fzf.vim
 " will not override existing commands.
 command! -bang Colors
-  \ call fzf#vim#colors({'left': '15%', 'options': '--reverse --margin 30%,0'}, <bang>0)
+			\ call fzf#vim#colors({'left': '15%', 'options': '--reverse --margin 30%,0'}, <bang>0)
 
 " Augmenting Ag command using fzf#vim#with_preview function
 "   * fzf#vim#with_preview([[options], [preview window], [toggle keys...]])
@@ -424,30 +424,30 @@ command! -bang Colors
 "   :Ag  - Start fzf with hidden preview window that can be enabled with "?" key
 "   :Ag! - Start fzf in fullscreen and display the preview window above
 command! -bang -nargs=* Ag
-  \ call fzf#vim#ag(<q-args>,
-  \                 <bang>0 ? fzf#vim#with_preview('up:60%')
-  \                         : fzf#vim#with_preview('right:50%:hidden', '?'),
-  \                 <bang>0)
+			\ call fzf#vim#ag(<q-args>,
+			\                 <bang>0 ? fzf#vim#with_preview('up:60%')
+			\                         : fzf#vim#with_preview('right:50%:hidden', '?'),
+			\                 <bang>0)
 
 " Similarly, we can apply it to fzf#vim#grep. To use ripgrep instead of ag:
 command! -bang -nargs=* Rg
-  \ call fzf#vim#grep(
-  \   'rg --column --line-number --no-heading --color=always --smart-case '.shellescape(<q-args>), 1,
-  \   <bang>0 ? fzf#vim#with_preview('up:60%')
-  \           : fzf#vim#with_preview('right:50%:hidden', '?'),
-  \   <bang>0)
+			\ call fzf#vim#grep(
+			\   'rg --column --line-number --no-heading --color=always --smart-case '.shellescape(<q-args>), 1,
+			\   <bang>0 ? fzf#vim#with_preview('up:60%')
+			\           : fzf#vim#with_preview('right:50%:hidden', '?'),
+			\   <bang>0)
 
 " Likewise, Files command with preview window
 command! -bang -nargs=? -complete=dir Files
-  \ call fzf#vim#files(<q-args>, fzf#vim#with_preview(), <bang>0)
+			\ call fzf#vim#files(<q-args>, fzf#vim#with_preview(), <bang>0)
 
 " TODO(jethros): write a GitFiles method that start fzf in full screen and
 " display GFiles
 command! -bang -nargs=? GitFiles
-  \ call fzf#vim#gitfiles('?',
-  \                 <bang>0 ? fzf#vim#with_preview('up:60%')
-  \                         : fzf#vim#with_preview('up:60%:hidden', '?'),
-  \                 <bang>0)
+			\ call fzf#vim#gitfiles('?',
+			\                 <bang>0 ? fzf#vim#with_preview('up:60%')
+			\                         : fzf#vim#with_preview('up:60%:hidden', '?'),
+			\                 <bang>0)
 " }}}
 
 " Open new file adjacent to current file
@@ -573,33 +573,21 @@ nmap <silent>K :wincmd k<CR>
 nmap <silent>H :wincmd h<CR>
 nmap <silent>L :wincmd l<CR>
 
-" yapf -- google
+" yapf - Deprecated becasue it is automatic  {{{
 "map <C-Y> :call yapf#YAPF()<cr>
 "imap <C-Y> <c-o>:call yapf#YAPF()<cr>
-
+"
 " map to <Leader>cf in python code
-autocmd FileType python nnoremap <buffer><Leader>cf :<C-u>Yapf<CR>
-autocmd FileType python vnoremap <buffer><Leader>cf :Yapf<CR>
+"autocmd FileType python nnoremap <buffer><Leader>cf :<C-u>Yapf<CR>
+"autocmd FileType python vnoremap <buffer><Leader>cf :Yapf<CR>
 " if you install vim-operator-user
-autocmd FileType python map <buffer><Leader>x <Plug>(operator-clang-format)
+"autocmd FileType python map <buffer><Leader>x <Plug>(operator-clang-format)
 " Toggle auto formatting:
-nmap <Leader>C :YapfAutoToggle<CR>
+"nmap <Leader>C :YapfAutoToggle<CR>
+" }}}
 
 " indent line
 let g:indent_guides_enable_on_vim_startup = 1
-
-augroup autoformat_settings
-	autocmd FileType bzl AutoFormatBuffer buildifier
-	autocmd FileType c,cpp,proto,javascript AutoFormatBuffer clang-format
-	autocmd FileType dart AutoFormatBuffer dartfmt
-	autocmd FileType go AutoFormatBuffer gofmt
-	autocmd FileType gn AutoFormatBuffer gn
-	autocmd FileType html,css,json AutoFormatBuffer js-beautify
-	"autocmd FileType java AutoFormatBuffer google-java-format
-	" Alternative: autocmd FileType python AutoFormatBuffer autopep8
-	autocmd FileType python AutoFormatBuffer yapf
-	autocmd BufWritePre *.py ImpSort!
-augroup END
 
 " Rewrap (Deprecated) {{{
 " Rewrap is similar to the gqq command with textwidth, but it also uses a hanging
@@ -665,23 +653,23 @@ autocmd Filetype org nmap Q :call TeX_fmt()<CR>
 "autocmd BufEnter * call ncm2#enable_for_buffer()
 
 " IMPORTANTE: :help Ncm2PopupOpen for more information
-set completeopt=noinsert,menuone,noselect
+"set completeopt=noinsert,menuone,noselect
 
 " suppress the annoying 'match x of y', 'The only match' and 'Pattern not
 " found' messages
-set shortmess+=c
+"set shortmess+=c
 
 " CTRL-C doesn't trigger the InsertLeave autocmd . map to <ESC> instead.
-inoremap <c-c> <ESC>
+"inoremap <c-c> <ESC>
 
 " When the <Enter> key is pressed while the popup menu is visible, it only
 " hides the menu. Use this mapping to close the menu and also start a new
 " line.
-inoremap <expr> <CR> (pumvisible() ? "\<c-y>\<cr>" : "\<CR>")
+"inoremap <expr> <CR> (pumvisible() ? "\<c-y>\<cr>" : "\<CR>")
 
 " Use <TAB> to select the popup menu:
-inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
-inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+"inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+"inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 
 " wrap existing omnifunc
 " Note that omnifunc does not run in background and may probably block the
@@ -707,11 +695,36 @@ command! -nargs=+ Cppman silent! call system("tmux split-window cppman " . expan
 autocmd FileType cpp nnoremap <silent><buffer> K <Esc>:Cppman <cword><CR>
 " }}}
 
-" vim makebar
+" vim markbar {{{
 map <Leader>mm <Plug>ToggleMarkbar
 " the following are unneeded if ToggleMarkbar is mapped
 map <Leader>mo <Plug>OpenMarkbar
 map <Leader>mc <Plug>CloseMarkbar
+
+" only display alphabetic marks a-i and A-I
+"let g:markbar_marks_to_display = 'abcdefghiABCDEFGHI'
+
+" width of a vertical split markbar
+let g:markbar_width = 75
+
+" indentation for lines of context
+let g:markbar_context_indent_block = '  '
+
+" number of lines of context to retrieve per mark
+let g:markbar_num_lines_context = 3
+
+" markbar-local mappings
+let g:markbar_jump_to_mark_mapping  = 'G'
+let g:markbar_next_mark_mapping     = '/'
+let g:markbar_previous_mark_mapping = '?'
+let g:markbar_rename_mark_mapping   = '<F2>'
+let g:markbar_reset_mark_mapping    = 'r'
+let g:markbar_delete_mark_mapping   = '<Del>'
+
+" file mark
+let g:markbar_file_mark_format_string = '%s [line: %2d, col: %2d]'
+let g:markbar_file_mark_arguments = ['fname', 'line', 'col']
+" }}}
 
 " vim spell
 for d in glob('~/.config/nvim/spell/*.add', 1, 1)
@@ -742,23 +755,24 @@ set cursorcolumn
 "hi CursorColumn cterm=NONE ctermbg=232 guibg=#050505
 hi Folded ctermbg=234 ctermfg=red
 
-" vim-grammarous
+" vim-grammarous {{{}
 nmap <leader>l :GrammarousCheck --lang=en-US --preview<CR>
 
 let g:grammarous#hooks = {}
 function! g:grammarous#hooks.on_check(errs) abort
-		nmap <buffer><C-i> <Plug>(grammarous-move-to-info-window)
-    nmap <buffer><C-n> <Plug>(grammarous-move-to-next-error)
-    nmap <buffer><C-P> <Plug>(grammarous-move-to-previous-error)
-    nmap <buffer><C-f> <Plug>(grammarous-fixit)
+	nmap <buffer><C-i> <Plug>(grammarous-move-to-info-window)
+	nmap <buffer><C-n> <Plug>(grammarous-move-to-next-error)
+	nmap <buffer><C-P> <Plug>(grammarous-move-to-previous-error)
+	nmap <buffer><C-f> <Plug>(grammarous-fixit)
 endfunction
 function! g:grammarous#hooks.on_reset(errs) abort
-    nunmap <buffer><C-n>
-    nunmap <buffer><C-p>
-    nunmap <buffer><C-f>
+	nunmap <buffer><C-n>
+	nunmap <buffer><C-p>
+	nunmap <buffer><C-f>
 endfunction
 "nnoremap <buffer> ]g <Plug>(grammarous-move-to-next-error)
 "nnoremap <buffer> [g <Plug>(grammarous-move-to-previous-error)
+" }}}
 
 " LaTeX
 autocmd Filetype tex setl updatetime=1
@@ -768,22 +782,21 @@ let g:livepreview_previewer = 'open -a Preview'
 let g:black_linelength = 80
 autocmd BufWritePre *.py execute ':Black' 
 
-" # Footer
 
 " Google codefmt
 augroup autoformat_settings
-  autocmd FileType python AutoFormatBuffer yapf
-  autocmd FileType c,cpp,proto,javascript AutoFormatBuffer clang-format
-  autocmd FileType go AutoFormatBuffer gofmt
-  "autocmd FileType rust AutoFormatBuffer rustfmt +nightly
+	autocmd FileType c,cpp,proto,javascript AutoFormatBuffer clang-format
+	autocmd FileType go AutoFormatBuffer gofmt
+	"autocmd FileType rust AutoFormatBuffer rustfmt +nightly
 	" ===================
-  autocmd FileType bzl AutoFormatBuffer buildifier
-  "autocmd FileType dart AutoFormatBuffer dartfmt
-  "autocmd FileType gn AutoFormatBuffer gn
-  autocmd FileType html,css,json AutoFormatBuffer js-beautify
-  autocmd FileType java AutoFormatBuffer google-java-format
-  " Alternative: autocmd FileType python AutoFormatBuffer autopep8
+	autocmd FileType bzl AutoFormatBuffer buildifier
+	autocmd FileType html,css,json AutoFormatBuffer js-beautify
+	autocmd FileType java AutoFormatBuffer google-java-format
+	" Alternative: autocmd FileType python AutoFormatBuffer autopep8
+	autocmd FileType python AutoFormatBuffer yapf
+	autocmd BufWritePre *.py ImpSort!
 augroup END
+
 " Optional: Enable codefmt's default mappings on the <Leader>= prefix.
 Glaive codefmt plugin[mappings]
 
@@ -805,17 +818,17 @@ vmap <M-j> :m'>+<cr>`<my`>mzgv`yo`z
 vmap <M-k> :m'<-2<cr>`>my`<mzgv`yo`z
 
 if has("mac") || has("macunix")
-  nmap <D-j> <M-j>
-  nmap <D-k> <M-k>
-  vmap <D-j> <M-j>
-  vmap <D-k> <M-k>
+	nmap <D-j> <M-j>
+	nmap <D-k> <M-k>
+	vmap <D-j> <M-j>
+	vmap <D-k> <M-k>
 endif
 
 " Delete trailing white space on save, useful for Python and CoffeeScript ;)
 func! DeleteTrailingWS()
-  exe "normal mz"
-  %s/\s\+$//ge
-  exe "normal `z"
+	exe "normal mz"
+	%s/\s\+$//ge
+	exe "normal `z"
 endfunc
 autocmd BufWrite *.py :call DeleteTrailingWS()
 autocmd BufWrite *.coffee :call DeleteTrailingWS()
