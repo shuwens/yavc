@@ -263,7 +263,7 @@ let g:go_fmt_command = "goimports"
 let g:go_bin_path = expand("~/dev/r/bin")
 
 " Don't gofmt Biscuit (yet)
-autocmd BufRead,BufNewFile /home/jon/dev/others/biscuit/** let [g:go_fmt_command, g:go_fmt_autosave]=["", 0]
+"autocmd BufRead,BufNewFile /home/jon/dev/others/biscuit/** let [g:go_fmt_command, g:go_fmt_autosave]=["", 0]
 
 " =============================================================================
 " # Editor settings
@@ -381,13 +381,13 @@ inoremap <C-c> <Esc>
 vnoremap <C-c> <Esc>
 
 " Suspend with Ctrl+f
-inoremap <C-f> :sus<cr>
-vnoremap <C-f> :sus<cr>
-nnoremap <C-f> :sus<cr>
+"inoremap <C-f> :sus<cr>
+"vnoremap <C-f> :sus<cr>
+"nnoremap <C-f> :sus<cr>
 
 " Jump to start and end of line using the home row keys
-map H ^
-map L $
+"map H ^
+"map L $
 
 " Neat X clipboard integration
 " ,p will paste clipboard into buffer
@@ -778,10 +778,21 @@ endfunction
 autocmd Filetype tex setl updatetime=1
 let g:livepreview_previewer = 'open -a Preview'
 
-" black for python
+" Python is special {{{
+" NOTE: I only want to auto-format Python files that belong to me 
 let g:black_linelength = 80
-autocmd BufWritePre *.py execute ':Black' 
-
+autocmd BufRead,BufNewFile $HOME/dev/projects/** let b:DevPythonFile=1
+autocmd BufWritePre *.py call DevPythonFormatter()
+fun! DevPythonFormatter()
+	if !exists('b:DevPythonFile')
+		return
+	endif
+	" I use black, not autopep8 or yapf for now... I wonder the best practise
+	execute ':Black' 
+	ImpSort!
+	call DeleteTrailingWS()
+endfun
+" }}}
 
 " Google codefmt
 augroup autoformat_settings
@@ -792,9 +803,6 @@ augroup autoformat_settings
 	autocmd FileType bzl AutoFormatBuffer buildifier
 	autocmd FileType html,css,json AutoFormatBuffer js-beautify
 	autocmd FileType java AutoFormatBuffer google-java-format
-	" Alternative: autocmd FileType python AutoFormatBuffer autopep8
-	autocmd FileType python AutoFormatBuffer yapf
-	autocmd BufWritePre *.py ImpSort!
 augroup END
 
 " Optional: Enable codefmt's default mappings on the <Leader>= prefix.
@@ -830,7 +838,7 @@ func! DeleteTrailingWS()
 	%s/\s\+$//ge
 	exe "normal `z"
 endfunc
-autocmd BufWrite *.py :call DeleteTrailingWS()
+"autocmd BufWrite *.py :call DeleteTrailingWS()
 autocmd BufWrite *.coffee :call DeleteTrailingWS()
 
 " Language Tool
