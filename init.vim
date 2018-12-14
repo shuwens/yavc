@@ -192,12 +192,6 @@ let g:latex_indent_enabled = 1
 let g:latex_fold_envs = 0
 let g:latex_fold_sections = []
 
-" Open hotkeys
-nmap <leader>p :Files<CR> 
-nmap <leader>; :Buffers<CR>
-nnoremap <leader>o :GFiles<CR> 
-nmap <leader>g :GFiles?<CR> 
-
 " Quick-save
 nmap <leader>w :w<CR>
 
@@ -223,9 +217,9 @@ nnoremap <leader>k :call LanguageClient#textDocument_hover()<CR>
 "nnoremap <silent> K :call LanguageClient#textDocument_hover()<CR>
 "nnoremap <silent> H :call LanguageClient#textDocument_hover()<CR>
 nnoremap <silent> D :call LanguageClient#textDocument_definition()<CR>
-nnoremap <leader>d :call LanguageClient#textDocument_definition()<cr>
+"nnoremap <leader>d :call LanguageClient#textDocument_definition()<cr>
 nnoremap <silent> Z :call LanguageClient#textDocument_definition()<CR>
-nnoremap <silent> gd :call LanguageClient#textDocument_definition()<CR>
+"nnoremap <silent> gd :call LanguageClient#textDocument_definition()<CR>
 nnoremap <silent> <leader>] :call LanguageClient#textDocument_definition()<CR>
 nnoremap <silent> R :call LanguageClient#textDocument_references()<cr>
 nnoremap <leader>r :call LanguageClient#textDocument_references()<cr>
@@ -395,12 +389,23 @@ vnoremap <C-c> <Esc>
 "noremap <leader>p :read !xsel --clipboard --output<cr>
 "noremap <leader>c :w !xsel -ib<cr><cr>
 
-" <leader>s for Rg search
-noremap <leader>s :Rg<CR>
+" fzf !!! {{{
+"
 "let g:fzf_layout = { 'down': '~20%' }
 let g:fzf_layout = { 'down': '~35%' }
 
-" fzf helper methods{{{
+" Open hotkeys
+nmap <leader>p :Files<CR> 
+"nmap <leader>; :Buffers<CR>
+nmap <leader>b :Buffers<CR>
+nnoremap <leader>o :GFiles<CR> 
+"nmap <leader>g :GFiles?<CR> 
+nmap <leader>; :GFiles?<CR> 
+" <leader>s for Rg search
+noremap <leader>s :Rg<CR>
+noremap <leader>a :Rg<CR>
+
+" fzf helper methods
 " Command for git grep
 " - fzf#vim#grep(command, with_column, [options], [fullscreen])
 command! -bang -nargs=* GGrep
@@ -538,42 +543,9 @@ autocmd BufRead *.xlsx.axlsx set filetype=ruby
 autocmd Filetype html,xml,xsl,php source $HOME/.config/nvim/scripts/closetag.vim
 
 
-" =============================================================================
-" # Personal
-" =============================================================================
+"  Deprecated keybindings {{{
 
-" provide hjkl movements in Insert mode via the <Alt> modifier key
-inoremap <A-h> <C-o>h
-inoremap <A-j> <C-o>j
-inoremap <A-k> <C-o>k
-inoremap <A-l> <C-o>l
-
-nmap <leader>w :w<CR>
-nmap <leader>wq :wq<CR>
-"nnoremap <leader>w :w<CR>
-nnoremap <leader>q :q!<CR>
-nnoremap <leader>qq :q!<Esc>:q!<CR>
-command! W w
-command! Wq wq
-command! WQ wq
-
-" map wincmd {{
-nmap <silent> <A-Up> :wincmd k<CR>
-nmap <silent> <A-Down> :wincmd j<CR>
-nmap <silent> <A-Left> :wincmd h<CR>
-nmap <silent> <A-Right> :wincmd l<CR>
-" using ctrl hj"
-"nmap <leader>j :wincmd j<CR>
-"nmap <leader>k :wincmd k<CR>
-"nmap <leader>h :wincmd h<CR>
-"nmap <leader>l :wincmd l<CR>
-" The right windcmd
-nmap <silent>J :wincmd j<CR>
-nmap <silent>K :wincmd k<CR>
-nmap <silent>H :wincmd h<CR>
-nmap <silent>L :wincmd l<CR>
-
-" yapf - Deprecated becasue it is automatic  {{{
+" yapf - Deprecated becasue it is automatic 
 "map <C-Y> :call yapf#YAPF()<cr>
 "imap <C-Y> <c-o>:call yapf#YAPF()<cr>
 "
@@ -584,12 +556,9 @@ nmap <silent>L :wincmd l<CR>
 "autocmd FileType python map <buffer><Leader>x <Plug>(operator-clang-format)
 " Toggle auto formatting:
 "nmap <Leader>C :YapfAutoToggle<CR>
-" }}}
 
-" indent line
-let g:indent_guides_enable_on_vim_startup = 1
 
-" Rewrap (Deprecated) {{{
+" Rewrap (Deprecated) 
 " Rewrap is similar to the gqq command with textwidth, but it also uses a hanging
 "   indent and can be used on multiple lines of text.  And note that textwidth needs
 "   to be set beforehand.
@@ -614,41 +583,8 @@ endfunction
 command! -range RewrapCmd <line1>,<line2>call RewrapFunc()
 " FIXME: not good
 "nmap Q :RewrapCmd<CR> 
-" }}}
-"
-" A second kind of re-wrap
-" Reformat lines (getting the spacing correct) {{{
-"
-" https://tex.stackexchange.com/questions/1548/intelligent-paragraph-reflowing-in-vim
-fun! TeX_fmt()
-	if (getline(".") != "")
-		let save_cursor = getpos(".")
-		let op_wrapscan = &wrapscan
-		set nowrapscan
-		let par_begin = '^\(%D\)\=\s*\($\||\\begin\|\\end\|\\[\|\\]\|\\\(sub\)*section\>\|\\item\>\|\\NC\>\|\\blank\>\|\\noindent\>\)'
-		let par_end   = '^\(%D\)\=\s*\($\||\\begin\|\\end\|\\[\|\\]\|\\place\|\\\(sub\)*section\>\|\\item\>\|\\NC\>\|\\blank\>\)'
-		try
-			exe '?'.par_begin.'?+'
-		catch /E384/
-			1
-		endtry
-		norm V
-		try
-			exe '/'.par_end.'/-'
-		catch /E385/
-			$
-		endtry
-		norm gq
-		let &wrapscan = op_wrapscan
-		call setpos('.', save_cursor) 
-	endif
-endfun
-" }}}
-autocmd Filetype tex nmap Q :call TeX_fmt()<CR>
-autocmd Filetype markdown nmap Q :call TeX_fmt()<CR>
-autocmd Filetype org nmap Q :call TeX_fmt()<CR>
 
-" ncm2 {{{
+" ncm2 
 " enable ncm2 for all buffers
 "autocmd BufEnter * call ncm2#enable_for_buffer()
 
@@ -687,6 +623,210 @@ au User Ncm2Plugin call ncm2#register_source({
 			\ 'complete_pattern': ':\s*',
 			\ 'on_complete': ['ncm2#on_complete#omni', 'csscomplete#CompleteCSS'],
 			\ })
+
+"  }}}
+
+
+" A second kind of re-wrap
+" Reformat lines (getting the spacing correct) {{{
+"
+" https://tex.stackexchange.com/questions/1548/intelligent-paragraph-reflowing-in-vim
+fun! TeX_fmt()
+	if (getline(".") != "")
+		let save_cursor = getpos(".")
+		let op_wrapscan = &wrapscan
+		set nowrapscan
+		let par_begin = '^\(%D\)\=\s*\($\||\\begin\|\\end\|\\[\|\\]\|\\\(sub\)*section\>\|\\item\>\|\\NC\>\|\\blank\>\|\\noindent\>\)'
+		let par_end   = '^\(%D\)\=\s*\($\||\\begin\|\\end\|\\[\|\\]\|\\place\|\\\(sub\)*section\>\|\\item\>\|\\NC\>\|\\blank\>\)'
+		try
+			exe '?'.par_begin.'?+'
+		catch /E384/
+			1
+		endtry
+		norm V
+		try
+			exe '/'.par_end.'/-'
+		catch /E385/
+			$
+		endtry
+		norm gq
+		let &wrapscan = op_wrapscan
+		call setpos('.', save_cursor) 
+	endif
+endfun
+" }}}
+autocmd Filetype tex nmap Q :call TeX_fmt()<CR>
+autocmd Filetype markdown nmap Q :call TeX_fmt()<CR>
+autocmd Filetype org nmap Q :call TeX_fmt()<CR>
+
+" vim spell
+for d in glob('~/.config/nvim/spell/*.add', 1, 1)
+	if filereadable(d) && (!filereadable(d . '.spl') || getftime(d) > getftime(d . '.spl'))
+		exec 'mkspell! ' . fnameescape(d)
+	endif
+endfor
+
+" vim lexical
+augroup lexical
+	autocmd!
+	autocmd FileType markdown,mkd call lexical#init()
+	autocmd FileType textile call lexical#init()
+	autocmd FileType text call lexical#init({ 'spell': 0 })
+augroup END
+let g:lexical#thesaurus = ['~/.config/nvim/thesaurus/mthesaur.txt',]
+let g:lexical#spellfile = ['~/.config/nvim/spell/en.utf-8.add',]
+
+" =============================================================================
+"    Personal config
+" =============================================================================
+
+set shortmess=at
+set cmdheight=2
+set tw=79
+set cursorline
+set cursorcolumn
+"hi CursorLine   cterm=NONE ctermbg=232 guibg=#050505
+"hi CursorColumn cterm=NONE ctermbg=232 guibg=#050505
+hi Folded ctermbg=234 ctermfg=red
+
+" vim-grammarous {{{
+" TODO: imrpovement for LaTeX files
+nmap <leader>l :GrammarousCheck --lang=en-US --preview<CR>
+
+let g:grammarous#hooks = {}
+function! g:grammarous#hooks.on_check(errs) abort
+	nmap <buffer><C-i> <Plug>(grammarous-move-to-info-window)
+	nmap <buffer><C-n> <Plug>(grammarous-move-to-next-error)
+	nmap <buffer><C-P> <Plug>(grammarous-move-to-previous-error)
+	nmap <buffer><C-f> <Plug>(grammarous-fixit)
+endfunction
+function! g:grammarous#hooks.on_reset(errs) abort
+	nunmap <buffer><C-n>
+	nunmap <buffer><C-p>
+	nunmap <buffer><C-f>
+endfunction
+"nnoremap <buffer> ]g <Plug>(grammarous-move-to-next-error)
+"nnoremap <buffer> [g <Plug>(grammarous-move-to-previous-error)
+" }}}
+
+" LaTeX {{{
+autocmd Filetype tex setl updatetime=1
+let g:livepreview_previewer = 'open -a Preview'
+
+" polyglot for LaTeX
+let g:polyglot_disabled = ['latex']
+" }}}
+
+" Python is special {{{
+" NOTE: I only want to auto-format Python files that belong to me 
+let g:black_linelength = 80
+autocmd BufRead,BufNewFile $HOME/dev/projects/** let b:DevPythonFile=1
+autocmd BufWritePre *.py call DevPythonFormatter()
+fun! DevPythonFormatter()
+	if !exists('b:DevPythonFile')
+		return
+	endif
+	" I use black, not autopep8 or yapf for now... I wonder the best practise
+	execute ':Black' 
+	ImpSort!
+	call DeleteTrailingWS()
+endfun
+" }}}
+"
+" Google codefmt {{{
+augroup autoformat_settings
+	autocmd FileType c,cpp,proto,javascript AutoFormatBuffer clang-format
+	autocmd FileType go AutoFormatBuffer gofmt
+	"autocmd FileType rust AutoFormatBuffer rustfmt +nightly
+	" ===================
+	autocmd FileType bzl AutoFormatBuffer buildifier
+	autocmd FileType html,css,json AutoFormatBuffer js-beautify
+	autocmd FileType java AutoFormatBuffer google-java-format
+augroup END
+
+" Optional: Enable codefmt's default mappings on the <Leader>= prefix.
+Glaive codefmt plugin[mappings]
+" }}}
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Editing mappings 
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" Remap VIM 0 to first non-blank character
+map 0 ^
+
+" Mac setting, not important {{{
+"
+" Move a line of text using ALT+[jk] or Comamnd+[jk] on mac
+nmap <M-j> mz:m+<cr>`z
+nmap <M-k> mz:m-2<cr>`z
+vmap <M-j> :m'>+<cr>`<my`>mzgv`yo`z
+vmap <M-k> :m'<-2<cr>`>my`<mzgv`yo`z
+
+if has("mac") || has("macunix")
+	nmap <D-j> <M-j>
+	nmap <D-k> <M-k>
+	vmap <D-j> <M-j>
+	vmap <D-k> <M-k>
+endif
+" }}}
+
+" Delete trailing white space on save, useful for Python and CoffeeScript ;)
+func! DeleteTrailingWS()
+	exe "normal mz"
+	%s/\s\+$//ge
+	exe "normal `z"
+endfunc
+"autocmd BufWrite *.py :call DeleteTrailingWS()
+autocmd BufWrite *.coffee :call DeleteTrailingWS()
+
+
+" =============================================================================
+" # Personal Keybindings
+" =============================================================================
+
+" Visual mode pressing * or # searches for the current selection
+vnoremap <silent> * :call VisualSelection('f')<CR>
+vnoremap <silent> # :call VisualSelection('b')<CR>
+
+" Try to make my life easier
+nmap <leader>w :w<CR>
+nmap <leader>wq :wq<CR>
+"nnoremap <leader>w :w<CR>
+nnoremap <leader>q :q!<CR>
+nnoremap <leader>qq :q!<Esc>:q!<CR>
+command! W w
+command! Wq wq
+command! WQ wq
+" indent line
+let g:indent_guides_enable_on_vim_startup = 1
+
+" map wincmd {{{
+"
+" The right windcmd
+nmap <silent>J :wincmd j<CR>
+nmap <silent>K :wincmd k<CR>
+nmap <silent>H :wincmd h<CR>
+nmap <silent>L :wincmd l<CR>
+
+nmap <silent> <A-Up> :wincmd k<CR>
+nmap <silent> <A-Down> :wincmd j<CR>
+nmap <silent> <A-Left> :wincmd h<CR>
+nmap <silent> <A-Right> :wincmd l<CR>
+
+" using ctrl hj"
+"nmap <leader>j :wincmd j<CR>
+"nmap <leader>k :wincmd k<CR>
+"nmap <leader>h :wincmd h<CR>
+"nmap <leader>l :wincmd l<CR>
+"}}}
+
+" provide hjkl movements in Insert mode via the <Alt> modifier key  {{{
+"
+inoremap <A-h> <C-o>h
+inoremap <A-j> <C-o>j
+inoremap <A-k> <C-o>k
+inoremap <A-l> <C-o>l
 " }}}
 
 " C++ reference look up  {{{
@@ -726,126 +866,13 @@ let g:markbar_file_mark_format_string = '%s [line: %2d, col: %2d]'
 let g:markbar_file_mark_arguments = ['fname', 'line', 'col']
 " }}}
 
-" vim spell
-for d in glob('~/.config/nvim/spell/*.add', 1, 1)
-	if filereadable(d) && (!filereadable(d . '.spl') || getftime(d) > getftime(d . '.spl'))
-		exec 'mkspell! ' . fnameescape(d)
-	endif
-endfor
-
-" vim lexical
-augroup lexical
-	autocmd!
-	autocmd FileType markdown,mkd call lexical#init()
-	autocmd FileType textile call lexical#init()
-	autocmd FileType text call lexical#init({ 'spell': 0 })
-augroup END
-let g:lexical#thesaurus = ['~/.config/nvim/thesaurus/mthesaur.txt',]
-let g:lexical#spellfile = ['~/.config/nvim/spell/en.utf-8.add',]
-
-" =============================================================================
-"    Personal config
-" =============================================================================
-set shortmess=at
-
-set tw=79
-set cursorline
-set cursorcolumn
-"hi CursorLine   cterm=NONE ctermbg=232 guibg=#050505
-"hi CursorColumn cterm=NONE ctermbg=232 guibg=#050505
-hi Folded ctermbg=234 ctermfg=red
-
-" vim-grammarous {{{}
-nmap <leader>l :GrammarousCheck --lang=en-US --preview<CR>
-
-let g:grammarous#hooks = {}
-function! g:grammarous#hooks.on_check(errs) abort
-	nmap <buffer><C-i> <Plug>(grammarous-move-to-info-window)
-	nmap <buffer><C-n> <Plug>(grammarous-move-to-next-error)
-	nmap <buffer><C-P> <Plug>(grammarous-move-to-previous-error)
-	nmap <buffer><C-f> <Plug>(grammarous-fixit)
-endfunction
-function! g:grammarous#hooks.on_reset(errs) abort
-	nunmap <buffer><C-n>
-	nunmap <buffer><C-p>
-	nunmap <buffer><C-f>
-endfunction
-"nnoremap <buffer> ]g <Plug>(grammarous-move-to-next-error)
-"nnoremap <buffer> [g <Plug>(grammarous-move-to-previous-error)
+" fugitive {{{
+"
+nnoremap <silent> gd :GDiff<CR>
+nnoremap <silent> dg :diffget<CR>
 " }}}
 
-" LaTeX
-autocmd Filetype tex setl updatetime=1
-let g:livepreview_previewer = 'open -a Preview'
 
-" Python is special {{{
-" NOTE: I only want to auto-format Python files that belong to me 
-let g:black_linelength = 80
-autocmd BufRead,BufNewFile $HOME/dev/projects/** let b:DevPythonFile=1
-autocmd BufWritePre *.py call DevPythonFormatter()
-fun! DevPythonFormatter()
-	if !exists('b:DevPythonFile')
-		return
-	endif
-	" I use black, not autopep8 or yapf for now... I wonder the best practise
-	execute ':Black' 
-	ImpSort!
-	call DeleteTrailingWS()
-endfun
-" }}}
-
-" Google codefmt
-augroup autoformat_settings
-	autocmd FileType c,cpp,proto,javascript AutoFormatBuffer clang-format
-	autocmd FileType go AutoFormatBuffer gofmt
-	"autocmd FileType rust AutoFormatBuffer rustfmt +nightly
-	" ===================
-	autocmd FileType bzl AutoFormatBuffer buildifier
-	autocmd FileType html,css,json AutoFormatBuffer js-beautify
-	autocmd FileType java AutoFormatBuffer google-java-format
-augroup END
-
-" Optional: Enable codefmt's default mappings on the <Leader>= prefix.
-Glaive codefmt plugin[mappings]
-
-set cmdheight=2
-" Visual mode pressing * or # searches for the current selection
-vnoremap <silent> * :call VisualSelection('f')<CR>
-vnoremap <silent> # :call VisualSelection('b')<CR>
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Editing mappings
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Remap VIM 0 to first non-blank character
-map 0 ^
-
-" Move a line of text using ALT+[jk] or Comamnd+[jk] on mac
-nmap <M-j> mz:m+<cr>`z
-nmap <M-k> mz:m-2<cr>`z
-vmap <M-j> :m'>+<cr>`<my`>mzgv`yo`z
-vmap <M-k> :m'<-2<cr>`>my`<mzgv`yo`z
-
-if has("mac") || has("macunix")
-	nmap <D-j> <M-j>
-	nmap <D-k> <M-k>
-	vmap <D-j> <M-j>
-	vmap <D-k> <M-k>
-endif
-
-" Delete trailing white space on save, useful for Python and CoffeeScript ;)
-func! DeleteTrailingWS()
-	exe "normal mz"
-	%s/\s\+$//ge
-	exe "normal `z"
-endfunc
-"autocmd BufWrite *.py :call DeleteTrailingWS()
-autocmd BufWrite *.coffee :call DeleteTrailingWS()
-
-" Language Tool
-"let g:languagetool_jar='$HOME/dev/others/LanguageTool-4.2/languagetool-commandline.jar'
-
-" polyglot
-let g:polyglot_disabled = ['latex']
 
 " nvim
 if has('nvim')
