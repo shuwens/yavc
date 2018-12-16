@@ -2,9 +2,9 @@
 set shell=/bin/bash
 let mapleader = "\<Space>"
 
-" =============================================================================
-" # PLUGINS
-" =============================================================================
+" ===========================================================================
+"  PLUGINS
+" ===========================================================================
 " Load vundle
 set nocompatible
 filetype off
@@ -37,65 +37,29 @@ Plug 'autozimu/LanguageClient-neovim', {
 			\ 'branch': 'next',
 			\ 'do': 'bash install.sh',
 			\ }
-" (Enhancement) Multi-entry selection UI.
-"Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+" Completion plugins
+" NOTE: I give up on ncm2 because it crashes a lot :(
+Plug 'Shougo/deoplete.nvim', {'do': ':UpdateRemotePlugins'}
+" Showing function signature and inline doc.
+Plug 'Shougo/echodoc.vim'
 
+" ???
 Plug 'mattn/webapi-vim'
 "Plug 'roxma/nvim-cm-racer'
 Plug 'junegunn/vader.vim'
 Plug 'reedes/vim-lexical' " lexical/spell
-Plug 'jceb/vim-orgmode'
-
-" Completion plugins
-"-- NOTE: I give up on ncm2 because it crashes a lot :(
-Plug 'Shougo/deoplete.nvim', {'do': ':UpdateRemotePlugins'}
-
-" Completion manager plugins
-Plug 'roxma/python-support.nvim'
-" for python completions
-let g:python_support_python3_requirements = add(get(g:,'python_support_python3_requirements',[]),'jedi')
-" language specific completions on markdown file
-let g:python_support_python3_requirements = add(get(g:,'python_support_python3_requirements',[]),'mistune')
-" utils, optional
-let g:python_support_python3_requirements = add(get(g:,'python_support_python3_requirements',[]),'psutil')
-let g:python_support_python3_requirements = add(get(g:,'python_support_python3_requirements',[]),'setproctitle')
-
-" LanguageClient enhancements
-" Showing function signature and inline doc.
-Plug 'Shougo/echodoc.vim'
-
-" Syntactic language support
 " Plug '~/dev/projects/simio', {'rtp': 'src/vim-syntax/'}
 Plug '~/dev/projects/api-soup', {'rtp': 'vim-syntax/'}
-Plug 'vim-scripts/gnuplot-syntax-highlighting'
-" Plug 'treycordova/rustpeg.vim.git'
-" Plug 'vim-scripts/haskell.vim'
-Plug 'cespare/vim-toml'
-" Plug 'lervag/vim-latex'
-Plug 'rust-lang/rust.vim'
-Plug 'fatih/vim-go'
-Plug 'dag/vim-fish'
-Plug 'tweekmonster/impsort.vim'
-
-" JETHRO
 "Plug 'fcangialosi/bootlin.vim'
 Plug 'tpope/vim-fugitive'
 Plug 'Yilin-Yang/vim-markbar'
-"Plug 'google/yapf', { 'rtp': 'plugins/vim', 'for': 'python' }
 Plug 'tpope/vim-speeddating'
 Plug 'jiangmiao/auto-pairs'
-Plug 'bennyyip/vim-yapf' "forked from rhysd/vim-clang-format
 Plug 'nathanaelkane/vim-indent-guides'
-Plug 'octol/vim-cpp-enhanced-highlight'
 Plug 'sheerun/vim-polyglot'
 Plug 'Shougo/vimproc.vim', {'do' : 'make'}
-Plug 'eagletmt/coqtop-vim'
-
-" Color 
-Plug 'rakr/vim-one'
-Plug 'kristijanhusak/vim-hybrid-material'
-Plug 'ambv/black'
-
+Plug 'ntpeters/vim-better-whitespace' " Remove trailing spaces
+Plug 'tpope/vim-sleuth'
 " Add maktaba and codefmt to the runtimepath.
 " (The latter must be installed before it can be used.)
 Plug 'google/vim-maktaba'
@@ -103,19 +67,50 @@ Plug 'google/vim-codefmt'
 " Also add Glaive, which is used to configure codefmt's maktaba flags. See
 " `:help :Glaive` for usage.
 Plug 'google/vim-glaive'
+"Plug 'neomake/neomake'
 
-" writing
+" Syntactic language support
+" --------------------------
+Plug 'vim-scripts/gnuplot-syntax-highlighting'
+" Plug 'treycordova/rustpeg.vim.git'
+" Plug 'vim-scripts/haskell.vim'
+Plug 'cespare/vim-toml'
+Plug 'fatih/vim-go'
+Plug 'dag/vim-fish'
+Plug 'jceb/vim-orgmode'
+Plug 'octol/vim-cpp-enhanced-highlight'
+Plug 'eagletmt/coqtop-vim'
+
+" Python
+Plug 'roxma/python-support.nvim'
+Plug 'tweekmonster/impsort.vim'
+Plug 'ambv/black'
+" Python completions
+let g:python_support_python3_requirements = add(get(g:,'python_support_python3_requirements',[]),'jedi')
+" language specific completions on markdown file
+let g:python_support_python3_requirements = add(get(g:,'python_support_python3_requirements',[]),'mistune')
+" utils, optional
+let g:python_support_python3_requirements = add(get(g:,'python_support_python3_requirements',[]),'psutil')
+let g:python_support_python3_requirements = add(get(g:,'python_support_python3_requirements',[]),'setproctitle')
+"Plug 'google/yapf', { 'rtp': 'plugins/vim', 'for': 'python' }
+"Plug 'bennyyip/vim-yapf' "forked from rhysd/vim-clang-format
+
+" Rust
+Plug 'rust-lang/rust.vim'
+
+" LaTeX
+" Plug 'lervag/vim-latex'
 Plug 'xuhdev/vim-latex-live-preview'
 Plug 'lervag/vimtex'
 Plug 'rhysd/vim-grammarous'
 
-"Plug 'neomake/neomake'
-
+" Color
+"Plug 'rakr/vim-one'
+"Plug 'kristijanhusak/vim-hybrid-material'
 call plug#end()
 
 " the glaive#Install() should go after the "call vundle#end()"
 call glaive#Install()
-
 
 runtime macros/matchit.vim
 
@@ -128,7 +123,6 @@ end
 if !has('gui_running')
 	set t_Co=256
 endif
-
 
 " Plugin settings
 let g:secure_modelines_allowed_items = [
@@ -164,6 +158,7 @@ let g:base16_shell_path="$HOME/dev/others/base16/shell/scripts/"
 let g:airline#extensions#tabline#formatter = 'default'
 let g:airline_powerline_fonts = 1
 let g:airline_theme='base16_atelierdune'
+let g:airline#extensions#ale#enabled = 1
 
 " from http://sheerun.net/2014/03/21/how-to-boost-your-vim-productivity/
 if executable('ag')
@@ -177,42 +172,33 @@ endif
 " Javascript
 let javaScript_fold=0
 
-" Linter
-let g:ale_sign_column_always = 1
-" only lint on save
-let g:ale_lint_on_text_changed = 'never'
-let g:ale_lint_on_save = 0
-let g:ale_lint_on_enter = 0
-let g:ale_rust_cargo_use_check = 1
-let g:ale_rust_cargo_check_all_targets = 1
-" let g:neomake_info_sign = {'text': '⚕', 'texthl': 'NeomakeInfoSign'}
-
-" LaTeX
-let g:latex_indent_enabled = 1
-let g:latex_fold_envs = 0
-let g:latex_fold_sections = []
-
 " Quick-save
 nmap <leader>w :w<CR>
 
 " Don't confirm .lvimrc
 let g:localvimrc_ask = 0
 
-" language server protocol - LSP
+" language server protocol - LSP {{{
+"
 " Required for operations modifying multiple buffers like rename.
 set hidden
+let g:LanguageClient_autoStart = 1
+set omnifunc=LanguageClient#complete
+let deoplete#enable_at_startup = 1
 let g:LanguageClient_serverCommands = {
 			\ 'rust': ['rustup', 'run', 'nightly', 'rls'],
 			\ 'javascript': ['javascript-typescript-stdio'],
 			\ 'javascript.jsx': ['tcp://127.0.0.1:2089'],
 			\ 'python': ['pyls'],
 			\ }
+
+			"\ 'rust': ['rustup', 'run', 'nightly', 'rls'],
+" }}}
+
+" LSP - keybindings {{{
+"
 nnoremap <F5> :call LanguageClient_contextMenu()<CR>
 nnoremap <leader>m :call LanguageClient_contextMenu()<CR>
-" Or map each action separately
-let g:LanguageClient_autoStart = 1
-set omnifunc=LanguageClient#complete
-let deoplete#enable_at_startup = 1
 nnoremap <leader>k :call LanguageClient#textDocument_hover()<CR>
 "nnoremap <silent> K :call LanguageClient#textDocument_hover()<CR>
 "nnoremap <silent> H :call LanguageClient#textDocument_hover()<CR>
@@ -229,8 +215,9 @@ nnoremap <silent> <F2> :call LanguageClient#textDocument_rename()<CR>
 "nnoremap <silent> <leader>r :call LanguageClient#textDocument_rename()<CR>
 nnoremap <silent> S :call LanugageClient#textDocument_documentSymbol()<CR>
 nnoremap <leader>s :call LanugageClient#textDocument_documentSymbol()<CR>
+" }}}
 
-" racer + rust
+" Rust {{{
 " https://github.com/rust-lang/rust.vim/issues/192
 let g:rustfmt_command = "rustfmt +nightly"
 let g:rustfmt_autosave = 1
@@ -241,9 +228,16 @@ let g:rust_clip_command = 'xclip -selection clipboard'
 "let g:racer_experimental_completer = 1
 let $RUST_SRC_PATH = systemlist("rustc --print sysroot")[0] . "/lib/rustlib/src/rust/src"
 
+" Follow Rust code style rules
+au Filetype rust source $HOME/.config/nvim/scripts/spacetab.vim
+au Filetype rust set colorcolumn=100
+
+" <leader>= reformats current tange
+autocmd FileType rust nnoremap <leader>= :'<,'>RustFmtRange<cr>
+" }}}
+
 " Completion
-" tab to select
-" and don't hijack my enter key
+" tab to select, and don't hijack my enter key
 inoremap <expr><Tab> (pumvisible()?(empty(v:completed_item)?"\<C-n>":"\<C-y>"):"\<Tab>")
 inoremap <expr><CR> (pumvisible()?(empty(v:completed_item)?"\<CR>\<CR>":"\<C-y>"):"\<CR>")
 
@@ -259,9 +253,9 @@ let g:go_bin_path = expand("~/dev/r/bin")
 " Don't gofmt Biscuit (yet)
 "autocmd BufRead,BufNewFile /home/jon/dev/others/biscuit/** let [g:go_fmt_command, g:go_fmt_autosave]=["", 0]
 
-" =============================================================================
-" # Editor settings
-" =============================================================================
+" ===========================================================================
+"   Editor settings
+" ===========================================================================
 filetype plugin indent on
 set autoindent
 set timeoutlen=300 " http://stackoverflow.com/questions/2158516/delay-before-o-opens-a-new-line
@@ -329,9 +323,9 @@ nnoremap ? ?\v
 nnoremap / /\v
 cnoremap %s/ %sm/
 
-" =============================================================================
-" # GUI settings
-" =============================================================================
+" ==========================================================================
+"    GUI settings
+" ==========================================================================
 set guioptions-=T " Remove toolbar
 set vb t_vb= " No more beeps
 set backspace=2 " Backspace over newlines
@@ -344,7 +338,7 @@ set synmaxcol=200
 set laststatus=2
 set relativenumber                 " Relative line numbers
 autocmd InsertEnter * :set number  " Now it is hybrid!
-autocmd InsertLeave * :set nonumber 
+autocmd InsertLeave * :set nonumber
 set diffopt+=iwhite " No whitespace in vimdiff
 set colorcolumn=80 " and give me a colored column
 set showcmd " Show (partial) command in status line.
@@ -362,9 +356,9 @@ hi Normal ctermbg=NONE
 set nolist
 set listchars=nbsp:¬,extends:»,precedes:«,trail:•
 
-" =============================================================================
-" # Keyboard shortcuts
-" =============================================================================
+" ===========================================================================
+"   Keyboard shortcuts
+" ===========================================================================
 " ; as :
 nnoremap ; :
 
@@ -395,12 +389,12 @@ vnoremap <C-c> <Esc>
 let g:fzf_layout = { 'down': '~35%' }
 
 " Open hotkeys
-nmap <leader>p :Files<CR> 
+nmap <leader>p :Files<CR>
 "nmap <leader>; :Buffers<CR>
 nmap <leader>b :Buffers<CR>
-nnoremap <leader>o :GFiles<CR> 
-"nmap <leader>g :GFiles?<CR> 
-nmap <leader>; :GFiles?<CR> 
+nnoremap <leader>o :GFiles<CR>
+"nmap <leader>g :GFiles?<CR>
+nmap <leader>; :GFiles?<CR>
 " <leader>s for Rg search
 noremap <leader>s :Rg<CR>
 noremap <leader>a :Rg<CR>
@@ -477,17 +471,12 @@ nnoremap k gk
 " Jump to next/previous error
 nnoremap <C-j> :cnext<cr>
 nnoremap <C-k> :cprev<cr>
-nmap <silent> L <Plug>(ale_lint)
-"nmap <silent> <C-k> <Plug>(ale_previous_wrap)
-"nmap <silent> <C-j> <Plug>(ale_next_wrap)
-nnoremap <C-l> :copen<cr>
+
+"nnoremap <C-l> :copen<cr>
 nnoremap <C-g> :cclose<cr>
 
 " <leader><leader> toggles between buffers
 nnoremap <leader><leader> <c-^>
-
-" <leader>= reformats current tange
-autocmd FileType rust nnoremap <leader>= :'<,'>RustFmtRange<cr>
 
 " <leader>, shows/hides hidden characters
 nnoremap <leader>, :set invlist<cr>
@@ -507,9 +496,9 @@ map <F1> <Esc>
 imap <F1> <Esc>
 
 
-" =============================================================================
-" # Autocommands
-" =============================================================================
+" ===========================================================================
+"    Autocommands
+" ===========================================================================
 
 " Prevent accidental writes to buffers that shouldn't be edited
 autocmd BufRead *.orig set readonly
@@ -527,10 +516,6 @@ endif
 " Auto-make less files on save
 autocmd BufWritePost *.less if filereadable("Makefile") | make | endif
 
-" Follow Rust code style rules
-au Filetype rust source $HOME/.config/nvim/scripts/spacetab.vim
-au Filetype rust set colorcolumn=100
-
 " Help filetype detection
 autocmd BufRead *.plot set filetype=gnuplot
 autocmd BufRead *.md set filetype=markdown
@@ -541,7 +526,6 @@ autocmd BufRead *.xlsx.axlsx set filetype=ruby
 
 " Script plugins
 autocmd Filetype html,xml,xsl,php source $HOME/.config/nvim/scripts/closetag.vim
-
 
 "  Deprecated keybindings {{{
 
@@ -626,9 +610,8 @@ au User Ncm2Plugin call ncm2#register_source({
 
 "  }}}
 
-
-" A second kind of re-wrap
-" Reformat lines (getting the spacing correct) {{{
+" A second kind of re-wrap {{{
+" Reformat lines (getting the spacing correct) 
 "
 " https://tex.stackexchange.com/questions/1548/intelligent-paragraph-reflowing-in-vim
 fun! TeX_fmt()
@@ -651,7 +634,7 @@ fun! TeX_fmt()
 		endtry
 		norm gq
 		let &wrapscan = op_wrapscan
-		call setpos('.', save_cursor) 
+		call setpos('.', save_cursor)
 	endif
 endfun
 " }}}
@@ -676,9 +659,9 @@ augroup END
 let g:lexical#thesaurus = ['~/.config/nvim/thesaurus/mthesaur.txt',]
 let g:lexical#spellfile = ['~/.config/nvim/spell/en.utf-8.add',]
 
-" =============================================================================
-"    Personal config
-" =============================================================================
+" ===========================================================================
+"   Personal config
+" ===========================================================================
 
 set shortmess=at
 set cmdheight=2
@@ -689,9 +672,48 @@ set cursorcolumn
 "hi CursorColumn cterm=NONE ctermbg=232 guibg=#050505
 hi Folded ctermbg=234 ctermfg=red
 
+" Linter -- ALE {{{
+highlight ALEErrorSign ctermfg=9
+let g:ale_sign_error = '✖'
+let g:ale_sign_warning = '⚠'
+" lint should be handled by LSP, but seems like that Rust is bit broken
+let g:ale_linters = {
+			\ 'rust': ['rls','cargo','rustc'],
+			\ }
+let g:ale_fixers = {
+			\ '*': ['remove_trailing_lines', 'trim_whitespace'],
+			\ 'rust': ['rustfmt']
+			\ }
+let g:ale_sign_column_always = 1
+" lint when I want
+" only lint on save
+let g:ale_lint_on_text_changed = 'never'
+let g:ale_lint_on_save = 0
+let g:ale_lint_on_enter = 0
+let g:ale_completion_enabled = 1
+" format error msg
+let g:ale_echo_msg_error_str = 'E'
+let g:ale_echo_msg_warning_str = 'W'
+let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
+
+" Rust
+let g:ale_rust_rls_toolchain = 'nightly'
+let g:ale_rust_cargo_use_check = 1 " Note that ale rust check need the Cargo.toml
+let g:ale_rust_cargo_check_all_targets = 1
+" let g:neomake_info_sign = {'text': '⚕', 'texthl': 'NeomakeInfoSign'}
+
+" ALE bindings
+"nmap <silent> L <Plug>(ale_lint)
+"nnoremap <leader>l <Plug>(ale_lint)
+nnoremap <leader>l :ALELint<CR>
+"nmap <silent> <C-k> <Plug>(ale_previous_wrap)
+"nmap <silent> <C-j> <Plug>(ale_next_wrap)
+" }}}
+
 " vim-grammarous {{{
 " TODO: imrpovement for LaTeX files
-nmap <leader>l :GrammarousCheck --lang=en-US --preview<CR>
+"
+nmap <leader>g :GrammarousCheck --lang=en-US --preview<CR>
 
 let g:grammarous#hooks = {}
 function! g:grammarous#hooks.on_check(errs) abort
@@ -710,6 +732,10 @@ endfunction
 " }}}
 
 " LaTeX {{{
+let g:latex_indent_enabled = 1
+let g:latex_fold_envs = 0
+let g:latex_fold_sections = []
+
 autocmd Filetype tex setl updatetime=1
 let g:livepreview_previewer = 'open -a Preview'
 
@@ -749,7 +775,7 @@ Glaive codefmt plugin[mappings]
 " }}}
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Editing mappings 
+"   Editing mappings
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 " Remap VIM 0 to first non-blank character
@@ -781,9 +807,9 @@ endfunc
 autocmd BufWrite *.coffee :call DeleteTrailingWS()
 
 
-" =============================================================================
-" # Personal Keybindings
-" =============================================================================
+" ===========================================================================
+"   Personal Keybindings
+" ===========================================================================
 
 " Visual mode pressing * or # searches for the current selection
 vnoremap <silent> * :call VisualSelection('f')<CR>
@@ -871,8 +897,6 @@ let g:markbar_file_mark_arguments = ['fname', 'line', 'col']
 nnoremap <silent> gd :GDiff<CR>
 nnoremap <silent> dg :diffget<CR>
 " }}}
-
-
 
 " nvim
 if has('nvim')
