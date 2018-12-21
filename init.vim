@@ -12,25 +12,38 @@ set rtp+=~/dev/others/base16/vim/
 call plug#begin('~/.local/share/nvim/plugged')
 
 " Load plugins
+
 " VIM enhancements
+" ----------------
 Plug 'ciaranm/securemodelines'
 Plug 'vim-scripts/localvimrc'
 Plug 'Shougo/unite.vim'
+Plug 'Shougo/vimproc.vim', {'do' : 'make'}
+Plug 'tpope/vim-fugitive'
+Plug 'sheerun/vim-polyglot' " language pack
+Plug 'tpope/vim-sleuth'  " Heuristically set buffer options
+"Plug 'tpope/vim-speeddating'
+Plug 'ntpeters/vim-better-whitespace' " Remove trailing spaces
 
 " GUI enhancements
-Plug 'w0rp/ale'
+" ----------------
 Plug 'machakann/vim-highlightedyank'
 "Plug 'itchyny/lightline.vim'   " use air line ?
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
+Plug 'Yilin-Yang/vim-markbar'
+Plug 'nathanaelkane/vim-indent-guides'
 
 " Fuzzy finder
+" ------------
 Plug 'airblade/vim-rooter'
 "Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --bin' }
 Plug '/usr/local/opt/fzf'
 Plug 'junegunn/fzf.vim'
 
 " Semantic language support
+" -------------------------
+Plug 'w0rp/ale'
 "Plug 'phildawes/racer'
 "Plug 'racer-rust/vim-racer'
 Plug 'autozimu/LanguageClient-neovim', {
@@ -42,32 +55,25 @@ Plug 'autozimu/LanguageClient-neovim', {
 Plug 'Shougo/deoplete.nvim', {'do': ':UpdateRemotePlugins'}
 " Showing function signature and inline doc.
 Plug 'Shougo/echodoc.vim'
-
-" ???
-Plug 'mattn/webapi-vim'
-"Plug 'roxma/nvim-cm-racer'
-Plug 'junegunn/vader.vim'
-Plug 'reedes/vim-lexical' " lexical/spell
-" Plug '~/dev/projects/simio', {'rtp': 'src/vim-syntax/'}
-Plug '~/dev/projects/api-soup', {'rtp': 'vim-syntax/'}
-"Plug 'fcangialosi/bootlin.vim'
-Plug 'tpope/vim-fugitive'
-Plug 'Yilin-Yang/vim-markbar'
-Plug 'tpope/vim-speeddating'
-Plug 'jiangmiao/auto-pairs'
-Plug 'nathanaelkane/vim-indent-guides'
-Plug 'sheerun/vim-polyglot'
-Plug 'Shougo/vimproc.vim', {'do' : 'make'}
-Plug 'ntpeters/vim-better-whitespace' " Remove trailing spaces
-Plug 'tpope/vim-sleuth'
+Plug 'google/vim-codefmt'
 " Add maktaba and codefmt to the runtimepath.
 " (The latter must be installed before it can be used.)
 Plug 'google/vim-maktaba'
-Plug 'google/vim-codefmt'
 " Also add Glaive, which is used to configure codefmt's maktaba flags. See
 " `:help :Glaive` for usage.
 Plug 'google/vim-glaive'
 "Plug 'neomake/neomake'
+
+" VIM editting enhancements
+" -------------------------
+Plug 'jiangmiao/auto-pairs'
+"Plug 'tpope/vim-surround'
+Plug 'luochen1990/rainbow'
+Plug 'RRethy/vim-illuminate'
+Plug 'inside/vim-search-pulse'
+Plug 'numirias/semshi', {'do': ':UpdateRemotePlugins'}
+Plug 'lilydjwg/colorizer'
+Plug 'terryma/vim-smooth-scroll'
 
 " Syntactic language support
 " --------------------------
@@ -80,6 +86,8 @@ Plug 'dag/vim-fish'
 Plug 'jceb/vim-orgmode'
 Plug 'octol/vim-cpp-enhanced-highlight'
 Plug 'eagletmt/coqtop-vim'
+"Plug 'mattn/webapi-vim'
+"Plug 'junegunn/vader.vim'
 
 " Python
 Plug 'roxma/python-support.nvim'
@@ -99,14 +107,22 @@ let g:python_support_python3_requirements = add(get(g:,'python_support_python3_r
 Plug 'rust-lang/rust.vim'
 
 " LaTeX
-" Plug 'lervag/vim-latex'
-Plug 'xuhdev/vim-latex-live-preview'
+"Plug 'xuhdev/vim-latex-live-preview'
 Plug 'lervag/vimtex'
 Plug 'rhysd/vim-grammarous'
+"Plug 'reedes/vim-lexical' " No?
 
 " Color
+" -----
 "Plug 'rakr/vim-one'
 "Plug 'kristijanhusak/vim-hybrid-material'
+"Plug ' mhartington/oceanic-next'
+
+" Plug '~/dev/projects/simio', {'rtp': 'src/vim-syntax/'}
+"Plug '~/dev/projects/api-soup', {'rtp': 'vim-syntax/'} " what is this?
+"Plug 'fcangialosi/bootlin.vim' " Linux source code via Elixir's Bootlin
+
+
 call plug#end()
 
 " the glaive#Install() should go after the "call vundle#end()"
@@ -192,7 +208,7 @@ let g:LanguageClient_serverCommands = {
 			\ 'python': ['pyls'],
 			\ }
 
-			"\ 'rust': ['rustup', 'run', 'nightly', 'rls'],
+"\ 'rust': ['rustup', 'run', 'nightly', 'rls'],
 " }}}
 
 " LSP - keybindings {{{
@@ -390,11 +406,9 @@ let g:fzf_layout = { 'down': '~35%' }
 
 " Open hotkeys
 nmap <leader>p :Files<CR>
-"nmap <leader>; :Buffers<CR>
-nmap <leader>b :Buffers<CR>
+nmap <leader>; :Buffers<CR>
 nnoremap <leader>o :GFiles<CR>
-"nmap <leader>g :GFiles?<CR>
-nmap <leader>; :GFiles?<CR>
+nmap <leader>g :GFiles?<CR>
 " <leader>s for Rg search
 noremap <leader>s :Rg<CR>
 noremap <leader>a :Rg<CR>
@@ -469,9 +483,10 @@ nnoremap j gj
 nnoremap k gk
 
 " Jump to next/previous error
-nnoremap <C-j> :cnext<cr>
-nnoremap <C-k> :cprev<cr>
+"nnoremap <C-j> :cnext<cr>
+"nnoremap <C-k> :cprev<cr>
 
+"nnoremap <C-l> :copen<cr>
 "nnoremap <C-l> :copen<cr>
 nnoremap <C-g> :cclose<cr>
 
@@ -529,7 +544,7 @@ autocmd Filetype html,xml,xsl,php source $HOME/.config/nvim/scripts/closetag.vim
 
 "  Deprecated keybindings {{{
 
-" yapf - Deprecated becasue it is automatic 
+" yapf - Deprecated becasue it is automatic
 "map <C-Y> :call yapf#YAPF()<cr>
 "imap <C-Y> <c-o>:call yapf#YAPF()<cr>
 "
@@ -542,7 +557,7 @@ autocmd Filetype html,xml,xsl,php source $HOME/.config/nvim/scripts/closetag.vim
 "nmap <Leader>C :YapfAutoToggle<CR>
 
 
-" Rewrap (Deprecated) 
+" Rewrap (Deprecated)
 " Rewrap is similar to the gqq command with textwidth, but it also uses a hanging
 "   indent and can be used on multiple lines of text.  And note that textwidth needs
 "   to be set beforehand.
@@ -566,9 +581,9 @@ function! RewrapFunc() range
 endfunction
 command! -range RewrapCmd <line1>,<line2>call RewrapFunc()
 " FIXME: not good
-"nmap Q :RewrapCmd<CR> 
+"nmap Q :RewrapCmd<CR>
 
-" ncm2 
+" ncm2
 " enable ncm2 for all buffers
 "autocmd BufEnter * call ncm2#enable_for_buffer()
 
@@ -599,7 +614,7 @@ command! -range RewrapCmd <line1>,<line2>call RewrapFunc()
 "               \ 'ncm2#on_complete#omni', 'csscomplete#CompleteCSS'],
 au User Ncm2Plugin call ncm2#register_source({
 			\ 'name' : 'css',
-			\ 'priority': 9, 
+			\ 'priority': 9,
 			\ 'subscope_enable': 1,
 			\ 'scope': ['css','scss'],
 			\ 'mark': 'css',
@@ -608,10 +623,22 @@ au User Ncm2Plugin call ncm2#register_source({
 			\ 'on_complete': ['ncm2#on_complete#omni', 'csscomplete#CompleteCSS'],
 			\ })
 
+" vim lexical
+"augroup lexical
+"	autocmd!
+"	autocmd FileType markdown,mkd call lexical#init()
+"	autocmd FileType textile call lexical#init()
+"	autocmd FileType text call lexical#init({ 'spell': 0 })
+"augroup END
+"let g:lexical#thesaurus = ['~/.config/nvim/thesaurus/mthesaur.txt',]
+"let g:lexical#spellfile = ['~/.config/nvim/spell/en.utf-8.add',]
+
+
+
 "  }}}
 
 " A second kind of re-wrap {{{
-" Reformat lines (getting the spacing correct) 
+" Reformat lines (getting the spacing correct)
 "
 " https://tex.stackexchange.com/questions/1548/intelligent-paragraph-reflowing-in-vim
 fun! TeX_fmt()
@@ -648,16 +675,6 @@ for d in glob('~/.config/nvim/spell/*.add', 1, 1)
 		exec 'mkspell! ' . fnameescape(d)
 	endif
 endfor
-
-" vim lexical
-augroup lexical
-	autocmd!
-	autocmd FileType markdown,mkd call lexical#init()
-	autocmd FileType textile call lexical#init()
-	autocmd FileType text call lexical#init({ 'spell': 0 })
-augroup END
-let g:lexical#thesaurus = ['~/.config/nvim/thesaurus/mthesaur.txt',]
-let g:lexical#spellfile = ['~/.config/nvim/spell/en.utf-8.add',]
 
 " ===========================================================================
 "   Personal config
@@ -713,7 +730,7 @@ nnoremap <leader>l :ALELint<CR>
 " vim-grammarous {{{
 " TODO: imrpovement for LaTeX files
 "
-nmap <leader>g :GrammarousCheck --lang=en-US --preview<CR>
+nmap <leader>L :GrammarousCheck --lang=en-US --preview<CR>
 
 let g:grammarous#hooks = {}
 function! g:grammarous#hooks.on_check(errs) abort
@@ -744,7 +761,7 @@ let g:polyglot_disabled = ['latex']
 " }}}
 
 " Python is special {{{
-" NOTE: I only want to auto-format Python files that belong to me 
+" NOTE: I only want to auto-format Python files that belong to me
 let g:black_linelength = 80
 autocmd BufRead,BufNewFile $HOME/dev/projects/** let b:DevPythonFile=1
 autocmd BufWritePre *.py call DevPythonFormatter()
@@ -753,7 +770,7 @@ fun! DevPythonFormatter()
 		return
 	endif
 	" I use black, not autopep8 or yapf for now... I wonder the best practise
-	execute ':Black' 
+	execute ':Black'
 	ImpSort!
 	call DeleteTrailingWS()
 endfun
@@ -797,6 +814,15 @@ if has("mac") || has("macunix")
 endif
 " }}}
 
+" better whitespace
+" red #FF0000, coral #FF7F50, tomato #FF6347, orangered #FF4500, orange
+" #FFA500, darkorange #FF8C00
+"let g:better_whitespace_ctermcolor='<desired_color>'
+let g:better_whitespace_guicolor='#FF4500'
+let g:better_whitespace_enabled=1
+let g:strip_whitespace_on_save=0
+
+
 " Delete trailing white space on save, useful for Python and CoffeeScript ;)
 func! DeleteTrailingWS()
 	exe "normal mz"
@@ -805,7 +831,6 @@ func! DeleteTrailingWS()
 endfunc
 "autocmd BufWrite *.py :call DeleteTrailingWS()
 autocmd BufWrite *.coffee :call DeleteTrailingWS()
-
 
 " ===========================================================================
 "   Personal Keybindings
@@ -816,7 +841,8 @@ vnoremap <silent> * :call VisualSelection('f')<CR>
 vnoremap <silent> # :call VisualSelection('b')<CR>
 
 " Try to make my life easier
-nmap <leader>w :w<CR>
+"nmap <leader>w :w<CR>
+nmap <leader>w :StripWhitespace<CR>:w<CR>
 nmap <leader>wq :wq<CR>
 "nnoremap <leader>w :w<CR>
 nnoremap <leader>q :q!<CR>
@@ -897,6 +923,33 @@ let g:markbar_file_mark_arguments = ['fname', 'line', 'col']
 nnoremap <silent> gd :GDiff<CR>
 nnoremap <silent> dg :diffget<CR>
 " }}}
+
+"--- Try
+" vim-illuminate
+hi link illuminatedWord Visual
+" Time in milliseconds (default 250)
+let g:Illuminate_delay = 1500
+"let g:Illuminate_ftHighlightGroups = {
+"      \ 'vim': ['vimVar', 'vimString', 'vimLineComment',
+"      \         'vimFuncName', 'vimFunction', 'vimUserFunc', 'vimFunc']
+"      \ }
+
+" vim-search-pulse
+let g:vim_search_pulse_duration = 200
+
+" semshi
+let g:deoplete#auto_complete_delay = 100
+
+" smooth scroll
+noremap <silent> <C-k> :call smooth_scroll#up(&scroll, 0, 2)<CR>
+noremap <silent> <C-j> :call smooth_scroll#down(&scroll, 0, 2)<CR>
+noremap <silent> <C-u> :call smooth_scroll#up(&scroll, 0, 2)<CR>
+noremap <silent> <C-d> :call smooth_scroll#down(&scroll, 0, 2)<CR>
+noremap <silent> <C-b> :call smooth_scroll#up(&scroll*2, 0, 4)<CR>
+noremap <silent> <C-f> :call smooth_scroll#down(&scroll*2, 0, 4)<CR>
+"noremap <silent> <C-k> :call smooth_scroll#up(&scroll*2, 0, 4)<CR>
+"noremap <silent> <C-j> :call smooth_scroll#down(&scroll*2, 0, 4)<CR>
+
 
 " nvim
 if has('nvim')

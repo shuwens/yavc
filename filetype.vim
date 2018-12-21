@@ -22,7 +22,7 @@ augroup filetypedetect
 	autocmd Filetype text setlocal tw=72 colorcolumn=73
 	autocmd Filetype markdown setlocal tw=72 colorcolumn=73
 	" No autocomplete in text
-	autocmd BufRead,BufNewFile /tmp/mutt* let g:deoplete#enable_at_startup = 0
+	"autocmd BufRead,BufNewFile /tmp/mutt* let g:deoplete#enable_at_startup = 0
 	" deoplete
 	autocmd Filetype tex let g:deoplete#enable_at_startup = 0
 	autocmd Filetype text let g:deoplete#enable_at_startup = 0
