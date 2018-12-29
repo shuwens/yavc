@@ -107,10 +107,10 @@ let g:python_support_python3_requirements = add(get(g:,'python_support_python3_r
 Plug 'rust-lang/rust.vim'
 
 " LaTeX
-"Plug 'xuhdev/vim-latex-live-preview'
-Plug 'lervag/vimtex'
 Plug 'rhysd/vim-grammarous'
-"Plug 'reedes/vim-lexical' " No?
+Plug 'reedes/vim-lexical' " No?
+"Plug 'lervag/vimtex' " maybe I don't actually need it
+"Plug 'LaTeX-Box-Team/LaTeX-Box'
 
 " Color
 " -----
@@ -261,6 +261,9 @@ inoremap <expr><CR> (pumvisible()?(empty(v:completed_item)?"\<CR>\<CR>":"\<C-y>"
 let mysyntaxfile='$HOME/.config/nvim/doxygen_load.vim'
 
 " Golang
+autocmd FileType go nmap <leader>t <Plug>(go-test)
+autocmd FileType go nmap <Leader>r <Plug>(go-rename)
+autocmd FileType go nmap <leader>c <Plug>(go-coverage)
 let g:go_play_open_browser = 0
 let g:go_fmt_fail_silently = 1
 let g:go_fmt_command = "goimports"
@@ -623,17 +626,6 @@ au User Ncm2Plugin call ncm2#register_source({
 			\ 'on_complete': ['ncm2#on_complete#omni', 'csscomplete#CompleteCSS'],
 			\ })
 
-" vim lexical
-"augroup lexical
-"	autocmd!
-"	autocmd FileType markdown,mkd call lexical#init()
-"	autocmd FileType textile call lexical#init()
-"	autocmd FileType text call lexical#init({ 'spell': 0 })
-"augroup END
-"let g:lexical#thesaurus = ['~/.config/nvim/thesaurus/mthesaur.txt',]
-"let g:lexical#spellfile = ['~/.config/nvim/spell/en.utf-8.add',]
-
-
 
 "  }}}
 
@@ -730,9 +722,6 @@ nnoremap <leader>l :ALELint<CR>
 
 " vim-grammarous {{{
 " TODO: imrpovement for LaTeX files
-"
-nmap <leader>L :GrammarousCheck --lang=en-US --preview<CR>
-
 let g:grammarous#hooks = {}
 function! g:grammarous#hooks.on_check(errs) abort
 	nmap <buffer><C-i> <Plug>(grammarous-move-to-info-window)
@@ -747,6 +736,8 @@ function! g:grammarous#hooks.on_reset(errs) abort
 endfunction
 "nnoremap <buffer> ]g <Plug>(grammarous-move-to-next-error)
 "nnoremap <buffer> [g <Plug>(grammarous-move-to-previous-error)
+nmap <leader>L :GrammarousCheck --lang=en-US --preview<CR>
+nmap <leader>G :GrammarousCheck --lang=en-US --preview<CR>
 " }}}
 
 " LaTeX {{{
@@ -925,6 +916,18 @@ nnoremap <silent> gd :GDiff<CR>
 nnoremap <silent> dg :diffget<CR>
 " }}}
 
+" vim lexical {{{
+augroup lexical
+	autocmd!
+	autocmd FileType markdown,mkd call lexical#init()
+	autocmd FileType textile call lexical#init()
+	autocmd FileType text call lexical#init({ 'spell': 0 })
+augroup END
+"let g:lexical#thesaurus = ['~/.config/nvim/thesaurus/mthesaur.txt',]
+let g:lexical#spellfile = ['~/.config/nvim/spell/en.utf-8.add',]
+let g:lexical#spelllang = ['en_us',]
+" }}}
+
 "--- Try
 " vim-illuminate
 hi link illuminatedWord Visual
@@ -951,7 +954,6 @@ noremap <silent> <C-f> :call smooth_scroll#down(&scroll*2, 0, 4)<CR>
 "noremap <silent> <C-k> :call smooth_scroll#up(&scroll*2, 0, 4)<CR>
 "noremap <silent> <C-j> :call smooth_scroll#down(&scroll*2, 0, 4)<CR>
 
-autocmd Filetype tex set ts=2 sw=0 sts=2
 
 " nvim
 if has('nvim')
