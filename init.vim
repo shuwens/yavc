@@ -665,6 +665,7 @@ fun! TeX_fmt()
 	endif
 endfun
 " }}}
+"autocmd Filetype tex set ts=2 sw=2 et
 autocmd Filetype tex nmap Q :call TeX_fmt()<CR>
 autocmd Filetype markdown nmap Q :call TeX_fmt()<CR>
 autocmd Filetype org nmap Q :call TeX_fmt()<CR>
@@ -950,6 +951,7 @@ noremap <silent> <C-f> :call smooth_scroll#down(&scroll*2, 0, 4)<CR>
 "noremap <silent> <C-k> :call smooth_scroll#up(&scroll*2, 0, 4)<CR>
 "noremap <silent> <C-j> :call smooth_scroll#down(&scroll*2, 0, 4)<CR>
 
+autocmd Filetype tex set ts=2 sw=0 sts=2
 
 " nvim
 if has('nvim')

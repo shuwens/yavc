@@ -18,9 +18,14 @@ augroup filetypedetect
 	"autocmd Filetype tex setlocal spell tw=80 colorcolumn=81
 	"autocmd Filetype text setlocal spell tw=72 colorcolumn=73
 	"autocmd Filetype markdown setlocal spell tw=72 colorcolumn=73
-	autocmd Filetype tex setlocal tw=80 colorcolumn=81
-	autocmd Filetype text setlocal tw=72 colorcolumn=73
-	autocmd Filetype markdown setlocal tw=72 colorcolumn=73
+	"autocmd Filetype tex setlocal spell tw=80 colorcolumn=81
+	"autocmd Filetype tex setlocal tabstop=4 shiftwidth=4 expandtab
+	"autocmd FileType tex set tabstop=2|set shiftwidth=2|set noexpandtab
+	"autocmd Filetype tex let g:tex_indent_items=0
+	"autocmd Filetype tex let g:tex_indent_and=0
+	"autocmd Filetype tex let g:tex_indent_brace=0
+	autocmd Filetype text setlocal  tw=72 colorcolumn=73
+	autocmd Filetype markdown setlocal  tw=72 colorcolumn=73
 	" No autocomplete in text
 	"autocmd BufRead,BufNewFile /tmp/mutt* let g:deoplete#enable_at_startup = 0
 	" deoplete
@@ -31,4 +36,11 @@ augroup filetypedetect
 	autocmd Filetype tex let b:ale_linters = ['proselint']
 	autocmd Filetype text let b:ale_linters = ['proselint']
 	autocmd Filetype markdown let b:ale_linters = ['proselint']
+
+autocmd FileType tex setlocal autoindent
+" endelig!
+ autocmd FileType tex let g:tex_indent_items=0
+ autocmd FileType tex let g:tex_indent_and=0
+ autocmd FileType tex let g:tex_indent_brace=0
+
 augroup END
