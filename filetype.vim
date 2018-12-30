@@ -8,7 +8,7 @@ augroup filetypedetect
 	" nftables
 	autocmd BufRead,BufNewFile *.nft setfiletype nftables
 	" Rust language server
-	"autocmd FileType rust let b:ale_linters = { 'rust': ['rls']}
+	autocmd FileType rust let b:ale_linters = { 'rust': ['rls']}
 	autocmd FileType rust nnoremap <leader>= :'<,'>RustFmtRange<cr>
 	" Shorter columns in text
 	autocmd Filetype text setlocal  tw=72 colorcolumn=73
@@ -29,4 +29,8 @@ augroup filetypedetect
 	autocmd FileType tex let g:tex_indent_items=0
 	autocmd FileType tex let g:tex_indent_and=0
 	autocmd FileType tex let g:tex_indent_brace=0
+	" fish
+	autocmd FileType fish compiler fish
+	autocmd FileType fish setlocal textwidth=79
+	autocmd FileType fish setlocal foldmethod=expr
 augroup END

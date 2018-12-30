@@ -17,7 +17,8 @@ call plug#begin('~/.local/share/nvim/plugged')
 " ----------------
 Plug 'ciaranm/securemodelines'
 Plug 'vim-scripts/localvimrc'
-Plug 'Shougo/unite.vim'
+"Plug 'Shougo/unite.vim'
+"Plug 'Shougo/denite.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'Shougo/vimproc.vim', {'do' : 'make'}
 Plug 'tpope/vim-fugitive'
 Plug 'sheerun/vim-polyglot' " language pack
@@ -33,6 +34,7 @@ Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'Yilin-Yang/vim-markbar'
 Plug 'nathanaelkane/vim-indent-guides'
+"Plug 'hecal3/vim-leader-guide'
 
 " Fuzzy finder
 " ------------
@@ -44,12 +46,11 @@ Plug 'junegunn/fzf.vim'
 " Semantic language support
 " -------------------------
 Plug 'w0rp/ale'
-"Plug 'phildawes/racer'
-"Plug 'racer-rust/vim-racer'
 Plug 'autozimu/LanguageClient-neovim', {
 			\ 'branch': 'next',
 			\ 'do': 'bash install.sh',
 			\ }
+
 " Completion plugins
 " NOTE: I give up on ncm2 because it crashes a lot :(
 Plug 'Shougo/deoplete.nvim', {'do': ':UpdateRemotePlugins'}
@@ -73,7 +74,7 @@ Plug 'RRethy/vim-illuminate'
 Plug 'inside/vim-search-pulse'
 Plug 'numirias/semshi', {'do': ':UpdateRemotePlugins'}
 Plug 'lilydjwg/colorizer'
-Plug 'terryma/vim-smooth-scroll'
+"Plug 'terryma/vim-smooth-scroll'
 
 " Syntactic language support
 " --------------------------
@@ -121,7 +122,6 @@ Plug 'reedes/vim-lexical' " No?
 " Plug '~/dev/projects/simio', {'rtp': 'src/vim-syntax/'}
 "Plug '~/dev/projects/api-soup', {'rtp': 'vim-syntax/'} " what is this?
 "Plug 'fcangialosi/bootlin.vim' " Linux source code via Elixir's Bootlin
-
 
 call plug#end()
 
@@ -188,9 +188,6 @@ endif
 " Javascript
 let javaScript_fold=0
 
-" Quick-save
-nmap <leader>w :w<CR>
-
 " Don't confirm .lvimrc
 let g:localvimrc_ask = 0
 
@@ -198,19 +195,21 @@ let g:localvimrc_ask = 0
 "
 " Required for operations modifying multiple buffers like rename.
 set hidden
+let g:LanguageClient_settingsPath = "$HOME/.config/nvim/settings.json"
 let g:LanguageClient_autoStart = 1
 set omnifunc=LanguageClient#complete
 let deoplete#enable_at_startup = 1
 let g:LanguageClient_serverCommands = {
-			\ 'rust': ['rustup', 'run', 'nightly', 'rls'],
+			\ 'rust': ['$HOME/.cargo/bin/rustup', 'run', 'nightly', 'rls'],
 			\ 'javascript': ['javascript-typescript-stdio'],
 			\ 'javascript.jsx': ['tcp://127.0.0.1:2089'],
 			\ 'python': ['pyls'],
 			\ }
-
-"\ 'rust': ['rustup', 'run', 'nightly', 'rls'],
+" LSP diagnosis
+"let g:LanguageClient_loggingLevel = 'INFO'
+"let g:LanguageClient_loggingFile =  expand('~/.local/share/nvim/LanguageClient.log')
+"let g:LanguageClient_serverStderr = expand('~/.local/share/nvim/LanguageServer.log')
 " }}}
-
 " LSP - keybindings {{{
 "
 nnoremap <F5> :call LanguageClient_contextMenu()<CR>
@@ -230,7 +229,11 @@ nnoremap <leader>n :call LanguageClient#textDocument_rename()<cr>
 nnoremap <silent> <F2> :call LanguageClient#textDocument_rename()<CR>
 "nnoremap <silent> <leader>r :call LanguageClient#textDocument_rename()<CR>
 nnoremap <silent> S :call LanugageClient#textDocument_documentSymbol()<CR>
+" Emacs style
+nnoremap <leader>. :call LanguageClient#textDocument_definition()<CR>
+"nnoremap <leader>* :call LanguageClient#textDocument_references()<cr>
 nnoremap <leader>s :call LanugageClient#textDocument_documentSymbol()<CR>
+nnoremap <leader>o <C-O>
 " }}}
 
 " Rust {{{
@@ -242,7 +245,6 @@ let g:rustfmt_fail_silently = 0
 let g:rust_clip_command = 'xclip -selection clipboard'
 "let g:racer_cmd = "/usr/bin/racer"
 "let g:racer_experimental_completer = 1
-let $RUST_SRC_PATH = systemlist("rustc --print sysroot")[0] . "/lib/rustlib/src/rust/src"
 
 " Follow Rust code style rules
 au Filetype rust source $HOME/.config/nvim/scripts/spacetab.vim
@@ -252,15 +254,7 @@ au Filetype rust set colorcolumn=100
 autocmd FileType rust nnoremap <leader>= :'<,'>RustFmtRange<cr>
 " }}}
 
-" Completion
-" tab to select, and don't hijack my enter key
-inoremap <expr><Tab> (pumvisible()?(empty(v:completed_item)?"\<C-n>":"\<C-y>"):"\<Tab>")
-inoremap <expr><CR> (pumvisible()?(empty(v:completed_item)?"\<CR>\<CR>":"\<C-y>"):"\<CR>")
-
-" Doxygen
-let mysyntaxfile='$HOME/.config/nvim/doxygen_load.vim'
-
-" Golang
+" Golang {{{
 autocmd FileType go nmap <leader>t <Plug>(go-test)
 autocmd FileType go nmap <Leader>r <Plug>(go-rename)
 autocmd FileType go nmap <leader>c <Plug>(go-coverage)
@@ -268,9 +262,15 @@ let g:go_play_open_browser = 0
 let g:go_fmt_fail_silently = 1
 let g:go_fmt_command = "goimports"
 let g:go_bin_path = expand("~/dev/r/bin")
+" }}}
+"
+" Completion
+" tab to select, and don't hijack my enter key
+inoremap <expr><Tab> (pumvisible()?(empty(v:completed_item)?"\<C-n>":"\<C-y>"):"\<Tab>")
+inoremap <expr><CR> (pumvisible()?(empty(v:completed_item)?"\<CR>\<CR>":"\<C-y>"):"\<CR>")
 
-" Don't gofmt Biscuit (yet)
-"autocmd BufRead,BufNewFile /home/jon/dev/others/biscuit/** let [g:go_fmt_command, g:go_fmt_autosave]=["", 0]
+" Doxygen
+let mysyntaxfile='$HOME/.config/nvim/doxygen_load.vim'
 
 " ===========================================================================
 "   Editor settings
@@ -395,12 +395,18 @@ vnoremap <C-c> <Esc>
 " Jump to start and end of line using the home row keys
 "map H ^
 "map L $
+map [ ^
+map ] $
+nnoremap <C-h> ^
+nnoremap <C-l> $
 
-" Neat X clipboard integration
+" Neat X clipboard integration linux {{{
+"
 " ,p will paste clipboard into buffer
 " ,c will copy entire buffer into clipboard
 "noremap <leader>p :read !xsel --clipboard --output<cr>
 "noremap <leader>c :w !xsel -ib<cr><cr>
+" }}}
 
 " fzf !!! {{{
 "
@@ -410,7 +416,7 @@ let g:fzf_layout = { 'down': '~35%' }
 " Open hotkeys
 nmap <leader>p :Files<CR>
 nmap <leader>; :Buffers<CR>
-nnoremap <leader>o :GFiles<CR>
+nnoremap <leader>f :GFiles<CR>
 nmap <leader>g :GFiles?<CR>
 " <leader>s for Rg search
 noremap <leader>s :Rg<CR>
@@ -687,16 +693,15 @@ highlight ALEErrorSign ctermfg=9
 let g:ale_sign_error = '✖'
 let g:ale_sign_warning = '⚠'
 " lint should be handled by LSP, but seems like that Rust is bit broken
-let g:ale_linters = {
-			\ 'rust': ['rls','cargo','rustc'],
-			\ }
+"let g:ale_linters = {
+"			\ 'rust': ['rls','cargo','rustc'],
+"			\ }
 let g:ale_fixers = {
 			\ '*': ['remove_trailing_lines', 'trim_whitespace'],
 			\ 'rust': ['rustfmt']
 			\ }
 let g:ale_sign_column_always = 1
-" lint when I want
-" only lint on save
+" only lint when I want
 let g:ale_lint_on_text_changed = 'never'
 let g:ale_lint_on_save = 0
 let g:ale_lint_on_enter = 0
@@ -710,14 +715,15 @@ let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
 let g:ale_rust_rls_toolchain = 'nightly'
 let g:ale_rust_cargo_use_check = 1 " Note that ale rust check need the Cargo.toml
 let g:ale_rust_cargo_check_all_targets = 1
-" let g:neomake_info_sign = {'text': '⚕', 'texthl': 'NeomakeInfoSign'}
 
 " ALE bindings
 "nmap <silent> L <Plug>(ale_lint)
 "nnoremap <leader>l <Plug>(ale_lint)
 nnoremap <leader>l :ALELint<CR>
-"nmap <silent> <C-k> <Plug>(ale_previous_wrap)
-"nmap <silent> <C-j> <Plug>(ale_next_wrap)
+nmap <silent> <C-k> <Plug>(ale_previous_wrap)
+nmap <silent> <C-j> <Plug>(ale_next_wrap)
+nmap <silent> <C-]> <Plug>(ale_previous_wrap)
+nmap <silent> <C-[> <Plug>(ale_next_wrap)
 " }}}
 
 " vim-grammarous {{{
@@ -727,12 +733,12 @@ function! g:grammarous#hooks.on_check(errs) abort
 	nmap <buffer><C-i> <Plug>(grammarous-move-to-info-window)
 	nmap <buffer><C-n> <Plug>(grammarous-move-to-next-error)
 	nmap <buffer><C-P> <Plug>(grammarous-move-to-previous-error)
-	nmap <buffer><C-f> <Plug>(grammarous-fixit)
+	nmap <buffer><leader>f <Plug>(grammarous-fixit)
 endfunction
 function! g:grammarous#hooks.on_reset(errs) abort
 	nunmap <buffer><C-n>
 	nunmap <buffer><C-p>
-	nunmap <buffer><C-f>
+	nunmap <buffer><leader>f
 endfunction
 "nnoremap <buffer> ]g <Plug>(grammarous-move-to-next-error)
 "nnoremap <buffer> [g <Plug>(grammarous-move-to-previous-error)
@@ -832,8 +838,7 @@ autocmd BufWrite *.coffee :call DeleteTrailingWS()
 vnoremap <silent> * :call VisualSelection('f')<CR>
 vnoremap <silent> # :call VisualSelection('b')<CR>
 
-" Try to make my life easier
-"nmap <leader>w :w<CR>
+" Quick-save
 nmap <leader>w :StripWhitespace<CR>:w<CR>
 nmap <leader>wq :wq<CR>
 "nnoremap <leader>w :w<CR>
@@ -842,6 +847,7 @@ nnoremap <leader>qq :q!<Esc>:q!<CR>
 command! W w
 command! Wq wq
 command! WQ wq
+
 " indent line
 let g:indent_guides_enable_on_vim_startup = 1
 
@@ -928,6 +934,7 @@ let g:lexical#spellfile = ['~/.config/nvim/spell/en.utf-8.add',]
 let g:lexical#spelllang = ['en_us',]
 " }}}
 
+
 "--- Try
 " vim-illuminate
 hi link illuminatedWord Visual
@@ -943,17 +950,6 @@ let g:vim_search_pulse_duration = 200
 
 " semshi
 let g:deoplete#auto_complete_delay = 100
-
-" smooth scroll
-noremap <silent> <C-k> :call smooth_scroll#up(&scroll, 0, 2)<CR>
-noremap <silent> <C-j> :call smooth_scroll#down(&scroll, 0, 2)<CR>
-noremap <silent> <C-u> :call smooth_scroll#up(&scroll, 0, 2)<CR>
-noremap <silent> <C-d> :call smooth_scroll#down(&scroll, 0, 2)<CR>
-noremap <silent> <C-b> :call smooth_scroll#up(&scroll*2, 0, 4)<CR>
-noremap <silent> <C-f> :call smooth_scroll#down(&scroll*2, 0, 4)<CR>
-"noremap <silent> <C-k> :call smooth_scroll#up(&scroll*2, 0, 4)<CR>
-"noremap <silent> <C-j> :call smooth_scroll#down(&scroll*2, 0, 4)<CR>
-
 
 " nvim
 if has('nvim')
