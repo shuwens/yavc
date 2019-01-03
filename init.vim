@@ -18,12 +18,12 @@ call plug#begin('~/.local/share/nvim/plugged')
 Plug 'ciaranm/securemodelines'
 Plug 'vim-scripts/localvimrc'
 "Plug 'Shougo/unite.vim'
-"Plug 'Shougo/denite.nvim', { 'do': ':UpdateRemotePlugins' }
+Plug 'Shougo/denite.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'Shougo/vimproc.vim', {'do' : 'make'}
 Plug 'tpope/vim-fugitive'
 Plug 'sheerun/vim-polyglot' " language pack
 Plug 'tpope/vim-sleuth'  " Heuristically set buffer options
-"Plug 'tpope/vim-speeddating'
+Plug 'tpope/vim-speeddating'
 Plug 'ntpeters/vim-better-whitespace' " Remove trailing spaces
 
 " GUI enhancements
@@ -34,7 +34,9 @@ Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'Yilin-Yang/vim-markbar'
 Plug 'nathanaelkane/vim-indent-guides'
-"Plug 'hecal3/vim-leader-guide'
+Plug 'hecal3/vim-leader-guide'
+Plug 'jaxbot/semantic-highlight.vim'
+Plug 'scrooloose/nerdtree'
 
 " Fuzzy finder
 " ------------
@@ -109,7 +111,7 @@ Plug 'rust-lang/rust.vim'
 
 " LaTeX
 Plug 'rhysd/vim-grammarous'
-Plug 'reedes/vim-lexical' " No?
+"Plug 'reedes/vim-lexical' " No?
 "Plug 'lervag/vimtex' " maybe I don't actually need it
 "Plug 'LaTeX-Box-Team/LaTeX-Box'
 
@@ -251,7 +253,7 @@ au Filetype rust source $HOME/.config/nvim/scripts/spacetab.vim
 au Filetype rust set colorcolumn=100
 
 " <leader>= reformats current tange
-autocmd FileType rust nnoremap <leader>= :'<,'>RustFmtRange<cr>
+autocmd FileType rust nnoremap <leader>= :'<,'>RustFmtRange<CR>
 " }}}
 
 " Golang {{{
@@ -261,7 +263,7 @@ autocmd FileType go nmap <leader>c <Plug>(go-coverage)
 let g:go_play_open_browser = 0
 let g:go_fmt_fail_silently = 1
 let g:go_fmt_command = "goimports"
-let g:go_bin_path = expand("~/dev/r/bin")
+let g:go_bin_path = expand("~/dev/others/r/bin")
 " }}}
 "
 " Completion
@@ -664,9 +666,9 @@ fun! TeX_fmt()
 endfun
 " }}}
 "autocmd Filetype tex set ts=2 sw=2 et
-autocmd Filetype tex nmap Q :call TeX_fmt()<CR>
-autocmd Filetype markdown nmap Q :call TeX_fmt()<CR>
-autocmd Filetype org nmap Q :call TeX_fmt()<CR>
+autocmd Filetype tex nmap Q :call TeX_fmt()<CR>zz
+autocmd Filetype markdown nmap Q :call TeX_fmt()<CR>zz
+"autocmd Filetype org nmap Q :call TeX_fmt()<CR>zz
 
 " vim spell
 for d in glob('~/.config/nvim/spell/*.add', 1, 1)
@@ -693,9 +695,10 @@ highlight ALEErrorSign ctermfg=9
 let g:ale_sign_error = '✖'
 let g:ale_sign_warning = '⚠'
 " lint should be handled by LSP, but seems like that Rust is bit broken
-"let g:ale_linters = {
-"			\ 'rust': ['rls','cargo','rustc'],
-"			\ }
+let g:ale_linters = {
+			\ 'LaTeX': ['proselint',],
+			\ 'rust': ['rls','cargo',],
+			\ }
 let g:ale_fixers = {
 			\ '*': ['remove_trailing_lines', 'trim_whitespace'],
 			\ 'rust': ['rustfmt']
@@ -713,7 +716,7 @@ let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
 
 " Rust
 let g:ale_rust_rls_toolchain = 'nightly'
-let g:ale_rust_cargo_use_check = 1 " Note that ale rust check need the Cargo.toml
+let g:ale_rust_cargo_use_check = 1 
 let g:ale_rust_cargo_check_all_targets = 1
 
 " ALE bindings
@@ -727,23 +730,34 @@ nmap <silent> <C-[> <Plug>(ale_next_wrap)
 " }}}
 
 " vim-grammarous {{{
+
+"let g:grammarous#use_vim_spelllang = 0
+"let g:grammarous#enable_spell_check = 1
+
+let g:grammarous#disabled_rules = {
+			\ '*' : ['WHITESPACE_RULE', 'EN_QUOTES'],
+			\ 'help' : ['WHITESPACE_RULE', 'EN_QUOTES', 'SENTENCE_WHITESPACE', 'UPPERCASE_SENTENCE_START'],
+			\ }
 " TODO: imrpovement for LaTeX files
+
 let g:grammarous#hooks = {}
 function! g:grammarous#hooks.on_check(errs) abort
 	nmap <buffer><C-i> <Plug>(grammarous-move-to-info-window)
 	nmap <buffer><C-n> <Plug>(grammarous-move-to-next-error)
 	nmap <buffer><C-P> <Plug>(grammarous-move-to-previous-error)
 	nmap <buffer><leader>f <Plug>(grammarous-fixit)
+	nnoremap <buffer><C-f> <Plug>(grammarous-fixit)
 endfunction
 function! g:grammarous#hooks.on_reset(errs) abort
 	nunmap <buffer><C-n>
 	nunmap <buffer><C-p>
 	nunmap <buffer><leader>f
 endfunction
+
 "nnoremap <buffer> ]g <Plug>(grammarous-move-to-next-error)
 "nnoremap <buffer> [g <Plug>(grammarous-move-to-previous-error)
-nmap <leader>L :GrammarousCheck --lang=en-US --preview<CR>
-nmap <leader>G :GrammarousCheck --lang=en-US --preview<CR>
+nnoremap <leader>L :GrammarousCheck --lang=en-US --preview<CR>
+nnoremap <leader>G :GrammarousCheck --lang=en-US --preview<CR>
 " }}}
 
 " LaTeX {{{
@@ -848,6 +862,19 @@ command! W w
 command! Wq wq
 command! WQ wq
 
+" detele things shortcut
+nnoremap <C-i> C
+"inoremap <C-i> C
+vnoremap <C-i> C
+nnoremap <leader>i C
+"inoremap <leader>i C
+vnoremap <leader>i C
+
+
+
+" Type lang<C-Y> for shebang line
+nnoremap <C-y> <Esc>:sil exe ".!which <cWORD>" <bar> s/^/#!/ <bar> filetype detect<cr>YpDi
+
 " indent line
 let g:indent_guides_enable_on_vim_startup = 1
 
@@ -925,9 +952,10 @@ nnoremap <silent> dg :diffget<CR>
 " vim lexical {{{
 augroup lexical
 	autocmd!
-	autocmd FileType markdown,mkd call lexical#init()
-	autocmd FileType textile call lexical#init()
-	autocmd FileType text call lexical#init({ 'spell': 0 })
+	"autocmd FileType markdown,mkd call lexical#init()
+	"autocmd FileType textile call lexical#init()
+	"autocmd FileType tex call lexical#init()
+	"autocmd FileType text call lexical#init({ 'spell': 0 })
 augroup END
 "let g:lexical#thesaurus = ['~/.config/nvim/thesaurus/mthesaur.txt',]
 let g:lexical#spellfile = ['~/.config/nvim/spell/en.utf-8.add',]
@@ -950,6 +978,16 @@ let g:vim_search_pulse_duration = 200
 
 " semshi
 let g:deoplete#auto_complete_delay = 100
+
+" nerdtree ot something
+let g:NERDTreeWinPos = "right"
+nnoremap <C-n> :NERDTreeToggle<CR>
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+
+" org mode
+ "let g:org_agenda_files=['~/todo.org']
+ "let g:org_aggressive_conceal = 1
+"let g:loaded_org_syntax = 0
 
 " nvim
 if has('nvim')
