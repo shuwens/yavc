@@ -32,4 +32,5 @@ augroup filetypedetect
 	autocmd FileType fish compiler fish
 	autocmd FileType fish setlocal textwidth=79
 	autocmd FileType fish setlocal foldmethod=expr
+	"autocmd FileType org let b:loaded_org_syntax = 1
 augroup END

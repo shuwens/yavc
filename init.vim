@@ -21,7 +21,7 @@ Plug 'vim-scripts/localvimrc'
 Plug 'Shougo/denite.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'Shougo/vimproc.vim', {'do' : 'make'}
 Plug 'tpope/vim-fugitive'
-Plug 'sheerun/vim-polyglot' " language pack
+"Plug 'sheerun/vim-polyglot'   " I don't need this and it is buggy
 Plug 'tpope/vim-sleuth'  " Heuristically set buffer options
 Plug 'tpope/vim-speeddating'
 Plug 'ntpeters/vim-better-whitespace' " Remove trailing spaces
@@ -119,7 +119,11 @@ Plug 'rhysd/vim-grammarous'
 " -----
 "Plug 'rakr/vim-one'
 "Plug 'kristijanhusak/vim-hybrid-material'
-"Plug ' mhartington/oceanic-next'
+if !isdirectory("$HOME/dev/others/base16")
+	"Plug ' mhartington/oceanic-next'
+	Plug 'Soares/base16.nvim'
+endif
+
 
 " Plug '~/dev/projects/simio', {'rtp': 'src/vim-syntax/'}
 "Plug '~/dev/projects/api-soup', {'rtp': 'vim-syntax/'} " what is this?
@@ -236,6 +240,7 @@ nnoremap <leader>. :call LanguageClient#textDocument_definition()<CR>
 "nnoremap <leader>* :call LanguageClient#textDocument_references()<cr>
 nnoremap <leader>s :call LanugageClient#textDocument_documentSymbol()<CR>
 nnoremap <leader>o <C-O>
+nnoremap <leader>/ <C-O>
 " }}}
 
 " Rust {{{
@@ -264,6 +269,7 @@ let g:go_play_open_browser = 0
 let g:go_fmt_fail_silently = 1
 let g:go_fmt_command = "goimports"
 let g:go_bin_path = expand("~/dev/others/r/bin")
+let g:go_version_warning = 0
 " }}}
 "
 " Completion
@@ -370,6 +376,7 @@ set shortmess+=c " don't give |ins-completion-menu| messages.
 " Colors
 set background=dark
 colorscheme base16-atelier-dune
+"colorscheme atelier-dune
 hi Normal ctermbg=NONE
 
 " Show those damn hidden characters
@@ -547,8 +554,9 @@ autocmd BufRead *.plot set filetype=gnuplot
 autocmd BufRead *.md set filetype=markdown
 autocmd BufRead *.lds set filetype=ld
 autocmd BufRead *.tex set filetype=tex
-autocmd BufRead *.trm set filetype=c
 autocmd BufRead *.xlsx.axlsx set filetype=ruby
+autocmd BufRead *.trm set filetype=c
+autocmd BufRead *.org set filetype=org
 
 " Script plugins
 autocmd Filetype html,xml,xsl,php source $HOME/.config/nvim/scripts/closetag.vim
@@ -668,7 +676,7 @@ endfun
 "autocmd Filetype tex set ts=2 sw=2 et
 autocmd Filetype tex nmap Q :call TeX_fmt()<CR>zz
 autocmd Filetype markdown nmap Q :call TeX_fmt()<CR>zz
-"autocmd Filetype org nmap Q :call TeX_fmt()<CR>zz
+autocmd Filetype org nmap Q :call TeX_fmt()<CR>
 
 " vim spell
 for d in glob('~/.config/nvim/spell/*.add', 1, 1)
@@ -769,7 +777,7 @@ autocmd Filetype tex setl updatetime=1
 let g:livepreview_previewer = 'open -a Preview'
 
 " polyglot for LaTeX
-let g:polyglot_disabled = ['latex']
+"let g:polyglot_disabled = ['latex']
 " }}}
 
 " Python is special {{{
@@ -985,9 +993,7 @@ nnoremap <C-n> :NERDTreeToggle<CR>
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
 " org mode
- "let g:org_agenda_files=['~/todo.org']
- "let g:org_aggressive_conceal = 1
-"let g:loaded_org_syntax = 0
+"let g:polyglot_disabled = ['org']
 
 " nvim
 if has('nvim')
