@@ -33,7 +33,8 @@ Plug 'machakann/vim-highlightedyank'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'Yilin-Yang/vim-markbar'
-Plug 'nathanaelkane/vim-indent-guides'
+"Plug 'nathanaelkane/vim-indent-guides'
+Plug 'Yggdroot/indentLine'
 Plug 'hecal3/vim-leader-guide'
 Plug 'jaxbot/semantic-highlight.vim'
 Plug 'scrooloose/nerdtree'
@@ -54,8 +55,21 @@ Plug 'autozimu/LanguageClient-neovim', {
 			\ }
 
 " Completion plugins
-" NOTE: I give up on ncm2 because it crashes a lot :(
-Plug 'Shougo/deoplete.nvim', {'do': ':UpdateRemotePlugins'}
+Plug 'ncm2/ncm2'
+Plug 'roxma/nvim-yarp'
+Plug 'ncm2/ncm2-bufword'
+Plug 'ncm2/ncm2-tmux'
+Plug 'ncm2/ncm2-path'
+Plug 'ncm2/ncm2-match-highlight'
+" snippet
+" based on snipmate
+Plug 'ncm2/ncm2-snipmate'
+" snipmate dependencies
+Plug 'tomtom/tlib_vim'
+Plug 'marcweber/vim-addon-mw-utils'
+Plug 'garbas/vim-snipmate'
+"Plug 'Shougo/deoplete.nvim', {'do': ':UpdateRemotePlugins'}
+"Plug 'wokalski/autocomplete-flow'
 " Showing function signature and inline doc.
 Plug 'Shougo/echodoc.vim'
 Plug 'google/vim-codefmt'
@@ -124,7 +138,8 @@ if !isdirectory("$HOME/dev/others/base16")
 	Plug 'Soares/base16.nvim'
 endif
 
-
+Plug 'junegunn/vader.vim'
+"Plug 'rizzatti/dash.vim'
 " Plug '~/dev/projects/simio', {'rtp': 'src/vim-syntax/'}
 "Plug '~/dev/projects/api-soup', {'rtp': 'vim-syntax/'} " what is this?
 "Plug 'fcangialosi/bootlin.vim' " Linux source code via Elixir's Bootlin
@@ -203,8 +218,7 @@ let g:localvimrc_ask = 0
 set hidden
 let g:LanguageClient_settingsPath = "$HOME/.config/nvim/settings.json"
 let g:LanguageClient_autoStart = 1
-set omnifunc=LanguageClient#complete
-let deoplete#enable_at_startup = 1
+"set omnifunc=LanguageClient#complete
 let g:LanguageClient_serverCommands = {
 			\ 'rust': ['$HOME/.cargo/bin/rustup', 'run', 'nightly', 'rls'],
 			\ 'javascript': ['javascript-typescript-stdio'],
@@ -271,11 +285,47 @@ let g:go_fmt_command = "goimports"
 let g:go_bin_path = expand("~/dev/others/r/bin")
 let g:go_version_warning = 0
 " }}}
-"
-" Completion
-" tab to select, and don't hijack my enter key
+" Completion {{{
+autocmd BufEnter * call ncm2#enable_for_buffer()
+set completeopt=noinsert,menuone,noselect
+" Use new fuzzy based matches
+let g:ncm2#matcher = 'substrfuzzy'
+" tab to select
+" and don't hijack my enter key
 inoremap <expr><Tab> (pumvisible()?(empty(v:completed_item)?"\<C-n>":"\<C-y>"):"\<Tab>")
 inoremap <expr><CR> (pumvisible()?(empty(v:completed_item)?"\<CR>\<CR>":"\<C-y>"):"\<CR>")
+"
+" ncm optional config
+" -------------------
+" suppress the annoying 'match x of y', 'The only match' and 'Pattern not
+" found' messages
+"set shortmess+=c
+" When the <Enter> key is pressed while the popup menu is visible, it only
+" hides the menu. Use this mapping to close the menu and also start a new
+" line.
+"inoremap <expr> <CR> (pumvisible() ? "\<c-y>\<cr>" : "\<CR>")
+" Use <TAB> to select the popup menu:
+"inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+"inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+"
+" ncm snippet config
+" ------------------
+" Press enter key to trigger snippet expansion
+" The parameters are the same as `:help feedkeys()`
+"inoremap <silent> <expr> <CR> ncm2_snipmate#expand_or("\<CR>", 'n')
+" wrap <Plug>snipMateTrigger so that it works for both completin and normal
+" snippet
+"inoremap <expr> <c-u> ncm2_snipmate#expand_or("\<Plug>snipMateTrigger", "m")
+" c-j c-k for moving in snippet
+"let g:snips_no_mappings = 1
+"vmap <c-j> <Plug>snipMateNextOrTrigger
+"vmap <c-k> <Plug>snipMateBack
+"imap <expr> <c-k> pumvisible() ? "\<c-y>\<Plug>snipMateBack" : "\<Plug>snipMateBack"
+"imap <expr> <c-j> pumvisible() ? "\<c-y>\<Plug>snipMateNextOrTrigger" : "\<Plug>snipMateNextOrTrigger"
+" }}}
+
+" Deoplete
+"let deoplete#enable_at_startup = 1
 
 " Doxygen
 let mysyntaxfile='$HOME/.config/nvim/doxygen_load.vim'
@@ -602,13 +652,6 @@ command! -range RewrapCmd <line1>,<line2>call RewrapFunc()
 " FIXME: not good
 "nmap Q :RewrapCmd<CR>
 
-" ncm2
-" enable ncm2 for all buffers
-"autocmd BufEnter * call ncm2#enable_for_buffer()
-
-" IMPORTANTE: :help Ncm2PopupOpen for more information
-"set completeopt=noinsert,menuone,noselect
-
 " suppress the annoying 'match x of y', 'The only match' and 'Pattern not
 " found' messages
 "set shortmess+=c
@@ -624,24 +667,6 @@ command! -range RewrapCmd <line1>,<line2>call RewrapFunc()
 " Use <TAB> to select the popup menu:
 "inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 "inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-
-" wrap existing omnifunc
-" Note that omnifunc does not run in background and may probably block the
-" editor. If you don't want to be blocked by omnifunc too often, you could
-" add 180ms delay before the omni wrapper:
-"  'on_complete': ['ncm2#on_complete#delay', 180,
-"               \ 'ncm2#on_complete#omni', 'csscomplete#CompleteCSS'],
-au User Ncm2Plugin call ncm2#register_source({
-			\ 'name' : 'css',
-			\ 'priority': 9,
-			\ 'subscope_enable': 1,
-			\ 'scope': ['css','scss'],
-			\ 'mark': 'css',
-			\ 'word_pattern': '[\w\-]+',
-			\ 'complete_pattern': ':\s*',
-			\ 'on_complete': ['ncm2#on_complete#omni', 'csscomplete#CompleteCSS'],
-			\ })
-
 
 "  }}}
 
@@ -724,17 +749,17 @@ let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
 
 " Rust
 let g:ale_rust_rls_toolchain = 'nightly'
-let g:ale_rust_cargo_use_check = 1 
+let g:ale_rust_cargo_use_check = 1
 let g:ale_rust_cargo_check_all_targets = 1
 
 " ALE bindings
 "nmap <silent> L <Plug>(ale_lint)
-"nnoremap <leader>l <Plug>(ale_lint)
-nnoremap <leader>l :ALELint<CR>
+nmap <leader>l <Plug>(ale_lint)
+"nnoremap <leader>l :ALELint<CR>
 nmap <silent> <C-k> <Plug>(ale_previous_wrap)
 nmap <silent> <C-j> <Plug>(ale_next_wrap)
-nmap <silent> <C-]> <Plug>(ale_previous_wrap)
-nmap <silent> <C-[> <Plug>(ale_next_wrap)
+"nmap <silent> <C-]> <Plug>(ale_previous_wrap)
+"nmap <silent> <C-[> <Plug>(ale_next_wrap)
 " }}}
 
 " vim-grammarous {{{
@@ -800,7 +825,7 @@ endfun
 augroup autoformat_settings
 	autocmd FileType c,cpp,proto,javascript AutoFormatBuffer clang-format
 	autocmd FileType go AutoFormatBuffer gofmt
-	"autocmd FileType rust AutoFormatBuffer rustfmt +nightly
+	autocmd FileType rust AutoFormatBuffer rustfmt +nightly
 	" ===================
 	autocmd FileType bzl AutoFormatBuffer buildifier
 	autocmd FileType html,css,json AutoFormatBuffer js-beautify
@@ -884,7 +909,7 @@ vnoremap <leader>i C
 nnoremap <C-y> <Esc>:sil exe ".!which <cWORD>" <bar> s/^/#!/ <bar> filetype detect<cr>YpDi
 
 " indent line
-let g:indent_guides_enable_on_vim_startup = 1
+"let g:indent_guides_enable_on_vim_startup = 1
 
 " map wincmd {{{
 "
@@ -985,7 +1010,7 @@ let g:Illuminate_delay = 1500
 let g:vim_search_pulse_duration = 200
 
 " semshi
-let g:deoplete#auto_complete_delay = 100
+"let g:deoplete#auto_complete_delay = 100
 
 " nerdtree ot something
 let g:NERDTreeWinPos = "right"

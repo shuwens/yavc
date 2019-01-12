@@ -8,7 +8,7 @@ augroup filetypedetect
 	" nftables
 	autocmd BufRead,BufNewFile *.nft setfiletype nftables
 	" Rust language server
-	autocmd FileType rust let b:ale_linters = { 'rust': ['rls', 'cargo']}
+	autocmd FileType rust let b:ale_linters = { 'rust': ['rls']}
 	" Shorter columns in text
 	autocmd Filetype text setlocal  tw=72 colorcolumn=73
 	autocmd Filetype markdown setlocal  tw=72 colorcolumn=73
