@@ -12,10 +12,6 @@ augroup filetypedetect
 	" Shorter columns in text
 	autocmd Filetype text setlocal  tw=72 colorcolumn=73
 	autocmd Filetype markdown setlocal  tw=72 colorcolumn=73
-	" deoplete
-	autocmd Filetype tex let g:deoplete#enable_at_startup = 0
-	autocmd Filetype text let g:deoplete#enable_at_startup = 0
-	autocmd Filetype markdown let g:deoplete#enable_at_startup = 0
 	" proselint!!!
 	autocmd Filetype tex let b:ale_linters = ['proselint']
 	autocmd Filetype text let b:ale_linters = ['proselint']
@@ -28,10 +24,12 @@ augroup filetypedetect
 	autocmd FileType tex let g:tex_indent_items=0
 	autocmd FileType tex let g:tex_indent_and=0
 	autocmd FileType tex let g:tex_indent_brace=0
-
+	" fish
 	autocmd FileType fish compiler fish
 	autocmd FileType fish setlocal textwidth=79
 	autocmd FileType fish setlocal foldmethod=expr
 	autocmd FileType fish setlocal indentexpr=fish#Indent()
 	autocmd FileType fish setlocal indentkeys+==end,=else,=case
+	" lisp
+	 au BufNewFile,BufRead *.lsp,*.lisp,*.el,*.cl,*.jl,*.L,.emacs,.spacemacs setf lisp
 augroup END

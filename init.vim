@@ -17,14 +17,16 @@ call plug#begin('~/.local/share/nvim/plugged')
 " ----------------
 Plug 'ciaranm/securemodelines'
 Plug 'vim-scripts/localvimrc'
-"Plug 'Shougo/unite.vim'
-Plug 'Shougo/denite.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'Shougo/vimproc.vim', {'do' : 'make'}
 Plug 'tpope/vim-fugitive'
 "Plug 'sheerun/vim-polyglot'   " I don't need this and it is buggy
 Plug 'tpope/vim-sleuth'  " Heuristically set buffer options
-Plug 'tpope/vim-speeddating'
+""Plug 'tpope/vim-speeddating'
 Plug 'ntpeters/vim-better-whitespace' " Remove trailing spaces
+Plug 'junegunn/vim-easy-align'
+Plug 'scrooloose/nerdcommenter'
+Plug 'janko-m/vim-test'
+Plug 'terryma/vim-multiple-cursors'
 
 " GUI enhancements
 " ----------------
@@ -38,7 +40,6 @@ Plug 'Yggdroot/indentLine'
 Plug 'hecal3/vim-leader-guide'
 Plug 'jaxbot/semantic-highlight.vim'
 Plug 'scrooloose/nerdtree'
-Plug 'luochen1990/rainbow'
 
 " Fuzzy finder
 " ------------
@@ -49,32 +50,23 @@ Plug 'junegunn/fzf.vim'
 
 " Semantic language support
 " -------------------------
-Plug 'w0rp/ale'
 Plug 'autozimu/LanguageClient-neovim', {
 			\ 'branch': 'next',
 			\ 'do': 'bash install.sh',
 			\ }
+Plug 'w0rp/ale'
 
 " Completion plugins
 Plug 'ncm2/ncm2'
 Plug 'roxma/nvim-yarp'
+Plug 'junegunn/vader.vim'
 Plug 'ncm2/ncm2-bufword'
 Plug 'ncm2/ncm2-tmux'
 Plug 'ncm2/ncm2-path'
-Plug 'ncm2/ncm2-match-highlight'
-" snippet
-" based on snipmate
-Plug 'ncm2/ncm2-snipmate'
-" snipmate dependencies
-Plug 'tomtom/tlib_vim'
-Plug 'marcweber/vim-addon-mw-utils'
-Plug 'garbas/vim-snipmate'
-"Plug 'Shougo/deoplete.nvim', {'do': ':UpdateRemotePlugins'}
-"Plug 'wokalski/autocomplete-flow'
+
 " Showing function signature and inline doc.
 Plug 'Shougo/echodoc.vim'
 Plug 'google/vim-maktaba'
-"Plug 'neomake/neomake'
 
 " VIM editting enhancements
 " -------------------------
@@ -95,7 +87,6 @@ Plug 'vim-scripts/gnuplot-syntax-highlighting'
 Plug 'cespare/vim-toml'
 Plug 'fatih/vim-go'
 Plug 'dag/vim-fish'
-""Plug 'RobertAudi/fish.vim'
 Plug 'jceb/vim-orgmode'
 Plug 'octol/vim-cpp-enhanced-highlight'
 Plug 'eagletmt/coqtop-vim'
@@ -113,8 +104,6 @@ let g:python_support_python3_requirements = add(get(g:,'python_support_python3_r
 " utils, optional
 let g:python_support_python3_requirements = add(get(g:,'python_support_python3_requirements',[]),'psutil')
 let g:python_support_python3_requirements = add(get(g:,'python_support_python3_requirements',[]),'setproctitle')
-"Plug 'google/yapf', { 'rtp': 'plugins/vim', 'for': 'python' }
-"Plug 'bennyyip/vim-yapf' "forked from rhysd/vim-clang-format
 
 " Rust
 Plug 'rust-lang/rust.vim'
@@ -126,19 +115,21 @@ Plug 'rhysd/vim-grammarous'
 "Plug 'LaTeX-Box-Team/LaTeX-Box'
 
 " Color
-" -----
-"Plug 'rakr/vim-one'
-"Plug 'kristijanhusak/vim-hybrid-material'
 if !isdirectory("$HOME/dev/others/base16")
 	"Plug ' mhartington/oceanic-next'
-	Plug 'Soares/base16.nvim'
+	Plug 'chriskempson/base16-vim'
 endif
+Plug 'google/vim-colorscheme-primary'
+Plug 'farfanoide/vim-facebook'
+Plug 'fcpg/vim-farout'
 
-Plug 'junegunn/vader.vim'
-"Plug 'rizzatti/dash.vim'
-" Plug '~/dev/projects/simio', {'rtp': 'src/vim-syntax/'}
-"Plug '~/dev/projects/api-soup', {'rtp': 'vim-syntax/'} " what is this?
-"Plug 'fcangialosi/bootlin.vim' " Linux source code via Elixir's Bootlin
+""Plug 'tpope/vim-unimpaired'
+"Plug 'tpope/vim-sensible'
+""Plug 'tpope/vim-endwise'
+
+Plug 'airblade/vim-gitgutter'
+Plug 'ap/vim-buftabline'
+Plug 'Xuyuanp/nerdtree-git-plugin'
 
 call plug#end()
 
@@ -188,7 +179,6 @@ let g:base16_shell_path="$HOME/dev/others/base16/shell/scripts/"
 let g:airline#extensions#tabline#formatter = 'default'
 let g:airline_powerline_fonts = 1
 let g:airline_theme='base16_atelierdune'
-let g:airline#extensions#ale#enabled = 1
 
 " from http://sheerun.net/2014/03/21/how-to-boost-your-vim-productivity/
 if executable('ag')
@@ -283,6 +273,7 @@ autocmd BufEnter * call ncm2#enable_for_buffer()
 set completeopt=noinsert,menuone,noselect
 " Use new fuzzy based matches
 let g:ncm2#matcher = 'substrfuzzy'
+let g:ncm2#popup_limit=10   " 3, 5, 10, 15
 " tab to select
 " and don't hijack my enter key
 inoremap <expr><Tab> (pumvisible()?(empty(v:completed_item)?"\<C-n>":"\<C-y>"):"\<Tab>")
@@ -339,6 +330,11 @@ if (match($TERM, "-256color") != -1) && (match($TERM, "tmux-256color") == -1)
 	" screen does not (yet) support truecolor
 	set termguicolors
 endif
+" for the vagrant linux box
+if (match($TERM, "xterm") != -1)
+	set termguicolors
+endif
+
 
 " Settings needed for .lvimrc
 set exrc
@@ -419,7 +415,9 @@ set shortmess+=c " don't give |ins-completion-menu| messages.
 " Colors
 set background=dark
 colorscheme base16-atelier-dune
-"colorscheme atelier-dune
+"colorscheme farout
+"colorscheme facebook
+"colorscheme oceanicnext
 hi Normal ctermbg=NONE
 
 " Show those damn hidden characters
@@ -717,6 +715,7 @@ set cursorcolumn
 hi Folded ctermbg=234 ctermfg=red
 
 " Linter -- ALE {{{
+let g:airline#extensions#ale#enabled = 1
 highlight ALEErrorSign ctermfg=9
 let g:ale_sign_error = '✖'
 let g:ale_sign_warning = '⚠'
@@ -790,7 +789,7 @@ nnoremap <leader>G :GrammarousCheck --lang=en-US --preview<CR>
 let g:latex_indent_enabled = 1
 let g:latex_fold_envs = 0
 let g:latex_fold_sections = []
-
+let g:tex_conceal = ""
 autocmd Filetype tex setl updatetime=1
 let g:livepreview_previewer = 'open -a Preview'
 
@@ -998,7 +997,38 @@ autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isT
 " org mode
 "let g:polyglot_disabled = ['org']
 
+" rainbow
 let g:rainbow_active = 1 "0 if you want to enable it later via :RainbowToggle
+
+" gitgutter
+let g:gitgutter_enabled = 0
+
+" Easy Align
+" Start interactive EasyAlign in visual mode (e.g. vipga)
+xmap ga <Plug>(EasyAlign)
+" Start interactive EasyAlign for a motion/text object (e.g. gaip)
+nmap ga <Plug>(EasyAlign)
+
+" NERDCommenter
+" Add spaces after comment delimiters by default
+let g:NERDSpaceDelims = 1
+" Use compact syntax for prettified multi-line comments
+let g:NERDCompactSexyComs = 1
+" Align line-wise comment delimiters flush left instead of following code indentation
+let g:NERDDefaultAlign = 'left'
+" Allow commenting and inverting empty lines (useful when commenting a region)
+let g:NERDCommentEmptyLines = 1
+" Enable trimming of trailing whitespace when uncommenting
+let g:NERDTrimTrailingWhitespace = 1
+" Enable NERDCommenterToggle to check all selected lines is commented or not
+let g:NERDToggleCheckAllLines = 1
+" Add your own custom formats or override the defaults
+let g:NERDCustomDelimiters = {
+			\ 'c': {'left': '//'},
+			\ 'cpp': {'left': '//'},
+			\ 'python': {'left': '#'},
+			\ 'rust': {'left': '///'},
+			\ }
 
 " nvim
 if has('nvim')
