@@ -38,6 +38,7 @@ Plug 'Yggdroot/indentLine'
 Plug 'hecal3/vim-leader-guide'
 Plug 'jaxbot/semantic-highlight.vim'
 Plug 'scrooloose/nerdtree'
+Plug 'luochen1990/rainbow'
 
 " Fuzzy finder
 " ------------
@@ -72,13 +73,7 @@ Plug 'garbas/vim-snipmate'
 "Plug 'wokalski/autocomplete-flow'
 " Showing function signature and inline doc.
 Plug 'Shougo/echodoc.vim'
-Plug 'google/vim-codefmt'
-" Add maktaba and codefmt to the runtimepath.
-" (The latter must be installed before it can be used.)
 Plug 'google/vim-maktaba'
-" Also add Glaive, which is used to configure codefmt's maktaba flags. See
-" `:help :Glaive` for usage.
-Plug 'google/vim-glaive'
 "Plug 'neomake/neomake'
 
 " VIM editting enhancements
@@ -100,6 +95,7 @@ Plug 'vim-scripts/gnuplot-syntax-highlighting'
 Plug 'cespare/vim-toml'
 Plug 'fatih/vim-go'
 Plug 'dag/vim-fish'
+""Plug 'RobertAudi/fish.vim'
 Plug 'jceb/vim-orgmode'
 Plug 'octol/vim-cpp-enhanced-highlight'
 Plug 'eagletmt/coqtop-vim'
@@ -145,9 +141,6 @@ Plug 'junegunn/vader.vim'
 "Plug 'fcangialosi/bootlin.vim' " Linux source code via Elixir's Bootlin
 
 call plug#end()
-
-" the glaive#Install() should go after the "call vundle#end()"
-call glaive#Install()
 
 runtime macros/matchit.vim
 
@@ -821,21 +814,6 @@ fun! DevPythonFormatter()
 endfun
 " }}}
 "
-" Google codefmt {{{
-augroup autoformat_settings
-	autocmd FileType c,cpp,proto,javascript AutoFormatBuffer clang-format
-	autocmd FileType go AutoFormatBuffer gofmt
-	autocmd FileType rust AutoFormatBuffer rustfmt +nightly
-	" ===================
-	autocmd FileType bzl AutoFormatBuffer buildifier
-	autocmd FileType html,css,json AutoFormatBuffer js-beautify
-	autocmd FileType java AutoFormatBuffer google-java-format
-augroup END
-
-" Optional: Enable codefmt's default mappings on the <Leader>= prefix.
-Glaive codefmt plugin[mappings]
-" }}}
-
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "   Editing mappings
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -1019,6 +997,8 @@ autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isT
 
 " org mode
 "let g:polyglot_disabled = ['org']
+
+let g:rainbow_active = 1 "0 if you want to enable it later via :RainbowToggle
 
 " nvim
 if has('nvim')

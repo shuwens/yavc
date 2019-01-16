@@ -28,9 +28,10 @@ augroup filetypedetect
 	autocmd FileType tex let g:tex_indent_items=0
 	autocmd FileType tex let g:tex_indent_and=0
 	autocmd FileType tex let g:tex_indent_brace=0
-	" fish
+
 	autocmd FileType fish compiler fish
 	autocmd FileType fish setlocal textwidth=79
 	autocmd FileType fish setlocal foldmethod=expr
-	"autocmd FileType org let b:loaded_org_syntax = 1
+	autocmd FileType fish setlocal indentexpr=fish#Indent()
+	autocmd FileType fish setlocal indentkeys+==end,=else,=case
 augroup END
