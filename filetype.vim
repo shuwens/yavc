@@ -20,6 +20,7 @@ augroup filetypedetect
 	autocmd Filetype tex setlocal spell autoindent
 	autocmd Filetype tex setlocal ts=2 sts=2 tw=80 colorcolumn=81 et
 	autocmd Filetype tex let g:tex_flavor = 'latex'
+	autocmd Filetype tex setlocal syntax=context
 	" endelig!
 	autocmd FileType tex let g:tex_indent_items=0
 	autocmd FileType tex let g:tex_indent_and=0

@@ -20,7 +20,7 @@ Plug 'vim-scripts/localvimrc'
 Plug 'Shougo/vimproc.vim', {'do' : 'make'}
 Plug 'tpope/vim-fugitive'
 "Plug 'sheerun/vim-polyglot'   " I don't need this and it is buggy
-Plug 'tpope/vim-sleuth'  " Heuristically set buffer options
+""Plug 'tpope/vim-sleuth'  " Heuristically set buffer options
 ""Plug 'tpope/vim-speeddating'
 Plug 'ntpeters/vim-better-whitespace' " Remove trailing spaces
 Plug 'junegunn/vim-easy-align'
@@ -31,22 +31,23 @@ Plug 'terryma/vim-multiple-cursors'
 " GUI enhancements
 " ----------------
 Plug 'machakann/vim-highlightedyank'
-"Plug 'itchyny/lightline.vim'   " use air line ?
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-Plug 'Yilin-Yang/vim-markbar'
+""Plug 'Yilin-Yang/vim-markbar'
 "Plug 'nathanaelkane/vim-indent-guides'
 Plug 'Yggdroot/indentLine'
-Plug 'hecal3/vim-leader-guide'
+""Plug 'hecal3/vim-leader-guide'
 Plug 'jaxbot/semantic-highlight.vim'
-Plug 'scrooloose/nerdtree'
 
 " Fuzzy finder
 " ------------
 Plug 'airblade/vim-rooter'
-"Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --bin' }
-Plug '/usr/local/opt/fzf'
 Plug 'junegunn/fzf.vim'
+if !empty(glob("/usr/local/opt/fzf"))
+	Plug '/usr/local/opt/fzf'
+else
+	Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --bin' }
+endif
 
 " Semantic language support
 " -------------------------
@@ -66,7 +67,7 @@ Plug 'ncm2/ncm2-path'
 
 " Showing function signature and inline doc.
 Plug 'Shougo/echodoc.vim'
-Plug 'google/vim-maktaba'
+"Plug 'google/vim-maktaba'
 
 " VIM editting enhancements
 " -------------------------
@@ -77,7 +78,7 @@ Plug 'RRethy/vim-illuminate'
 Plug 'inside/vim-search-pulse'
 Plug 'numirias/semshi', {'do': ':UpdateRemotePlugins'}
 Plug 'lilydjwg/colorizer'
-"Plug 'terryma/vim-smooth-scroll'
+Plug 'terryma/vim-smooth-scroll'
 
 " Syntactic language support
 " --------------------------
@@ -92,6 +93,8 @@ Plug 'octol/vim-cpp-enhanced-highlight'
 Plug 'eagletmt/coqtop-vim'
 "Plug 'mattn/webapi-vim'
 "Plug 'junegunn/vader.vim'
+Plug 'godlygeek/tabular'
+Plug 'plasticboy/vim-markdown'
 
 " Python
 Plug 'roxma/python-support.nvim'
@@ -119,17 +122,17 @@ if !isdirectory("$HOME/dev/others/base16")
 	"Plug ' mhartington/oceanic-next'
 	Plug 'chriskempson/base16-vim'
 endif
-Plug 'google/vim-colorscheme-primary'
-Plug 'farfanoide/vim-facebook'
-Plug 'fcpg/vim-farout'
+""Plug 'google/vim-colorscheme-primary'
+""Plug 'farfanoide/vim-facebook'
+""Plug 'fcpg/vim-farout'
 
 ""Plug 'tpope/vim-unimpaired'
 "Plug 'tpope/vim-sensible'
 ""Plug 'tpope/vim-endwise'
 
-Plug 'airblade/vim-gitgutter'
-Plug 'ap/vim-buftabline'
-Plug 'Xuyuanp/nerdtree-git-plugin'
+""Plug 'airblade/vim-gitgutter'
+""Plug 'ap/vim-buftabline'
+""Plug 'Xuyuanp/nerdtree-git-plugin'
 
 call plug#end()
 
@@ -162,17 +165,6 @@ let g:secure_modelines_allowed_items = [
 " Base16
 let base16colorspace=256
 let g:base16_shell_path="$HOME/dev/others/base16/shell/scripts/"
-
-" Lightline (Deprecated) {{{
-" let g:lightline = { 'colorscheme': 'wombat' }
-"let g:lightline = {
-"			\ 'component_function': {
-"			\   'filename': 'LightlineFilename',
-"			\ },
-"			\ }
-"function! LightlineFilename()
-"	return expand('%:t') !=# '' ? @% : '[No Name]'
-"endfunction
 " }}}
 
 " Airline
@@ -237,7 +229,7 @@ nnoremap <leader>. :call LanguageClient#textDocument_definition()<CR>
 "nnoremap <leader>* :call LanguageClient#textDocument_references()<cr>
 nnoremap <leader>s :call LanugageClient#textDocument_documentSymbol()<CR>
 nnoremap <leader>o <C-O>
-nnoremap <leader>/ <C-O>
+""nnoremap <leader>/ <C-O>
 " }}}
 
 " Rust {{{
@@ -334,7 +326,13 @@ endif
 if (match($TERM, "xterm") != -1)
 	set termguicolors
 endif
-
+let g:sneak#s_next = 1
+let g:vim_markdown_new_list_item_indent = 0
+let g:vim_markdown_auto_insert_bullets = 0
+let g:vim_markdown_frontmatter = 1
+set printfont=:h10
+set printencoding=utf-8
+set printoptions=paper:letter
 
 " Settings needed for .lvimrc
 set exrc
@@ -395,7 +393,7 @@ cnoremap %s/ %sm/
 set guioptions-=T " Remove toolbar
 set vb t_vb= " No more beeps
 set backspace=2 " Backspace over newlines
-set foldmethod=marker " Only fold on marks
+set nofoldenable
 set ruler " Where am I?
 set ttyfast
 " https://github.com/vim/vim/issues/1735#issuecomment-383353563
@@ -406,6 +404,9 @@ set relativenumber                 " Relative line numbers
 autocmd InsertEnter * :set number  " Now it is hybrid!
 autocmd InsertLeave * :set nonumber
 set diffopt+=iwhite " No whitespace in vimdiff
+" Make diffing better: https://vimways.org/2018/the-power-of-diff/
+set diffopt+=algorithm:patience
+set diffopt+=indent-heuristic
 set colorcolumn=80 " and give me a colored column
 set showcmd " Show (partial) command in status line.
 set mouse=a " Enable mouse usage (all modes) in terminals
@@ -546,7 +547,7 @@ nnoremap k gk
 "nnoremap <C-k> :cprev<cr>
 
 "nnoremap <C-l> :copen<cr>
-"nnoremap <C-l> :copen<cr>
+nnoremap <leader>/ :copen<cr>
 nnoremap <C-g> :cclose<cr>
 
 " <leader><leader> toggles between buffers
@@ -747,7 +748,6 @@ let g:ale_rust_cargo_check_all_targets = 1
 " ALE bindings
 "nmap <silent> L <Plug>(ale_lint)
 nmap <leader>l <Plug>(ale_lint)
-"nnoremap <leader>l :ALELint<CR>
 nmap <silent> <C-k> <Plug>(ale_previous_wrap)
 nmap <silent> <C-j> <Plug>(ale_next_wrap)
 "nmap <silent> <C-]> <Plug>(ale_previous_wrap)
@@ -792,7 +792,7 @@ let g:latex_fold_sections = []
 let g:tex_conceal = ""
 autocmd Filetype tex setl updatetime=1
 let g:livepreview_previewer = 'open -a Preview'
-
+autocmd BufNewFile,BufRead *.tex set syntax=context
 " polyglot for LaTeX
 "let g:polyglot_disabled = ['latex']
 " }}}
