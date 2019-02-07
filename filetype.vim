@@ -1,10 +1,6 @@
 augroup filetypedetect
-	" Mail
-	"autocmd BufRead,BufNewFile /tmp/mutt*              setfiletype mail
-	"autocmd Filetype mail                              setlocal spell tw=72 colorcolumn=73
-	"autocmd Filetype mail                              setlocal fo+=w
 	" Git commit message
-	autocmd Filetype gitcommit                         setlocal spell tw=72 colorcolumn=73
+	autocmd Filetype gitcommit setlocal spell tw=72 colorcolumn=73
 	" nftables
 	autocmd BufRead,BufNewFile *.nft setfiletype nftables
 	" Rust language server
@@ -32,5 +28,5 @@ augroup filetypedetect
 	autocmd FileType fish setlocal indentexpr=fish#Indent()
 	autocmd FileType fish setlocal indentkeys+==end,=else,=case
 	" lisp
-	 au BufNewFile,BufRead *.lsp,*.lisp,*.el,*.cl,*.jl,*.L,.emacs,.spacemacs setf lisp
+	au BufNewFile,BufRead *.lsp,*.lisp,*.el,*.cl,*.jl,*.L,.emacs,.spacemacs setf lisp
 augroup END

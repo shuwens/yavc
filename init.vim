@@ -78,7 +78,6 @@ Plug 'RRethy/vim-illuminate'
 Plug 'inside/vim-search-pulse'
 Plug 'numirias/semshi', {'do': ':UpdateRemotePlugins'}
 Plug 'lilydjwg/colorizer'
-Plug 'terryma/vim-smooth-scroll'
 
 " Syntactic language support
 " --------------------------
@@ -95,6 +94,7 @@ Plug 'eagletmt/coqtop-vim'
 "Plug 'junegunn/vader.vim'
 Plug 'godlygeek/tabular'
 Plug 'plasticboy/vim-markdown'
+Plug 'daeyun/vim-matlab', { 'do': ':UpdateRemotePlugins'}
 
 " Python
 Plug 'roxma/python-support.nvim'
@@ -169,7 +169,7 @@ let g:base16_shell_path="$HOME/dev/others/base16/shell/scripts/"
 
 " Airline
 let g:airline#extensions#tabline#formatter = 'default'
-let g:airline_powerline_fonts = 1
+let g:airline_powerline_fonts = 0 " sadly noto sans mono is not patched yet...
 let g:airline_theme='base16_atelierdune'
 
 " from http://sheerun.net/2014/03/21/how-to-boost-your-vim-productivity/
@@ -191,8 +191,10 @@ let g:localvimrc_ask = 0
 "
 " Required for operations modifying multiple buffers like rename.
 set hidden
-let g:LanguageClient_settingsPath = "$HOME/.config/nvim/settings.json"
 let g:LanguageClient_autoStart = 1
+let g:LanguageClient_useVirtualText = 0
+let g:LanguageClient_diagnosticsEnable = 0
+let g:LanguageClient_settingsPath = "$HOME/.config/nvim/settings.json"
 "set omnifunc=LanguageClient#complete
 let g:LanguageClient_serverCommands = {
 			\ 'rust': ['$HOME/.cargo/bin/rustup', 'run', 'nightly', 'rls'],
@@ -200,33 +202,32 @@ let g:LanguageClient_serverCommands = {
 			\ 'javascript.jsx': ['tcp://127.0.0.1:2089'],
 			\ 'python': ['pyls'],
 			\ }
+let g:LanguageClient_rootMarkers = {
+			\ 'go': ['.git', 'go.mod'],
+			\ }
 " LSP diagnosis
 "let g:LanguageClient_loggingLevel = 'INFO'
 "let g:LanguageClient_loggingFile =  expand('~/.local/share/nvim/LanguageClient.log')
 "let g:LanguageClient_serverStderr = expand('~/.local/share/nvim/LanguageServer.log')
 " }}}
 " LSP - keybindings {{{
-"
 nnoremap <F5> :call LanguageClient_contextMenu()<CR>
 nnoremap <leader>m :call LanguageClient_contextMenu()<CR>
 nnoremap <leader>k :call LanguageClient#textDocument_hover()<CR>
-"nnoremap <silent> K :call LanguageClient#textDocument_hover()<CR>
-"nnoremap <silent> H :call LanguageClient#textDocument_hover()<CR>
 nnoremap <silent> D :call LanguageClient#textDocument_definition()<CR>
-"nnoremap <leader>d :call LanguageClient#textDocument_definition()<cr>
 nnoremap <silent> Z :call LanguageClient#textDocument_definition()<CR>
-"nnoremap <silent> gd :call LanguageClient#textDocument_definition()<CR>
-nnoremap <silent> <leader>] :call LanguageClient#textDocument_definition()<CR>
-nnoremap <silent> R :call LanguageClient#textDocument_references()<cr>
-nnoremap <leader>r :call LanguageClient#textDocument_references()<cr>
+nnoremap <leader>d :call LanguageClient#textDocument_definition()<CR>
+nnoremap <leader>] :call LanguageClient#textDocument_definition()<CR>
+nnoremap <silent> R :call LanguageClient#textDocument_references()<CR>
+nnoremap <leader>r :call LanguageClient#textDocument_references()<CR>
 nnoremap <silent> N :call LanguageClient#textDocument_rename()<CR>
-nnoremap <leader>n :call LanguageClient#textDocument_rename()<cr>
+nnoremap <leader>n :call LanguageClient#textDocument_rename()<CR>
 nnoremap <silent> <F2> :call LanguageClient#textDocument_rename()<CR>
-"nnoremap <silent> <leader>r :call LanguageClient#textDocument_rename()<CR>
+"nnoremap <leader>r :call LanguageClient#textDocument_rename()<CR>
 nnoremap <silent> S :call LanugageClient#textDocument_documentSymbol()<CR>
 " Emacs style
 nnoremap <leader>. :call LanguageClient#textDocument_definition()<CR>
-"nnoremap <leader>* :call LanguageClient#textDocument_references()<cr>
+nnoremap <leader>r :call LanguageClient#textDocument_references()<CR>
 nnoremap <leader>s :call LanugageClient#textDocument_documentSymbol()<CR>
 nnoremap <leader>o <C-O>
 ""nnoremap <leader>/ <C-O>
@@ -239,13 +240,9 @@ let g:rustfmt_autosave = 1
 let g:rustfmt_emit_files = 1
 let g:rustfmt_fail_silently = 0
 let g:rust_clip_command = 'xclip -selection clipboard'
-"let g:racer_cmd = "/usr/bin/racer"
-"let g:racer_experimental_completer = 1
-
 " Follow Rust code style rules
 au Filetype rust source $HOME/.config/nvim/scripts/spacetab.vim
 au Filetype rust set colorcolumn=100
-
 " <leader>= reformats current tange
 autocmd FileType rust nnoremap <leader>= :'<,'>RustFmtRange<CR>
 " }}}
@@ -283,25 +280,7 @@ inoremap <expr><CR> (pumvisible()?(empty(v:completed_item)?"\<CR>\<CR>":"\<C-y>"
 " Use <TAB> to select the popup menu:
 "inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 "inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-"
-" ncm snippet config
-" ------------------
-" Press enter key to trigger snippet expansion
-" The parameters are the same as `:help feedkeys()`
-"inoremap <silent> <expr> <CR> ncm2_snipmate#expand_or("\<CR>", 'n')
-" wrap <Plug>snipMateTrigger so that it works for both completin and normal
-" snippet
-"inoremap <expr> <c-u> ncm2_snipmate#expand_or("\<Plug>snipMateTrigger", "m")
-" c-j c-k for moving in snippet
-"let g:snips_no_mappings = 1
-"vmap <c-j> <Plug>snipMateNextOrTrigger
-"vmap <c-k> <Plug>snipMateBack
-"imap <expr> <c-k> pumvisible() ? "\<c-y>\<Plug>snipMateBack" : "\<Plug>snipMateBack"
-"imap <expr> <c-j> pumvisible() ? "\<c-y>\<Plug>snipMateNextOrTrigger" : "\<Plug>snipMateNextOrTrigger"
 " }}}
-
-" Deoplete
-"let deoplete#enable_at_startup = 1
 
 " Doxygen
 let mysyntaxfile='$HOME/.config/nvim/doxygen_load.vim'
@@ -353,10 +332,10 @@ set wildmenu
 set wildmode=list:longest
 set wildignore=.hg,.svn,*~,*.png,*.jpg,*.gif,*.settings,Thumbs.db,*.min.js,*.swp,publish/*,intermediate/*,*.o,*.hi,Zend,vendor
 
-" Use wide tabs
-set shiftwidth=2
-set softtabstop=2
-set tabstop=2
+" Use regular tabs (wide)
+set shiftwidth=4
+set softtabstop=4
+set tabstop=4
 set noexpandtab
 
 " Get syntax
@@ -393,12 +372,13 @@ cnoremap %s/ %sm/
 set guioptions-=T " Remove toolbar
 set vb t_vb= " No more beeps
 set backspace=2 " Backspace over newlines
-set nofoldenable
+"set nofoldenable
+set foldmethod=marker " Only fold on marks
 set ruler " Where am I?
 set ttyfast
 " https://github.com/vim/vim/issues/1735#issuecomment-383353563
 set lazyredraw
-set synmaxcol=200
+set synmaxcol=500
 set laststatus=2
 set relativenumber                 " Relative line numbers
 autocmd InsertEnter * :set number  " Now it is hybrid!
@@ -416,10 +396,10 @@ set shortmess+=c " don't give |ins-completion-menu| messages.
 " Colors
 set background=dark
 colorscheme base16-atelier-dune
-"colorscheme farout
-"colorscheme facebook
-"colorscheme oceanicnext
 hi Normal ctermbg=NONE
+"highlight Normal ctermbg=NONE
+"highlight nonText ctermbg=NONE
+colorscheme base16-atelier-dune
 
 " Show those damn hidden characters
 " Verbose: set listchars=nbsp:¬,eol:¶,extends:»,precedes:«,trail:•
@@ -591,6 +571,10 @@ endif
 " Auto-make less files on save
 autocmd BufWritePost *.less if filereadable("Makefile") | make | endif
 
+" Follow Rust code style rules
+au Filetype rust source $HOME/.config/nvim/scripts/spacetab.vim
+au Filetype rust set colorcolumn=100
+
 " Help filetype detection
 autocmd BufRead *.plot set filetype=gnuplot
 autocmd BufRead *.md set filetype=markdown
@@ -718,8 +702,6 @@ hi Folded ctermbg=234 ctermfg=red
 " Linter -- ALE {{{
 let g:airline#extensions#ale#enabled = 1
 highlight ALEErrorSign ctermfg=9
-let g:ale_sign_error = '✖'
-let g:ale_sign_warning = '⚠'
 " lint should be handled by LSP, but seems like that Rust is bit broken
 let g:ale_linters = {
 			\ 'LaTeX': ['proselint',],
@@ -735,11 +717,16 @@ let g:ale_lint_on_text_changed = 'never'
 let g:ale_lint_on_save = 0
 let g:ale_lint_on_enter = 0
 let g:ale_completion_enabled = 1
+let g:ale_virtualtext_cursor = 0
 " format error msg
-let g:ale_echo_msg_error_str = 'E'
-let g:ale_echo_msg_warning_str = 'W'
-let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
-
+let g:ale_sign_error = '✖'
+let g:ale_sign_warning = '⚠'
+let g:ale_sign_info = 'ℹ'
+"let g:ale_sign_info = '🛈'
+let g:ale_echo_msg_error_str = 'ERROR'
+let g:ale_echo_msg_warning_str = 'WARN'
+let g:ale_echo_msg_info_str = 'INFO'
+let g:ale_echo_msg_format = '[%severity%] %s  [%linter% | %code%]'
 " Rust
 let g:ale_rust_rls_toolchain = 'nightly'
 let g:ale_rust_cargo_use_check = 1
@@ -1029,6 +1016,10 @@ let g:NERDCustomDelimiters = {
 			\ 'python': {'left': '#'},
 			\ 'rust': {'left': '///'},
 			\ }
+
+" Matlab
+let g:matlab_server_launcher = 'tmux' "launch the server in a tmux split
+let g:matlab_server_split = 'vertical'   "launch the server in a vertical split
 
 " nvim
 if has('nvim')
