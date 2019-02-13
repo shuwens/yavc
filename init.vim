@@ -20,7 +20,7 @@ Plug 'vim-scripts/localvimrc'
 Plug 'Shougo/vimproc.vim', {'do' : 'make'}
 Plug 'tpope/vim-fugitive'
 "Plug 'sheerun/vim-polyglot'   " I don't need this and it is buggy
-""Plug 'tpope/vim-sleuth'  " Heuristically set buffer options
+Plug 'tpope/vim-sleuth'  " Heuristically set buffer options
 ""Plug 'tpope/vim-speeddating'
 Plug 'ntpeters/vim-better-whitespace' " Remove trailing spaces
 Plug 'junegunn/vim-easy-align'
@@ -33,10 +33,7 @@ Plug 'terryma/vim-multiple-cursors'
 Plug 'machakann/vim-highlightedyank'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-""Plug 'Yilin-Yang/vim-markbar'
-"Plug 'nathanaelkane/vim-indent-guides'
 Plug 'Yggdroot/indentLine'
-""Plug 'hecal3/vim-leader-guide'
 Plug 'jaxbot/semantic-highlight.vim'
 
 " Fuzzy finder
@@ -64,10 +61,13 @@ Plug 'junegunn/vader.vim'
 Plug 'ncm2/ncm2-bufword'
 Plug 'ncm2/ncm2-tmux'
 Plug 'ncm2/ncm2-path'
+" snippet
+Plug 'Shougo/neosnippet.vim'
+Plug 'ncm2/ncm2-neosnippet'
+Plug 'Shougo/neosnippet-snippets'
 
 " Showing function signature and inline doc.
 Plug 'Shougo/echodoc.vim'
-"Plug 'google/vim-maktaba'
 
 " VIM editting enhancements
 " -------------------------
@@ -94,7 +94,6 @@ Plug 'eagletmt/coqtop-vim'
 "Plug 'junegunn/vader.vim'
 Plug 'godlygeek/tabular'
 Plug 'plasticboy/vim-markdown'
-Plug 'daeyun/vim-matlab', { 'do': ':UpdateRemotePlugins'}
 
 " Python
 Plug 'roxma/python-support.nvim'
@@ -197,7 +196,7 @@ let g:LanguageClient_diagnosticsEnable = 0
 let g:LanguageClient_settingsPath = "$HOME/.config/nvim/settings.json"
 "set omnifunc=LanguageClient#complete
 let g:LanguageClient_serverCommands = {
-			\ 'rust': ['$HOME/.cargo/bin/rustup', 'run', 'nightly', 'rls'],
+			\ 'rust': ['$HOME/.cargo/bin/rustup', 'run', 'nightly-2019-02-08', 'rls'],
 			\ 'javascript': ['javascript-typescript-stdio'],
 			\ 'javascript.jsx': ['tcp://127.0.0.1:2089'],
 			\ 'python': ['pyls'],
@@ -232,7 +231,58 @@ nnoremap <leader>s :call LanugageClient#textDocument_documentSymbol()<CR>
 nnoremap <leader>o <C-O>
 ""nnoremap <leader>/ <C-O>
 " }}}
+" Completion {{{
+autocmd BufEnter * call ncm2#enable_for_buffer()
+set completeopt=noinsert,menuone,noselect
+" suppress the annoying 'match x of y', 'The only match' and 'Pattern not
+" found' messages
+set shortmess+=c
 
+" CTRL-C doesn't trigger the InsertLeave autocmd . map to <ESC> instead.
+inoremap <c-c> <ESC>
+
+" When the <Enter> key is pressed while the popup menu is visible, it only
+" hides the menu. Use this mapping to close the menu and also start a new
+" line.
+inoremap <expr> <CR> (pumvisible() ? "\<c-y>\<cr>" : "\<CR>")
+
+" Use <TAB> to select the popup menu:
+inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+
+" wrap existing omnifunc
+" Note that omnifunc does not run in background and may probably block the
+" editor. If you don't want to be blocked by omnifunc too often, you could
+" add 180ms delay before the omni wrapper:
+"  'on_complete': ['ncm2#on_complete#delay', 180,
+"               \ 'ncm2#on_complete#omni', 'csscomplete#CompleteCSS'],
+au User Ncm2Plugin call ncm2#register_source({
+			\ 'name' : 'css',
+			\ 'priority': 9,
+			\ 'subscope_enable': 1,
+			\ 'scope': ['css','scss'],
+			\ 'mark': 'css',
+			\ 'word_pattern': '[\w\-]+',
+			\ 'complete_pattern': ':\s*',
+			\ 'on_complete': ['ncm2#on_complete#omni', 'csscomplete#CompleteCSS'],
+			\ })
+
+" tab to select
+" and don't hijack my enter key
+""inoremap <expr><Tab> (pumvisible()?(empty(v:completed_item)?"\<C-n>":"\<C-y>"):"\<Tab>")
+""inoremap <expr><CR> (pumvisible()?(empty(v:completed_item)?"\<CR>\<CR>":"\<C-y>"):"\<CR>")
+inoremap <silent> <expr> <CR> ncm2_neosnippet#expand_or("\<CR>", 'n')
+" }}}
+" Golang {{{
+autocmd FileType go nmap <leader>t <Plug>(go-test)
+autocmd FileType go nmap <Leader>r <Plug>(go-rename)
+autocmd FileType go nmap <leader>c <Plug>(go-coverage)
+let g:go_play_open_browser = 0
+let g:go_fmt_fail_silently = 1
+let g:go_fmt_command = "goimports"
+let g:go_bin_path = expand("~/dev/others/r/bin")
+let g:go_version_warning = 0
+" }}}
 " Rust {{{
 " https://github.com/rust-lang/rust.vim/issues/192
 let g:rustfmt_command = "rustfmt +nightly"
@@ -246,42 +296,6 @@ au Filetype rust set colorcolumn=100
 " <leader>= reformats current tange
 autocmd FileType rust nnoremap <leader>= :'<,'>RustFmtRange<CR>
 " }}}
-
-" Golang {{{
-autocmd FileType go nmap <leader>t <Plug>(go-test)
-autocmd FileType go nmap <Leader>r <Plug>(go-rename)
-autocmd FileType go nmap <leader>c <Plug>(go-coverage)
-let g:go_play_open_browser = 0
-let g:go_fmt_fail_silently = 1
-let g:go_fmt_command = "goimports"
-let g:go_bin_path = expand("~/dev/others/r/bin")
-let g:go_version_warning = 0
-" }}}
-" Completion {{{
-autocmd BufEnter * call ncm2#enable_for_buffer()
-set completeopt=noinsert,menuone,noselect
-" Use new fuzzy based matches
-let g:ncm2#matcher = 'substrfuzzy'
-let g:ncm2#popup_limit=10   " 3, 5, 10, 15
-" tab to select
-" and don't hijack my enter key
-inoremap <expr><Tab> (pumvisible()?(empty(v:completed_item)?"\<C-n>":"\<C-y>"):"\<Tab>")
-inoremap <expr><CR> (pumvisible()?(empty(v:completed_item)?"\<CR>\<CR>":"\<C-y>"):"\<CR>")
-"
-" ncm optional config
-" -------------------
-" suppress the annoying 'match x of y', 'The only match' and 'Pattern not
-" found' messages
-"set shortmess+=c
-" When the <Enter> key is pressed while the popup menu is visible, it only
-" hides the menu. Use this mapping to close the menu and also start a new
-" line.
-"inoremap <expr> <CR> (pumvisible() ? "\<c-y>\<cr>" : "\<CR>")
-" Use <TAB> to select the popup menu:
-"inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
-"inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-" }}}
-
 " Doxygen
 let mysyntaxfile='$HOME/.config/nvim/doxygen_load.vim'
 
@@ -423,13 +437,18 @@ vnoremap <C-c> <Esc>
 "vnoremap <C-f> :sus<cr>
 "nnoremap <C-f> :sus<cr>
 
-" Jump to start and end of line using the home row keys
+" Jump to start and end of line using the home row keys {{{
 "map H ^
 "map L $
 map [ ^
 map ] $
 nnoremap <C-h> ^
 nnoremap <C-l> $
+inoremap <C-e> <Esc>A
+inoremap <C-a> <Esc>I
+nnoremap <C-e> <Esc>A
+nnoremap <C-a> <Esc>I
+" }}}
 
 " Neat X clipboard integration linux {{{
 "
@@ -438,7 +457,6 @@ nnoremap <C-l> $
 "noremap <leader>p :read !xsel --clipboard --output<cr>
 "noremap <leader>c :w !xsel -ib<cr><cr>
 " }}}
-
 " fzf !!! {{{
 "
 "let g:fzf_layout = { 'down': '~20%' }
@@ -550,6 +568,34 @@ noremap M :!make -k -j4<cr>
 map <F1> <Esc>
 imap <F1> <Esc>
 
+" ===========================================================================
+"   Personal Keybindings
+" ===========================================================================
+
+" Visual mode pressing * or # searches for the current selection
+vnoremap <silent> * :call VisualSelection('f')<CR>
+vnoremap <silent> # :call VisualSelection('b')<CR>
+
+" Quick-save
+nmap <leader>w :StripWhitespace<CR>:w<CR>
+nmap <leader>wq :wq<CR>
+"nnoremap <leader>w :w<CR>
+nnoremap <leader>q :q!<CR>
+nnoremap <leader>qq :q!<Esc>:q!<CR>
+command! W w
+command! Wq wq
+command! WQ wq
+
+" detele things shortcut
+nnoremap <C-i> C
+"inoremap <C-i> C
+vnoremap <C-i> C
+nnoremap <leader>i C
+"inoremap <leader>i C
+vnoremap <leader>i C
+
+" Type lang<C-Y> for shebang line
+nnoremap <C-y> <Esc>:sil exe ".!which <cWORD>" <bar> s/^/#!/ <bar> filetype detect<cr>YpDi
 
 " ===========================================================================
 "    Autocommands
@@ -586,65 +632,6 @@ autocmd BufRead *.org set filetype=org
 
 " Script plugins
 autocmd Filetype html,xml,xsl,php source $HOME/.config/nvim/scripts/closetag.vim
-
-"  Deprecated keybindings {{{
-
-" yapf - Deprecated becasue it is automatic
-"map <C-Y> :call yapf#YAPF()<cr>
-"imap <C-Y> <c-o>:call yapf#YAPF()<cr>
-"
-" map to <Leader>cf in python code
-"autocmd FileType python nnoremap <buffer><Leader>cf :<C-u>Yapf<CR>
-"autocmd FileType python vnoremap <buffer><Leader>cf :Yapf<CR>
-" if you install vim-operator-user
-"autocmd FileType python map <buffer><Leader>x <Plug>(operator-clang-format)
-" Toggle auto formatting:
-"nmap <Leader>C :YapfAutoToggle<CR>
-
-
-" Rewrap (Deprecated)
-" Rewrap is similar to the gqq command with textwidth, but it also uses a hanging
-"   indent and can be used on multiple lines of text.  And note that textwidth needs
-"   to be set beforehand.
-" Probably generally best to use with the F3 hotkey defined below.  Can use
-"   count to determine how many rows below to include.  Cannot use directions.
-" Very, very useful for docblocks and if not using a version of Vim with the
-"   breakindent patch
-"
-" From https://github.com/anorman728/vimprojects/blob/master/Rewrap.vim
-function! RewrapFunc() range
-	let lines = a:lastline-a:firstline+1
-	if lines!=1
-		let joinlines = lines-1
-		exe ":normal ".lines."J"
-	endif
-	exe ":normal gqq"
-	while line('.')!=a:firstline
-		exe ":normal I  "
-		exe ":normal k"
-	endwhile
-endfunction
-command! -range RewrapCmd <line1>,<line2>call RewrapFunc()
-" FIXME: not good
-"nmap Q :RewrapCmd<CR>
-
-" suppress the annoying 'match x of y', 'The only match' and 'Pattern not
-" found' messages
-"set shortmess+=c
-
-" CTRL-C doesn't trigger the InsertLeave autocmd . map to <ESC> instead.
-"inoremap <c-c> <ESC>
-
-" When the <Enter> key is pressed while the popup menu is visible, it only
-" hides the menu. Use this mapping to close the menu and also start a new
-" line.
-"inoremap <expr> <CR> (pumvisible() ? "\<c-y>\<cr>" : "\<CR>")
-
-" Use <TAB> to select the popup menu:
-"inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
-"inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-
-"  }}}
 
 " A second kind of re-wrap {{{
 " Reformat lines (getting the spacing correct)
@@ -740,7 +727,6 @@ nmap <silent> <C-j> <Plug>(ale_next_wrap)
 "nmap <silent> <C-]> <Plug>(ale_previous_wrap)
 "nmap <silent> <C-[> <Plug>(ale_next_wrap)
 " }}}
-
 " vim-grammarous {{{
 
 "let g:grammarous#use_vim_spelllang = 0
@@ -771,7 +757,6 @@ endfunction
 nnoremap <leader>L :GrammarousCheck --lang=en-US --preview<CR>
 nnoremap <leader>G :GrammarousCheck --lang=en-US --preview<CR>
 " }}}
-
 " LaTeX {{{
 let g:latex_indent_enabled = 1
 let g:latex_fold_envs = 0
@@ -783,7 +768,6 @@ autocmd BufNewFile,BufRead *.tex set syntax=context
 " polyglot for LaTeX
 "let g:polyglot_disabled = ['latex']
 " }}}
-
 " Python is special {{{
 " NOTE: I only want to auto-format Python files that belong to me
 let g:black_linelength = 80
@@ -831,7 +815,6 @@ let g:better_whitespace_guicolor='#FF4500'
 let g:better_whitespace_enabled=1
 let g:strip_whitespace_on_save=0
 
-
 " Delete trailing white space on save, useful for Python and CoffeeScript ;)
 func! DeleteTrailingWS()
 	exe "normal mz"
@@ -840,40 +823,6 @@ func! DeleteTrailingWS()
 endfunc
 "autocmd BufWrite *.py :call DeleteTrailingWS()
 autocmd BufWrite *.coffee :call DeleteTrailingWS()
-
-" ===========================================================================
-"   Personal Keybindings
-" ===========================================================================
-
-" Visual mode pressing * or # searches for the current selection
-vnoremap <silent> * :call VisualSelection('f')<CR>
-vnoremap <silent> # :call VisualSelection('b')<CR>
-
-" Quick-save
-nmap <leader>w :StripWhitespace<CR>:w<CR>
-nmap <leader>wq :wq<CR>
-"nnoremap <leader>w :w<CR>
-nnoremap <leader>q :q!<CR>
-nnoremap <leader>qq :q!<Esc>:q!<CR>
-command! W w
-command! Wq wq
-command! WQ wq
-
-" detele things shortcut
-nnoremap <C-i> C
-"inoremap <C-i> C
-vnoremap <C-i> C
-nnoremap <leader>i C
-"inoremap <leader>i C
-vnoremap <leader>i C
-
-
-
-" Type lang<C-Y> for shebang line
-nnoremap <C-y> <Esc>:sil exe ".!which <cWORD>" <bar> s/^/#!/ <bar> filetype detect<cr>YpDi
-
-" indent line
-"let g:indent_guides_enable_on_vim_startup = 1
 
 " map wincmd {{{
 "
@@ -894,7 +843,6 @@ nmap <silent> <A-Right> :wincmd l<CR>
 "nmap <leader>h :wincmd h<CR>
 "nmap <leader>l :wincmd l<CR>
 "}}}
-
 " provide hjkl movements in Insert mode via the <Alt> modifier key  {{{
 "
 inoremap <A-h> <C-o>h
@@ -902,50 +850,16 @@ inoremap <A-j> <C-o>j
 inoremap <A-k> <C-o>k
 inoremap <A-l> <C-o>l
 " }}}
-
 " C++ reference look up  {{{
 " https://stackoverflow.com/questions/2272759/looking-up-c-documentation-inside-of-vim?utm_medium=organic&utm_source=google_rich_qa&utm_campaign=google_rich_qa
 command! -nargs=+ Cppman silent! call system("tmux split-window cppman " . expand(<q-args>))
 autocmd FileType cpp nnoremap <silent><buffer> K <Esc>:Cppman <cword><CR>
 " }}}
-
-" vim markbar {{{
-map <Leader>mm <Plug>ToggleMarkbar
-" the following are unneeded if ToggleMarkbar is mapped
-map <Leader>mo <Plug>OpenMarkbar
-map <Leader>mc <Plug>CloseMarkbar
-
-" only display alphabetic marks a-i and A-I
-"let g:markbar_marks_to_display = 'abcdefghiABCDEFGHI'
-
-" width of a vertical split markbar
-let g:markbar_width = 75
-
-" indentation for lines of context
-let g:markbar_context_indent_block = '  '
-
-" number of lines of context to retrieve per mark
-let g:markbar_num_lines_context = 3
-
-" markbar-local mappings
-let g:markbar_jump_to_mark_mapping  = 'G'
-let g:markbar_next_mark_mapping     = '/'
-let g:markbar_previous_mark_mapping = '?'
-let g:markbar_rename_mark_mapping   = '<F2>'
-let g:markbar_reset_mark_mapping    = 'r'
-let g:markbar_delete_mark_mapping   = '<Del>'
-
-" file mark
-let g:markbar_file_mark_format_string = '%s [line: %2d, col: %2d]'
-let g:markbar_file_mark_arguments = ['fname', 'line', 'col']
-" }}}
-
 " fugitive {{{
 "
 nnoremap <silent> gd :GDiff<CR>
 nnoremap <silent> dg :diffget<CR>
 " }}}
-
 " vim lexical {{{
 augroup lexical
 	autocmd!
@@ -958,7 +872,6 @@ augroup END
 let g:lexical#spellfile = ['~/.config/nvim/spell/en.utf-8.add',]
 let g:lexical#spelllang = ['en_us',]
 " }}}
-
 
 "--- Try
 " vim-illuminate
@@ -1016,10 +929,6 @@ let g:NERDCustomDelimiters = {
 			\ 'python': {'left': '#'},
 			\ 'rust': {'left': '///'},
 			\ }
-
-" Matlab
-let g:matlab_server_launcher = 'tmux' "launch the server in a tmux split
-let g:matlab_server_split = 'vertical'   "launch the server in a vertical split
 
 " nvim
 if has('nvim')
