@@ -9,7 +9,7 @@ let mapleader = "\<Space>"
 set nocompatible
 filetype off
 set rtp+=~/dev/others/base16/vim/
-call plug#begin('~/.local/share/nvim/plugged')
+call plug#begin('$HOME/.local/share/nvim/plugged')
 
 " Load plugins
 
@@ -21,7 +21,6 @@ Plug 'Shougo/vimproc.vim', {'do' : 'make'}
 Plug 'tpope/vim-fugitive'
 "Plug 'sheerun/vim-polyglot'   " I don't need this and it is buggy
 Plug 'tpope/vim-sleuth'  " Heuristically set buffer options
-""Plug 'tpope/vim-speeddating'
 Plug 'ntpeters/vim-better-whitespace' " Remove trailing spaces
 Plug 'junegunn/vim-easy-align'
 Plug 'scrooloose/nerdcommenter'
@@ -35,6 +34,8 @@ Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'Yggdroot/indentLine'
 Plug 'jaxbot/semantic-highlight.vim'
+Plug 'scrooloose/nerdtree'
+Plug 'Xuyuanp/nerdtree-git-plugin'
 
 " Fuzzy finder
 " ------------
@@ -72,7 +73,6 @@ Plug 'Shougo/echodoc.vim'
 " VIM editting enhancements
 " -------------------------
 Plug 'jiangmiao/auto-pairs'
-"Plug 'tpope/vim-surround'
 Plug 'luochen1990/rainbow'
 Plug 'RRethy/vim-illuminate'
 Plug 'inside/vim-search-pulse'
@@ -594,9 +594,10 @@ nnoremap <leader>i C
 "inoremap <leader>i C
 vnoremap <leader>i C
 
-" Type lang<C-Y> for shebang line
-nnoremap <C-y> <Esc>:sil exe ".!which <cWORD>" <bar> s/^/#!/ <bar> filetype detect<cr>YpDi
-
+" F3 to insert a logical clock
+nmap <F3> i<C-R>=strftime("%Y-%m-%d %a %I:%M %p")<CR><Esc>
+imap <F3> <C-R>=strftime("%Y-%m-%d %a %I:%M %p")<CR>
+inoremap <special> <F3> <c-r>=strftime('%c')<CR>
 " ===========================================================================
 "    Autocommands
 " ===========================================================================
@@ -886,12 +887,10 @@ let g:Illuminate_delay = 1500
 " vim-search-pulse
 let g:vim_search_pulse_duration = 200
 
-" semshi
-"let g:deoplete#auto_complete_delay = 100
-
 " nerdtree ot something
 let g:NERDTreeWinPos = "right"
-nnoremap <C-n> :NERDTreeToggle<CR>
+""nnoremap <C-n> :NERDTreeToggle<CR>
+nnoremap <leader>n :NERDTreeToggle<CR>
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
 " org mode
