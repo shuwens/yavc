@@ -9,7 +9,7 @@ augroup filetypedetect
 	autocmd Filetype text setlocal  tw=72 colorcolumn=73
 	autocmd Filetype markdown setlocal  tw=72 colorcolumn=73
 	" proselint!!!
-	autocmd Filetype tex let b:ale_linters = ['proselint']
+	autocmd Filetype tex let b:ale_linters = ['proselint', "lacheck", "chktex"]
 	autocmd Filetype text let b:ale_linters = ['proselint']
 	autocmd Filetype markdown let b:ale_linters = ['proselint']
 	" tex

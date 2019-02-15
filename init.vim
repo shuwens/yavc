@@ -112,6 +112,7 @@ Plug 'rust-lang/rust.vim'
 
 " LaTeX
 Plug 'rhysd/vim-grammarous'
+Plug 'xuhdev/vim-latex-live-preview', { 'for': 'tex' }
 "Plug 'reedes/vim-lexical' " No?
 "Plug 'lervag/vimtex' " maybe I don't actually need it
 "Plug 'LaTeX-Box-Team/LaTeX-Box'
@@ -928,6 +929,8 @@ let g:NERDCustomDelimiters = {
 			\ 'python': {'left': '#'},
 			\ 'rust': {'left': '///'},
 			\ }
+
+let g:livepreview_previewer = 'open -a Preview'
 
 " nvim
 if has('nvim')
