@@ -528,14 +528,14 @@ nnoremap <leader>e :e <C-R>=expand("%:p:h") . "/" <CR>
 " No arrow keys --- force yourself to use the home row
 nnoremap <up> <nop>
 nnoremap <down> <nop>
+nnoremap <left> <nop>
+nnoremap <right> <nop>
 inoremap <up> <nop>
 inoremap <down> <nop>
-inoremap <left> <nop>
-inoremap <right> <nop>
 
 " Left and right can switch buffers
-nnoremap <left> :bp<CR>
-nnoremap <right> :bn<CR>
+""nnoremap <left> :bp<CR>
+""nnoremap <right> :bn<CR>
 
 " Move by line
 nnoremap j gj
