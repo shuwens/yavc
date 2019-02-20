@@ -428,10 +428,10 @@ set listchars=nbsp:¬,extends:»,precedes:«,trail:•
 nnoremap ; :
 
 " Ctrl+c and Ctrl+j as Esc
-inoremap <C-j> <Esc>
-vnoremap <C-j> <Esc>
-inoremap <C-c> <Esc>
-vnoremap <C-c> <Esc>
+"inoremap <C-j> <Esc>
+"vnoremap <C-j> <Esc>
+"inoremap <C-c> <Esc>
+"vnoremap <C-c> <Esc>
 
 " Suspend with Ctrl+f
 "inoremap <C-f> :sus<cr>
@@ -542,8 +542,8 @@ nnoremap j gj
 nnoremap k gk
 
 " Jump to next/previous error
-"nnoremap <C-j> :cnext<cr>
-"nnoremap <C-k> :cprev<cr>
+nnoremap <C-j> :cnext<cr>
+nnoremap <C-k> :cprev<cr>
 
 "nnoremap <C-l> :copen<cr>
 nnoremap <leader>/ :copen<cr>
@@ -724,10 +724,8 @@ let g:ale_rust_cargo_check_all_targets = 1
 " ALE bindings
 "nmap <silent> L <Plug>(ale_lint)
 nmap <leader>l <Plug>(ale_lint)
-nmap <silent> <C-k> <Plug>(ale_previous_wrap)
 nmap <silent> <C-j> <Plug>(ale_next_wrap)
-"nmap <silent> <C-]> <Plug>(ale_previous_wrap)
-"nmap <silent> <C-[> <Plug>(ale_next_wrap)
+nmap <silent> <C-k> <Plug>(ale_previous_wrap)
 " }}}
 " vim-grammarous {{{
 
@@ -743,14 +741,14 @@ let g:grammarous#disabled_rules = {
 let g:grammarous#hooks = {}
 function! g:grammarous#hooks.on_check(errs) abort
 	nmap <buffer><C-i> <Plug>(grammarous-move-to-info-window)
-	nmap <buffer><C-n> <Plug>(grammarous-move-to-next-error)
-	nmap <buffer><C-P> <Plug>(grammarous-move-to-previous-error)
+	nmap <buffer><C-j> <Plug>(grammarous-move-to-next-error)
+	nmap <buffer><C-k> <Plug>(grammarous-move-to-previous-error)
 	nmap <buffer><leader>f <Plug>(grammarous-fixit)
 	nnoremap <buffer><C-f> <Plug>(grammarous-fixit)
 endfunction
 function! g:grammarous#hooks.on_reset(errs) abort
-	nunmap <buffer><C-n>
-	nunmap <buffer><C-p>
+	nunmap <buffer><C-j>
+	nunmap <buffer><C-k>
 	nunmap <buffer><leader>f
 endfunction
 
