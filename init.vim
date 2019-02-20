@@ -286,7 +286,7 @@ let g:go_version_warning = 0
 " }}}
 " Rust {{{
 " https://github.com/rust-lang/rust.vim/issues/192
-let g:rustfmt_command = "rustfmt +nightly"
+let g:rustfmt_command = "rustfmt +nightly-2019-02-08"
 let g:rustfmt_autosave = 1
 let g:rustfmt_emit_files = 1
 let g:rustfmt_fail_silently = 0
@@ -717,7 +717,7 @@ let g:ale_echo_msg_warning_str = 'WARN'
 let g:ale_echo_msg_info_str = 'INFO'
 let g:ale_echo_msg_format = '[%severity%] %s  [%linter% | %code%]'
 " Rust
-let g:ale_rust_rls_toolchain = 'nightly'
+let g:ale_rust_rls_toolchain = 'nightly-2019-02-08'
 let g:ale_rust_cargo_use_check = 1
 let g:ale_rust_cargo_check_all_targets = 1
 
@@ -931,6 +931,7 @@ let g:NERDCustomDelimiters = {
 			\ }
 
 let g:livepreview_previewer = 'open -a Preview'
+
 
 " nvim
 if has('nvim')
