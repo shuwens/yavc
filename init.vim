@@ -30,6 +30,7 @@ Plug 'terryma/vim-multiple-cursors'
 " GUI enhancements
 " ----------------
 Plug 'machakann/vim-highlightedyank'
+ Plug 'andymass/vim-matchup'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'Yggdroot/indentLine'
@@ -62,11 +63,6 @@ Plug 'junegunn/vader.vim'
 Plug 'ncm2/ncm2-bufword'
 Plug 'ncm2/ncm2-tmux'
 Plug 'ncm2/ncm2-path'
-" snippet
-Plug 'Shougo/neosnippet.vim'
-Plug 'ncm2/ncm2-neosnippet'
-Plug 'Shougo/neosnippet-snippets'
-
 " Showing function signature and inline doc.
 Plug 'Shougo/echodoc.vim'
 
@@ -90,8 +86,6 @@ Plug 'dag/vim-fish'
 Plug 'jceb/vim-orgmode'
 Plug 'octol/vim-cpp-enhanced-highlight'
 Plug 'eagletmt/coqtop-vim'
-"Plug 'mattn/webapi-vim'
-"Plug 'junegunn/vader.vim'
 Plug 'godlygeek/tabular'
 Plug 'plasticboy/vim-markdown'
 
@@ -233,46 +227,16 @@ nnoremap <leader>o <C-O>
 ""nnoremap <leader>/ <C-O>
 " }}}
 " Completion {{{
+" Completion
 autocmd BufEnter * call ncm2#enable_for_buffer()
 set completeopt=noinsert,menuone,noselect
-" suppress the annoying 'match x of y', 'The only match' and 'Pattern not
-" found' messages
-set shortmess+=c
-
-" CTRL-C doesn't trigger the InsertLeave autocmd . map to <ESC> instead.
-inoremap <c-c> <ESC>
-
-" When the <Enter> key is pressed while the popup menu is visible, it only
-" hides the menu. Use this mapping to close the menu and also start a new
-" line.
-inoremap <expr> <CR> (pumvisible() ? "\<c-y>\<cr>" : "\<CR>")
-
-" Use <TAB> to select the popup menu:
-inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
-inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-
-" wrap existing omnifunc
-" Note that omnifunc does not run in background and may probably block the
-" editor. If you don't want to be blocked by omnifunc too often, you could
-" add 180ms delay before the omni wrapper:
-"  'on_complete': ['ncm2#on_complete#delay', 180,
-"               \ 'ncm2#on_complete#omni', 'csscomplete#CompleteCSS'],
-au User Ncm2Plugin call ncm2#register_source({
-			\ 'name' : 'css',
-			\ 'priority': 9,
-			\ 'subscope_enable': 1,
-			\ 'scope': ['css','scss'],
-			\ 'mark': 'css',
-			\ 'word_pattern': '[\w\-]+',
-			\ 'complete_pattern': ':\s*',
-			\ 'on_complete': ['ncm2#on_complete#omni', 'csscomplete#CompleteCSS'],
-			\ })
-
 " tab to select
 " and don't hijack my enter key
-""inoremap <expr><Tab> (pumvisible()?(empty(v:completed_item)?"\<C-n>":"\<C-y>"):"\<Tab>")
-""inoremap <expr><CR> (pumvisible()?(empty(v:completed_item)?"\<CR>\<CR>":"\<C-y>"):"\<CR>")
-inoremap <silent> <expr> <CR> ncm2_neosnippet#expand_or("\<CR>", 'n')
+inoremap <expr><Tab> (pumvisible()?(empty(v:completed_item)?"\<C-n>":"\<C-y>"):"\<Tab>")
+inoremap <expr><CR> (pumvisible()?(empty(v:completed_item)?"\<CR>\<CR>":"\<C-y>"):"\<CR>")
+" }}}
+" echodoc {{{
+let g:echodoc_enable_at_startup = 1
 " }}}
 " Golang {{{
 autocmd FileType go nmap <leader>t <Plug>(go-test)
@@ -927,7 +891,7 @@ let g:NERDCustomDelimiters = {
 			\ 'python': {'left': '#'},
 			\ 'rust': {'left': '///'},
 			\ }
-
+" Preview
 let g:livepreview_previewer = 'open -a Preview'
 
 
