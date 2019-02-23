@@ -262,7 +262,7 @@ au Filetype rust set colorcolumn=100
 autocmd FileType rust nnoremap <leader>= :'<,'>RustFmtRange<CR>
 " }}}
 " Doxygen
-let mysyntaxfile='$HOME/.config/nvim/doxygen_load.vim'
+"let mysyntaxfile='$HOME/.config/nvim/doxygen_load.vim'
 
 " ===========================================================================
 "   Editor settings
@@ -364,8 +364,10 @@ autocmd InsertEnter * :set number  " Now it is hybrid!
 autocmd InsertLeave * :set nonumber
 set diffopt+=iwhite " No whitespace in vimdiff
 " Make diffing better: https://vimways.org/2018/the-power-of-diff/
-set diffopt+=algorithm:patience
-set diffopt+=indent-heuristic
+if has("patch-8.1.0360")
+    set diffopt+=internal,algorithm:patience
+	set diffopt+=indent-heuristic
+endif
 set colorcolumn=80 " and give me a colored column
 set showcmd " Show (partial) command in status line.
 set mouse=a " Enable mouse usage (all modes) in terminals
