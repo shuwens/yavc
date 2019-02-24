@@ -291,6 +291,8 @@ let g:vim_markdown_frontmatter = 1
 set printfont=:h10
 set printencoding=utf-8
 set printoptions=paper:letter
+" Always draw sign column. Prevent buffer moving when adding/deleting sign.
+set signcolumn=yes
 
 " Settings needed for .lvimrc
 set exrc
@@ -666,13 +668,13 @@ let g:ale_fixers = {
 			\ '*': ['remove_trailing_lines', 'trim_whitespace'],
 			\ 'rust': ['rustfmt']
 			\ }
-let g:ale_sign_column_always = 1
+"let g:ale_sign_column_always = 1
 " only lint when I want
 let g:ale_lint_on_text_changed = 'never'
 let g:ale_lint_on_save = 0
 let g:ale_lint_on_enter = 0
 let g:ale_completion_enabled = 1
-let g:ale_virtualtext_cursor = 0
+"let g:ale_virtualtext_cursor = 0
 " format error msg
 let g:ale_sign_error = '✖'
 let g:ale_sign_warning = '⚠'
