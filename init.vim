@@ -26,6 +26,7 @@ Plug 'junegunn/vim-easy-align'
 Plug 'scrooloose/nerdcommenter'
 Plug 'janko-m/vim-test'
 Plug 'terryma/vim-multiple-cursors'
+Plug 'tpope/vim-speeddating'
 
 " GUI enhancements
 " ----------------
@@ -186,8 +187,8 @@ let g:localvimrc_ask = 0
 " Required for operations modifying multiple buffers like rename.
 set hidden
 let g:LanguageClient_autoStart = 1
-let g:LanguageClient_useVirtualText = 0
-let g:LanguageClient_diagnosticsEnable = 0
+let g:LanguageClient_useVirtualText = 1
+let g:LanguageClient_diagnosticsEnable = 1
 let g:LanguageClient_settingsPath = "$HOME/.config/nvim/settings.json"
 "set omnifunc=LanguageClient#complete
 let g:LanguageClient_serverCommands = {
@@ -250,7 +251,7 @@ let g:go_version_warning = 0
 " }}}
 " Rust {{{
 " https://github.com/rust-lang/rust.vim/issues/192
-let g:rustfmt_command = "rustfmt +nightly-2019-02-08"
+let g:rustfmt_command = "rustfmt +nightly"
 let g:rustfmt_autosave = 1
 let g:rustfmt_emit_files = 1
 let g:rustfmt_fail_silently = 0
@@ -674,26 +675,46 @@ let g:ale_lint_on_text_changed = 'never'
 let g:ale_lint_on_save = 0
 let g:ale_lint_on_enter = 0
 let g:ale_completion_enabled = 1
-"let g:ale_virtualtext_cursor = 0
-" format error msg
-let g:ale_sign_error = '✖'
-let g:ale_sign_warning = '⚠'
-let g:ale_sign_info = 'ℹ'
-"let g:ale_sign_info = '🛈'
-let g:ale_echo_msg_error_str = 'ERROR'
-let g:ale_echo_msg_warning_str = 'WARN'
-let g:ale_echo_msg_info_str = 'INFO'
-let g:ale_echo_msg_format = '[%severity%] %s  [%linter% | %code%]'
 " Rust
 let g:ale_rust_rls_toolchain = 'nightly'
 let g:ale_rust_cargo_use_check = 1
 let g:ale_rust_cargo_check_all_targets = 1
-
 " ALE bindings
 "nmap <silent> L <Plug>(ale_lint)
 nmap <leader>l <Plug>(ale_lint)
 nmap <silent> <C-j> <Plug>(ale_next_wrap)
 nmap <silent> <C-k> <Plug>(ale_previous_wrap)
+" don't make errors so painful to look at
+let g:LanguageClient_diagnosticsDisplay = {
+    \     1: {
+    \         "name": "Error",
+    \         "texthl": "ALEError",
+    \         "signText": "✖",
+    \         "signTexthl": "ErrorMsg",
+    \         "virtualTexthl": "WarningMsg",
+    \     },
+    \     2: {
+    \         "name": "Warning",
+    \         "texthl": "ALEWarning",
+    \         "signText": "⚠",
+    \         "signTexthl": "ALEWarningSign",
+    \         "virtualTexthl": "Todo",
+    \     },
+    \     3: {
+    \         "name": "Information",
+    \         "texthl": "ALEInfo",
+    \         "signText": "ℹ",
+    \         "signTexthl": "ALEInfoSign",
+    \         "virtualTexthl": "Todo",
+    \     },
+    \     4: {
+    \         "name": "Hint",
+    \         "texthl": "ALEInfo",
+    \         "signText": "➤",
+    \         "signTexthl": "ALEInfoSign",
+    \         "virtualTexthl": "Todo",
+    \     },
+    \ }
 " }}}
 " vim-grammarous {{{
 
