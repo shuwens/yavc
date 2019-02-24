@@ -191,7 +191,7 @@ let g:LanguageClient_diagnosticsEnable = 0
 let g:LanguageClient_settingsPath = "$HOME/.config/nvim/settings.json"
 "set omnifunc=LanguageClient#complete
 let g:LanguageClient_serverCommands = {
-			\ 'rust': ['$HOME/.cargo/bin/rustup', 'run', 'nightly-2019-02-08', 'rls'],
+			\ 'rust': ['$HOME/.cargo/bin/rustup', 'run', 'nightly', 'rls'],
 			\ 'javascript': ['javascript-typescript-stdio'],
 			\ 'javascript.jsx': ['tcp://127.0.0.1:2089'],
 			\ 'python': ['pyls'],
@@ -683,7 +683,7 @@ let g:ale_echo_msg_warning_str = 'WARN'
 let g:ale_echo_msg_info_str = 'INFO'
 let g:ale_echo_msg_format = '[%severity%] %s  [%linter% | %code%]'
 " Rust
-let g:ale_rust_rls_toolchain = 'nightly-2019-02-08'
+let g:ale_rust_rls_toolchain = 'nightly'
 let g:ale_rust_cargo_use_check = 1
 let g:ale_rust_cargo_check_all_targets = 1
 
