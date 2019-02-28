@@ -31,7 +31,7 @@ Plug 'tpope/vim-speeddating'
 " GUI enhancements
 " ----------------
 Plug 'machakann/vim-highlightedyank'
- Plug 'andymass/vim-matchup'
+Plug 'andymass/vim-matchup'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'Yggdroot/indentLine'
@@ -44,17 +44,17 @@ Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'airblade/vim-rooter'
 Plug 'junegunn/fzf.vim'
 if !empty(glob("/usr/local/opt/fzf"))
-	Plug '/usr/local/opt/fzf'
+    Plug '/usr/local/opt/fzf'
 else
-	Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --bin' }
+    Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --bin' }
 endif
 
 " Semantic language support
 " -------------------------
 Plug 'autozimu/LanguageClient-neovim', {
-			\ 'branch': 'next',
-			\ 'do': 'bash install.sh',
-			\ }
+	    \ 'branch': 'next',
+	    \ 'do': 'bash install.sh',
+	    \ }
 Plug 'w0rp/ale'
 
 " Completion plugins
@@ -89,6 +89,7 @@ Plug 'octol/vim-cpp-enhanced-highlight'
 Plug 'eagletmt/coqtop-vim'
 Plug 'godlygeek/tabular'
 Plug 'plasticboy/vim-markdown'
+Plug 'arakashic/chromatica.nvim'
 
 " Python
 Plug 'roxma/python-support.nvim'
@@ -114,8 +115,8 @@ Plug 'xuhdev/vim-latex-live-preview', { 'for': 'tex' }
 
 " Color
 if !isdirectory("$HOME/dev/others/base16")
-	"Plug ' mhartington/oceanic-next'
-	Plug 'chriskempson/base16-vim'
+    "Plug ' mhartington/oceanic-next'
+    Plug 'chriskempson/base16-vim'
 endif
 ""Plug 'google/vim-colorscheme-primary'
 ""Plug 'farfanoide/vim-facebook'
@@ -134,28 +135,28 @@ call plug#end()
 runtime macros/matchit.vim
 
 if has('nvim')
-	set guicursor=n-v-c:block-Cursor/lCursor-blinkon0,i-ci:ver25-Cursor/lCursor,r-cr:hor20-Cursor/lCursor
-	set inccommand=nosplit
-	noremap <C-q> :confirm qall<CR>
+    set guicursor=n-v-c:block-Cursor/lCursor-blinkon0,i-ci:ver25-Cursor/lCursor,r-cr:hor20-Cursor/lCursor
+    set inccommand=nosplit
+    noremap <C-q> :confirm qall<CR>
 end
 
 if !has('gui_running')
-	set t_Co=256
+    set t_Co=256
 endif
 
 " Plugin settings
 let g:secure_modelines_allowed_items = [
-			\ "textwidth",   "tw",
-			\ "softtabstop", "sts",
-			\ "tabstop",     "ts",
-			\ "shiftwidth",  "sw",
-			\ "expandtab",   "et",   "noexpandtab", "noet",
-			\ "filetype",    "ft",
-			\ "foldmethod",  "fdm",
-			\ "readonly",    "ro",   "noreadonly", "noro",
-			\ "rightleft",   "rl",   "norightleft", "norl",
-			\ "colorcolumn"
-			\ ]
+	    \ "textwidth",   "tw",
+	    \ "softtabstop", "sts",
+	    \ "tabstop",     "ts",
+	    \ "shiftwidth",  "sw",
+	    \ "expandtab",   "et",   "noexpandtab", "noet",
+	    \ "filetype",    "ft",
+	    \ "foldmethod",  "fdm",
+	    \ "readonly",    "ro",   "noreadonly", "noro",
+	    \ "rightleft",   "rl",   "norightleft", "norl",
+	    \ "colorcolumn"
+	    \ ]
 
 " Base16
 let base16colorspace=256
@@ -169,11 +170,11 @@ let g:airline_theme='base16_atelierdune'
 
 " from http://sheerun.net/2014/03/21/how-to-boost-your-vim-productivity/
 if executable('ag')
-	set grepprg=ag\ --nogroup\ --nocolor
+    set grepprg=ag\ --nogroup\ --nocolor
 endif
 if executable('rg')
-	set grepprg=rg\ --no-heading\ --vimgrep
-	set grepformat=%f:%l:%c:%m
+    set grepprg=rg\ --no-heading\ --vimgrep
+    set grepformat=%f:%l:%c:%m
 endif
 
 " Javascript
@@ -192,14 +193,13 @@ let g:LanguageClient_diagnosticsEnable = 1
 let g:LanguageClient_settingsPath = "$HOME/.config/nvim/settings.json"
 "set omnifunc=LanguageClient#complete
 let g:LanguageClient_serverCommands = {
-			\ 'rust': ['$HOME/.cargo/bin/rustup', 'run', 'nightly', 'rls'],
-			\ 'javascript': ['javascript-typescript-stdio'],
-			\ 'javascript.jsx': ['tcp://127.0.0.1:2089'],
-			\ 'python': ['pyls'],
-			\ }
+	    \ 'rust': ['$HOME/.cargo/bin/rustup', 'run', 'nightly', 'rls'],
+	    \ 'go': ['bingo'],
+	    \ 'python': ['pyls'],
+	    \ }
 let g:LanguageClient_rootMarkers = {
-			\ 'go': ['.git', 'go.mod'],
-			\ }
+	    \ 'go': ['.git', 'go.mod'],
+	    \ }
 " LSP diagnosis
 "let g:LanguageClient_loggingLevel = 'INFO'
 "let g:LanguageClient_loggingFile =  expand('~/.local/share/nvim/LanguageClient.log')
@@ -278,12 +278,12 @@ set hidden
 set nowrap
 set nojoinspaces
 if (match($TERM, "-256color") != -1) && (match($TERM, "tmux-256color") == -1)
-	" screen does not (yet) support truecolor
-	set termguicolors
+    " screen does not (yet) support truecolor
+    set termguicolors
 endif
 " for the vagrant linux box
 if (match($TERM, "xterm") != -1)
-	set termguicolors
+    set termguicolors
 endif
 let g:sneak#s_next = 1
 let g:vim_markdown_new_list_item_indent = 0
@@ -369,7 +369,7 @@ set diffopt+=iwhite " No whitespace in vimdiff
 " Make diffing better: https://vimways.org/2018/the-power-of-diff/
 if has("patch-8.1.0360")
     set diffopt+=internal,algorithm:patience
-	set diffopt+=indent-heuristic
+    set diffopt+=indent-heuristic
 endif
 set colorcolumn=80 " and give me a colored column
 set showcmd " Show (partial) command in status line.
@@ -445,14 +445,14 @@ noremap <leader>a :Rg<CR>
 " Command for git grep
 " - fzf#vim#grep(command, with_column, [options], [fullscreen])
 command! -bang -nargs=* GGrep
-			\ call fzf#vim#grep(
-			\   'git grep --line-number '.shellescape(<q-args>), 0,
-			\   { 'dir': systemlist('git rev-parse --show-toplevel')[0] }, <bang>0)
+	    \ call fzf#vim#grep(
+	    \   'git grep --line-number '.shellescape(<q-args>), 0,
+	    \   { 'dir': systemlist('git rev-parse --show-toplevel')[0] }, <bang>0)
 
 " Override Colors command. You can safely do this in your .vimrc as fzf.vim
 " will not override existing commands.
 command! -bang Colors
-			\ call fzf#vim#colors({'left': '15%', 'options': '--reverse --margin 30%,0'}, <bang>0)
+	    \ call fzf#vim#colors({'left': '15%', 'options': '--reverse --margin 30%,0'}, <bang>0)
 
 " Augmenting Ag command using fzf#vim#with_preview function
 "   * fzf#vim#with_preview([[options], [preview window], [toggle keys...]])
@@ -465,30 +465,30 @@ command! -bang Colors
 "   :Ag  - Start fzf with hidden preview window that can be enabled with "?" key
 "   :Ag! - Start fzf in fullscreen and display the preview window above
 command! -bang -nargs=* Ag
-			\ call fzf#vim#ag(<q-args>,
-			\                 <bang>0 ? fzf#vim#with_preview('up:60%')
-			\                         : fzf#vim#with_preview('right:50%:hidden', '?'),
-			\                 <bang>0)
+	    \ call fzf#vim#ag(<q-args>,
+	    \                 <bang>0 ? fzf#vim#with_preview('up:60%')
+	    \                         : fzf#vim#with_preview('right:50%:hidden', '?'),
+	    \                 <bang>0)
 
 " Similarly, we can apply it to fzf#vim#grep. To use ripgrep instead of ag:
 command! -bang -nargs=* Rg
-			\ call fzf#vim#grep(
-			\   'rg --column --line-number --no-heading --color=always --smart-case '.shellescape(<q-args>), 1,
-			\   <bang>0 ? fzf#vim#with_preview('up:60%')
-			\           : fzf#vim#with_preview('right:50%:hidden', '?'),
-			\   <bang>0)
+	    \ call fzf#vim#grep(
+	    \   'rg --column --line-number --no-heading --color=always --smart-case '.shellescape(<q-args>), 1,
+	    \   <bang>0 ? fzf#vim#with_preview('up:60%')
+	    \           : fzf#vim#with_preview('right:50%:hidden', '?'),
+	    \   <bang>0)
 
 " Likewise, Files command with preview window
 command! -bang -nargs=? -complete=dir Files
-			\ call fzf#vim#files(<q-args>, fzf#vim#with_preview(), <bang>0)
+	    \ call fzf#vim#files(<q-args>, fzf#vim#with_preview(), <bang>0)
 
 " TODO(jethros): write a GitFiles method that start fzf in full screen and
 " display GFiles
 command! -bang -nargs=? GitFiles
-			\ call fzf#vim#gitfiles('?',
-			\                 <bang>0 ? fzf#vim#with_preview('up:60%')
-			\                         : fzf#vim#with_preview('up:60%:hidden', '?'),
-			\                 <bang>0)
+	    \ call fzf#vim#gitfiles('?',
+	    \                 <bang>0 ? fzf#vim#with_preview('up:60%')
+	    \                         : fzf#vim#with_preview('up:60%:hidden', '?'),
+	    \                 <bang>0)
 " }}}
 
 " Open new file adjacent to current file
@@ -581,8 +581,8 @@ autocmd InsertLeave * set nopaste
 
 " Jump to last edit position on opening file
 if has("autocmd")
-	" https://stackoverflow.com/questions/31449496/vim-ignore-specifc-file-in-autocommand
-	au BufReadPost * if expand('%:p') !~# '\m/\.git/' && line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
+    " https://stackoverflow.com/questions/31449496/vim-ignore-specifc-file-in-autocommand
+    au BufReadPost * if expand('%:p') !~# '\m/\.git/' && line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
 endif
 
 " Auto-make less files on save
@@ -609,27 +609,27 @@ autocmd Filetype html,xml,xsl,php source $HOME/.config/nvim/scripts/closetag.vim
 "
 " https://tex.stackexchange.com/questions/1548/intelligent-paragraph-reflowing-in-vim
 fun! TeX_fmt()
-	if (getline(".") != "")
-		let save_cursor = getpos(".")
-		let op_wrapscan = &wrapscan
-		set nowrapscan
-		let par_begin = '^\(%D\)\=\s*\($\||\\begin\|\\end\|\\[\|\\]\|\\\(sub\)*section\>\|\\item\>\|\\NC\>\|\\blank\>\|\\noindent\>\)'
-		let par_end   = '^\(%D\)\=\s*\($\||\\begin\|\\end\|\\[\|\\]\|\\place\|\\\(sub\)*section\>\|\\item\>\|\\NC\>\|\\blank\>\)'
-		try
-			exe '?'.par_begin.'?+'
-		catch /E384/
-			1
-		endtry
-		norm V
-		try
-			exe '/'.par_end.'/-'
-		catch /E385/
-			$
-		endtry
-		norm gq
-		let &wrapscan = op_wrapscan
-		call setpos('.', save_cursor)
-	endif
+    if (getline(".") != "")
+	let save_cursor = getpos(".")
+	let op_wrapscan = &wrapscan
+	set nowrapscan
+	let par_begin = '^\(%D\)\=\s*\($\||\\begin\|\\end\|\\[\|\\]\|\\\(sub\)*section\>\|\\item\>\|\\NC\>\|\\blank\>\|\\noindent\>\)'
+	let par_end   = '^\(%D\)\=\s*\($\||\\begin\|\\end\|\\[\|\\]\|\\place\|\\\(sub\)*section\>\|\\item\>\|\\NC\>\|\\blank\>\)'
+	try
+	    exe '?'.par_begin.'?+'
+	catch /E384/
+	    1
+	endtry
+	norm V
+	try
+	    exe '/'.par_end.'/-'
+	catch /E385/
+	    $
+	endtry
+	norm gq
+	let &wrapscan = op_wrapscan
+	call setpos('.', save_cursor)
+    endif
 endfun
 " }}}
 "autocmd Filetype tex set ts=2 sw=2 et
@@ -639,9 +639,9 @@ autocmd Filetype org nmap Q :call TeX_fmt()<CR>
 
 " vim spell
 for d in glob('~/.config/nvim/spell/*.add', 1, 1)
-	if filereadable(d) && (!filereadable(d . '.spl') || getftime(d) > getftime(d . '.spl'))
-		exec 'mkspell! ' . fnameescape(d)
-	endif
+    if filereadable(d) && (!filereadable(d . '.spl') || getftime(d) > getftime(d . '.spl'))
+	exec 'mkspell! ' . fnameescape(d)
+    endif
 endfor
 
 " ===========================================================================
@@ -662,13 +662,12 @@ let g:airline#extensions#ale#enabled = 1
 highlight ALEErrorSign ctermfg=9
 " lint should be handled by LSP, but seems like that Rust is bit broken
 let g:ale_linters = {
-			\ 'LaTeX': ['proselint',],
-			\ 'rust': ['rls','cargo',],
-			\ }
+	    \ 'LaTeX': ['proselint',],
+	    \ }
 let g:ale_fixers = {
-			\ '*': ['remove_trailing_lines', 'trim_whitespace'],
-			\ 'rust': ['rustfmt']
-			\ }
+	    \ '*': ['remove_trailing_lines', 'trim_whitespace'],
+	    \ 'rust': ['rustfmt']
+	    \ }
 "let g:ale_sign_column_always = 1
 " only lint when I want
 let g:ale_lint_on_text_changed = 'never'
@@ -686,35 +685,35 @@ nmap <silent> <C-j> <Plug>(ale_next_wrap)
 nmap <silent> <C-k> <Plug>(ale_previous_wrap)
 " don't make errors so painful to look at
 let g:LanguageClient_diagnosticsDisplay = {
-    \     1: {
-    \         "name": "Error",
-    \         "texthl": "ALEError",
-    \         "signText": "✖",
-    \         "signTexthl": "ErrorMsg",
-    \         "virtualTexthl": "WarningMsg",
-    \     },
-    \     2: {
-    \         "name": "Warning",
-    \         "texthl": "ALEWarning",
-    \         "signText": "⚠",
-    \         "signTexthl": "ALEWarningSign",
-    \         "virtualTexthl": "Todo",
-    \     },
-    \     3: {
-    \         "name": "Information",
-    \         "texthl": "ALEInfo",
-    \         "signText": "ℹ",
-    \         "signTexthl": "ALEInfoSign",
-    \         "virtualTexthl": "Todo",
-    \     },
-    \     4: {
-    \         "name": "Hint",
-    \         "texthl": "ALEInfo",
-    \         "signText": "➤",
-    \         "signTexthl": "ALEInfoSign",
-    \         "virtualTexthl": "Todo",
-    \     },
-    \ }
+	    \     1: {
+	    \         "name": "Error",
+	    \         "texthl": "ALEError",
+	    \         "signText": "✖",
+	    \         "signTexthl": "ErrorMsg",
+	    \         "virtualTexthl": "WarningMsg",
+	    \     },
+	    \     2: {
+	    \         "name": "Warning",
+	    \         "texthl": "ALEWarning",
+	    \         "signText": "⚠",
+	    \         "signTexthl": "ALEWarningSign",
+	    \         "virtualTexthl": "Todo",
+	    \     },
+	    \     3: {
+	    \         "name": "Information",
+	    \         "texthl": "ALEInfo",
+	    \         "signText": "ℹ",
+	    \         "signTexthl": "ALEInfoSign",
+	    \         "virtualTexthl": "Todo",
+	    \     },
+	    \     4: {
+	    \         "name": "Hint",
+	    \         "texthl": "ALEInfo",
+	    \         "signText": "➤",
+	    \         "signTexthl": "ALEInfoSign",
+	    \         "virtualTexthl": "Todo",
+	    \     },
+	    \ }
 " }}}
 " vim-grammarous {{{
 
@@ -722,23 +721,23 @@ let g:LanguageClient_diagnosticsDisplay = {
 "let g:grammarous#enable_spell_check = 1
 
 let g:grammarous#disabled_rules = {
-			\ '*' : ['WHITESPACE_RULE', 'EN_QUOTES'],
-			\ 'help' : ['WHITESPACE_RULE', 'EN_QUOTES', 'SENTENCE_WHITESPACE', 'UPPERCASE_SENTENCE_START'],
-			\ }
+	    \ '*' : ['WHITESPACE_RULE', 'EN_QUOTES'],
+	    \ 'help' : ['WHITESPACE_RULE', 'EN_QUOTES', 'SENTENCE_WHITESPACE', 'UPPERCASE_SENTENCE_START'],
+	    \ }
 " TODO: imrpovement for LaTeX files
 
 let g:grammarous#hooks = {}
 function! g:grammarous#hooks.on_check(errs) abort
-	nmap <buffer><C-i> <Plug>(grammarous-move-to-info-window)
-	nmap <buffer><C-j> <Plug>(grammarous-move-to-next-error)
-	nmap <buffer><C-k> <Plug>(grammarous-move-to-previous-error)
-	nmap <buffer><leader>f <Plug>(grammarous-fixit)
-	nnoremap <buffer><C-f> <Plug>(grammarous-fixit)
+    nmap <buffer><C-i> <Plug>(grammarous-move-to-info-window)
+    nmap <buffer><C-j> <Plug>(grammarous-move-to-next-error)
+    nmap <buffer><C-k> <Plug>(grammarous-move-to-previous-error)
+    nmap <buffer><leader>f <Plug>(grammarous-fixit)
+    nnoremap <buffer><C-f> <Plug>(grammarous-fixit)
 endfunction
 function! g:grammarous#hooks.on_reset(errs) abort
-	nunmap <buffer><C-j>
-	nunmap <buffer><C-k>
-	nunmap <buffer><leader>f
+    nunmap <buffer><C-j>
+    nunmap <buffer><C-k>
+    nunmap <buffer><leader>f
 endfunction
 
 "nnoremap <buffer> ]g <Plug>(grammarous-move-to-next-error)
@@ -763,13 +762,13 @@ let g:black_linelength = 80
 autocmd BufRead,BufNewFile $HOME/dev/projects/** let b:DevPythonFile=1
 autocmd BufWritePre *.py call DevPythonFormatter()
 fun! DevPythonFormatter()
-	if !exists('b:DevPythonFile')
-		return
-	endif
-	" I use black, not autopep8 or yapf for now... I wonder the best practise
-	execute ':Black'
-	ImpSort!
-	call DeleteTrailingWS()
+    if !exists('b:DevPythonFile')
+	return
+    endif
+    " I use black, not autopep8 or yapf for now... I wonder the best practise
+    execute ':Black'
+    ImpSort!
+    call DeleteTrailingWS()
 endfun
 " }}}
 "
@@ -789,10 +788,10 @@ vmap <M-j> :m'>+<cr>`<my`>mzgv`yo`z
 vmap <M-k> :m'<-2<cr>`>my`<mzgv`yo`z
 
 if has("mac") || has("macunix")
-	nmap <D-j> <M-j>
-	nmap <D-k> <M-k>
-	vmap <D-j> <M-j>
-	vmap <D-k> <M-k>
+    nmap <D-j> <M-j>
+    nmap <D-k> <M-k>
+    vmap <D-j> <M-j>
+    vmap <D-k> <M-k>
 endif
 " }}}
 
@@ -806,9 +805,9 @@ let g:strip_whitespace_on_save=0
 
 " Delete trailing white space on save, useful for Python and CoffeeScript ;)
 func! DeleteTrailingWS()
-	exe "normal mz"
-	%s/\s\+$//ge
-	exe "normal `z"
+    exe "normal mz"
+    %s/\s\+$//ge
+    exe "normal `z"
 endfunc
 "autocmd BufWrite *.py :call DeleteTrailingWS()
 autocmd BufWrite *.coffee :call DeleteTrailingWS()
@@ -851,11 +850,11 @@ nnoremap <silent> dg :diffget<CR>
 " }}}
 " vim lexical {{{
 augroup lexical
-	autocmd!
-	"autocmd FileType markdown,mkd call lexical#init()
-	"autocmd FileType textile call lexical#init()
-	"autocmd FileType tex call lexical#init()
-	"autocmd FileType text call lexical#init({ 'spell': 0 })
+    autocmd!
+    "autocmd FileType markdown,mkd call lexical#init()
+    "autocmd FileType textile call lexical#init()
+    "autocmd FileType tex call lexical#init()
+    "autocmd FileType text call lexical#init({ 'spell': 0 })
 augroup END
 "let g:lexical#thesaurus = ['~/.config/nvim/thesaurus/mthesaur.txt',]
 let g:lexical#spellfile = ['~/.config/nvim/spell/en.utf-8.add',]
@@ -911,16 +910,16 @@ let g:NERDTrimTrailingWhitespace = 1
 let g:NERDToggleCheckAllLines = 1
 " Add your own custom formats or override the defaults
 let g:NERDCustomDelimiters = {
-			\ 'c': {'left': '//'},
-			\ 'cpp': {'left': '//'},
-			\ 'python': {'left': '#'},
-			\ 'rust': {'left': '///'},
-			\ }
+	    \ 'c': {'left': '//'},
+	    \ 'cpp': {'left': '//'},
+	    \ 'python': {'left': '#'},
+	    \ 'rust': {'left': '///'},
+	    \ }
 " Preview
 let g:livepreview_previewer = 'open -a Preview'
 
 
 " nvim
 if has('nvim')
-	runtime! plugin/python_setup.vim
+    runtime! plugin/python_setup.vim
 endif
