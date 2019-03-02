@@ -32,8 +32,9 @@ Plug 'tpope/vim-speeddating'
 " ----------------
 Plug 'machakann/vim-highlightedyank'
 Plug 'andymass/vim-matchup'
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
+"Plug 'vim-airline/vim-airline'
+"Plug 'vim-airline/vim-airline-themes'
+Plug 'itchyny/lightline.vim'
 Plug 'Yggdroot/indentLine'
 Plug 'jaxbot/semantic-highlight.vim'
 Plug 'scrooloose/nerdtree'
@@ -148,10 +149,32 @@ let base16colorspace=256
 let g:base16_shell_path="$HOME/dev/others/base16/shell/scripts/"
 " }}}
 
+" Status Line {{{
 " Airline
-let g:airline#extensions#tabline#formatter = 'default'
-let g:airline_powerline_fonts = 0 " sadly noto sans mono is not patched yet...
-let g:airline_theme='base16_atelierdune'
+"let g:airline#extensions#tabline#formatter = 'default'
+"let g:airline_powerline_fonts = 0 " sadly noto sans mono is not patched yet...
+"let g:airline_theme='base16_atelierdune'
+" Lightline
+let g:lightline = {
+      \ 'colorscheme': 'one',
+      \ 'active': {
+      \ 'left': [ [ 'mode', 'paste' ],
+      \           [ 'gitbranch', 'readonly', 'filename', 'modified' ] ],
+      \  'right': [
+      \             ['teststatus'], ['lineinfo'],
+      \             ['percent'], ['fileformat', 'fileencoding', 'filetype']
+      \           ]
+      \ },
+      \ 'component_function': {
+      \   'gitbranch': 'fugitive#head',
+      \   'filename': 'LightlineFilename',
+      \   'teststatus': 'TestStatus',
+      \ },
+\ }
+function! LightlineFilename()
+  return expand('%:t') !=# '' ? @% : '[No Name]'
+endfunction
+" }}}
 
 " from http://sheerun.net/2014/03/21/how-to-boost-your-vim-productivity/
 if executable('ag')
@@ -869,7 +892,7 @@ autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isT
 "let g:polyglot_disabled = ['org']
 
 " rainbow
-let g:rainbow_active = 1 "0 if you want to enable it later via :RainbowToggle
+"let g:rainbow_active = 1 "0 if you want to enable it later via :RainbowToggle
 
 " gitgutter
 let g:gitgutter_enabled = 0
@@ -902,6 +925,72 @@ let g:NERDCustomDelimiters = {
 	    \ }
 " Preview
 let g:livepreview_previewer = 'open -a Preview'
+
+" =============================================================================
+" # RUN TESTS IN BACKGROUND
+" =============================================================================
+let g:TestStatus=-1
+function! TestStatus()
+  if &filetype != "rust"
+    return ""
+  elseif g:TestStatus == -1
+    return "[Test: N/A]"
+  elseif g:TestStatus == 0
+    return "[Test: OK.]"
+  else
+    return "[Test: ERR]"
+  endif
+endfunction
+function! s:BgCmdCB(job_id, data, event)
+    call writefile([join(a:data)], g:bgCmdOutput, 'a')
+endfunction
+function! s:BgCmdExit(job_id, data, status)
+  let l:bufno = bufwinnr("__Bg_Res__")
+  echo 'Running' g:bgCmd 'in background... Done.'
+  let g:TestStatus=a:data
+  " Change status line to show errors
+  if a:data > 0
+    hi statusline guibg=DarkRed ctermfg=1 guifg=Black ctermbg=0
+    if l:bufno == -1
+      below 8split __Bg_Res__
+      let l:bufno = bufwinnr("__Bg_Res__")
+    else
+      execute bufno . "wincmd w"
+    endif
+    normal! ggdG
+    setlocal buftype=nofile
+    call append(0,readfile(g:bgCmdOutput))
+    normal! gg
+    execute "-1 wincmd w"
+  else
+    " Restore status line
+    hi statusline term=bold,reverse cterm=bold ctermfg=233 ctermbg=66 gui=bold guifg=#1c1c1c guibg=#5f8787
+    " Close tests result window
+    if l:bufno != -1
+      execute bufno . "wincmd w"
+      close
+    endif
+  endif
+  unlet g:bgCmdOutput
+endfunction
+
+function! RunBgCmd(command)
+  let g:bgCmd = a:command
+  if exists('g:bgCmdOutput')
+    echo 'Task' g:bgCmd 'running in background'
+  else
+    echo 'Running' g:bgCmd 'in background'
+    let g:bgCmdOutput = tempname()
+    call jobstart(a:command,{
+      \'on_stderr': function('s:BgCmdCB'),
+      \'on_stdout': function('s:BgCmdCB'),
+      \'on_exit': function('s:BgCmdExit')})
+  endif
+endfunction
+
+command! -nargs=+ -complete=shellcmd RunBg call RunBgCmd(<q-args>)
+autocmd FileType rust nmap <leader>t :RunBg cargo test<CR>
+autocmd FileType rust nmap <leader>tc :RunBg cargo test -- --nocapture<CR>
 
 
 " nvim
