@@ -109,27 +109,12 @@ Plug 'rust-lang/rust.vim'
 " LaTeX
 Plug 'rhysd/vim-grammarous'
 Plug 'xuhdev/vim-latex-live-preview', { 'for': 'tex' }
-"Plug 'reedes/vim-lexical' " No?
-"Plug 'lervag/vimtex' " maybe I don't actually need it
-"Plug 'LaTeX-Box-Team/LaTeX-Box'
 
 " Color
 if !isdirectory("$HOME/dev/others/base16")
     "Plug ' mhartington/oceanic-next'
     Plug 'chriskempson/base16-vim'
 endif
-""Plug 'google/vim-colorscheme-primary'
-""Plug 'farfanoide/vim-facebook'
-""Plug 'fcpg/vim-farout'
-
-""Plug 'tpope/vim-unimpaired'
-"Plug 'tpope/vim-sensible'
-""Plug 'tpope/vim-endwise'
-
-""Plug 'airblade/vim-gitgutter'
-""Plug 'ap/vim-buftabline'
-""Plug 'Xuyuanp/nerdtree-git-plugin'
-
 call plug#end()
 
 runtime macros/matchit.vim
