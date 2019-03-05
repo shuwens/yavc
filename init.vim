@@ -19,7 +19,7 @@ Plug 'ciaranm/securemodelines'
 Plug 'vim-scripts/localvimrc'
 Plug 'Shougo/vimproc.vim', {'do' : 'make'}
 Plug 'tpope/vim-fugitive'
-"Plug 'sheerun/vim-polyglot'   " I don't need this and it is buggy
+Plug 'sheerun/vim-polyglot'   " I don't need this and it is buggy
 Plug 'tpope/vim-sleuth'  " Heuristically set buffer options
 Plug 'ntpeters/vim-better-whitespace' " Remove trailing spaces
 Plug 'junegunn/vim-easy-align'
@@ -45,17 +45,13 @@ Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'airblade/vim-rooter'
 Plug 'junegunn/fzf.vim'
 if !empty(glob("/usr/local/opt/fzf"))
-    Plug '/usr/local/opt/fzf'
+  Plug '/usr/local/opt/fzf'
 else
-    Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --bin' }
+  Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --bin' }
 endif
 
 " Semantic language support
 " -------------------------
-Plug 'autozimu/LanguageClient-neovim', {
-	    \ 'branch': 'next',
-	    \ 'do': 'bash install.sh',
-	    \ }
 Plug 'w0rp/ale'
 
 " Completion plugins
@@ -113,36 +109,36 @@ Plug 'xuhdev/vim-latex-live-preview', { 'for': 'tex' }
 
 " Color
 if !isdirectory("$HOME/dev/others/base16")
-    "Plug ' mhartington/oceanic-next'
-    Plug 'chriskempson/base16-vim'
+  "Plug ' mhartington/oceanic-next'
+  Plug 'chriskempson/base16-vim'
 endif
 call plug#end()
 
 runtime macros/matchit.vim
 
 if has('nvim')
-    set guicursor=n-v-c:block-Cursor/lCursor-blinkon0,i-ci:ver25-Cursor/lCursor,r-cr:hor20-Cursor/lCursor
-    set inccommand=nosplit
-    noremap <C-q> :confirm qall<CR>
+  set guicursor=n-v-c:block-Cursor/lCursor-blinkon0,i-ci:ver25-Cursor/lCursor,r-cr:hor20-Cursor/lCursor
+  set inccommand=nosplit
+  noremap <C-q> :confirm qall<CR>
 end
 
 if !has('gui_running')
-    set t_Co=256
+  set t_Co=256
 endif
 
 " Plugin settings
 let g:secure_modelines_allowed_items = [
-	    \ "textwidth",   "tw",
-	    \ "softtabstop", "sts",
-	    \ "tabstop",     "ts",
-	    \ "shiftwidth",  "sw",
-	    \ "expandtab",   "et",   "noexpandtab", "noet",
-	    \ "filetype",    "ft",
-	    \ "foldmethod",  "fdm",
-	    \ "readonly",    "ro",   "noreadonly", "noro",
-	    \ "rightleft",   "rl",   "norightleft", "norl",
-	    \ "colorcolumn"
-	    \ ]
+      \ "textwidth",   "tw",
+      \ "softtabstop", "sts",
+      \ "tabstop",     "ts",
+      \ "shiftwidth",  "sw",
+      \ "expandtab",   "et",   "noexpandtab", "noet",
+      \ "filetype",    "ft",
+      \ "foldmethod",  "fdm",
+      \ "readonly",    "ro",   "noreadonly", "noro",
+      \ "rightleft",   "rl",   "norightleft", "norl",
+      \ "colorcolumn"
+      \ ]
 
 " Base16
 let base16colorspace=256
@@ -156,7 +152,7 @@ let g:base16_shell_path="$HOME/dev/others/base16/shell/scripts/"
 "let g:airline_theme='base16_atelierdune'
 " Lightline
 let g:lightline = {
-      \ 'colorscheme': 'one',
+      \ 'colorscheme': 'jellybeans',
       \ 'active': {
       \ 'left': [ [ 'mode', 'paste' ],
       \           [ 'gitbranch', 'readonly', 'filename', 'modified' ] ],
@@ -170,7 +166,7 @@ let g:lightline = {
       \   'filename': 'LightlineFilename',
       \   'teststatus': 'TestStatus',
       \ },
-\ }
+      \ }
 function! LightlineFilename()
   return expand('%:t') !=# '' ? @% : '[No Name]'
 endfunction
@@ -178,11 +174,11 @@ endfunction
 
 " from http://sheerun.net/2014/03/21/how-to-boost-your-vim-productivity/
 if executable('ag')
-    set grepprg=ag\ --nogroup\ --nocolor
+  set grepprg=ag\ --nogroup\ --nocolor
 endif
 if executable('rg')
-    set grepprg=rg\ --no-heading\ --vimgrep
-    set grepformat=%f:%l:%c:%m
+  set grepprg=rg\ --no-heading\ --vimgrep
+  set grepformat=%f:%l:%c:%m
 endif
 
 " Javascript
@@ -191,49 +187,17 @@ let javaScript_fold=0
 " Don't confirm .lvimrc
 let g:localvimrc_ask = 0
 
-" language server protocol - LSP {{{
-"
-" Required for operations modifying multiple buffers like rename.
-set hidden
-let g:LanguageClient_autoStart = 1
-let g:LanguageClient_useVirtualText = 1
-let g:LanguageClient_diagnosticsEnable = 1
-let g:LanguageClient_settingsPath = "$HOME/.config/nvim/settings.json"
-"set omnifunc=LanguageClient#complete
-let g:LanguageClient_serverCommands = {
-	    \ 'rust': ['$HOME/.cargo/bin/rustup', 'run', 'nightly', 'rls'],
-	    \ 'go': ['bingo'],
-	    \ 'python': ['pyls'],
-	    \ }
-let g:LanguageClient_rootMarkers = {
-	    \ 'go': ['.git', 'go.mod'],
-	    \ }
-" LSP diagnosis
-"let g:LanguageClient_loggingLevel = 'INFO'
-"let g:LanguageClient_loggingFile =  expand('~/.local/share/nvim/LanguageClient.log')
-"let g:LanguageClient_serverStderr = expand('~/.local/share/nvim/LanguageServer.log')
-" }}}
 " LSP - keybindings {{{
-nnoremap <F5> :call LanguageClient_contextMenu()<CR>
-nnoremap <leader>m :call LanguageClient_contextMenu()<CR>
-nnoremap <leader>k :call LanguageClient#textDocument_hover()<CR>
-nnoremap <silent> D :call LanguageClient#textDocument_definition()<CR>
-nnoremap <silent> Z :call LanguageClient#textDocument_definition()<CR>
-nnoremap <leader>d :call LanguageClient#textDocument_definition()<CR>
-nnoremap <leader>] :call LanguageClient#textDocument_definition()<CR>
-nnoremap <silent> R :call LanguageClient#textDocument_references()<CR>
-nnoremap <leader>r :call LanguageClient#textDocument_references()<CR>
-nnoremap <silent> N :call LanguageClient#textDocument_rename()<CR>
-nnoremap <leader>n :call LanguageClient#textDocument_rename()<CR>
-nnoremap <silent> <F2> :call LanguageClient#textDocument_rename()<CR>
+"nnoremap <F5> :call LanguageClient_contextMenu()<CR>
+"nnoremap <leader>m :call LanguageClient_contextMenu()<CR>
+"nnoremap <silent> R :call LanguageClient#textDocument_references()<CR>
+"nnoremap <leader>r :call LanguageClient#textDocument_references()<CR>
+"nnoremap <silent> N :call LanguageClient#textDocument_rename()<CR>
+"nnoremap <leader>n :call LanguageClient#textDocument_rename()<CR>
+"nnoremap <silent> <F2> :call LanguageClient#textDocument_rename()<CR>
 "nnoremap <leader>r :call LanguageClient#textDocument_rename()<CR>
-nnoremap <silent> S :call LanugageClient#textDocument_documentSymbol()<CR>
-" Emacs style
-nnoremap <leader>. :call LanguageClient#textDocument_definition()<CR>
-nnoremap <leader>r :call LanguageClient#textDocument_references()<CR>
-nnoremap <leader>s :call LanugageClient#textDocument_documentSymbol()<CR>
-nnoremap <leader>o <C-O>
-""nnoremap <leader>/ <C-O>
+"nnoremap <silent> S :call LanugageClient#textDocument_documentSymbol()<CR>
+"nnoremap <leader>/ <C-O>
 " }}}
 " Completion {{{
 " Completion
@@ -270,8 +234,6 @@ au Filetype rust set colorcolumn=100
 " <leader>= reformats current tange
 autocmd FileType rust nnoremap <leader>= :'<,'>RustFmtRange<CR>
 " }}}
-" Doxygen
-"let mysyntaxfile='$HOME/.config/nvim/doxygen_load.vim'
 
 " ===========================================================================
 "   Editor settings
@@ -286,12 +248,12 @@ set hidden
 set nowrap
 set nojoinspaces
 if (match($TERM, "-256color") != -1) && (match($TERM, "tmux-256color") == -1)
-    " screen does not (yet) support truecolor
-    set termguicolors
+  " screen does not (yet) support truecolor
+  set termguicolors
 endif
 " for the vagrant linux box
 if (match($TERM, "xterm") != -1)
-    set termguicolors
+  set termguicolors
 endif
 let g:sneak#s_next = 1
 let g:vim_markdown_new_list_item_indent = 0
@@ -376,8 +338,8 @@ autocmd InsertLeave * :set nonumber
 set diffopt+=iwhite " No whitespace in vimdiff
 " Make diffing better: https://vimways.org/2018/the-power-of-diff/
 if has("patch-8.1.0360")
-    set diffopt+=internal,algorithm:patience
-    set diffopt+=indent-heuristic
+  set diffopt+=internal,algorithm:patience
+  set diffopt+=indent-heuristic
 endif
 set colorcolumn=80 " and give me a colored column
 set showcmd " Show (partial) command in status line.
@@ -453,14 +415,14 @@ noremap <leader>a :Rg<CR>
 " Command for git grep
 " - fzf#vim#grep(command, with_column, [options], [fullscreen])
 command! -bang -nargs=* GGrep
-	    \ call fzf#vim#grep(
-	    \   'git grep --line-number '.shellescape(<q-args>), 0,
-	    \   { 'dir': systemlist('git rev-parse --show-toplevel')[0] }, <bang>0)
+      \ call fzf#vim#grep(
+      \   'git grep --line-number '.shellescape(<q-args>), 0,
+      \   { 'dir': systemlist('git rev-parse --show-toplevel')[0] }, <bang>0)
 
 " Override Colors command. You can safely do this in your .vimrc as fzf.vim
 " will not override existing commands.
 command! -bang Colors
-	    \ call fzf#vim#colors({'left': '15%', 'options': '--reverse --margin 30%,0'}, <bang>0)
+      \ call fzf#vim#colors({'left': '15%', 'options': '--reverse --margin 30%,0'}, <bang>0)
 
 " Augmenting Ag command using fzf#vim#with_preview function
 "   * fzf#vim#with_preview([[options], [preview window], [toggle keys...]])
@@ -473,30 +435,30 @@ command! -bang Colors
 "   :Ag  - Start fzf with hidden preview window that can be enabled with "?" key
 "   :Ag! - Start fzf in fullscreen and display the preview window above
 command! -bang -nargs=* Ag
-	    \ call fzf#vim#ag(<q-args>,
-	    \                 <bang>0 ? fzf#vim#with_preview('up:60%')
-	    \                         : fzf#vim#with_preview('right:50%:hidden', '?'),
-	    \                 <bang>0)
+      \ call fzf#vim#ag(<q-args>,
+      \                 <bang>0 ? fzf#vim#with_preview('up:60%')
+      \                         : fzf#vim#with_preview('right:50%:hidden', '?'),
+      \                 <bang>0)
 
 " Similarly, we can apply it to fzf#vim#grep. To use ripgrep instead of ag:
 command! -bang -nargs=* Rg
-	    \ call fzf#vim#grep(
-	    \   'rg --column --line-number --no-heading --color=always --smart-case '.shellescape(<q-args>), 1,
-	    \   <bang>0 ? fzf#vim#with_preview('up:60%')
-	    \           : fzf#vim#with_preview('right:50%:hidden', '?'),
-	    \   <bang>0)
+      \ call fzf#vim#grep(
+      \   'rg --column --line-number --no-heading --color=always --smart-case '.shellescape(<q-args>), 1,
+      \   <bang>0 ? fzf#vim#with_preview('up:60%')
+      \           : fzf#vim#with_preview('right:50%:hidden', '?'),
+      \   <bang>0)
 
 " Likewise, Files command with preview window
 command! -bang -nargs=? -complete=dir Files
-	    \ call fzf#vim#files(<q-args>, fzf#vim#with_preview(), <bang>0)
+      \ call fzf#vim#files(<q-args>, fzf#vim#with_preview(), <bang>0)
 
 " TODO(jethros): write a GitFiles method that start fzf in full screen and
 " display GFiles
 command! -bang -nargs=? GitFiles
-	    \ call fzf#vim#gitfiles('?',
-	    \                 <bang>0 ? fzf#vim#with_preview('up:60%')
-	    \                         : fzf#vim#with_preview('up:60%:hidden', '?'),
-	    \                 <bang>0)
+      \ call fzf#vim#gitfiles('?',
+      \                 <bang>0 ? fzf#vim#with_preview('up:60%')
+      \                         : fzf#vim#with_preview('up:60%:hidden', '?'),
+      \                 <bang>0)
 " }}}
 
 " Open new file adjacent to current file
@@ -519,12 +481,11 @@ nnoremap j gj
 nnoremap k gk
 
 " Jump to next/previous error
-nnoremap <C-j> :cnext<cr>
-nnoremap <C-k> :cprev<cr>
-
+"nnoremap <C-j> :cnext<cr>
+"nnoremap <C-k> :cprev<cr>
 "nnoremap <C-l> :copen<cr>
-nnoremap <leader>/ :copen<cr>
-nnoremap <C-g> :cclose<cr>
+"nnoremap <leader>/ :copen<cr>
+"nnoremap <C-g> :cclose<cr>
 
 " <leader><leader> toggles between buffers
 nnoremap <leader><leader> <c-^>
@@ -589,8 +550,8 @@ autocmd InsertLeave * set nopaste
 
 " Jump to last edit position on opening file
 if has("autocmd")
-    " https://stackoverflow.com/questions/31449496/vim-ignore-specifc-file-in-autocommand
-    au BufReadPost * if expand('%:p') !~# '\m/\.git/' && line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
+  " https://stackoverflow.com/questions/31449496/vim-ignore-specifc-file-in-autocommand
+  au BufReadPost * if expand('%:p') !~# '\m/\.git/' && line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
 endif
 
 " Auto-make less files on save
@@ -617,27 +578,27 @@ autocmd Filetype html,xml,xsl,php source $HOME/.config/nvim/scripts/closetag.vim
 "
 " https://tex.stackexchange.com/questions/1548/intelligent-paragraph-reflowing-in-vim
 fun! TeX_fmt()
-    if (getline(".") != "")
-	let save_cursor = getpos(".")
-	let op_wrapscan = &wrapscan
-	set nowrapscan
-	let par_begin = '^\(%D\)\=\s*\($\||\\begin\|\\end\|\\[\|\\]\|\\\(sub\)*section\>\|\\item\>\|\\NC\>\|\\blank\>\|\\noindent\>\)'
-	let par_end   = '^\(%D\)\=\s*\($\||\\begin\|\\end\|\\[\|\\]\|\\place\|\\\(sub\)*section\>\|\\item\>\|\\NC\>\|\\blank\>\)'
-	try
-	    exe '?'.par_begin.'?+'
-	catch /E384/
-	    1
-	endtry
-	norm V
-	try
-	    exe '/'.par_end.'/-'
-	catch /E385/
-	    $
-	endtry
-	norm gq
-	let &wrapscan = op_wrapscan
-	call setpos('.', save_cursor)
-    endif
+  if (getline(".") != "")
+    let save_cursor = getpos(".")
+    let op_wrapscan = &wrapscan
+    set nowrapscan
+    let par_begin = '^\(%D\)\=\s*\($\||\\begin\|\\end\|\\[\|\\]\|\\\(sub\)*section\>\|\\item\>\|\\NC\>\|\\blank\>\|\\noindent\>\)'
+    let par_end   = '^\(%D\)\=\s*\($\||\\begin\|\\end\|\\[\|\\]\|\\place\|\\\(sub\)*section\>\|\\item\>\|\\NC\>\|\\blank\>\)'
+    try
+      exe '?'.par_begin.'?+'
+    catch /E384/
+      1
+    endtry
+    norm V
+    try
+      exe '/'.par_end.'/-'
+    catch /E385/
+      $
+    endtry
+    norm gq
+    let &wrapscan = op_wrapscan
+    call setpos('.', save_cursor)
+  endif
 endfun
 " }}}
 "autocmd Filetype tex set ts=2 sw=2 et
@@ -647,9 +608,9 @@ autocmd Filetype org nmap Q :call TeX_fmt()<CR>
 
 " vim spell
 for d in glob('~/.config/nvim/spell/*.add', 1, 1)
-    if filereadable(d) && (!filereadable(d . '.spl') || getftime(d) > getftime(d . '.spl'))
-	exec 'mkspell! ' . fnameescape(d)
-    endif
+  if filereadable(d) && (!filereadable(d . '.spl') || getftime(d) > getftime(d . '.spl'))
+    exec 'mkspell! ' . fnameescape(d)
+  endif
 endfor
 
 " ===========================================================================
@@ -670,58 +631,68 @@ let g:airline#extensions#ale#enabled = 1
 highlight ALEErrorSign ctermfg=9
 " lint should be handled by LSP, but seems like that Rust is bit broken
 let g:ale_linters = {
-	    \ 'LaTeX': ['proselint',],
-	    \ }
+      \ 'python': ['pyls',],
+      \ 'LaTeX': ['proselint',],
+      \ }
 let g:ale_fixers = {
-	    \ '*': ['remove_trailing_lines', 'trim_whitespace'],
-	    \ 'rust': ['rustfmt']
-	    \ }
+      \ '*': ['remove_trailing_lines', 'trim_whitespace'],
+      \ 'rust': ['rustfmt']
+      \ }
 "let g:ale_sign_column_always = 1
 " only lint when I want
 let g:ale_lint_on_text_changed = 'never'
+let g:ale_lint_on_insert_leave = 1
 let g:ale_lint_on_save = 0
 let g:ale_lint_on_enter = 0
 let g:ale_completion_enabled = 1
+let g:ale_virtualtext_cursor = 1
 " Rust
 let g:ale_rust_rls_toolchain = 'nightly'
-let g:ale_rust_cargo_use_check = 1
-let g:ale_rust_cargo_check_all_targets = 1
+let g:ale_rust_rls_config = {
+      \ 'rust': {
+      \ 'all_targets': 1,
+      \ 'build_on_save': 1,
+      \ 'clippy_preference': 'on'
+      \ }
+      \ }
+"let g:ale_rust_cargo_use_check = 1
+"let g:ale_rust_cargo_use_clippy = 1
+"let g:ale_rust_cargo_check_all_targets = 1
+"
 " ALE bindings
 "nmap <silent> L <Plug>(ale_lint)
 nmap <leader>l <Plug>(ale_lint)
+nmap <leader>k <Plug>(ale_hover)
+"nmap <leader>] <Plug>(ale_go_to_definition)
+" Jump to next/previous error
 nmap <silent> <C-j> <Plug>(ale_next_wrap)
 nmap <silent> <C-k> <Plug>(ale_previous_wrap)
-" don't make errors so painful to look at
-let g:LanguageClient_diagnosticsDisplay = {
-	    \     1: {
-	    \         "name": "Error",
-	    \         "texthl": "ALEError",
-	    \         "signText": "✖",
-	    \         "signTexthl": "ErrorMsg",
-	    \         "virtualTexthl": "WarningMsg",
-	    \     },
-	    \     2: {
-	    \         "name": "Warning",
-	    \         "texthl": "ALEWarning",
-	    \         "signText": "⚠",
-	    \         "signTexthl": "ALEWarningSign",
-	    \         "virtualTexthl": "Todo",
-	    \     },
-	    \     3: {
-	    \         "name": "Information",
-	    \         "texthl": "ALEInfo",
-	    \         "signText": "ℹ",
-	    \         "signTexthl": "ALEInfoSign",
-	    \         "virtualTexthl": "Todo",
-	    \     },
-	    \     4: {
-	    \         "name": "Hint",
-	    \         "texthl": "ALEInfo",
-	    \         "signText": "➤",
-	    \         "signTexthl": "ALEInfoSign",
-	    \         "virtualTexthl": "Todo",
-	    \     },
-	    \ }
+nmap <leader>d <Plug>(ale_detail)
+nmap <leader>g :close<cr>
+" Emacs style
+nmap <leader>. <Plug>(ale_go_to_definition)
+nmap <leader>y <Plug>(ale_go_to_definition_in_vsplit)
+nmap <leader>dd <Plug>(ale_go_to_type_definition)
+nmap <leader>r <Plug>(ale_find_references)
+nmap <leader>o <C-O>
+" format error msg
+highlight link ALEWarningSign Todo
+highlight link ALEErrorSign WarningMsg
+highlight link ALEVirtualTextWarning Todo
+highlight link ALEVirtualTextInfo Todo
+highlight link ALEVirtualTextError WarningMsg
+highlight ALEError guibg=#330000
+highlight ALEWarning guibg=#333300
+"highlight ALEError guibg=None
+"highlight ALEWarning guibg=None
+let g:ale_sign_error = "✖"
+let g:ale_sign_warning = "⚠"
+let g:ale_sign_info = "i"
+let g:ale_sign_hint = "➤"
+let g:ale_echo_msg_error_str = 'ERROR'
+let g:ale_echo_msg_warning_str = 'WARN'
+let g:ale_echo_msg_info_str = 'INFO'
+let g:ale_echo_msg_format = '[%severity%] %s  [%linter% | %code%]'
 " }}}
 " vim-grammarous {{{
 
@@ -729,23 +700,23 @@ let g:LanguageClient_diagnosticsDisplay = {
 "let g:grammarous#enable_spell_check = 1
 
 let g:grammarous#disabled_rules = {
-	    \ '*' : ['WHITESPACE_RULE', 'EN_QUOTES'],
-	    \ 'help' : ['WHITESPACE_RULE', 'EN_QUOTES', 'SENTENCE_WHITESPACE', 'UPPERCASE_SENTENCE_START'],
-	    \ }
+      \ '*' : ['WHITESPACE_RULE', 'EN_QUOTES'],
+      \ 'help' : ['WHITESPACE_RULE', 'EN_QUOTES', 'SENTENCE_WHITESPACE', 'UPPERCASE_SENTENCE_START'],
+      \ }
 " TODO: imrpovement for LaTeX files
 
 let g:grammarous#hooks = {}
 function! g:grammarous#hooks.on_check(errs) abort
-    nmap <buffer><C-i> <Plug>(grammarous-move-to-info-window)
-    nmap <buffer><C-j> <Plug>(grammarous-move-to-next-error)
-    nmap <buffer><C-k> <Plug>(grammarous-move-to-previous-error)
-    nmap <buffer><leader>f <Plug>(grammarous-fixit)
-    nnoremap <buffer><C-f> <Plug>(grammarous-fixit)
+  nmap <buffer><C-i> <Plug>(grammarous-move-to-info-window)
+  nmap <buffer><C-j> <Plug>(grammarous-move-to-next-error)
+  nmap <buffer><C-k> <Plug>(grammarous-move-to-previous-error)
+  nmap <buffer><leader>f <Plug>(grammarous-fixit)
+  nnoremap <buffer><C-f> <Plug>(grammarous-fixit)
 endfunction
 function! g:grammarous#hooks.on_reset(errs) abort
-    nunmap <buffer><C-j>
-    nunmap <buffer><C-k>
-    nunmap <buffer><leader>f
+  nunmap <buffer><C-j>
+  nunmap <buffer><C-k>
+  nunmap <buffer><leader>f
 endfunction
 
 "nnoremap <buffer> ]g <Plug>(grammarous-move-to-next-error)
@@ -770,165 +741,16 @@ let g:black_linelength = 80
 autocmd BufRead,BufNewFile $HOME/dev/projects/** let b:DevPythonFile=1
 autocmd BufWritePre *.py call DevPythonFormatter()
 fun! DevPythonFormatter()
-    if !exists('b:DevPythonFile')
-	return
-    endif
-    " I use black, not autopep8 or yapf for now... I wonder the best practise
-    execute ':Black'
-    ImpSort!
-    call DeleteTrailingWS()
+  if !exists('b:DevPythonFile')
+    return
+  endif
+  " I use black, not autopep8 or yapf for now... I wonder the best practise
+  execute ':Black'
+  ImpSort!
+  call DeleteTrailingWS()
 endfun
 " }}}
-"
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"   Editing mappings
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-" Remap VIM 0 to first non-blank character
-map 0 ^
-
-" Mac setting, not important {{{
-"
-" Move a line of text using ALT+[jk] or Comamnd+[jk] on mac
-nmap <M-j> mz:m+<cr>`z
-nmap <M-k> mz:m-2<cr>`z
-vmap <M-j> :m'>+<cr>`<my`>mzgv`yo`z
-vmap <M-k> :m'<-2<cr>`>my`<mzgv`yo`z
-
-if has("mac") || has("macunix")
-    nmap <D-j> <M-j>
-    nmap <D-k> <M-k>
-    vmap <D-j> <M-j>
-    vmap <D-k> <M-k>
-endif
-" }}}
-
-" better whitespace
-" red #FF0000, coral #FF7F50, tomato #FF6347, orangered #FF4500, orange
-" #FFA500, darkorange #FF8C00
-"let g:better_whitespace_ctermcolor='<desired_color>'
-let g:better_whitespace_guicolor='#FF4500'
-let g:better_whitespace_enabled=1
-let g:strip_whitespace_on_save=0
-
-" Delete trailing white space on save, useful for Python and CoffeeScript ;)
-func! DeleteTrailingWS()
-    exe "normal mz"
-    %s/\s\+$//ge
-    exe "normal `z"
-endfunc
-"autocmd BufWrite *.py :call DeleteTrailingWS()
-autocmd BufWrite *.coffee :call DeleteTrailingWS()
-
-" map wincmd {{{
-"
-" The right windcmd
-nmap <silent>J :wincmd j<CR>
-nmap <silent>K :wincmd k<CR>
-nmap <silent>H :wincmd h<CR>
-nmap <silent>L :wincmd l<CR>
-
-nmap <silent> <A-Up> :wincmd k<CR>
-nmap <silent> <A-Down> :wincmd j<CR>
-nmap <silent> <A-Left> :wincmd h<CR>
-nmap <silent> <A-Right> :wincmd l<CR>
-
-" using ctrl hj"
-"nmap <leader>j :wincmd j<CR>
-"nmap <leader>k :wincmd k<CR>
-"nmap <leader>h :wincmd h<CR>
-"nmap <leader>l :wincmd l<CR>
-"}}}
-" provide hjkl movements in Insert mode via the <Alt> modifier key  {{{
-"
-inoremap <A-h> <C-o>h
-inoremap <A-j> <C-o>j
-inoremap <A-k> <C-o>k
-inoremap <A-l> <C-o>l
-" }}}
-" C++ reference look up  {{{
-" https://stackoverflow.com/questions/2272759/looking-up-c-documentation-inside-of-vim?utm_medium=organic&utm_source=google_rich_qa&utm_campaign=google_rich_qa
-command! -nargs=+ Cppman silent! call system("tmux split-window cppman " . expand(<q-args>))
-autocmd FileType cpp nnoremap <silent><buffer> K <Esc>:Cppman <cword><CR>
-" }}}
-" fugitive {{{
-"
-nnoremap <silent> gd :GDiff<CR>
-nnoremap <silent> dg :diffget<CR>
-" }}}
-" vim lexical {{{
-augroup lexical
-    autocmd!
-    "autocmd FileType markdown,mkd call lexical#init()
-    "autocmd FileType textile call lexical#init()
-    "autocmd FileType tex call lexical#init()
-    "autocmd FileType text call lexical#init({ 'spell': 0 })
-augroup END
-"let g:lexical#thesaurus = ['~/.config/nvim/thesaurus/mthesaur.txt',]
-let g:lexical#spellfile = ['~/.config/nvim/spell/en.utf-8.add',]
-let g:lexical#spelllang = ['en_us',]
-" }}}
-
-"--- Try
-" vim-illuminate
-hi link illuminatedWord Visual
-" Time in milliseconds (default 250)
-let g:Illuminate_delay = 1500
-"let g:Illuminate_ftHighlightGroups = {
-"      \ 'vim': ['vimVar', 'vimString', 'vimLineComment',
-"      \         'vimFuncName', 'vimFunction', 'vimUserFunc', 'vimFunc']
-"      \ }
-
-" vim-search-pulse
-let g:vim_search_pulse_duration = 200
-
-" nerdtree ot something
-let g:NERDTreeWinPos = "right"
-""nnoremap <C-n> :NERDTreeToggle<CR>
-nnoremap <leader>n :NERDTreeToggle<CR>
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
-
-" org mode
-"let g:polyglot_disabled = ['org']
-
-" rainbow
-"let g:rainbow_active = 1 "0 if you want to enable it later via :RainbowToggle
-
-" gitgutter
-let g:gitgutter_enabled = 0
-
-" Easy Align
-" Start interactive EasyAlign in visual mode (e.g. vipga)
-xmap ga <Plug>(EasyAlign)
-" Start interactive EasyAlign for a motion/text object (e.g. gaip)
-nmap ga <Plug>(EasyAlign)
-
-" NERDCommenter
-" Add spaces after comment delimiters by default
-let g:NERDSpaceDelims = 1
-" Use compact syntax for prettified multi-line comments
-let g:NERDCompactSexyComs = 1
-" Align line-wise comment delimiters flush left instead of following code indentation
-let g:NERDDefaultAlign = 'left'
-" Allow commenting and inverting empty lines (useful when commenting a region)
-let g:NERDCommentEmptyLines = 1
-" Enable trimming of trailing whitespace when uncommenting
-let g:NERDTrimTrailingWhitespace = 1
-" Enable NERDCommenterToggle to check all selected lines is commented or not
-let g:NERDToggleCheckAllLines = 1
-" Add your own custom formats or override the defaults
-let g:NERDCustomDelimiters = {
-	    \ 'c': {'left': '//'},
-	    \ 'cpp': {'left': '//'},
-	    \ 'python': {'left': '#'},
-	    \ 'rust': {'left': '///'},
-	    \ }
-" Preview
-let g:livepreview_previewer = 'open -a Preview'
-
-" =============================================================================
-" # RUN TESTS IN BACKGROUND
-" =============================================================================
+" Cargo test in lightline {{{
 let g:TestStatus=-1
 function! TestStatus()
   if &filetype != "rust"
@@ -942,7 +764,7 @@ function! TestStatus()
   endif
 endfunction
 function! s:BgCmdCB(job_id, data, event)
-    call writefile([join(a:data)], g:bgCmdOutput, 'a')
+  call writefile([join(a:data)], g:bgCmdOutput, 'a')
 endfunction
 function! s:BgCmdExit(job_id, data, status)
   let l:bufno = bufwinnr("__Bg_Res__")
@@ -982,18 +804,164 @@ function! RunBgCmd(command)
     echo 'Running' g:bgCmd 'in background'
     let g:bgCmdOutput = tempname()
     call jobstart(a:command,{
-      \'on_stderr': function('s:BgCmdCB'),
-      \'on_stdout': function('s:BgCmdCB'),
-      \'on_exit': function('s:BgCmdExit')})
+	  \'on_stderr': function('s:BgCmdCB'),
+	  \'on_stdout': function('s:BgCmdCB'),
+	  \'on_exit': function('s:BgCmdExit')})
   endif
 endfunction
 
 command! -nargs=+ -complete=shellcmd RunBg call RunBgCmd(<q-args>)
 autocmd FileType rust nmap <leader>t :RunBg cargo test<CR>
 autocmd FileType rust nmap <leader>tc :RunBg cargo test -- --nocapture<CR>
+" }}}
+"
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"   Editing mappings
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" Remap VIM 0 to first non-blank character
+map 0 ^
+
+" Mac setting, not important {{{
+"
+" Move a line of text using ALT+[jk] or Comamnd+[jk] on mac
+nmap <M-j> mz:m+<cr>`z
+nmap <M-k> mz:m-2<cr>`z
+vmap <M-j> :m'>+<cr>`<my`>mzgv`yo`z
+vmap <M-k> :m'<-2<cr>`>my`<mzgv`yo`z
+
+if has("mac") || has("macunix")
+  nmap <D-j> <M-j>
+  nmap <D-k> <M-k>
+  vmap <D-j> <M-j>
+  vmap <D-k> <M-k>
+endif
+" }}}
+
+" better whitespace
+" red #FF0000, coral #FF7F50, tomato #FF6347, orangered #FF4500, orange
+" #FFA500, darkorange #FF8C00
+"let g:better_whitespace_ctermcolor='<desired_color>'
+let g:better_whitespace_guicolor='#FF4500'
+let g:better_whitespace_enabled=1
+let g:strip_whitespace_on_save=0
+
+" Delete trailing white space on save, useful for Python and CoffeeScript ;) {{{
+func! DeleteTrailingWS()
+  exe "normal mz"
+  %s/\s\+$//ge
+  exe "normal `z"
+endfunc
+"autocmd BufWrite *.py :call DeleteTrailingWS()
+"autocmd BufWrite *.coffee :call DeleteTrailingWS()
+" }}}
+
+" map wincmd {{{
+"
+" The right windcmd
+nmap <silent>J :wincmd j<CR>
+nmap <silent>K :wincmd k<CR>
+nmap <silent>H :wincmd h<CR>
+nmap <silent>L :wincmd l<CR>
+
+nmap <silent> <A-Up> :wincmd k<CR>
+nmap <silent> <A-Down> :wincmd j<CR>
+nmap <silent> <A-Left> :wincmd h<CR>
+nmap <silent> <A-Right> :wincmd l<CR>
+
+" using ctrl hj"
+"nmap <leader>j :wincmd j<CR>
+"nmap <leader>k :wincmd k<CR>
+"nmap <leader>h :wincmd h<CR>
+"nmap <leader>l :wincmd l<CR>
+"}}}
+" provide hjkl movements in Insert mode via the <Alt> modifier key  {{{
+"
+inoremap <A-h> <C-o>h
+inoremap <A-j> <C-o>j
+inoremap <A-k> <C-o>k
+inoremap <A-l> <C-o>l
+" }}}
+" C++ reference look up  {{{
+" https://stackoverflow.com/questions/2272759/looking-up-c-documentation-inside-of-vim?utm_medium=organic&utm_source=google_rich_qa&utm_campaign=google_rich_qa
+command! -nargs=+ Cppman silent! call system("tmux split-window cppman " . expand(<q-args>))
+autocmd FileType cpp nnoremap <silent><buffer> K <Esc>:Cppman <cword><CR>
+" }}}
+" fugitive {{{
+"
+nnoremap <silent> gd :GDiff<CR>
+nnoremap <silent> dg :diffget<CR>
+" }}}
+" vim lexical {{{
+augroup lexical
+  autocmd!
+  "autocmd FileType markdown,mkd call lexical#init()
+  "autocmd FileType textile call lexical#init()
+  "autocmd FileType tex call lexical#init()
+  "autocmd FileType text call lexical#init({ 'spell': 0 })
+augroup END
+"let g:lexical#thesaurus = ['~/.config/nvim/thesaurus/mthesaur.txt',]
+let g:lexical#spellfile = ['~/.config/nvim/spell/en.utf-8.add',]
+let g:lexical#spelllang = ['en_us',]
+" }}}
+
+"--- Try
+" vim-illuminate
+hi link illuminatedWord Visual
+" Time in milliseconds (default 250)
+let g:Illuminate_delay = 1500
+"let g:Illuminate_ftHighlightGroups = {
+"      \ 'vim': ['vimVar', 'vimString', 'vimLineComment',
+"      \         'vimFuncName', 'vimFunction', 'vimUserFunc', 'vimFunc']
+"      \ }
+
+" vim-search-pulse
+let g:vim_search_pulse_duration = 200
+
+" nerdtree ot something
+let g:NERDTreeWinPos = "right"
+""nnoremap <C-n> :NERDTreeToggle<CR>
+nnoremap <leader>n :NERDTreeToggle<CR>
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+
+
+" rainbow
+let g:rainbow_active = 1 "0 if you want to enable it later via :RainbowToggle
+
+" gitgutter
+let g:gitgutter_enabled = 0
+
+" Easy Align
+" Start interactive EasyAlign in visual mode (e.g. vipga)
+xmap ga <Plug>(EasyAlign)
+" Start interactive EasyAlign for a motion/text object (e.g. gaip)
+nmap ga <Plug>(EasyAlign)
+
+" NERDCommenter
+" Add spaces after comment delimiters by default
+let g:NERDSpaceDelims = 1
+" Use compact syntax for prettified multi-line comments
+let g:NERDCompactSexyComs = 1
+" Align line-wise comment delimiters flush left instead of following code indentation
+let g:NERDDefaultAlign = 'left'
+" Allow commenting and inverting empty lines (useful when commenting a region)
+let g:NERDCommentEmptyLines = 1
+" Enable trimming of trailing whitespace when uncommenting
+let g:NERDTrimTrailingWhitespace = 1
+" Enable NERDCommenterToggle to check all selected lines is commented or not
+let g:NERDToggleCheckAllLines = 1
+" Add your own custom formats or override the defaults
+let g:NERDCustomDelimiters = {
+      \ 'c': {'left': '//'},
+      \ 'cpp': {'left': '//'},
+      \ 'python': {'left': '#'},
+      \ 'rust': {'left': '///'},
+      \ }
+" Preview
+let g:livepreview_previewer = 'open -a Preview'
 
 
 " nvim
 if has('nvim')
-    runtime! plugin/python_setup.vim
+  runtime! plugin/python_setup.vim
 endif
