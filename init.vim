@@ -37,8 +37,8 @@ Plug 'andymass/vim-matchup'
 Plug 'itchyny/lightline.vim'
 Plug 'Yggdroot/indentLine'
 Plug 'jaxbot/semantic-highlight.vim'
-Plug 'scrooloose/nerdtree'
-Plug 'Xuyuanp/nerdtree-git-plugin'
+"Plug 'scrooloose/nerdtree'
+"Plug 'Xuyuanp/nerdtree-git-plugin'
 
 " Fuzzy finder
 " ------------
@@ -67,7 +67,8 @@ Plug 'Shougo/echodoc.vim'
 " VIM editting enhancements
 " -------------------------
 Plug 'jiangmiao/auto-pairs'
-Plug 'luochen1990/rainbow'
+"Plug 'luochen1990/rainbow'
+Plug 'kien/rainbow_parentheses.vim'
 Plug 'RRethy/vim-illuminate'
 Plug 'inside/vim-search-pulse'
 Plug 'numirias/semshi', {'do': ':UpdateRemotePlugins'}
@@ -332,9 +333,8 @@ set ttyfast
 set lazyredraw
 set synmaxcol=500
 set laststatus=2
-set relativenumber                 " Relative line numbers
-autocmd InsertEnter * :set number  " Now it is hybrid!
-autocmd InsertLeave * :set nonumber
+set relativenumber " Relative line numbers
+set number " Also show current absolute line
 set diffopt+=iwhite " No whitespace in vimdiff
 " Make diffing better: https://vimways.org/2018/the-power-of-diff/
 if has("patch-8.1.0360")
@@ -350,9 +350,10 @@ set shortmess+=c " don't give |ins-completion-menu| messages.
 " Colors
 set background=dark
 colorscheme base16-atelier-dune
-hi Normal ctermbg=NONE
-"highlight Normal ctermbg=NONE
+"hi Normal ctermbg=NONE
 "highlight nonText ctermbg=NONE
+hi Normal guibg=NONE
+highlight nonText guibg=NONE
 colorscheme base16-atelier-dune
 
 " Show those damn hidden characters
@@ -367,10 +368,10 @@ set listchars=nbsp:¬,extends:»,precedes:«,trail:•
 nnoremap ; :
 
 " Ctrl+c and Ctrl+j as Esc
-"inoremap <C-j> <Esc>
-"vnoremap <C-j> <Esc>
-"inoremap <C-c> <Esc>
-"vnoremap <C-c> <Esc>
+inoremap <C-j> <Esc>
+vnoremap <C-j> <Esc>
+inoremap <C-c> <Esc>
+vnoremap <C-c> <Esc>
 
 " Suspend with Ctrl+f
 "inoremap <C-f> :sus<cr>
@@ -382,8 +383,8 @@ nnoremap ; :
 "map L $
 map [ ^
 map ] $
-nnoremap <C-h> ^
-nnoremap <C-l> $
+nnoremap <C-l> ^
+nnoremap <C-h> $
 inoremap <C-e> <Esc>A
 inoremap <C-a> <Esc>I
 nnoremap <C-e> <Esc>A
@@ -607,6 +608,7 @@ autocmd Filetype markdown nmap Q :call TeX_fmt()<CR>zz
 autocmd Filetype org nmap Q :call TeX_fmt()<CR>
 
 " vim spell
+set spell spelllang=en_us
 for d in glob('~/.config/nvim/spell/*.add', 1, 1)
   if filereadable(d) && (!filereadable(d . '.spl') || getftime(d) > getftime(d . '.spl'))
     exec 'mkspell! ' . fnameescape(d)
@@ -622,8 +624,7 @@ set cmdheight=2
 set tw=79
 set cursorline
 set cursorcolumn
-"hi CursorLine   cterm=NONE ctermbg=232 guibg=#050505
-"hi CursorColumn cterm=NONE ctermbg=232 guibg=#050505
+hi Normal ctermbg=NONE
 hi Folded ctermbg=234 ctermfg=red
 
 " Linter -- ALE {{{
@@ -665,10 +666,10 @@ nmap <leader>l <Plug>(ale_lint)
 nmap <leader>k <Plug>(ale_hover)
 "nmap <leader>] <Plug>(ale_go_to_definition)
 " Jump to next/previous error
-nmap <silent> <C-j> <Plug>(ale_next_wrap)
-nmap <silent> <C-k> <Plug>(ale_previous_wrap)
+nmap <silent> <C-n> <Plug>(ale_next_wrap)
+nmap <silent> <C-p> <Plug>(ale_previous_wrap)
 nmap <leader>d <Plug>(ale_detail)
-nmap <leader>g :close<cr>
+nmap <silent> <C-g> :close<cr>
 " Emacs style
 nmap <leader>. <Plug>(ale_go_to_definition)
 nmap <leader>y <Plug>(ale_go_to_definition_in_vsplit)
@@ -708,8 +709,8 @@ let g:grammarous#disabled_rules = {
 let g:grammarous#hooks = {}
 function! g:grammarous#hooks.on_check(errs) abort
   nmap <buffer><C-i> <Plug>(grammarous-move-to-info-window)
-  nmap <buffer><C-j> <Plug>(grammarous-move-to-next-error)
-  nmap <buffer><C-k> <Plug>(grammarous-move-to-previous-error)
+  nmap <buffer><C-n> <Plug>(grammarous-move-to-next-error)
+  nmap <buffer><C-p> <Plug>(grammarous-move-to-previous-error)
   nmap <buffer><leader>f <Plug>(grammarous-fixit)
   nnoremap <buffer><C-f> <Plug>(grammarous-fixit)
 endfunction
@@ -924,9 +925,31 @@ let g:NERDTreeWinPos = "right"
 nnoremap <leader>n :NERDTreeToggle<CR>
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
-
-" rainbow
-let g:rainbow_active = 1 "0 if you want to enable it later via :RainbowToggle
+" rainbow parentheses {{{
+"
+"let g:rbpt_max = 16
+au VimEnter * RainbowParenthesesToggle
+au Syntax * RainbowParenthesesLoadRound
+au Syntax * RainbowParenthesesLoadSquare
+au Syntax * RainbowParenthesesLoadBraces
+let g:rbpt_colorpairs = [
+    \ ['brown',       'RoyalBlue3'],
+    \ ['Darkblue',    'SeaGreen3'],
+    \ ['darkgray',    'DarkOrchid3'],
+    \ ['darkgreen',   'firebrick3'],
+    \ ['darkcyan',    'RoyalBlue3'],
+    \ ['darkred',     'SeaGreen3'],
+    \ ['darkmagenta', 'DarkOrchid3'],
+    \ ['brown',       'firebrick3'],
+    \ ['gray',        'RoyalBlue3'],
+    \ ['black',       'SeaGreen3'],
+    \ ['darkmagenta', 'DarkOrchid3'],
+    \ ['Darkblue',    'firebrick3'],
+    \ ['darkgreen',   'RoyalBlue3'],
+    \ ['darkcyan',    'SeaGreen3'],
+    \ ['darkred',     'DarkOrchid3'],
+    \ ]
+" }}}
 
 " gitgutter
 let g:gitgutter_enabled = 0

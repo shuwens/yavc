@@ -29,4 +29,6 @@ augroup filetypedetect
 	autocmd FileType fish setlocal indentkeys+==end,=else,=case
 	" lisp
 	au BufNewFile,BufRead *.lsp,*.lisp,*.el,*.cl,*.jl,*.L,.emacs,.spacemacs setf lisp
+	"spell
+	"autocmd FileType md,rst,text,yaml,rs,tex setlocal spell spelllang=en_us
 augroup END
