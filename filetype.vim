@@ -13,7 +13,7 @@ augroup filetypedetect
 	autocmd Filetype text let b:ale_linters = ['proselint']
 	autocmd Filetype markdown let b:ale_linters = ['proselint']
 	" tex
-	autocmd Filetype tex setlocal spell autoindent
+	"autocmd Filetype tex setlocal spell autoindent
 	autocmd Filetype tex setlocal ts=2 sts=2 tw=80 colorcolumn=81 et
 	autocmd Filetype tex let g:tex_flavor = 'latex'
 	autocmd Filetype tex setlocal syntax=context
@@ -24,11 +24,12 @@ augroup filetypedetect
 	" fish
 	autocmd FileType fish compiler fish
 	autocmd FileType fish setlocal textwidth=79
-	autocmd FileType fish setlocal foldmethod=expr
+	"autocmd FileType fish setlocal foldmethod=expr
+	autocmd FileType fish setlocal nofoldenable
 	autocmd FileType fish setlocal indentexpr=fish#Indent()
 	autocmd FileType fish setlocal indentkeys+==end,=else,=case
 	" lisp
-	au BufNewFile,BufRead *.lsp,*.lisp,*.el,*.cl,*.jl,*.L,.emacs,.spacemacs setf lisp
-	"spell
-	"autocmd FileType md,rst,text,yaml,rs,tex setlocal spell spelllang=en_us
+	au BufNewFile,BufRead *.lsp,*.lisp,*.el,*.cl,*.jl,*.L,.emacs,.spacemacs,.skhdrc setf lisp
+	" hack
+	au BufNewFile,BufRead .chunkwmrc,.skhdrc setf shell
 augroup END
