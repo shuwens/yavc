@@ -29,7 +29,7 @@ augroup filetypedetect
 	autocmd FileType fish setlocal indentexpr=fish#Indent()
 	autocmd FileType fish setlocal indentkeys+==end,=else,=case
 	" lisp
-	au BufNewFile,BufRead *.lsp,*.lisp,*.el,*.cl,*.jl,*.L,.emacs,.spacemacs,.skhdrc setf lisp
+	au BufNewFile,BufRead *.lsp,*.lisp,*.el,*.cl,*.jl,*.L,.emacs,.spacemacs setf lisp
 	" hack
 	au BufNewFile,BufRead .chunkwmrc,.skhdrc setf shell
 augroup END
