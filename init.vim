@@ -21,7 +21,7 @@ Plug 'Shougo/vimproc.vim', {'do' : 'make'}
 Plug 'tpope/vim-fugitive'
 Plug 'sheerun/vim-polyglot'   " I don't need this and it is buggy
 Plug 'tpope/vim-sleuth'  " Heuristically set buffer options
-Plug 'ntpeters/vim-better-whitespace' " Remove trailing spaces
+"Plug 'ntpeters/vim-better-whitespace' " Remove trailing spaces
 Plug 'junegunn/vim-easy-align'
 Plug 'scrooloose/nerdcommenter'
 Plug 'janko-m/vim-test'
@@ -32,13 +32,9 @@ Plug 'tpope/vim-speeddating'
 " ----------------
 Plug 'machakann/vim-highlightedyank'
 Plug 'andymass/vim-matchup'
-"Plug 'vim-airline/vim-airline'
-"Plug 'vim-airline/vim-airline-themes'
 Plug 'itchyny/lightline.vim'
 Plug 'Yggdroot/indentLine'
 Plug 'jaxbot/semantic-highlight.vim'
-"Plug 'scrooloose/nerdtree'
-"Plug 'Xuyuanp/nerdtree-git-plugin'
 
 " Fuzzy finder
 " ------------
@@ -64,11 +60,10 @@ Plug 'ncm2/ncm2-path'
 " Showing function signature and inline doc.
 Plug 'Shougo/echodoc.vim'
 
-" VIM editting enhancements
+" VIM editing enhancements
 " -------------------------
 Plug 'jiangmiao/auto-pairs'
-"Plug 'luochen1990/rainbow'
-"Plug 'kien/rainbow_parentheses.vim'
+"Plug 'luochen1990/rainbow', { 'branch': 'develop' }
 Plug 'RRethy/vim-illuminate'
 Plug 'inside/vim-search-pulse'
 Plug 'numirias/semshi', {'do': ':UpdateRemotePlugins'}
@@ -77,8 +72,6 @@ Plug 'lilydjwg/colorizer'
 " Syntactic language support
 " --------------------------
 Plug 'vim-scripts/gnuplot-syntax-highlighting'
-" Plug 'treycordova/rustpeg.vim.git'
-" Plug 'vim-scripts/haskell.vim'
 Plug 'cespare/vim-toml'
 Plug 'fatih/vim-go'
 Plug 'dag/vim-fish'
@@ -147,10 +140,6 @@ let g:base16_shell_path="$HOME/dev/others/base16/shell/scripts/"
 " }}}
 
 " Status Line {{{
-" Airline
-"let g:airline#extensions#tabline#formatter = 'default'
-"let g:airline_powerline_fonts = 0 " sadly noto sans mono is not patched yet...
-"let g:airline_theme='base16_atelierdune'
 " Lightline
 let g:lightline = {
       \ 'colorscheme': 'jellybeans',
@@ -173,35 +162,7 @@ function! LightlineFilename()
 endfunction
 " }}}
 
-" from http://sheerun.net/2014/03/21/how-to-boost-your-vim-productivity/
-if executable('ag')
-  set grepprg=ag\ --nogroup\ --nocolor
-endif
-if executable('rg')
-  set grepprg=rg\ --no-heading\ --vimgrep
-  set grepformat=%f:%l:%c:%m
-endif
-
-" Javascript
-let javaScript_fold=0
-
-" Don't confirm .lvimrc
-let g:localvimrc_ask = 0
-
-" LSP - keybindings {{{
-"nnoremap <F5> :call LanguageClient_contextMenu()<CR>
-"nnoremap <leader>m :call LanguageClient_contextMenu()<CR>
-"nnoremap <silent> R :call LanguageClient#textDocument_references()<CR>
-"nnoremap <leader>r :call LanguageClient#textDocument_references()<CR>
-"nnoremap <silent> N :call LanguageClient#textDocument_rename()<CR>
-"nnoremap <leader>n :call LanguageClient#textDocument_rename()<CR>
-"nnoremap <silent> <F2> :call LanguageClient#textDocument_rename()<CR>
-"nnoremap <leader>r :call LanguageClient#textDocument_rename()<CR>
-"nnoremap <silent> S :call LanugageClient#textDocument_documentSymbol()<CR>
-"nnoremap <leader>/ <C-O>
-" }}}
 " Completion {{{
-" Completion
 autocmd BufEnter * call ncm2#enable_for_buffer()
 set completeopt=noinsert,menuone,noselect
 " tab to select
@@ -209,9 +170,17 @@ set completeopt=noinsert,menuone,noselect
 inoremap <expr><Tab> (pumvisible()?(empty(v:completed_item)?"\<C-n>":"\<C-y>"):"\<Tab>")
 inoremap <expr><CR> (pumvisible()?(empty(v:completed_item)?"\<CR>\<CR>":"\<C-y>"):"\<CR>")
 " }}}
+"
 " echodoc {{{
 let g:echodoc_enable_at_startup = 1
 " }}}
+"
+" Don't confirm .lvimrc
+let g:localvimrc_ask = 0
+
+" Javascript
+let javaScript_fold=0
+
 " Golang {{{
 autocmd FileType go nmap <leader>t <Plug>(go-test)
 autocmd FileType go nmap <Leader>r <Plug>(go-rename)
@@ -222,6 +191,7 @@ let g:go_fmt_command = "goimports"
 let g:go_bin_path = expand("~/dev/others/r/bin")
 let g:go_version_warning = 0
 " }}}
+
 " Rust {{{
 " https://github.com/rust-lang/rust.vim/issues/192
 let g:rustfmt_command = "rustfmt +nightly"
@@ -235,6 +205,7 @@ au Filetype rust set colorcolumn=100
 " <leader>= reformats current tange
 autocmd FileType rust nnoremap <leader>= :'<,'>RustFmtRange<CR>
 " }}}
+
 
 " ===========================================================================
 "   Editor settings
@@ -350,8 +321,6 @@ set shortmess+=c " don't give |ins-completion-menu| messages.
 " Colors
 set background=dark
 colorscheme base16-atelier-dune
-"hi Normal ctermbg=NONE
-"highlight nonText ctermbg=NONE
 hi Normal guibg=NONE
 highlight nonText guibg=NONE
 colorscheme base16-atelier-dune
@@ -373,11 +342,6 @@ vnoremap <C-j> <Esc>
 inoremap <C-c> <Esc>
 vnoremap <C-c> <Esc>
 
-" Suspend with Ctrl+f
-"inoremap <C-f> :sus<cr>
-"vnoremap <C-f> :sus<cr>
-"nnoremap <C-f> :sus<cr>
-
 " Jump to start and end of line using the home row keys {{{
 "map H ^
 "map L $
@@ -395,10 +359,21 @@ nnoremap <C-a> <Esc>I
 "
 " ,p will paste clipboard into buffer
 " ,c will copy entire buffer into clipboard
-"noremap <leader>p :read !xsel --clipboard --output<cr>
-"noremap <leader>c :w !xsel -ib<cr><cr>
+if has('unix')
+  if has('mac')       " osx
+    " Paste clipboard content to current line
+    noremap <leader>p :r !pbpaste<CR>
+    noremap <leader>c :w !pbcopy<CR><CR>
+  else                " linux, bsd, etc
+    noremap <leader>p :read !xsel --clipboard --output<cr>
+    noremap <leader>c :w !xsel -ib<cr><cr>
+  endif
+endif
 " }}}
+"
 " fzf !!! {{{
+
+" from http://sheerun.net/2014/03/21/how-to-boost-your-vim-productivity/
 "
 "let g:fzf_layout = { 'down': '~20%' }
 let g:fzf_layout = { 'down': '~35%' }
@@ -413,16 +388,23 @@ noremap <leader>s :Rg<CR>
 "noremap <leader>s :Rg
 noremap <leader>a :Rgg<CR>
 
+" }}}
+" fzf helper methods {{{
 
-" fzf helper methods
-"
-let g:fzf_layout = { 'down': '~20%' }
+if executable('ag')
+  set grepprg=ag\ --nogroup\ --nocolor
+endif
+if executable('rg')
+  set grepprg=rg\ --no-heading\ --vimgrep
+  set grepformat=%f:%l:%c:%m
+endif
+
 command! -bang -nargs=* Rgg
-  \ call fzf#vim#grep(
-  \   'rg --column --line-number --no-heading --color=always '.shellescape(<q-args>), 1,
-  \   <bang>0 ? fzf#vim#with_preview('up:60%')
-  \           : fzf#vim#with_preview('right:50%:hidden', '?'),
-  \   <bang>0)
+      \ call fzf#vim#grep(
+      \   'rg --column --line-number --no-heading --color=always '.shellescape(<q-args>), 1,
+      \   <bang>0 ? fzf#vim#with_preview('up:60%')
+      \           : fzf#vim#with_preview('right:50%:hidden', '?'),
+      \   <bang>0)
 
 function! s:list_cmd()
   let base = fnamemodify(expand('%'), ':h:.:S')
@@ -430,8 +412,8 @@ function! s:list_cmd()
 endfunction
 
 command! -bang -nargs=? -complete=dir Files
-  \ call fzf#vim#files(<q-args>, {'source': s:list_cmd(),
-\ 'options': '--tiebreak=index'}, <bang>0)
+      \ call fzf#vim#files(<q-args>, {'source': s:list_cmd(),
+      \ 'options': '--tiebreak=index'}, <bang>0)
 
 " Command for git grep
 " - fzf#vim#grep(command, with_column, [options], [fullscreen])
@@ -501,13 +483,6 @@ inoremap <down> <nop>
 nnoremap j gj
 nnoremap k gk
 
-" Jump to next/previous error
-"nnoremap <C-j> :cnext<cr>
-"nnoremap <C-k> :cprev<cr>
-"nnoremap <C-l> :copen<cr>
-"nnoremap <leader>/ :copen<cr>
-"nnoremap <C-g> :cclose<cr>
-
 " <leader><leader> toggles between buffers
 nnoremap <leader><leader> <c-^>
 
@@ -539,7 +514,6 @@ vnoremap <silent> # :call VisualSelection('b')<CR>
 " Quick-save
 nmap <leader>w :StripWhitespace<CR>:w<CR>
 nmap <leader>wq :wq<CR>
-"nnoremap <leader>w :w<CR>
 nnoremap <leader>q :q!<CR>
 nnoremap <leader>qq :q!<Esc>:q!<CR>
 command! W w
@@ -558,6 +532,7 @@ vnoremap <leader>i C
 nmap <F3> i<C-R>=strftime("%Y-%m-%d %a %I:%M %p")<CR><Esc>
 imap <F3> <C-R>=strftime("%Y-%m-%d %a %I:%M %p")<CR>
 inoremap <special> <F3> <c-r>=strftime('%c')<CR>
+
 " ===========================================================================
 "    Autocommands
 " ===========================================================================
@@ -577,10 +552,6 @@ endif
 
 " Auto-make less files on save
 autocmd BufWritePost *.less if filereadable("Makefile") | make | endif
-
-" Follow Rust code style rules
-au Filetype rust source $HOME/.config/nvim/scripts/spacetab.vim
-au Filetype rust set colorcolumn=100
 
 " Help filetype detection
 autocmd BufRead *.plot set filetype=gnuplot
@@ -622,6 +593,7 @@ fun! TeX_fmt()
   endif
 endfun
 " }}}
+
 "autocmd Filetype tex set ts=2 sw=2 et
 autocmd Filetype tex nmap Q :call TeX_fmt()<CR>zz
 autocmd Filetype markdown nmap Q :call TeX_fmt()<CR>zz
@@ -629,31 +601,9 @@ autocmd Filetype org nmap Q :call TeX_fmt()<CR>
 
 " rainbow parentheses {{{
 "
-"let g:rbpt_max = 16
-"au VimEnter * RainbowParenthesesToggle
-"au Syntax * RainbowParenthesesLoadRound
-"au Syntax * RainbowParenthesesLoadSquare
-"au Syntax * RainbowParenthesesLoadBraces
-let g:rbpt_colorpairs = [
-    \ ['brown',       'RoyalBlue3'],
-    \ ['Darkblue',    'SeaGreen3'],
-    \ ['darkgray',    'DarkOrchid3'],
-    \ ['darkgreen',   'firebrick3'],
-    \ ['darkcyan',    'RoyalBlue3'],
-    \ ['darkred',     'SeaGreen3'],
-    \ ['darkmagenta', 'DarkOrchid3'],
-    \ ['brown',       'firebrick3'],
-    \ ['gray',        'RoyalBlue3'],
-    \ ['black',       'SeaGreen3'],
-    \ ['darkmagenta', 'DarkOrchid3'],
-    \ ['Darkblue',    'firebrick3'],
-    \ ['darkgreen',   'RoyalBlue3'],
-    \ ['darkcyan',    'SeaGreen3'],
-    \ ['darkred',     'DarkOrchid3'],
-    \ ]
 " }}}
 
-" vim spell
+" VIM spell
 set spell spelllang=en_us
 for d in glob('~/.config/nvim/spell/*.add', 1, 1)
   if filereadable(d) && (!filereadable(d . '.spl') || getftime(d) > getftime(d . '.spl'))
@@ -706,10 +656,8 @@ let g:ale_rust_rls_config = {
 "let g:ale_rust_cargo_check_all_targets = 1
 "
 " ALE bindings
-"nmap <silent> L <Plug>(ale_lint)
 nmap <leader>l <Plug>(ale_lint)
 nmap <leader>k <Plug>(ale_hover)
-"nmap <leader>] <Plug>(ale_go_to_definition)
 " Jump to next/previous error
 nmap <silent> <C-n> <Plug>(ale_next_wrap)
 nmap <silent> <C-p> <Plug>(ale_previous_wrap)
@@ -740,16 +688,13 @@ let g:ale_echo_msg_warning_str = 'WARN'
 let g:ale_echo_msg_info_str = 'INFO'
 let g:ale_echo_msg_format = '[%severity%] %s  [%linter% | %code%]'
 " }}}
-" vim-grammarous {{{
 
-"let g:grammarous#use_vim_spelllang = 0
-"let g:grammarous#enable_spell_check = 1
+" vim-grammarous {{{
 
 let g:grammarous#disabled_rules = {
       \ '*' : ['WHITESPACE_RULE', 'EN_QUOTES'],
       \ 'help' : ['WHITESPACE_RULE', 'EN_QUOTES', 'SENTENCE_WHITESPACE', 'UPPERCASE_SENTENCE_START'],
       \ }
-" TODO: imrpovement for LaTeX files
 
 let g:grammarous#hooks = {}
 function! g:grammarous#hooks.on_check(errs) abort
@@ -765,11 +710,10 @@ function! g:grammarous#hooks.on_reset(errs) abort
   nunmap <buffer><leader>f
 endfunction
 
-"nnoremap <buffer> ]g <Plug>(grammarous-move-to-next-error)
-"nnoremap <buffer> [g <Plug>(grammarous-move-to-previous-error)
 nnoremap <leader>L :GrammarousCheck --lang=en-US --preview<CR>
 nnoremap <leader>G :GrammarousCheck --lang=en-US --preview<CR>
 " }}}
+
 " LaTeX {{{
 let g:latex_indent_enabled = 1
 let g:latex_fold_envs = 0
@@ -778,9 +722,8 @@ let g:tex_conceal = ""
 autocmd Filetype tex setl updatetime=1
 let g:livepreview_previewer = 'open -a Preview'
 autocmd BufNewFile,BufRead *.tex set syntax=context
-" polyglot for LaTeX
-"let g:polyglot_disabled = ['latex']
 " }}}
+
 " Python is special {{{
 " NOTE: I only want to auto-format Python files that belong to me
 let g:black_linelength = 80
@@ -796,6 +739,7 @@ fun! DevPythonFormatter()
   call DeleteTrailingWS()
 endfun
 " }}}
+
 " Cargo test in lightline {{{
 let g:TestStatus=-1
 function! TestStatus()
@@ -868,6 +812,11 @@ autocmd FileType rust nmap <leader>tc :RunBg cargo test -- --nocapture<CR>
 " Remap VIM 0 to first non-blank character
 map 0 ^
 
+" highlighted yank
+if !exists('##textyankpost')
+  map y <plug>(highlightedyank)
+endif
+
 " Mac setting, not important {{{
 "
 " Move a line of text using ALT+[jk] or Comamnd+[jk] on mac
@@ -898,8 +847,6 @@ func! DeleteTrailingWS()
   %s/\s\+$//ge
   exe "normal `z"
 endfunc
-"autocmd BufWrite *.py :call DeleteTrailingWS()
-"autocmd BufWrite *.coffee :call DeleteTrailingWS()
 " }}}
 
 " map wincmd {{{
@@ -914,12 +861,6 @@ nmap <silent> <A-Up> :wincmd k<CR>
 nmap <silent> <A-Down> :wincmd j<CR>
 nmap <silent> <A-Left> :wincmd h<CR>
 nmap <silent> <A-Right> :wincmd l<CR>
-
-" using ctrl hj"
-"nmap <leader>j :wincmd j<CR>
-"nmap <leader>k :wincmd k<CR>
-"nmap <leader>h :wincmd h<CR>
-"nmap <leader>l :wincmd l<CR>
 "}}}
 " provide hjkl movements in Insert mode via the <Alt> modifier key  {{{
 "
@@ -938,20 +879,7 @@ autocmd FileType cpp nnoremap <silent><buffer> K <Esc>:Cppman <cword><CR>
 nnoremap <silent> gd :GDiff<CR>
 nnoremap <silent> dg :diffget<CR>
 " }}}
-" vim lexical {{{
-augroup lexical
-  autocmd!
-  "autocmd FileType markdown,mkd call lexical#init()
-  "autocmd FileType textile call lexical#init()
-  "autocmd FileType tex call lexical#init()
-  "autocmd FileType text call lexical#init({ 'spell': 0 })
-augroup END
-"let g:lexical#thesaurus = ['~/.config/nvim/thesaurus/mthesaur.txt',]
-let g:lexical#spellfile = ['~/.config/nvim/spell/en.utf-8.add',]
-let g:lexical#spelllang = ['en_us',]
-" }}}
 
-"--- Try
 " vim-illuminate
 hi link illuminatedWord Visual
 " Time in milliseconds (default 250)
@@ -963,12 +891,6 @@ let g:Illuminate_delay = 1500
 
 " vim-search-pulse
 let g:vim_search_pulse_duration = 200
-
-" nerdtree ot something
-let g:NERDTreeWinPos = "right"
-""nnoremap <C-n> :NERDTreeToggle<CR>
-nnoremap <leader>n :NERDTreeToggle<CR>
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
 " gitgutter
 let g:gitgutter_enabled = 0
@@ -999,9 +921,9 @@ let g:NERDCustomDelimiters = {
       \ 'python': {'left': '#'},
       \ 'rust': {'left': '///'},
       \ }
+
 " Preview
 let g:livepreview_previewer = 'open -a Preview'
-
 
 " nvim
 if has('nvim')
