@@ -199,9 +199,6 @@ let g:rustfmt_autosave = 1
 let g:rustfmt_emit_files = 1
 let g:rustfmt_fail_silently = 0
 let g:rust_clip_command = 'xclip -selection clipboard'
-" Follow Rust code style rules
-au Filetype rust source $HOME/.config/nvim/scripts/spacetab.vim
-au Filetype rust set colorcolumn=100
 " <leader>= reformats current tange
 autocmd FileType rust nnoremap <leader>= :'<,'>RustFmtRange<CR>
 " }}}
@@ -549,21 +546,6 @@ if has("autocmd")
   " https://stackoverflow.com/questions/31449496/vim-ignore-specifc-file-in-autocommand
   au BufReadPost * if expand('%:p') !~# '\m/\.git/' && line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
 endif
-
-" Auto-make less files on save
-autocmd BufWritePost *.less if filereadable("Makefile") | make | endif
-
-" Help filetype detection
-autocmd BufRead *.plot set filetype=gnuplot
-autocmd BufRead *.md set filetype=markdown
-autocmd BufRead *.lds set filetype=ld
-autocmd BufRead *.tex set filetype=tex
-autocmd BufRead *.xlsx.axlsx set filetype=ruby
-autocmd BufRead *.trm set filetype=c
-autocmd BufRead *.org set filetype=org
-
-" Script plugins
-autocmd Filetype html,xml,xsl,php source $HOME/.config/nvim/scripts/closetag.vim
 
 " A second kind of re-wrap {{{
 " Reformat lines (getting the spacing correct)
