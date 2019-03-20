@@ -22,7 +22,6 @@ Plug 'tpope/vim-fugitive'
 Plug 'sheerun/vim-polyglot'   " I don't need this and it is buggy
 Plug 'tpope/vim-sleuth'  " Heuristically set buffer options
 "Plug 'ntpeters/vim-better-whitespace' " Remove trailing spaces
-Plug 'junegunn/vim-easy-align'
 Plug 'scrooloose/nerdcommenter'
 Plug 'janko-m/vim-test'
 Plug 'terryma/vim-multiple-cursors'
@@ -876,12 +875,6 @@ let g:vim_search_pulse_duration = 200
 
 " gitgutter
 let g:gitgutter_enabled = 0
-
-" Easy Align
-" Start interactive EasyAlign in visual mode (e.g. vipga)
-xmap ga <Plug>(EasyAlign)
-" Start interactive EasyAlign for a motion/text object (e.g. gaip)
-nmap ga <Plug>(EasyAlign)
 
 " NERDCommenter
 " Add spaces after comment delimiters by default
