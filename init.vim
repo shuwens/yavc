@@ -32,6 +32,7 @@ Plug 'tpope/vim-speeddating'
 Plug 'machakann/vim-highlightedyank'
 Plug 'andymass/vim-matchup'
 Plug 'itchyny/lightline.vim'
+Plug 'maximbaz/lightline-ale'
 Plug 'Yggdroot/indentLine'
 Plug 'jaxbot/semantic-highlight.vim'
 
@@ -147,7 +148,8 @@ let g:lightline = {
       \           [ 'gitbranch', 'readonly', 'filename', 'modified' ] ],
       \  'right': [
       \             ['teststatus'], ['lineinfo'],
-      \             ['percent'], ['fileformat', 'fileencoding', 'filetype']
+      \             ['percent'], ['filetype', 'fileformat', 'fileencoding'],
+      \		    [ 'linter_checking', 'linter_errors', 'linter_warnings', 'linter_ok' ],
       \           ]
       \ },
       \ 'component_function': {
@@ -159,6 +161,20 @@ let g:lightline = {
 function! LightlineFilename()
   return expand('%:t') !=# '' ? @% : '[No Name]'
 endfunction
+
+" better light line?
+let g:lightline.component_expand = {
+      \  'linter_checking': 'lightline#ale#checking',
+      \  'linter_warnings': 'lightline#ale#warnings',
+      \  'linter_errors': 'lightline#ale#errors',
+      \  'linter_ok': 'lightline#ale#ok',
+      \ }
+let g:lightline.component_type = {
+      \     'linter_checking': 'left',
+      \     'linter_warnings': 'warning',
+      \     'linter_errors': 'error',
+      \     'linter_ok': 'left',
+      \ }
 " }}}
 
 " Completion {{{
@@ -169,7 +185,6 @@ set completeopt=noinsert,menuone,noselect
 inoremap <expr><Tab> (pumvisible()?(empty(v:completed_item)?"\<C-n>":"\<C-y>"):"\<Tab>")
 inoremap <expr><CR> (pumvisible()?(empty(v:completed_item)?"\<CR>\<CR>":"\<C-y>"):"\<CR>")
 " }}}
-"
 " echodoc {{{
 let g:echodoc_enable_at_startup = 1
 " }}}
@@ -381,8 +396,8 @@ nnoremap <leader>f :GFiles<CR>
 nmap <leader>g :GFiles?<CR>
 " <leader>s for Rg search
 noremap <leader>s :Rg<CR>
-"noremap <leader>s :Rg
-noremap <leader>a :Rgg<CR>
+noremap <leader>a :Ag<CR>
+noremap <leader>rg :Rgg<CR>
 
 " }}}
 " fzf helper methods {{{
