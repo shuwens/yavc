@@ -638,6 +638,9 @@ let g:ale_lint_on_save = 0
 let g:ale_lint_on_enter = 0
 let g:ale_completion_enabled = 1
 let g:ale_virtualtext_cursor = 1
+" Write this in your vimrc file
+let g:ale_set_loclist = 0
+let g:ale_set_quickfix = 1
 " Rust
 let g:ale_rust_rls_toolchain = 'nightly'
 let g:ale_rust_rls_config = {
