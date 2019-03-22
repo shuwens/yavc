@@ -658,8 +658,9 @@ let g:ale_rust_rls_config = {
 nmap <leader>l <Plug>(ale_lint)
 nmap <leader>k <Plug>(ale_hover)
 " Jump to next/previous error
-nmap <silent> <C-n> <Plug>(ale_next_wrap)
-nmap <silent> <C-p> <Plug>(ale_previous_wrap)
+nmap <silent> <C-j> <Plug>(ale_next_wrap)
+nmap <silent> <C-k> <Plug>(ale_previous_wrap)
+"
 nmap <leader>d <Plug>(ale_detail)
 nmap <silent> <C-g> :close<cr>
 " Emacs style
