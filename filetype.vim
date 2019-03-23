@@ -10,6 +10,7 @@ augroup filetypedetect
 	" Follow Rust code style rules
 	au Filetype rust source $HOME/.config/nvim/scripts/spacetab.vim
 	au Filetype rust set colorcolumn=100
+	au FileType rust let b:dispatch = 'cargo check' 
 
 	" Shorter columns in text
 	autocmd Filetype text setlocal  tw=72 colorcolumn=73

@@ -28,7 +28,8 @@ Plug 'terryma/vim-multiple-cursors'
 Plug 'tpope/vim-speeddating'
 Plug 'mbbill/undotree'
 Plug 'tpope/vim-sensible'
-
+Plug 'tpope/vim-dispatch'
+Plug 'yaahallo/rscmake', { 'do': './install.sh' }
 
 " GUI enhancements
 " ----------------
@@ -629,6 +630,7 @@ let g:airline#extensions#ale#enabled = 1
 highlight ALEErrorSign ctermfg=9
 " lint should be handled by LSP, but seems like that Rust is bit broken
 let g:ale_linters = {
+    \ 'cpp' : ['rscmake', 'cppcheck', 'clangtidy', 'gcovcheck'],
       \ 'python': ['pyls',],
       \ 'LaTeX': ['proselint',],
       \ }
@@ -691,7 +693,8 @@ let g:ale_sign_hint = "➤"
 let g:ale_echo_msg_error_str = 'ERROR'
 let g:ale_echo_msg_warning_str = 'WARN'
 let g:ale_echo_msg_info_str = 'INFO'
-let g:ale_echo_msg_format = '[%severity%] %s  [%linter% %code%]'
+let g:ale_echo_msg_format = '%code: %%s %linter%'
+"let g:ale_echo_msg_format = '[%severity%] %s  [%linter% %code%]'
 " }}}
 
 " vim-grammarous {{{
@@ -926,6 +929,9 @@ let g:livepreview_previewer = 'open -a Preview'
 
 " Replaced gundo with UndoTree, pure vimscript instead of dependencies
 nnoremap <leader>u :UndotreeToggle<CR>
+
+" vim-dispatch
+nnoremap <leader>d :Dispatch<CR>
 
 " nvim
 if has('nvim')
