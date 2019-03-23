@@ -111,8 +111,6 @@ if !isdirectory("$HOME/dev/others/base16")
 endif
 call plug#end()
 
-" Don't need it if we have sensible?
-"runtime macros/matchit.vim
 
 if has('nvim')
   set guicursor=n-v-c:block-Cursor/lCursor-blinkon0,i-ci:ver25-Cursor/lCursor,r-cr:hor20-Cursor/lCursor
@@ -229,7 +227,6 @@ filetype plugin indent on
 set autoindent
 set timeoutlen=300 " http://stackoverflow.com/questions/2158516/delay-before-o-opens-a-new-line
 set encoding=utf-8
-set scrolloff=3
 set noshowmode
 set hidden
 set nowrap
@@ -340,10 +337,14 @@ hi Normal guibg=NONE
 highlight nonText guibg=NONE
 colorscheme base16-atelier-dune
 
+" sensible: no need now{{{
+"set scrolloff=3
+"runtime macros/matchit.vim
 " Show those damn hidden characters
 " Verbose: set listchars=nbsp:¬,eol:¶,extends:»,precedes:«,trail:•
-set nolist
-set listchars=nbsp:¬,extends:»,precedes:«,trail:•
+"set nolist
+"set listchars=nbsp:¬,extends:»,precedes:«,trail:•
+" }}}
 
 " ===========================================================================
 "   Keyboard shortcuts
