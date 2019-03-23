@@ -26,6 +26,9 @@ Plug 'scrooloose/nerdcommenter'
 Plug 'janko-m/vim-test'
 Plug 'terryma/vim-multiple-cursors'
 Plug 'tpope/vim-speeddating'
+Plug 'mbbill/undotree'
+Plug 'tpope/vim-sensible'
+
 
 " GUI enhancements
 " ----------------
@@ -108,7 +111,8 @@ if !isdirectory("$HOME/dev/others/base16")
 endif
 call plug#end()
 
-runtime macros/matchit.vim
+" Don't need it if we have sensible?
+"runtime macros/matchit.vim
 
 if has('nvim')
   set guicursor=n-v-c:block-Cursor/lCursor-blinkon0,i-ci:ver25-Cursor/lCursor,r-cr:hor20-Cursor/lCursor
@@ -686,7 +690,7 @@ let g:ale_sign_hint = "➤"
 let g:ale_echo_msg_error_str = 'ERROR'
 let g:ale_echo_msg_warning_str = 'WARN'
 let g:ale_echo_msg_info_str = 'INFO'
-let g:ale_echo_msg_format = '[%severity%] %s  [%linter% | %code%]'
+let g:ale_echo_msg_format = '[%severity%] %s  [%linter% %code%]'
 " }}}
 
 " vim-grammarous {{{
@@ -918,6 +922,9 @@ let g:NERDCustomDelimiters = {
 
 " Preview
 let g:livepreview_previewer = 'open -a Preview'
+
+" Replaced gundo with UndoTree, pure vimscript instead of dependencies
+nnoremap <leader>u :UndotreeToggle<CR>
 
 " nvim
 if has('nvim')
