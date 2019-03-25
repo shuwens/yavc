@@ -148,7 +148,9 @@ let g:lightline = {
       \ 'colorscheme': 'jellybeans',
       \ 'active': {
       \ 'left': [ [ 'mode', 'paste' ],
-      \           [ 'gitbranch', 'readonly', 'filename', 'modified' ] ],
+      \           [ 'readonly', 'filename', 'modified' ],
+      \		  [ 'gitbranch',]
+      \		],
       \  'right': [
       \             ['teststatus'], ['lineinfo'],
       \             ['percent'], ['filetype', 'fileformat', 'fileencoding'],
@@ -625,7 +627,7 @@ let g:airline#extensions#ale#enabled = 1
 highlight ALEErrorSign ctermfg=9
 " lint should be handled by LSP, but seems like that Rust is bit broken
 let g:ale_linters = {
-    \ 'cpp' : ['rscmake', 'cppcheck', 'clangtidy', 'gcovcheck'],
+      \ 'cpp' : ['rscmake', 'cppcheck', 'clangtidy', 'gcovcheck'],
       \ 'python': ['pyls',],
       \ 'LaTeX': ['proselint',],
       \ }
