@@ -606,7 +606,7 @@ autocmd Filetype org nmap Q :call TeX_fmt()<CR>
 " }}}
 
 " VIM spell
-set spell spelllang=en_us
+set spelllang=en_us
 for d in glob('~/.config/nvim/spell/*.add', 1, 1)
   if filereadable(d) && (!filereadable(d . '.spl') || getftime(d) > getftime(d . '.spl'))
     exec 'mkspell! ' . fnameescape(d)
