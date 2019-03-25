@@ -157,14 +157,9 @@ let g:lightline = {
       \ },
       \ 'component_function': {
       \   'gitbranch': 'fugitive#head',
-      \   'filename': 'LightlineFilename',
       \   'teststatus': 'TestStatus',
       \ },
       \ }
-function! LightlineFilename()
-  return expand('%:t') !=# '' ? @% : '[No Name]'
-endfunction
-
 " better light line?
 let g:lightline.component_expand = {
       \  'linter_checking': 'lightline#ale#checking',
