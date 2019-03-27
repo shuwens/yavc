@@ -386,22 +386,22 @@ endif
 " }}}
 "
 " fzf !!! {{{
-
 " from http://sheerun.net/2014/03/21/how-to-boost-your-vim-productivity/
 "
 "let g:fzf_layout = { 'down': '~20%' }
 let g:fzf_layout = { 'down': '~35%' }
-
+" Keybindings
+imap <c-x><c-l> <plug>(fzf-complete-line)
+nnoremap <leader>c :Commits<CR>
 " Open hotkeys
-nmap <leader>p :Files<CR>
-nmap <leader>; :Buffers<CR>
+nnoremap <leader>p :Files<CR>
+nnoremap <leader>; :Buffers<CR>
 nnoremap <leader>f :GFiles<CR>
-nmap <leader>g :GFiles?<CR>
+nnoremap <leader>g :GFiles?<CR>
 " <leader>s for Rg search
 noremap <leader>s :Rg<CR>
 noremap <leader>a :Ag<CR>
 noremap <leader>rg :Rgg<CR>
-
 " }}}
 " fzf helper methods {{{
 
@@ -490,8 +490,8 @@ inoremap <up> <nop>
 inoremap <down> <nop>
 
 " Left and right can switch buffers
-""nnoremap <left> :bp<CR>
-""nnoremap <right> :bn<CR>
+nnoremap <left> :bp<CR>
+nnoremap <right> :bn<CR>
 
 " Move by line
 nnoremap j gj
