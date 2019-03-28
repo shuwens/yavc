@@ -552,6 +552,15 @@ nnoremap <leader>gd :Gvdiff<CR>
 nnoremap gdh :diffget //2<CR>
 nnoremap gdl :diffget //3<CR>
 
+" Replaced gundo with UndoTree, pure vimscript instead of dependencies
+nnoremap <leader>u :UndotreeToggle<CR>
+
+" vim-dispatch
+nnoremap <leader>d :Dispatch<CR>
+" special case for netbricks
+autocmd BufRead,BufNewFile $HOME/dev/netbricks/** let b:dispatch = './build.sh'
+autocmd BufRead,BufNewFile $HOME/dev/netbricks/** nnoremap <leader>d :Dispatch!<CR>
+
 " ===========================================================================
 "    Autocommands
 " ===========================================================================
@@ -669,8 +678,7 @@ nmap <leader>k <Plug>(ale_hover)
 " Jump to next/previous error
 nmap <silent> <C-j> <Plug>(ale_next_wrap)
 nmap <silent> <C-k> <Plug>(ale_previous_wrap)
-"
-nmap <leader>d <Plug>(ale_detail)
+"nmap <leader>d <Plug>(ale_detail)  " useless?
 nmap <silent> <C-g> :close<cr>
 " Emacs style
 nmap <leader>. <Plug>(ale_go_to_definition)
@@ -928,12 +936,6 @@ let g:NERDCustomDelimiters = {
 
 " Preview
 let g:livepreview_previewer = 'open -a Preview'
-
-" Replaced gundo with UndoTree, pure vimscript instead of dependencies
-nnoremap <leader>u :UndotreeToggle<CR>
-
-" vim-dispatch
-nnoremap <leader>d :Dispatch<CR>
 
 " nvim
 if has('nvim')
