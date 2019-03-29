@@ -39,6 +39,8 @@ Plug 'itchyny/lightline.vim'
 Plug 'maximbaz/lightline-ale'
 Plug 'Yggdroot/indentLine'
 Plug 'jaxbot/semantic-highlight.vim'
+Plug 'bounceme/poppy.vim'
+Plug 'ntpeters/vim-better-whitespace'
 
 " Fuzzy finder
 " ------------
@@ -646,7 +648,7 @@ let g:ale_linters = {
       \ 'LaTeX': ['proselint',],
       \ }
 let g:ale_fixers = {
-      \ '*': ['remove_trailing_lines', 'trim_whitespace'],
+      \	'*': ['remove_trailing_lines', 'trim_whitespace'],
       \ 'rust': ['rustfmt']
       \ }
 " only lint when I want
@@ -936,6 +938,9 @@ let g:NERDCustomDelimiters = {
 
 " Preview
 let g:livepreview_previewer = 'open -a Preview'
+
+" poppy
+au! cursormoved * call PoppyInit()
 
 " nvim
 if has('nvim')

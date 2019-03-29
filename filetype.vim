@@ -62,4 +62,7 @@ augroup filetypedetect
 	" Spell checking for things I need
 	autocmd Filetype tex setlocal spell
 	autocmd Filetype rust setlocal spell
+
+
+	autocmd FileType markdown setlocal nofoldenable
 augroup END
