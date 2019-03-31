@@ -915,7 +915,8 @@ let g:vim_search_pulse_duration = 200
 " gitgutter
 let g:gitgutter_enabled = 0
 
-" NERDCommenter
+" NERDCommenter {{{
+"
 " Add spaces after comment delimiters by default
 let g:NERDSpaceDelims = 1
 " Use compact syntax for prettified multi-line comments
@@ -935,6 +936,11 @@ let g:NERDCustomDelimiters = {
       \ 'python': {'left': '#'},
       \ 'rust': {'left': '///'},
       \ }
+" Nerd commenter keybindings
+map <leader>\ <leader>c<Space>
+map <leader>cc <plug>NERDComToggleComment
+map <C-\> <leader>c<Space>
+" }}}
 
 " Preview
 let g:livepreview_previewer = 'open -a Preview'
