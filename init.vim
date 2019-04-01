@@ -63,6 +63,11 @@ Plug 'junegunn/vader.vim'
 Plug 'ncm2/ncm2-bufword'
 Plug 'ncm2/ncm2-tmux'
 Plug 'ncm2/ncm2-path'
+" LSP
+Plug 'autozimu/LanguageClient-neovim', {
+    \ 'branch': 'next',
+    \ 'do': 'bash install.sh',
+    \ }
 " Showing function signature and inline doc.
 Plug 'Shougo/echodoc.vim'
 
@@ -150,8 +155,8 @@ let g:lightline = {
       \ 'colorscheme': 'jellybeans',
       \ 'active': {
       \ 'left': [ [ 'mode', 'paste' ],
+      \		  [ 'gitbranch',],
       \           [ 'readonly', 'filename', 'modified' ],
-      \		  [ 'gitbranch',]
       \		],
       \  'right': [
       \             ['teststatus'], ['lineinfo'],
@@ -179,7 +184,10 @@ let g:lightline.component_type = {
       \ }
 " }}}
 
-" Completion {{{
+" NCM2 completion manager {{{
+" NOTE: At some point I might want to switch to coc, if I want support for other
+" programming language outside LSP.
+"
 autocmd BufEnter * call ncm2#enable_for_buffer()
 set completeopt=noinsert,menuone,noselect
 " tab to select
@@ -187,10 +195,20 @@ set completeopt=noinsert,menuone,noselect
 inoremap <expr><Tab> (pumvisible()?(empty(v:completed_item)?"\<C-n>":"\<C-y>"):"\<Tab>")
 inoremap <expr><CR> (pumvisible()?(empty(v:completed_item)?"\<CR>\<CR>":"\<C-y>"):"\<CR>")
 " }}}
+" LSP completion backend{{{
+" FIXME: I believe ALE completion should be able to do this, however I can't
+" get that to work for now.
+let g:LanguageClient_serverCommands = {
+    \ 'rust': ['rls'],
+    \ }
+let g:LanguageClient_diagnosticsEnable = 0
+ let g:LanguageClient_autoStart = 1
+" }}}
+
 " echodoc {{{
 let g:echodoc_enable_at_startup = 1
 " }}}
-"
+
 " Don't confirm .lvimrc
 let g:localvimrc_ask = 0
 
@@ -327,7 +345,7 @@ endif
 set colorcolumn=80 " and give me a colored column
 set showcmd " Show (partial) command in status line.
 set mouse=a " Enable mouse usage (all modes) in terminals
-set completeopt-=preview
+"set completeopt-=preview
 set shortmess+=c " don't give |ins-completion-menu| messages.
 
 " Colors
@@ -646,6 +664,7 @@ let g:ale_linters = {
       \ 'cpp' : ['rscmake', 'cppcheck', 'clangtidy', 'gcovcheck'],
       \ 'python': ['pyls',],
       \ 'LaTeX': ['proselint',],
+	      \ 'rust': ['rustup', 'run', 'nightly', 'rls'],
       \ }
 let g:ale_fixers = {
       \	'*': ['remove_trailing_lines', 'trim_whitespace'],
@@ -656,7 +675,7 @@ let g:ale_lint_on_text_changed = 'never'
 let g:ale_lint_on_insert_leave = 1
 let g:ale_lint_on_save = 0
 let g:ale_lint_on_enter = 0
-let g:ale_completion_enabled = 1
+let g:ale_completion_enabled = 0
 let g:ale_virtualtext_cursor = 1
 " Write this in your vimrc file
 let g:ale_set_loclist = 0
@@ -687,6 +706,7 @@ nmap <leader>. <Plug>(ale_go_to_definition)
 nmap <leader>y <Plug>(ale_go_to_definition_in_vsplit)
 nmap <leader>dd <Plug>(ale_go_to_type_definition)
 nmap <leader>r <Plug>(ale_find_references)
+nmap <leader>\ <C-O>
 nmap <leader>o <C-O>
 " format error msg
 highlight link ALEWarningSign Todo
@@ -705,7 +725,7 @@ let g:ale_sign_hint = "➤"
 let g:ale_echo_msg_error_str = 'ERROR'
 let g:ale_echo_msg_warning_str = 'WARN'
 let g:ale_echo_msg_info_str = 'INFO'
-let g:ale_echo_msg_format = '%code: %%s %linter%'
+let g:ale_echo_msg_format = '%code: %%s [%linter%]'
 "let g:ale_echo_msg_format = '[%severity%] %s  [%linter% %code%]'
 " }}}
 
@@ -934,10 +954,10 @@ let g:NERDCustomDelimiters = {
       \ 'c': {'left': '//'},
       \ 'cpp': {'left': '//'},
       \ 'python': {'left': '#'},
-      \ 'rust': {'left': '///'},
+      \ 'rust': {'left': '//'},
       \ }
 " Nerd commenter keybindings
-map <leader>\ <leader>c<Space>
+"map <leader>\ <leader>c<Space>
 map <leader>cc <plug>NERDComToggleComment
 map <C-\> <leader>c<Space>
 " }}}

@@ -6,11 +6,11 @@ augroup filetypedetect
 	autocmd BufRead,BufNewFile *.nft setfiletype nftables
 
 	" Rust language server
-	autocmd FileType rust let b:ale_linters = ['rustup', 'run', 'nightly', 'rls']
+	"autocmd FileType rust let b:ale_linters = ['rustup', 'run', 'nightly', 'rls']
 	" Follow Rust code style rules
 	au Filetype rust source $HOME/.config/nvim/scripts/spacetab.vim
 	au Filetype rust set colorcolumn=100
-	au FileType rust let b:dispatch = 'cargo check' 
+	au FileType rust let b:dispatch = 'cargo check'
 
 	" Shorter columns in text
 	autocmd Filetype text setlocal  tw=72 colorcolumn=73
@@ -42,7 +42,7 @@ augroup filetypedetect
 	" lisp
 	au BufNewFile,BufRead *.lsp,*.lisp,*.el,*.cl,*.jl,*.L,.emacs,.spacemacs setf lisp
 
-	" other file types 
+	" other file types
 	au BufNewFile,BufRead .chunkwmrc,.skhdrc set filetype=sh
 
 	" Auto-make less files on save
