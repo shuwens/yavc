@@ -59,11 +59,12 @@ Plug 'w0rp/ale'
 " Completion plugins
 Plug 'ncm2/ncm2'
 Plug 'roxma/nvim-yarp'
-Plug 'junegunn/vader.vim'
 Plug 'ncm2/ncm2-bufword'
 Plug 'ncm2/ncm2-tmux'
 Plug 'ncm2/ncm2-path'
 " LSP
+" FIXME: this is temporary as ncm2 will be able to use ALE LSP client later
+" https://github.com/ncm2/ncm2/issues/121
 Plug 'autozimu/LanguageClient-neovim', {
     \ 'branch': 'next',
     \ 'do': 'bash install.sh',
@@ -79,6 +80,7 @@ Plug 'RRethy/vim-illuminate'
 Plug 'inside/vim-search-pulse'
 Plug 'numirias/semshi', {'do': ':UpdateRemotePlugins'}
 Plug 'lilydjwg/colorizer'
+Plug 'junegunn/vader.vim'
 
 " Syntactic language support
 " --------------------------
@@ -183,7 +185,6 @@ let g:lightline.component_type = {
       \     'linter_ok': 'left',
       \ }
 " }}}
-
 " NCM2 completion manager {{{
 " NOTE: At some point I might want to switch to coc, if I want support for other
 " programming language outside LSP.
@@ -202,9 +203,10 @@ let g:LanguageClient_serverCommands = {
     \ 'rust': ['rls'],
     \ }
 let g:LanguageClient_diagnosticsEnable = 0
- let g:LanguageClient_autoStart = 1
+let g:LanguageClient_autoStart = 1
+"let g:echodoc#enable_at_startup = 1
+"let g:echodoc#type = 'virtual'
 " }}}
-
 " echodoc {{{
 let g:echodoc_enable_at_startup = 1
 " }}}
@@ -225,14 +227,13 @@ let g:go_fmt_command = "goimports"
 let g:go_bin_path = expand("~/dev/others/r/bin")
 let g:go_version_warning = 0
 " }}}
-
 " Rust {{{
 " https://github.com/rust-lang/rust.vim/issues/192
 let g:rustfmt_command = "rustfmt +nightly"
 let g:rustfmt_autosave = 1
 let g:rustfmt_emit_files = 1
 let g:rustfmt_fail_silently = 0
-let g:rust_clip_command = 'xclip -selection clipboard'
+"let g:rust_clip_command = 'xclip -selection clipboard'
 " <leader>= reformats current tange
 autocmd FileType rust nnoremap <leader>= :'<,'>RustFmtRange<CR>
 " }}}
@@ -347,6 +348,22 @@ set showcmd " Show (partial) command in status line.
 set mouse=a " Enable mouse usage (all modes) in terminals
 "set completeopt-=preview
 set shortmess+=c " don't give |ins-completion-menu| messages.
+
+set shortmess=at
+set cmdheight=2
+set tw=79
+set cursorline
+set cursorcolumn
+hi Normal ctermbg=NONE
+hi Folded ctermbg=234 ctermfg=red
+
+" better whitespace
+" red #FF0000, coral #FF7F50, tomato #FF6347, orangered #FF4500, orange
+" #FFA500, darkorange #FF8C00
+"let g:better_whitespace_ctermcolor='<desired_color>'
+let g:better_whitespace_guicolor='#FF4500'
+let g:better_whitespace_enabled=1
+let g:strip_whitespace_on_save=0
 
 " Colors
 set background=dark
@@ -506,8 +523,8 @@ nnoremap <up> <nop>
 nnoremap <down> <nop>
 nnoremap <left> <nop>
 nnoremap <right> <nop>
-inoremap <up> <nop>
-inoremap <down> <nop>
+"inoremap <up> <nop>
+"inoremap <down> <nop>
 
 " Left and right can switch buffers
 nnoremap <left> :bp<CR>
@@ -647,27 +664,16 @@ endfor
 " ===========================================================================
 "   Personal config
 " ===========================================================================
-
-set shortmess=at
-set cmdheight=2
-set tw=79
-set cursorline
-set cursorcolumn
-hi Normal ctermbg=NONE
-hi Folded ctermbg=234 ctermfg=red
-
 " Linter -- ALE {{{
 let g:airline#extensions#ale#enabled = 1
-highlight ALEErrorSign ctermfg=9
 " lint should be handled by LSP, but seems like that Rust is bit broken
 let g:ale_linters = {
       \ 'cpp' : ['rscmake', 'cppcheck', 'clangtidy', 'gcovcheck'],
       \ 'python': ['pyls',],
       \ 'LaTeX': ['proselint',],
-	      \ 'rust': ['rustup', 'run', 'nightly', 'rls'],
       \ }
 let g:ale_fixers = {
-      \	'*': ['remove_trailing_lines', 'trim_whitespace'],
+      \	'*': ['remove_trailing_lines', ],
       \ 'rust': ['rustfmt']
       \ }
 " only lint when I want
@@ -714,10 +720,10 @@ highlight link ALEErrorSign WarningMsg
 highlight link ALEVirtualTextWarning Todo
 highlight link ALEVirtualTextInfo Todo
 highlight link ALEVirtualTextError WarningMsg
-highlight ALEError guibg=#330000
-highlight ALEWarning guibg=#333300
-"highlight ALEError guibg=None
-"highlight ALEWarning guibg=None
+"highlight ALEError guibg=#330000
+"highlight ALEWarning guibg=#333300
+highlight ALEError guibg=None
+highlight ALEWarning guibg=None
 let g:ale_sign_error = "✖"
 let g:ale_sign_warning = "⚠"
 let g:ale_sign_info = "i"
@@ -725,7 +731,12 @@ let g:ale_sign_hint = "➤"
 let g:ale_echo_msg_error_str = 'ERROR'
 let g:ale_echo_msg_warning_str = 'WARN'
 let g:ale_echo_msg_info_str = 'INFO'
-let g:ale_echo_msg_format = '%code: %%s [%linter%]'
+let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
+"let g:ale_echo_msg_format='%linter% %severity% (%code%): %s'
+      let g:ale_loclist_msg_format='%linter% %severity% (%code%): %s'
+
+
+"let g:ale_echo_msg_format = '%code: %%s [%linter%]'
 "let g:ale_echo_msg_format = '[%severity%] %s  [%linter% %code%]'
 " }}}
 
@@ -872,14 +883,6 @@ if has("mac") || has("macunix")
   vmap <D-k> <M-k>
 endif
 " }}}
-
-" better whitespace
-" red #FF0000, coral #FF7F50, tomato #FF6347, orangered #FF4500, orange
-" #FFA500, darkorange #FF8C00
-"let g:better_whitespace_ctermcolor='<desired_color>'
-let g:better_whitespace_guicolor='#FF4500'
-let g:better_whitespace_enabled=1
-let g:strip_whitespace_on_save=0
 
 " Delete trailing white space on save, useful for Python and CoffeeScript ;) {{{
 func! DeleteTrailingWS()
