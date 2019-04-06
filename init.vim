@@ -54,7 +54,8 @@ endif
 
 " Semantic language support
 " -------------------------
-Plug 'w0rp/ale'
+"Plug 'w0rp/ale'
+Plug 'jethrosun/ale', { 'branch': 'fix-2301' }
 
 " Completion plugins
 Plug 'ncm2/ncm2'
@@ -119,6 +120,7 @@ if !isdirectory("$HOME/dev/others/base16")
   "Plug ' mhartington/oceanic-next'
   Plug 'chriskempson/base16-vim'
 endif
+Plug 'nightsense/cosmic_latte'
 call plug#end()
 
 
@@ -160,10 +162,10 @@ let g:lightline = {
       \		  [ 'gitbranch', 'readonly', 'filename', 'modified' ]
       \		],
       \  'right': [
-      \             ['teststatus'],
-      \		    ['filetype', 'fileformat', 'fileencoding'],
-      \             ['lineinfo', 'percent'],
-      \		    [ 'linter_checking', 'linter_errors', 'linter_warnings', 'linter_ok' ]
+      \             ['lineinfo'],
+      \		    ['percent'],
+      \		    ['fileformat', 'fileencoding', 'filetype', 'teststatus'],
+      \		    [ 'linter_checking', 'linter_errors', 'linter_warnings', 'linter_ok' ],
       \           ]
       \ },
       	\   'component': {
@@ -272,7 +274,7 @@ inoremap <expr><CR> (pumvisible()?(empty(v:completed_item)?"\<CR>\<CR>":"\<C-y>"
 " FIXME: I believe ALE completion should be able to do this, however I can't
 " get that to work for now.
 let g:LanguageClient_serverCommands = {
-      \ 'rust': ['rls'],
+      \ 'rust': ['ra_lsp_server'],
       \ }
 let g:LanguageClient_autoStart = 1
 let g:LanguageClient_diagnosticsEnable = 0
@@ -305,9 +307,11 @@ let g:rustfmt_command = "rustfmt +nightly"
 let g:rustfmt_autosave = 1
 let g:rustfmt_emit_files = 1
 let g:rustfmt_fail_silently = 0
+"let g:rust_keep_autopairs_default = 1
 "let g:rust_clip_command = 'xclip -selection clipboard'
 " <leader>= reformats current tange
-autocmd FileType rust nnoremap <leader>= :'<,'>RustFmtRange<CR>
+"autocmd FileType rust nnoremap <leader>= :'<,'>RustFmtRange<CR>
+autocmd FileType rust nnoremap <leader>= :RustFmt<CR>
 " }}}
 
 " ===========================================================================
@@ -398,6 +402,10 @@ cnoremap %s/ %sm/
 set guioptions-=T " Remove toolbar
 set vb t_vb= " No more beeps
 set backspace=2 " Backspace over newlines
+set cmdheight=2
+set tw=79
+set cursorline
+set cursorcolumn
 "set nofoldenable
 set foldmethod=marker " Only fold on marks
 set ruler " Where am I?
@@ -418,15 +426,7 @@ set colorcolumn=80 " and give me a colored column
 set showcmd " Show (partial) command in status line.
 set mouse=a " Enable mouse usage (all modes) in terminals
 set shortmess+=c " don't give |ins-completion-menu| messages.
-
-set shortmess=at
-set cmdheight=2
-set tw=79
-set cursorline
-set cursorcolumn
-hi Normal ctermbg=NONE
-hi Folded ctermbg=234 ctermfg=red
-
+"set shortmess=at
 set completeopt-=preview
 
 " better whitespace
@@ -440,9 +440,12 @@ let g:strip_whitespace_on_save=0
 " Colors
 set background=dark
 colorscheme base16-atelier-dune
+"colorscheme cosmic_latte
+
 hi Normal guibg=NONE
 highlight nonText guibg=NONE
-colorscheme base16-atelier-dune
+hi Normal ctermbg=NONE
+hi Folded ctermbg=234 ctermfg=red
 
 " sensible: no need now{{{
 "set scrolloff=3
@@ -781,7 +784,7 @@ nmap <leader>. <Plug>(ale_go_to_definition)
 nmap <leader>y <Plug>(ale_go_to_definition_in_vsplit)
 nmap <leader>dd <Plug>(ale_go_to_type_definition)
 nmap <leader>r <Plug>(ale_find_references)
-nmap <leader>\ <C-O>
+" nmap <leader>\ <C-O>
 nmap <leader>o <C-O>
 
 " ALE format {{{2
@@ -982,6 +985,12 @@ let g:livepreview_previewer = 'open -a Preview'
 
 " poppy
 au! cursormoved * call PoppyInit()
+
+" auto pair jump
+let g:AutoPairsShortcutJump = '<leader>\'
+"let g:AutoPairsShortcutJump = '<S-tab>'
+" let g:AutoPairsShortcutJump = '<C-l>'
+"let g:AutoPairsShortcutJump = '<M-n>'
 
 " nvim
 if has('nvim')

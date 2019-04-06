@@ -11,7 +11,7 @@ augroup filetypedetect
 	au Filetype rust source $HOME/.config/nvim/scripts/spacetab.vim
 	au Filetype rust set colorcolumn=100
 	au FileType rust let b:dispatch = 'cargo check'
-	au FileType rust let b:AutoPairs = AutoPairsDefine({'<' : '>'})
+	au filetype rust let b:AutoPairs = {'`': '`', '"': '"', '{': '}', '(': ')', '[': ']', '|':'|', '<':'>'}
 	au Filetype rust let b:ale_linters = ['rustup', 'run', 'nightly', 'rls']
 
 	" Shorter columns in text
@@ -65,5 +65,7 @@ augroup filetypedetect
 	au Filetype tex setlocal spell
 	au Filetype rust setlocal spell
 
+	" additional 
+	au filetype ruby let b:AutoPairs = {'`': '`', '"': '"', '{': '}', '''': '''', '(': ')', '[': ']', '|':'|'}
 	au FileType markdown setlocal nofoldenable
 augroup END
