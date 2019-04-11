@@ -36,8 +36,7 @@ augroup filetypedetect
 	" fish
 	au FileType fish compiler fish
 	au FileType fish setlocal textwidth=79
-	"autocmd FileType fish setlocal foldmethod=expr
-	au FileType fish setlocal nofoldenable
+	"au FileType fish setlocal nofoldenable
 	au FileType fish setlocal indentexpr=fish#Indent()
 	au FileType fish setlocal indentkeys+==end,=else,=case
 
@@ -65,7 +64,8 @@ augroup filetypedetect
 	au Filetype tex setlocal spell
 	au Filetype rust setlocal spell
 
-	" additional 
+	" additional
 	au filetype ruby let b:AutoPairs = {'`': '`', '"': '"', '{': '}', '''': '''', '(': ')', '[': ']', '|':'|'}
 	au FileType markdown setlocal nofoldenable
+	"autocmd FileType vim setlocal foldmethod=expr
 augroup END
