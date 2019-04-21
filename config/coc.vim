@@ -1,4 +1,3 @@
-
 " Coc
 "
 " if hidden is not set, TextEdit might fail.
@@ -19,6 +18,19 @@ set shortmess+=c
 
 " always show signcolumns
 set signcolumn=yes
+
+" Float color highlight
+"hi CocErrorFloat guifg=#af0000
+hi CocErrorFloat guifg=#ff5874
+hi CocErrorSign guifg=#ff5874
+hi CocWarningFloat guifg=#ddaa00
+hi CocWarningSign guifg=#ddaa00
+hi CocInfoSign guifg=#ffaf00
+hi CocInfoFloat guifg=#ffaf00
+hi CocHintFloat guifg=#2ed1cd
+
+" Rust
+call coc#config('rust', { 'clippy_preference': 'on' })
 
 " Use tab for trigger completion with characters ahead and navigate.
 " Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
@@ -50,6 +62,7 @@ nmap <silent> <leader>y  <Plug>(coc-type-definition)
 nmap <silent> <leader>i  <Plug>(coc-implementation)
 nmap <silent> <leader>r  <Plug>(coc-references)
 nmap <silent> <leader>o  <C-O>
+nmap <silent> <leader>\  <C-O>
 nmap <silent> <C-g> :close<cr>
 
 " Use K to show documentation in preview window
@@ -96,89 +109,6 @@ command! -nargs=0 Format :call CocAction('format')
 " Use `:Fold` to fold current buffer
 command! -nargs=? Fold :call CocAction('fold', <f-args>)
 
-" Lightline config {{{
-"
-" Add diagnostic info for https://github.com/itchyny/lightline.vim
-function! CocCurrentFunction()
-  return get(b:, 'coc_current_function', '')
-endfunction
-
-let g:lightline = {
-      \ 'colorscheme': 'jellybeans',
-      \ 'active': {
-      \   'left': [ [ 'mode', 'paste' ],
-      \             [ 'cocstatus', 'currentfunction', 'readonly', 'filename', 'modified' ] ]
-      \ },
-      \ 'component_function': {
-      \   'cocstatus': 'coc#status',
-      \   'currentfunction': 'CocCurrentFunction'
-      \ },
-      \ }
-
-let g:lightline = {
-      \ 'colorscheme': 'jellybeans',
-      \ 'active': {
-      \   'left': [ [ 'mode', 'paste' ],
-      \		    [ 'currentfunction', 'readonly', 'filename', 'modified' ],
-      \             [ 'coc_error', 'coc_warning', 'coc_hint', 'coc_info' ] ],
-      \   'right': [ [ 'lineinfo',  ],
-      \              [ 'percent' ],
-      \              [ 'fileformat', 'fileencoding', 'filetype'] ]
-      \ },
-      \ 'component_expand': {
-      \   'coc_error'        : 'LightlineCocErrors',
-      \   'coc_warning'      : 'LightlineCocWarnings',
-      \   'coc_info'         : 'LightlineCocInfos',
-      \   'coc_hint'         : 'LightlineCocHints',
-      \   'coc_fix'          : 'LightlineCocFixes',
-      \ },
-      \ 'component_function': {
-      \   'currentfunction': 'CocCurrentFunction'
-      \ },
-      \ }
-
-let g:lightline.component_type = {
-      \   'coc_error'        : 'error',
-      \   'coc_warning'      : 'warning',
-      \   'coc_info'         : 'tabsel',
-      \   'coc_hint'         : 'middle',
-      \   'coc_fix'          : 'middle',
-      \ }
-
-function! s:lightline_coc_diagnostic(kind, sign) abort
-  let info = get(b:, 'coc_diagnostic_info', 0)
-  if empty(info) || get(info, a:kind, 0) == 0
-    return ''
-  endif
-  try
-    let s = g:coc_user_config['diagnostic'][a:sign . 'Sign']
-  catch
-    let s = "•"
-  endtry
-  return printf('%s %d', s, info[a:kind])
-endfunction
-
-function! LightlineCocErrors() abort
-  return s:lightline_coc_diagnostic('error', 'error')
-endfunction
-
-function! LightlineCocWarnings() abort
-  return s:lightline_coc_diagnostic('warning', 'warning')
-endfunction
-
-function! LightlineCocInfos() abort
-  return s:lightline_coc_diagnostic('information', 'info')
-endfunction
-
-function! LightlineCocHints() abort
-  return s:lightline_coc_diagnostic('hints', 'hint')
-endfunction
-      \ }
-
-autocmd User CocDiagnosticChange call lightline#update()
-" }}}
-
-
 " Using CocList
 " Show all diagnostics
 nnoremap <silent> <leader>a  :<C-u>CocList diagnostics<cr>
@@ -190,10 +120,38 @@ nnoremap <silent> <leader>c  :<C-u>CocList commands<cr>
 "nnoremap <silent> <space>o  :<C-u>CocList outline<cr>
 " Search workspace symbols
 nnoremap <silent> <leader>s  :<C-u>CocList -I symbols<cr>
+" Resume latest coc list
+nnoremap <silent> <leader>p  :<C-u>CocListResume<CR>
 " Do default action for next item.
 "nnoremap <silent> <leader>j  :<C-u>CocNext<CR>
 " Do default action for previous item.
 "nnoremap <silent> <leader>k  :<C-u>CocPrev<CR>
-" Resume latest coc list
-nnoremap <silent> <leader>p  :<C-u>CocListResume<CR>
+
+let g:coc_status_error_sign = "✗"
+let g:coc_status_warning_sign = "⚠"
+
+" Lightline config
+"
+" Add diagnostic info for https://github.com/itchyny/lightline.vim
+function! CocCurrentFunction()
+  return get(b:, 'coc_current_function', '')
+endfunction
+
+let g:lightline = {
+      \ 'colorscheme': 'jellybeans',
+      \ 'active': {
+      \   'left': [ [ 'mode', 'paste' ],
+      \		    [ 'cocstatus',  'readonly', 'filename', 'modified' ] ],
+      \   'right': [ [ 'lineinfo',  ],
+      \              [ 'percent' ],
+      \              [ 'fileformat', 'fileencoding', 'filetype'],
+      \		     ]
+      \ },
+      \ 'component_function': {
+      \   'gitbranch': 'fugitive#head',
+      \   'cocstatus': 'coc#status',
+      \   'currentfunction': 'CocCurrentFunction'
+      \ },
+      \ }
+
 

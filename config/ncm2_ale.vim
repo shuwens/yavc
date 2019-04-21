@@ -143,7 +143,8 @@ command! -nargs=+ -complete=shellcmd RunBg call RunBgCmd(<q-args>)
 autocmd FileType rust nmap <leader>t :RunBg cargo test<CR>
 autocmd FileType rust nmap <leader>tc :RunBg cargo test -- --nocapture<CR>
 " }}}
-
+" }}}
+"
 " Linter -- ALE {{{
 " lint should be handled by LSP, but seems like that Rust is bit broken
 let g:ale_linters = {

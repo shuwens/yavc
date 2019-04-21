@@ -1,5 +1,7 @@
 {
   "diagnostic.refreshOnInsertMode": true,
+  //  "diagnostic.virtualText": true,
+  "diagnostic.displayByAle": true,
 
   "coc.preferences.diagnostic.errorSign": "✗",
   "coc.preferences.diagnostic.warningSig": "⚠",

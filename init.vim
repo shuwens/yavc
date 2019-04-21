@@ -38,8 +38,7 @@ Plug 'jaxbot/semantic-highlight.vim'
 Plug 'bounceme/poppy.vim'
 Plug 'ntpeters/vim-better-whitespace'
 Plug 'itchyny/lightline.vim'
-"Plug 'vim-airline/vim-airline'
-"Plug 'vim-airline/vim-airline-themes'
+"Plug 'liuchengxu/eleline.vim'
 
 " Fuzzy finder
 " ------------
@@ -53,16 +52,20 @@ endif
 
 " Semantic language support
 " -------------------------
-
+Plug 'w0rp/ale'
 " Completion plugins
 " COC
-Plug 'neoclide/coc.nvim', {'do': { -> coc#util#install()}}"
+Plug 'neoclide/coc.nvim', {'do': { -> coc#util#install()}}
+Plug 'neoclide/coc-rls', {'do': 'yarn install --frozen-lockfile'}
+""Plug 'neoclide/coc-python', {'do': 'yarn install --frozen-lockfile'}
+Plug 'neoclide/coc-vimtex', {'do': 'yarn install --frozen-lockfile'}
+Plug 'neoclide/coc-pairs', {'do': 'yarn install --frozen-lockfile'}
 " Showing function signature and inline doc.
 Plug 'Shougo/echodoc.vim'
 
 " VIM editing enhancements
 " -------------------------
-Plug 'jiangmiao/auto-pairs'
+"Plug 'jiangmiao/auto-pairs'
 "Plug 'luochen1990/rainbow', { 'branch': 'develop' }
 Plug 'RRethy/vim-illuminate'
 Plug 'inside/vim-search-pulse'
@@ -766,7 +769,7 @@ let g:livepreview_previewer = 'open -a Preview'
 au! cursormoved * call PoppyInit()
 
 " auto pair jump
-let g:AutoPairsShortcutJump = '<leader>\'
+"let g:AutoPairsShortcutJump = '<leader>\'
 "let g:AutoPairsShortcutJump = '<S-tab>'
 " let g:AutoPairsShortcutJump = '<C-l>'
 "let g:AutoPairsShortcutJump = '<M-n>'
@@ -775,9 +778,12 @@ let g:AutoPairsShortcutJump = '<leader>\'
 let g:chromatica#libclang_path='/usr/local/opt/llvm/lib'
 let g:chromatica#enable_at_startup=1
 
-source $HOME/.config/nvim/coc.vim
+" NOTE(jethros): This is the interesting bit, some keybinding in ALE and COC
+" are overlapping but it is fine b/c I only use the code completion part in
+" COC.
+source $HOME/.config/nvim/config/coc.vim
+source $HOME/.config/nvim/config/ale.vim
 
-set hidden
 " nvim
 if has('nvim')
   runtime! plugin/python_setup.vim
