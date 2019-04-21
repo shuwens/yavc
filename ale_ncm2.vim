@@ -16,7 +16,6 @@ Plug 'autozimu/LanguageClient-neovim', {
       \ 'do': 'bash install.sh',
       \ }
 
-
 " NCM2 completion manager {{{
 " NOTE: At some point I might want to switch to coc, if I want support for other
 " programming language outside LSP.

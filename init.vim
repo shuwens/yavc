@@ -33,11 +33,13 @@ Plug 'yaahallo/rscmake', { 'do': './install.sh' }
 " ----------------
 Plug 'machakann/vim-highlightedyank'
 Plug 'andymass/vim-matchup'
-Plug 'itchyny/lightline.vim'
 Plug 'Yggdroot/indentLine'
 Plug 'jaxbot/semantic-highlight.vim'
 Plug 'bounceme/poppy.vim'
 Plug 'ntpeters/vim-better-whitespace'
+Plug 'itchyny/lightline.vim'
+"Plug 'vim-airline/vim-airline'
+"Plug 'vim-airline/vim-airline-themes'
 
 " Fuzzy finder
 " ------------
@@ -775,6 +777,7 @@ let g:chromatica#enable_at_startup=1
 
 source $HOME/.config/nvim/coc.vim
 
+set hidden
 " nvim
 if has('nvim')
   runtime! plugin/python_setup.vim

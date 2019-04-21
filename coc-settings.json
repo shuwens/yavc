@@ -1,0 +1,11 @@
+{
+  "diagnostic.refreshOnInsertMode": true,
+
+  "coc.preferences.diagnostic.errorSign": "✗",
+  "coc.preferences.diagnostic.warningSig": "⚠",
+
+  "diagnostic.errorSign": "✖",
+  "diagnostic.hintSign": "➤",
+  "diagnostic.infoSign": "i",
+  "diagnostic.warningSign": "⚠"
+}
