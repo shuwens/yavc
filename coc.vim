@@ -41,19 +41,19 @@ inoremap <silent><expr> <c-space> coc#refresh()
 inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
 
 " Use `[c` and `]c` to navigate diagnostics
-nmap <C-k> <Plug>(coc-diagnostic-prev)
-nmap <C-j> <Plug>(coc-diagnostic-next)
+nmap <silent> <C-k>  <Plug>(coc-diagnostic-prev)
+nmap <silent> <C-j>  <Plug>(coc-diagnostic-next)
 
 " Remap keys for gotos
-nmap <leader>. <Plug>(coc-definition)
-nmap <leader>y <Plug>(coc-type-definition)
-nmap <leader>i <Plug>(coc-implementation)
-nmap <leader>r <Plug>(coc-references)
-nmap <leader>o <C-O>
+nmap <silent> <leader>.  <Plug>(coc-definition)
+nmap <silent> <leader>y  <Plug>(coc-type-definition)
+nmap <silent> <leader>i  <Plug>(coc-implementation)
+nmap <silent> <leader>r  <Plug>(coc-references)
+nmap <silent> <leader>o  <C-O>
 nmap <silent> <C-g> :close<cr>
 
 " Use K to show documentation in preview window
-nnoremap <leader>k :call <SID>show_documentation()<CR>
+nnoremap <silent> <leader>k :call <SID>show_documentation()<CR>
 
 function! s:show_documentation()
   if &filetype == 'vim'
@@ -67,11 +67,11 @@ endfunction
 autocmd CursorHold * silent call CocActionAsync('highlight')
 
 " Remap for rename current word
-nmap <leader>rn <Plug>(coc-rename)
+nmap <silent> <leader>rn  <Plug>(coc-rename)
 
 " Remap for format selected region
-vmap <leader>f  <Plug>(coc-format-selected)
-nmap <leader>f  <Plug>(coc-format-selected)
+vmap <silent> <leader>f  <Plug>(coc-format-selected)
+nmap <silent> <leader>f  <Plug>(coc-format-selected)
 
 augroup mygroup
   autocmd!
@@ -82,19 +82,19 @@ augroup mygroup
 augroup end
 
 " Remap for do codeAction of selected region, ex: `<leader>aap` for current paragraph
-vmap <leader>a  <Plug>(coc-codeaction-selected)
-nmap <leader>a  <Plug>(coc-codeaction-selected)
+vmap <silent> <leader>a  <Plug>(coc-codeaction-selected)
+nmap <silent> <leader>a  <Plug>(coc-codeaction-selected)
 
 " Remap for do codeAction of current line
-nmap <leader>ac  <Plug>(coc-codeaction)
+nmap <silent> <leader>ac  <Plug>(coc-codeaction)
 " Fix autofix problem of current line
-nmap <leader>qf  <Plug>(coc-fix-current)
+nmap <silent> <leader>qf  <Plug>(coc-fix-current)
 
 " Use `:Format` to format current buffer
 command! -nargs=0 Format :call CocAction('format')
 
 " Use `:Fold` to fold current buffer
-command! -nargs=? Fold :call     CocAction('fold', <f-args>)
+command! -nargs=? Fold :call CocAction('fold', <f-args>)
 
 " Lightline config {{{
 "
@@ -181,19 +181,19 @@ autocmd User CocDiagnosticChange call lightline#update()
 
 " Using CocList
 " Show all diagnostics
-nnoremap <silent> <space>a  :<C-u>CocList diagnostics<cr>
+nnoremap <silent> <leader>a  :<C-u>CocList diagnostics<cr>
 " Manage extensions
-"nnoremap <silent> <space>e  :<C-u>CocList extensions<cr>
+"nnoremap <silent> <leader>e  :<C-u>CocList extensions<cr>
 " Show commands
-nnoremap <silent> <space>c  :<C-u>CocList commands<cr>
+nnoremap <silent> <leader>c  :<C-u>CocList commands<cr>
 " Find symbol of current document
 "nnoremap <silent> <space>o  :<C-u>CocList outline<cr>
 " Search workspace symbols
-nnoremap <silent> <space>s  :<C-u>CocList -I symbols<cr>
+nnoremap <silent> <leader>s  :<C-u>CocList -I symbols<cr>
 " Do default action for next item.
-"nnoremap <silent> <space>j  :<C-u>CocNext<CR>
+"nnoremap <silent> <leader>j  :<C-u>CocNext<CR>
 " Do default action for previous item.
-"nnoremap <silent> <space>k  :<C-u>CocPrev<CR>
+"nnoremap <silent> <leader>k  :<C-u>CocPrev<CR>
 " Resume latest coc list
-nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
+nnoremap <silent> <leader>p  :<C-u>CocListResume<CR>
 
