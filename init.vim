@@ -80,7 +80,8 @@ Plug 'cespare/vim-toml'
 Plug 'fatih/vim-go'
 Plug 'dag/vim-fish'
 Plug 'jceb/vim-orgmode'
-Plug 'octol/vim-cpp-enhanced-highlight'
+Plug 'bfrg/vim-cpp-modern'
+""Plug 'octol/vim-cpp-enhanced-highlight'
 Plug 'godlygeek/tabular'
 Plug 'plasticboy/vim-markdown'
 Plug 'arakashic/chromatica.nvim'
@@ -332,12 +333,10 @@ inoremap <C-c> <Esc>
 vnoremap <C-c> <Esc>
 
 " Jump to start and end of line using the home row keys {{{
-"map H ^
-"map L $
-map [ ^
-map ] $
-nnoremap <C-l> ^
-nnoremap <C-h> $
+""map H ^
+""map L $
+nnoremap <C-h> ^
+nnoremap <C-l> $
 inoremap <C-e> <Esc>A
 inoremap <C-a> <Esc>I
 nnoremap <C-e> <Esc>A
@@ -697,10 +696,10 @@ nmap <silent>K :wincmd k<CR>
 nmap <silent>H :wincmd h<CR>
 nmap <silent>L :wincmd l<CR>
 
-nmap <silent> <A-Up> :wincmd k<CR>
-nmap <silent> <A-Down> :wincmd j<CR>
-nmap <silent> <A-Left> :wincmd h<CR>
-nmap <silent> <A-Right> :wincmd l<CR>
+nmap <silent> <A-k> :wincmd k<CR>
+nmap <silent> <A-j> :wincmd j<CR>
+nmap <silent> <A-h> :wincmd h<CR>
+nmap <silent> <A-l> :wincmd l<CR>
 "}}}
 " provide hjkl movements in Insert mode via the <Alt> modifier key  {{{
 "
