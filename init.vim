@@ -28,6 +28,7 @@ Plug 'mbbill/undotree'
 Plug 'tpope/vim-sensible'
 Plug 'tpope/vim-dispatch'
 Plug 'yaahallo/rscmake', { 'do': './install.sh' }
+Plug 'junegunn/vim-slash'
 
 " GUI enhancements
 " ----------------
@@ -52,12 +53,12 @@ endif
 
 " Semantic language support
 " -------------------------
-Plug 'w0rp/ale'
+"Plug 'w0rp/ale'
 " Completion plugins
 " COC
 Plug 'neoclide/coc.nvim', {'do': { -> coc#util#install()}}
 Plug 'neoclide/coc-rls', {'do': 'yarn install --frozen-lockfile'}
-""Plug 'neoclide/coc-python', {'do': 'yarn install --frozen-lockfile'}
+Plug 'neoclide/coc-python', {'do': 'yarn install --frozen-lockfile'}
 Plug 'neoclide/coc-vimtex', {'do': 'yarn install --frozen-lockfile'}
 Plug 'neoclide/coc-pairs', {'do': 'yarn install --frozen-lockfile'}
 " Showing function signature and inline doc.
@@ -72,6 +73,8 @@ Plug 'inside/vim-search-pulse'
 Plug 'numirias/semshi', {'do': ':UpdateRemotePlugins'}
 Plug 'lilydjwg/colorizer'
 Plug 'junegunn/vader.vim'
+Plug 'junegunn/goyo.vim'
+Plug 'junegunn/limelight.vim'
 
 " Syntactic language support
 " --------------------------
@@ -781,7 +784,9 @@ let g:chromatica#enable_at_startup=1
 " are overlapping but it is fine b/c I only use the code completion part in
 " COC.
 source $HOME/.config/nvim/config/coc.vim
-source $HOME/.config/nvim/config/ale.vim
+source $HOME/.config/nvim/config/lightline.vim
+
+source $HOME/.config/nvim/config/writing.vim
 
 " nvim
 if has('nvim')

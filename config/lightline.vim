@@ -9,10 +9,11 @@ let g:lightline = {
       \ 'colorscheme': 'jellybeans',
       \ 'active': {
       \   'left': [ [ 'mode', 'paste' ],
-      \		    [ 'gitbranch',  'readonly', 'filename', 'modified' ] ],
-      \   'right': [ [ 'lineinfo',  ],
+      \		    [  'gitbranch', ],
+      \		    [ 'readonly', 'filename', 'modified' ] ],
+      \   'right': [ [ 'lineinfo' ],
       \              [ 'percent' ],
-      \              [ 'fileformat', 'fileencoding', 'filetype'],
+      \              [ 'fileformat', 'fileencoding', 'filetype',],
       \              [ 'coc_error', 'coc_warning', 'coc_hint', 'coc_info' ] ]
       \ },
       \ 'component_expand': {
@@ -24,9 +25,19 @@ let g:lightline = {
       \ },
       \ 'component_function': {
       \   'gitbranch': 'fugitive#head',
-      \   'currentfunction': 'CocCurrentFunction'
+      \   'currentfunction': 'CocCurrentFunction',
+      \   'fileformat': 'LightlineFileformat',
+      \   'filetype': 'LightlineFiletype'
       \ },
       \ }
+
+function! LightlineFileformat()
+  return winwidth(0) > 70 ? &fileformat : ''
+endfunction
+
+function! LightlineFiletype()
+  return winwidth(0) > 70 ? (&filetype !=# '' ? &filetype : 'no ft') : ''
+endfunction
 
 let g:lightline.component_type = {
       \   'coc_error'        : 'error',

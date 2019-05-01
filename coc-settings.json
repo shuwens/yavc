@@ -1,13 +1,11 @@
 {
   "diagnostic.refreshOnInsertMode": true,
-  //  "diagnostic.virtualText": true,
-  "diagnostic.displayByAle": true,
+  //  "diagnostic.displayByAle": true,
 
-  "coc.preferences.diagnostic.errorSign": "✗",
-  "coc.preferences.diagnostic.warningSig": "⚠",
-
-  "diagnostic.errorSign": "✖",
+  "diagnostic.errorSign": "✗",
   "diagnostic.hintSign": "➤",
   "diagnostic.infoSign": "i",
-  "diagnostic.warningSign": "⚠"
+  "diagnostic.warningSign": "⚠",
+
+  "diagnostic.enableMessage": "jump"
 }
