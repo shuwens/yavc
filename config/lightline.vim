@@ -24,11 +24,13 @@ let g:lightline = {
       \   'coc_fix'          : 'LightlineCocFixes',
       \ },
       \ 'component_function': {
-      \   'gitbranch': 'fugitive#head',
+      \   'gitbranch': 'LightlineGitBranch',
       \   'currentfunction': 'CocCurrentFunction',
       \   'fileformat': 'LightlineFileformat',
       \   'filetype': 'LightlineFiletype'
       \ },
+      \ 'separator': { 'left': '<', 'right': '>' },
+      \ 'subseparator': { 'left': '<', 'right': '>' }
       \ }
 
 function! LightlineFileformat()
@@ -74,6 +76,10 @@ endfunction
 
 function! LightlineCocHints() abort
   return s:lightline_coc_diagnostic('hints', 'hint')
+endfunction
+
+function! LightlineGitBranch()
+  return "\uE725 " . (exists('*fugitive#head') ? fugitive#head() : '')
 endfunction
 
 autocmd User CocDiagnosticChange call lightline#update()

@@ -19,6 +19,7 @@ Plug 'ciaranm/securemodelines'
 Plug 'vim-scripts/localvimrc'
 Plug 'Shougo/vimproc.vim', {'do' : 'make'}
 Plug 'tpope/vim-fugitive'
+Plug 'jreybert/vimagit'
 "Plug 'sheerun/vim-polyglot'   " I don't need this and it is buggy
 Plug 'tpope/vim-sleuth'  " Heuristically set buffer options
 Plug 'scrooloose/nerdcommenter'
@@ -28,7 +29,6 @@ Plug 'mbbill/undotree'
 Plug 'tpope/vim-sensible'
 Plug 'tpope/vim-dispatch'
 Plug 'yaahallo/rscmake', { 'do': './install.sh' }
-Plug 'junegunn/vim-slash'
 
 " GUI enhancements
 " ----------------
@@ -38,8 +38,9 @@ Plug 'Yggdroot/indentLine'
 Plug 'jaxbot/semantic-highlight.vim'
 Plug 'bounceme/poppy.vim'
 Plug 'ntpeters/vim-better-whitespace'
-Plug 'itchyny/lightline.vim'
-"Plug 'liuchengxu/eleline.vim'
+"Plug 'itchyny/lightline.vim'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
 
 " Fuzzy finder
 " ------------
@@ -128,19 +129,17 @@ endif
 
 " Plugin settings
 let g:secure_modelines_allowed_items = [
-      \ "textwidth",   "tw",
-      \ "softtabstop", "sts",
-      \ "tabstop",     "ts",
-      \ "shiftwidth",  "sw",
-      \ "expandtab",   "et",   "noexpandtab", "noet",
-      \ "filetype",    "ft",
-      \ "foldmethod",  "fdm",
-      \ "readonly",    "ro",   "noreadonly", "noro",
-      \ "rightleft",   "rl",   "norightleft", "norl",
-      \ "colorcolumn"
-      \ ]
-
-
+	  \ "textwidth",   "tw",
+	  \ "softtabstop", "sts",
+	  \ "tabstop",     "ts",
+	  \ "shiftwidth",  "sw",
+	  \ "expandtab",   "et",   "noexpandtab", "noet",
+	  \ "filetype",    "ft",
+	  \ "foldmethod",  "fdm",
+	  \ "readonly",    "ro",   "noreadonly", "noro",
+	  \ "rightleft",   "rl",   "norightleft", "norl",
+	  \ "colorcolumn"
+	  \ ]
 " }}}
 " echodoc {{{
 let g:echodoc_enable_at_startup = 1
@@ -352,12 +351,12 @@ nnoremap <C-a> <Esc>I
 " ,c will copy entire buffer into clipboard
 if has('unix')
   if has('mac')       " osx
-    " Paste clipboard content to current line
-    noremap <leader>p :r !pbpaste<CR>
-    noremap <leader>c :w !pbcopy<CR><CR>
+	" Paste clipboard content to current line
+	noremap <leader>p :r !pbpaste<CR>
+	noremap <leader>c :w !pbcopy<CR><CR>
   else                " linux, bsd, etc
-    noremap <leader>p :read !xsel --clipboard --output<cr>
-    noremap <leader>c :w !xsel -ib<cr><cr>
+	noremap <leader>p :read !xsel --clipboard --output<cr>
+	noremap <leader>c :w !xsel -ib<cr><cr>
   endif
 endif
 " }}}
@@ -391,11 +390,11 @@ if executable('rg')
 endif
 
 command! -bang -nargs=* Rgg
-      \ call fzf#vim#grep(
-      \   'rg --column --line-number --no-heading --color=always '.shellescape(<q-args>), 1,
-      \   <bang>0 ? fzf#vim#with_preview('up:60%')
-      \           : fzf#vim#with_preview('right:50%:hidden', '?'),
-      \   <bang>0)
+	  \ call fzf#vim#grep(
+	  \   'rg --column --line-number --no-heading --color=always '.shellescape(<q-args>), 1,
+	  \   <bang>0 ? fzf#vim#with_preview('up:60%')
+	  \           : fzf#vim#with_preview('right:50%:hidden', '?'),
+	  \   <bang>0)
 
 function! s:list_cmd()
   let base = fnamemodify(expand('%'), ':h:.:S')
@@ -403,20 +402,20 @@ function! s:list_cmd()
 endfunction
 
 command! -bang -nargs=? -complete=dir Files
-      \ call fzf#vim#files(<q-args>, {'source': s:list_cmd(),
-      \ 'options': '--tiebreak=index'}, <bang>0)
+	  \ call fzf#vim#files(<q-args>, {'source': s:list_cmd(),
+	  \ 'options': '--tiebreak=index'}, <bang>0)
 
 " Command for git grep
 " - fzf#vim#grep(command, with_column, [options], [fullscreen])
 command! -bang -nargs=* GGrep
-      \ call fzf#vim#grep(
-      \   'git grep --line-number '.shellescape(<q-args>), 0,
-      \   { 'dir': systemlist('git rev-parse --show-toplevel')[0] }, <bang>0)
+	  \ call fzf#vim#grep(
+	  \   'git grep --line-number '.shellescape(<q-args>), 0,
+	  \   { 'dir': systemlist('git rev-parse --show-toplevel')[0] }, <bang>0)
 
 " Override Colors command. You can safely do this in your .vimrc as fzf.vim
 " will not override existing commands.
 command! -bang Colors
-      \ call fzf#vim#colors({'left': '15%', 'options': '--reverse --margin 30%,0'}, <bang>0)
+	  \ call fzf#vim#colors({'left': '15%', 'options': '--reverse --margin 30%,0'}, <bang>0)
 
 " Augmenting Ag command using fzf#vim#with_preview function
 "   * fzf#vim#with_preview([[options], [preview window], [toggle keys...]])
@@ -429,30 +428,30 @@ command! -bang Colors
 "   :Ag  - Start fzf with hidden preview window that can be enabled with "?" key
 "   :Ag! - Start fzf in fullscreen and display the preview window above
 command! -bang -nargs=* Ag
-      \ call fzf#vim#ag(<q-args>,
-      \                 <bang>0 ? fzf#vim#with_preview('up:60%')
-      \                         : fzf#vim#with_preview('right:50%:hidden', '?'),
-      \                 <bang>0)
+	  \ call fzf#vim#ag(<q-args>,
+	  \                 <bang>0 ? fzf#vim#with_preview('up:60%')
+	  \                         : fzf#vim#with_preview('right:50%:hidden', '?'),
+	  \                 <bang>0)
 
 " Similarly, we can apply it to fzf#vim#grep. To use ripgrep instead of ag:
 command! -bang -nargs=* Rg
-      \ call fzf#vim#grep(
-      \   'rg --column --line-number --no-heading --color=always --smart-case '.shellescape(<q-args>), 1,
-      \   <bang>0 ? fzf#vim#with_preview('up:60%')
-      \           : fzf#vim#with_preview('right:50%:hidden', '?'),
-      \   <bang>0)
+	  \ call fzf#vim#grep(
+	  \   'rg --column --line-number --no-heading --color=always --smart-case '.shellescape(<q-args>), 1,
+	  \   <bang>0 ? fzf#vim#with_preview('up:60%')
+	  \           : fzf#vim#with_preview('right:50%:hidden', '?'),
+	  \   <bang>0)
 
 " Likewise, Files command with preview window
 command! -bang -nargs=? -complete=dir Files
-      \ call fzf#vim#files(<q-args>, fzf#vim#with_preview(), <bang>0)
+	  \ call fzf#vim#files(<q-args>, fzf#vim#with_preview(), <bang>0)
 
 " TODO(jethros): write a GitFiles method that start fzf in full screen and
 " display GFiles
 command! -bang -nargs=? GitFiles
-      \ call fzf#vim#gitfiles('?',
-      \                 <bang>0 ? fzf#vim#with_preview('up:60%')
-      \                         : fzf#vim#with_preview('up:60%:hidden', '?'),
-      \                 <bang>0)
+	  \ call fzf#vim#gitfiles('?',
+	  \                 <bang>0 ? fzf#vim#with_preview('up:60%')
+	  \                         : fzf#vim#with_preview('up:60%:hidden', '?'),
+	  \                 <bang>0)
 " }}}
 
 " Open new file adjacent to current file
@@ -561,25 +560,25 @@ endif
 " https://tex.stackexchange.com/questions/1548/intelligent-paragraph-reflowing-in-vim
 fun! TeX_fmt()
   if (getline(".") != "")
-    let save_cursor = getpos(".")
-    let op_wrapscan = &wrapscan
-    set nowrapscan
-    let par_begin = '^\(%D\)\=\s*\($\||\\begin\|\\end\|\\[\|\\]\|\\\(sub\)*section\>\|\\item\>\|\\NC\>\|\\blank\>\|\\noindent\>\)'
-    let par_end   = '^\(%D\)\=\s*\($\||\\begin\|\\end\|\\[\|\\]\|\\place\|\\\(sub\)*section\>\|\\item\>\|\\NC\>\|\\blank\>\)'
-    try
-      exe '?'.par_begin.'?+'
-    catch /E384/
-      1
-    endtry
-    norm V
-    try
-      exe '/'.par_end.'/-'
-    catch /E385/
-      $
-    endtry
-    norm gq
-    let &wrapscan = op_wrapscan
-    call setpos('.', save_cursor)
+	let save_cursor = getpos(".")
+	let op_wrapscan = &wrapscan
+	set nowrapscan
+	let par_begin = '^\(%D\)\=\s*\($\||\\begin\|\\end\|\\[\|\\]\|\\\(sub\)*section\>\|\\item\>\|\\NC\>\|\\blank\>\|\\noindent\>\)'
+	let par_end   = '^\(%D\)\=\s*\($\||\\begin\|\\end\|\\[\|\\]\|\\place\|\\\(sub\)*section\>\|\\item\>\|\\NC\>\|\\blank\>\)'
+	try
+	  exe '?'.par_begin.'?+'
+	catch /E384/
+	  1
+	endtry
+	norm V
+	try
+	  exe '/'.par_end.'/-'
+	catch /E385/
+	  $
+	endtry
+	norm gq
+	let &wrapscan = op_wrapscan
+	call setpos('.', save_cursor)
   endif
 endfun
 " }}}
@@ -597,7 +596,7 @@ autocmd Filetype org nmap Q :call TeX_fmt()<CR>
 set spelllang=en_us
 for d in glob('~/.config/nvim/spell/*.add', 1, 1)
   if filereadable(d) && (!filereadable(d . '.spl') || getftime(d) > getftime(d . '.spl'))
-    exec 'mkspell! ' . fnameescape(d)
+	exec 'mkspell! ' . fnameescape(d)
   endif
 endfor
 
@@ -607,9 +606,9 @@ endfor
 " vim-grammarous {{{
 
 let g:grammarous#disabled_rules = {
-      \ '*' : ['WHITESPACE_RULE', 'EN_QUOTES'],
-      \ 'help' : ['WHITESPACE_RULE', 'EN_QUOTES', 'SENTENCE_WHITESPACE', 'UPPERCASE_SENTENCE_START'],
-      \ }
+	  \ '*' : ['WHITESPACE_RULE', 'EN_QUOTES'],
+	  \ 'help' : ['WHITESPACE_RULE', 'EN_QUOTES', 'SENTENCE_WHITESPACE', 'UPPERCASE_SENTENCE_START'],
+	  \ }
 
 let g:grammarous#hooks = {}
 function! g:grammarous#hooks.on_check(errs) abort
@@ -646,7 +645,7 @@ autocmd BufRead,BufNewFile $HOME/dev/projects/** let b:DevPythonFile=1
 autocmd BufWritePre *.py call DevPythonFormatter()
 fun! DevPythonFormatter()
   if !exists('b:DevPythonFile')
-    return
+	return
   endif
   " I use black, not autopep8 or yapf for now... I wonder the best practise
   execute ':Black'
@@ -753,11 +752,11 @@ let g:NERDTrimTrailingWhitespace = 1
 let g:NERDToggleCheckAllLines = 1
 " Add your own custom formats or override the defaults
 let g:NERDCustomDelimiters = {
-      \ 'c': {'left': '//'},
-      \ 'cpp': {'left': '//'},
-      \ 'python': {'left': '#'},
-      \ 'rust': {'left': '//'},
-      \ }
+	  \ 'c': {'left': '//'},
+	  \ 'cpp': {'left': '//'},
+	  \ 'python': {'left': '#'},
+	  \ 'rust': {'left': '//'},
+	  \ }
 " Nerd commenter keybindings
 "map <leader>\ <leader>c<Space>
 map <leader>cc <plug>NERDComToggleComment
@@ -777,16 +776,19 @@ au! cursormoved * call PoppyInit()
 "let g:AutoPairsShortcutJump = '<M-n>'
 
 " chromatica
-let g:chromatica#libclang_path='/usr/local/opt/llvm/lib'
-let g:chromatica#enable_at_startup=1
+if !empty(glob("/usr/local/opt/llvm/lib"))
+  let g:chromatica#libclang_path='/usr/local/opt/llvm/lib'
+  let g:chromatica#enable_at_startup=1
+endif
 
 " NOTE(jethros): This is the interesting bit, some keybinding in ALE and COC
 " are overlapping but it is fine b/c I only use the code completion part in
 " COC.
 source $HOME/.config/nvim/config/coc.vim
-source $HOME/.config/nvim/config/lightline.vim
 
 source $HOME/.config/nvim/config/writing.vim
+
+source $HOME/.config/nvim/config/airline.vim
 
 " nvim
 if has('nvim')
