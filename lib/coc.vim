@@ -1,5 +1,12 @@
 " Coc
 "
+" Coc extensions
+call coc#add_extension('coc-snippets')
+call coc#add_extension('coc-python')
+call coc#add_extension('coc-rls')
+call coc#add_extension('coc-pairs')
+call coc#add_extension('coc-vimtex')
+
 " if hidden is not set, TextEdit might fail.
 set hidden
 
@@ -61,7 +68,7 @@ nmap <silent> <leader>.  <Plug>(coc-definition)
 nmap <silent> <leader>y  <Plug>(coc-type-definition)
 nmap <silent> <leader>i  <Plug>(coc-implementation)
 nmap <silent> <leader>r  <Plug>(coc-references)
-nmap <silent> <leader>o  <C-O>
+"nmap <silent> <leader>o  <C-O>
 nmap <silent> <leader>\  <C-O>
 nmap <silent> <C-g> :close<cr>
 
@@ -80,7 +87,7 @@ endfunction
 autocmd CursorHold * silent call CocActionAsync('highlight')
 
 " Remap for rename current word
-nmap <silent> <leader>rn  <Plug>(coc-rename)
+nmap <silent> <leader>n  <Plug>(coc-rename)
 
 " Remap for format selected region
 vmap <silent> <leader>f  <Plug>(coc-format-selected)
@@ -115,47 +122,17 @@ nnoremap <silent> <leader>a  :<C-u>CocList diagnostics<cr>
 " Manage extensions
 "nnoremap <silent> <leader>e  :<C-u>CocList extensions<cr>
 " Show commands
-nnoremap <silent> <leader>c  :<C-u>CocList commands<cr>
+"nnoremap <silent> <leader>c  :<C-u>CocList commands<cr>
 " Find symbol of current document
-"nnoremap <silent> <space>o  :<C-u>CocList outline<cr>
+nnoremap <silent> <leader>o  :<C-u>CocList outline<cr>
 " Search workspace symbols
-nnoremap <silent> <leader>s  :<C-u>CocList -I symbols<cr>
+nnoremap <silent> <leader>]  :<C-u>CocList -I symbols<cr>
 " Resume latest coc list
-nnoremap <silent> <leader>p  :<C-u>CocListResume<CR>
+"nnoremap <silent> <leader>p  :<C-u>CocListResume<CR>
 " Do default action for next item.
-"nnoremap <silent> <leader>j  :<C-u>CocNext<CR>
+nnoremap <silent> <leader>j  :<C-u>CocNext<CR>
 " Do default action for previous item.
-"nnoremap <silent> <leader>k  :<C-u>CocPrev<CR>
-
-" Lightline config
-"
-" Add diagnostic info for https://github.com/itchyny/lightline.vim
-function! CocCurrentFunction()
-  return get(b:, 'coc_current_function', '')
-endfunction
-
-let g:lightline = {
-      \ 'colorscheme': 'jellybeans',
-      \ 'active': {
-      \   'left': [ [ 'mode', 'paste' ],
-      \		    [ 'cocstatus',  'readonly', 'filename', 'modified' ] ],
-      \   'right': [ [ 'lineinfo',  ],
-      \              [ 'percent' ],
-      \              [ 'fileformat', 'fileencoding', 'filetype'],
-      \		     ]
-      \ },
-      \ 'component_function': {
-      \   'gitbranch': 'fugitive#head',
-      \   'cocstatus': 'coc#status',
-      \   'currentfunction': 'CocCurrentFunction'
-      \ },
-      \ }
-
-let g:coc_status_error_sign = "✗"
-let g:coc_status_warning_sign = "⚠"
-
-" Coc Snippet
-call coc#add_extension('coc-snippets')
+nnoremap <silent> <leader>k  :<C-u>CocPrev<CR>
 
 " Use <C-l> for trigger snippet expand.
 imap <C-l> <Plug>(coc-snippets-expand)
@@ -184,3 +161,14 @@ function! s:check_back_space() abort
 endfunction
 
 let g:coc_snippet_next = '<tab>'
+
+call coc#config('coc', {
+      \ 'preferences.diagnostic.displayByAle': 'false',
+      \ 'preferences.diagnostic.errorSign': "✗",
+      \ 'preferences.diagnostic.warningSign': "⚠",
+      \ 'preferences.diagnostic.infoSign': 'i',
+      \ 'preferences.diagnostic.hintSign': "➤",
+      \ 'preferences.diagnostic.refreshOnInsertMode': 'true',
+      \ 'preferences.diagnostic.enableMessage': 'jump',
+      \})
+

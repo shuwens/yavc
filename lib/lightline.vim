@@ -83,3 +83,35 @@ function! LightlineGitBranch()
 endfunction
 
 autocmd User CocDiagnosticChange call lightline#update()
+
+
+
+
+" Lightline config
+"
+" Add diagnostic info for https://github.com/itchyny/lightline.vim
+function! CocCurrentFunction()
+  return get(b:, 'coc_current_function', '')
+endfunction
+
+let g:lightline = {
+      \ 'colorscheme': 'jellybeans',
+      \ 'active': {
+      \   'left': [ [ 'mode', 'paste' ],
+      \		    [ 'cocstatus',  'readonly', 'filename', 'modified' ] ],
+      \   'right': [ [ 'lineinfo',  ],
+      \              [ 'percent' ],
+      \              [ 'fileformat', 'fileencoding', 'filetype'],
+      \		     ]
+      \ },
+      \ 'component_function': {
+      \   'gitbranch': 'fugitive#head',
+      \   'cocstatus': 'coc#status',
+      \   'currentfunction': 'CocCurrentFunction'
+      \ },
+      \ }
+
+let g:coc_status_error_sign = "✗"
+let g:coc_status_warning_sign = "⚠"
+
+

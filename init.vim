@@ -1,19 +1,18 @@
-" Fish doesn't play all that well with others
 set shell=/bin/bash
 let mapleader = "\<Space>"
+let maplocalleader = ","
 
 " ===========================================================================
 "  PLUGINS
 " ===========================================================================
-" Load vundle
 set nocompatible
 filetype off
 set rtp+=~/dev/others/base16/vim/
 call plug#begin('$HOME/.local/share/nvim/plugged')
 
-" Load plugins
+"█▓▒░ Load plugins
 
-" VIM enhancements
+"█▓▒░ VIM enhancements
 " ----------------
 Plug 'ciaranm/securemodelines'
 Plug 'vim-scripts/localvimrc'
@@ -26,58 +25,67 @@ Plug 'scrooloose/nerdcommenter'
 Plug 'terryma/vim-multiple-cursors'
 Plug 'tpope/vim-speeddating'
 Plug 'mbbill/undotree'
-Plug 'tpope/vim-sensible'
 Plug 'tpope/vim-dispatch'
 Plug 'yaahallo/rscmake', { 'do': './install.sh' }
+Plug 'tpope/vim-sensible'
 
-" GUI enhancements
+"█▓▒░ GUI enhancements
 " ----------------
 Plug 'machakann/vim-highlightedyank'
 Plug 'andymass/vim-matchup'
+"Plug 'thaerkh/vim-indentguides'
 Plug 'Yggdroot/indentLine'
 Plug 'jaxbot/semantic-highlight.vim'
 Plug 'bounceme/poppy.vim'
 Plug 'ntpeters/vim-better-whitespace'
+Plug 'romainl/vim-cool'
 "Plug 'itchyny/lightline.vim'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 
-" Fuzzy finder
+"█▓▒░ Fuzzy finder
 " ------------
 Plug 'airblade/vim-rooter'
 Plug 'junegunn/fzf.vim'
 if !empty(glob("/usr/local/opt/fzf"))
   Plug '/usr/local/opt/fzf'
+  set rtp+=/usr/local/opt/fzf
 else
   Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --bin' }
+  set rtp+=~/.fzf
 endif
 
-" Semantic language support
+"█▓▒░ Semantic language support
 " -------------------------
-"Plug 'w0rp/ale'
 " Completion plugins
-" COC
-Plug 'neoclide/coc.nvim', {'do': { -> coc#util#install()}}
-Plug 'neoclide/coc-rls', {'do': 'yarn install --frozen-lockfile'}
-Plug 'neoclide/coc-python', {'do': 'yarn install --frozen-lockfile'}
-Plug 'neoclide/coc-vimtex', {'do': 'yarn install --frozen-lockfile'}
-Plug 'neoclide/coc-pairs', {'do': 'yarn install --frozen-lockfile'}
+if has('unix')
+  if has('mac')       " osx
+    " Coc
+    Plug 'neoclide/coc.nvim', {'do': './install.sh nightly'}
+  else                " linux, bsd, etc
+    Plug 'w0rp/ale'
+    Plug 'ncm2/ncm2'
+    Plug 'roxma/nvim-yarp'
+    " Completion plugins
+    Plug 'ncm2/ncm2-bufword'
+    Plug 'ncm2/ncm2-tmux'
+    Plug 'ncm2/ncm2-path'
+    Plug 'jiangmiao/auto-pairs'
+  endif
+endif
 " Showing function signature and inline doc.
 Plug 'Shougo/echodoc.vim'
 
-" VIM editing enhancements
+"█▓▒░ VIM editing enhancements
 " -------------------------
-"Plug 'jiangmiao/auto-pairs'
-"Plug 'luochen1990/rainbow', { 'branch': 'develop' }
+Plug 'luochen1990/rainbow'
 Plug 'RRethy/vim-illuminate'
 Plug 'inside/vim-search-pulse'
 Plug 'numirias/semshi', {'do': ':UpdateRemotePlugins'}
 Plug 'lilydjwg/colorizer'
 Plug 'junegunn/vader.vim'
-Plug 'junegunn/goyo.vim'
-Plug 'junegunn/limelight.vim'
 
-" Syntactic language support
+"█▓▒░ Syntactic language support
 " --------------------------
 Plug 'vim-scripts/gnuplot-syntax-highlighting'
 Plug 'cespare/vim-toml'
@@ -90,31 +98,18 @@ Plug 'godlygeek/tabular'
 Plug 'plasticboy/vim-markdown'
 Plug 'arakashic/chromatica.nvim'
 
-" Python
-Plug 'roxma/python-support.nvim'
-Plug 'tweekmonster/impsort.vim'
-Plug 'ambv/black'
-" Python completions
-let g:python_support_python3_requirements = add(get(g:,'python_support_python3_requirements',[]),'jedi')
-" language specific completions on markdown file
-let g:python_support_python3_requirements = add(get(g:,'python_support_python3_requirements',[]),'mistune')
-" utils, optional
-let g:python_support_python3_requirements = add(get(g:,'python_support_python3_requirements',[]),'psutil')
-let g:python_support_python3_requirements = add(get(g:,'python_support_python3_requirements',[]),'setproctitle')
-
-" Rust
+"█▓▒░ Rust
 Plug 'rust-lang/rust.vim'
 
-" LaTeX
+"█▓▒░ LaTeX
+Plug 'lervag/vimtex'
 Plug 'rhysd/vim-grammarous'
 Plug 'xuhdev/vim-latex-live-preview', { 'for': 'tex' }
 
-" Color
+"█▓▒░ Color
 if !isdirectory("$HOME/dev/others/base16")
-  "Plug ' mhartington/oceanic-next'
   Plug 'chriskempson/base16-vim'
 endif
-Plug 'nightsense/cosmic_latte'
 call plug#end()
 
 if has('nvim')
@@ -127,19 +122,19 @@ if !has('gui_running')
   set t_Co=256
 endif
 
-" Plugin settings
+"█▓▒░ Plugin settings
 let g:secure_modelines_allowed_items = [
-	  \ "textwidth",   "tw",
-	  \ "softtabstop", "sts",
-	  \ "tabstop",     "ts",
-	  \ "shiftwidth",  "sw",
-	  \ "expandtab",   "et",   "noexpandtab", "noet",
-	  \ "filetype",    "ft",
-	  \ "foldmethod",  "fdm",
-	  \ "readonly",    "ro",   "noreadonly", "noro",
-	  \ "rightleft",   "rl",   "norightleft", "norl",
-	  \ "colorcolumn"
-	  \ ]
+      \ "textwidth",   "tw",
+      \ "softtabstop", "sts",
+      \ "tabstop",     "ts",
+      \ "shiftwidth",  "sw",
+      \ "expandtab",   "et",   "noexpandtab", "noet",
+      \ "filetype",    "ft",
+      \ "foldmethod",  "fdm",
+      \ "readonly",    "ro",   "noreadonly", "noro",
+      \ "rightleft",   "rl",   "norightleft", "norl",
+      \ "colorcolumn"
+      \ ]
 " }}}
 " echodoc {{{
 let g:echodoc_enable_at_startup = 1
@@ -161,7 +156,7 @@ let g:go_fmt_command = "goimports"
 let g:go_bin_path = expand("~/dev/others/r/bin")
 let g:go_version_warning = 0
 " }}}
-" Rust {{{
+"█▓▒░ Rust {{{
 " https://github.com/rust-lang/rust.vim/issues/192
 let g:rustfmt_command = "rustfmt +nightly"
 let g:rustfmt_autosave = 1
@@ -185,21 +180,24 @@ set noshowmode
 set hidden
 set nowrap
 set nojoinspaces
-if (match($TERM, "-256color") != -1) && (match($TERM, "tmux-256color") == -1)
+" I only use VIM from the terminals
+if (match($TERM, "-256color") != -1) && (match($TERM, "screen-256color") != -1)
   " screen does not (yet) support truecolor
   set termguicolors
 endif
-" for the vagrant linux box
 if (match($TERM, "xterm") != -1)
+  " for the vagrant linux box
   set termguicolors
 endif
-let g:sneak#s_next = 1
+
 let g:vim_markdown_new_list_item_indent = 0
 let g:vim_markdown_auto_insert_bullets = 0
 let g:vim_markdown_frontmatter = 1
-set printfont=:h10
+
+set printfont=:h14
 set printencoding=utf-8
 set printoptions=paper:letter
+
 " Always draw sign column. Prevent buffer moving when adding/deleting sign.
 set signcolumn=yes
 
@@ -275,7 +273,9 @@ set lazyredraw
 set synmaxcol=500
 set laststatus=2
 set relativenumber " Relative line numbers
-set number " Also show current absolute line
+autocmd InsertEnter * :set number  " Now it is hybrid!
+autocmd InsertLeave * :set nonumber
+"set number " Also show current absolute line
 set diffopt+=iwhite " No whitespace in vimdiff
 " Make diffing better: https://vimways.org/2018/the-power-of-diff/
 if has("patch-8.1.0360")
@@ -286,8 +286,6 @@ set colorcolumn=80 " and give me a colored column
 set showcmd " Show (partial) command in status line.
 set mouse=a " Enable mouse usage (all modes) in terminals
 set shortmess+=c " don't give |ins-completion-menu| messages.
-"set shortmess=at
-set completeopt-=preview
 
 " better whitespace
 " red #FF0000, coral #FF7F50, tomato #FF6347, orangered #FF4500, orange
@@ -302,21 +300,11 @@ set background=dark
 let base16colorspace=256
 let g:base16_shell_path="$HOME/dev/others/base16/shell/scripts/"
 colorscheme base16-atelier-dune
-"colorscheme cosmic_latte
 
 hi Normal guibg=NONE
-highlight nonText guibg=NONE
-hi Normal ctermbg=NONE
-hi Folded ctermbg=234 ctermfg=red
-
-" sensible: no need now{{{
-"set scrolloff=3
-"runtime macros/matchit.vim
-" Show those damn hidden characters
-" Verbose: set listchars=nbsp:¬,eol:¶,extends:»,precedes:«,trail:•
-"set nolist
-"set listchars=nbsp:¬,extends:»,precedes:«,trail:•
-" }}}
+"hi nonText guibg=NONE
+"hi Normal ctermbg=NONE
+"hi Folded ctermbg=234 ctermfg=red
 
 " Jump to last edit position on opening file
 " https://stackoverflow.com/questions/31449496/vim-ignore-specifc-file-in-autocommand
@@ -344,28 +332,25 @@ inoremap <C-a> <Esc>I
 nnoremap <C-e> <Esc>A
 nnoremap <C-a> <Esc>I
 " }}}
-
 " Neat X clipboard integration linux {{{
 "
 " ,p will paste clipboard into buffer
 " ,c will copy entire buffer into clipboard
 if has('unix')
   if has('mac')       " osx
-	" Paste clipboard content to current line
-	noremap <leader>p :r !pbpaste<CR>
-	noremap <leader>c :w !pbcopy<CR><CR>
+    " Paste clipboard content to current line
+    noremap <localleader>v :r !pbpaste<CR>
+    noremap <localleader>c :w !pbcopy<CR><CR>
   else                " linux, bsd, etc
-	noremap <leader>p :read !xsel --clipboard --output<cr>
-	noremap <leader>c :w !xsel -ib<cr><cr>
+    noremap <localleader>v :read !xsel --clipboard --output<cr>
+    noremap <localleader>c :w !xsel -ib<cr><cr>
   endif
 endif
 " }}}
-"
 " fzf !!! {{{
 " from http://sheerun.net/2014/03/21/how-to-boost-your-vim-productivity/
 "
-"let g:fzf_layout = { 'down': '~20%' }
-let g:fzf_layout = { 'down': '~35%' }
+let g:fzf_layout = { 'down': '~25%' }
 " Keybindings
 imap <c-x><c-l> <plug>(fzf-complete-line)
 nnoremap <leader>c :Commits<CR>
@@ -376,7 +361,7 @@ nnoremap <leader>f :GFiles<CR>
 nnoremap <leader>g :GFiles?<CR>
 " <leader>s for Rg search
 noremap <leader>s :Rg<CR>
-noremap <leader>a :Ag<CR>
+noremap <leader>/ :Ag<CR>
 noremap <leader>rg :Rgg<CR>
 " }}}
 " fzf helper methods {{{
@@ -390,11 +375,11 @@ if executable('rg')
 endif
 
 command! -bang -nargs=* Rgg
-	  \ call fzf#vim#grep(
-	  \   'rg --column --line-number --no-heading --color=always '.shellescape(<q-args>), 1,
-	  \   <bang>0 ? fzf#vim#with_preview('up:60%')
-	  \           : fzf#vim#with_preview('right:50%:hidden', '?'),
-	  \   <bang>0)
+      \ call fzf#vim#grep(
+      \   'rg --column --line-number --no-heading --color=always '.shellescape(<q-args>), 1,
+      \   <bang>0 ? fzf#vim#with_preview('up:60%')
+      \           : fzf#vim#with_preview('right:50%:hidden', '?'),
+      \   <bang>0)
 
 function! s:list_cmd()
   let base = fnamemodify(expand('%'), ':h:.:S')
@@ -402,20 +387,20 @@ function! s:list_cmd()
 endfunction
 
 command! -bang -nargs=? -complete=dir Files
-	  \ call fzf#vim#files(<q-args>, {'source': s:list_cmd(),
-	  \ 'options': '--tiebreak=index'}, <bang>0)
+      \ call fzf#vim#files(<q-args>, {'source': s:list_cmd(),
+      \ 'options': '--tiebreak=index'}, <bang>0)
 
 " Command for git grep
 " - fzf#vim#grep(command, with_column, [options], [fullscreen])
 command! -bang -nargs=* GGrep
-	  \ call fzf#vim#grep(
-	  \   'git grep --line-number '.shellescape(<q-args>), 0,
-	  \   { 'dir': systemlist('git rev-parse --show-toplevel')[0] }, <bang>0)
+      \ call fzf#vim#grep(
+      \   'git grep --line-number '.shellescape(<q-args>), 0,
+      \   { 'dir': systemlist('git rev-parse --show-toplevel')[0] }, <bang>0)
 
 " Override Colors command. You can safely do this in your .vimrc as fzf.vim
 " will not override existing commands.
 command! -bang Colors
-	  \ call fzf#vim#colors({'left': '15%', 'options': '--reverse --margin 30%,0'}, <bang>0)
+      \ call fzf#vim#colors({'left': '15%', 'options': '--reverse --margin 30%,0'}, <bang>0)
 
 " Augmenting Ag command using fzf#vim#with_preview function
 "   * fzf#vim#with_preview([[options], [preview window], [toggle keys...]])
@@ -428,30 +413,30 @@ command! -bang Colors
 "   :Ag  - Start fzf with hidden preview window that can be enabled with "?" key
 "   :Ag! - Start fzf in fullscreen and display the preview window above
 command! -bang -nargs=* Ag
-	  \ call fzf#vim#ag(<q-args>,
-	  \                 <bang>0 ? fzf#vim#with_preview('up:60%')
-	  \                         : fzf#vim#with_preview('right:50%:hidden', '?'),
-	  \                 <bang>0)
+      \ call fzf#vim#ag(<q-args>,
+      \                 <bang>0 ? fzf#vim#with_preview('up:60%')
+      \                         : fzf#vim#with_preview('right:50%:hidden', '?'),
+      \                 <bang>0)
 
 " Similarly, we can apply it to fzf#vim#grep. To use ripgrep instead of ag:
 command! -bang -nargs=* Rg
-	  \ call fzf#vim#grep(
-	  \   'rg --column --line-number --no-heading --color=always --smart-case '.shellescape(<q-args>), 1,
-	  \   <bang>0 ? fzf#vim#with_preview('up:60%')
-	  \           : fzf#vim#with_preview('right:50%:hidden', '?'),
-	  \   <bang>0)
+      \ call fzf#vim#grep(
+      \   'rg --column --line-number --no-heading --color=always --smart-case '.shellescape(<q-args>), 1,
+      \   <bang>0 ? fzf#vim#with_preview('up:60%')
+      \           : fzf#vim#with_preview('right:50%:hidden', '?'),
+      \   <bang>0)
 
 " Likewise, Files command with preview window
 command! -bang -nargs=? -complete=dir Files
-	  \ call fzf#vim#files(<q-args>, fzf#vim#with_preview(), <bang>0)
+      \ call fzf#vim#files(<q-args>, fzf#vim#with_preview(), <bang>0)
 
 " TODO(jethros): write a GitFiles method that start fzf in full screen and
 " display GFiles
 command! -bang -nargs=? GitFiles
-	  \ call fzf#vim#gitfiles('?',
-	  \                 <bang>0 ? fzf#vim#with_preview('up:60%')
-	  \                         : fzf#vim#with_preview('up:60%:hidden', '?'),
-	  \                 <bang>0)
+      \ call fzf#vim#gitfiles('?',
+      \                 <bang>0 ? fzf#vim#with_preview('up:60%')
+      \                         : fzf#vim#with_preview('up:60%:hidden', '?'),
+      \                 <bang>0)
 " }}}
 
 " Open new file adjacent to current file
@@ -480,11 +465,11 @@ nnoremap <leader><leader> <c-^>
 nnoremap <leader>, :set invlist<cr>
 
 " <leader>q shows stats
-nnoremap <leader>q g<c-g>
+"nnoremap <leader>p g<c-g>
 
 " Keymap for replacing up to next _ or -
 "noremap <leader>m ct_   " choosing over lsp ctx menu
-noremap <leader>n ct-
+"noremap <leader>n ct-
 
 " M to make
 noremap M :!make -k -j4<cr>
@@ -519,7 +504,7 @@ nnoremap <leader>i C
 vnoremap <leader>i C
 
 " F3 to insert a logical clock
-nmap <F3> i<C-R>=strftime("%Y-%m-%d %a %I:%M %p")<CR><Esc>
+nmap <F3> <C-R>=strftime("%Y-%m-%d %a %I:%M %p")<CR><Esc>
 imap <F3> <C-R>=strftime("%Y-%m-%d %a %I:%M %p")<CR>
 inoremap <special> <F3> <c-r>=strftime('%c')<CR>
 
@@ -535,7 +520,9 @@ nnoremap <leader>u :UndotreeToggle<CR>
 nnoremap <leader>d :Dispatch<CR>
 " special case for netbricks
 autocmd BufRead,BufNewFile $HOME/dev/netbricks/** let b:dispatch = './build.sh'
-autocmd BufRead,BufNewFile $HOME/dev/netbricks/** nnoremap <leader>d :Dispatch!<CR>
+"autocmd BufRead,BufNewFile $HOME/dev/netbricks/** nnoremap <leader>d :Dispatch!<CR>
+autocmd BufRead,BufNewFile $HOME/dev/projects/netbricks/** let b:dispatch = './build.sh'
+"autocmd BufRead,BufNewFile $HOME/dev/projects/netbricks/** nnoremap <leader>d :Dispatch!<CR>
 
 " ===========================================================================
 "    Autocommands
@@ -560,45 +547,47 @@ endif
 " https://tex.stackexchange.com/questions/1548/intelligent-paragraph-reflowing-in-vim
 fun! TeX_fmt()
   if (getline(".") != "")
-	let save_cursor = getpos(".")
-	let op_wrapscan = &wrapscan
-	set nowrapscan
-	let par_begin = '^\(%D\)\=\s*\($\||\\begin\|\\end\|\\[\|\\]\|\\\(sub\)*section\>\|\\item\>\|\\NC\>\|\\blank\>\|\\noindent\>\)'
-	let par_end   = '^\(%D\)\=\s*\($\||\\begin\|\\end\|\\[\|\\]\|\\place\|\\\(sub\)*section\>\|\\item\>\|\\NC\>\|\\blank\>\)'
-	try
-	  exe '?'.par_begin.'?+'
-	catch /E384/
-	  1
-	endtry
-	norm V
-	try
-	  exe '/'.par_end.'/-'
-	catch /E385/
-	  $
-	endtry
-	norm gq
-	let &wrapscan = op_wrapscan
-	call setpos('.', save_cursor)
+    let save_cursor = getpos(".")
+    let op_wrapscan = &wrapscan
+    set nowrapscan
+    let par_begin = '^\(%D\)\=\s*\($\||\\begin\|\\end\|\\[\|\\]\|\\\(sub\)*section\>\|\\item\>\|\\NC\>\|\\blank\>\|\\noindent\>\)'
+    let par_end   = '^\(%D\)\=\s*\($\||\\begin\|\\end\|\\[\|\\]\|\\place\|\\\(sub\)*section\>\|\\item\>\|\\NC\>\|\\blank\>\)'
+    try
+      exe '?'.par_begin.'?+'
+    catch /E384/
+      1
+    endtry
+    norm V
+    try
+      exe '/'.par_end.'/-'
+    catch /E385/
+      $
+    endtry
+    norm gq
+    let &wrapscan = op_wrapscan
+    call setpos('.', save_cursor)
   endif
 endfun
 " }}}
-
 "autocmd Filetype tex set ts=2 sw=2 et
 autocmd Filetype tex nmap Q :call TeX_fmt()<CR>zz
 autocmd Filetype markdown nmap Q :call TeX_fmt()<CR>zz
-autocmd Filetype org nmap Q :call TeX_fmt()<CR>
 
 " rainbow parentheses {{{
-"
+let g:rainbow_active = 0
 " }}}
 
 " VIM spell
 set spelllang=en_us
 for d in glob('~/.config/nvim/spell/*.add', 1, 1)
   if filereadable(d) && (!filereadable(d . '.spl') || getftime(d) > getftime(d . '.spl'))
-	exec 'mkspell! ' . fnameescape(d)
+    exec 'mkspell! ' . fnameescape(d)
   endif
 endfor
+hi clear SpellBad
+hi SpellBad cterm=underline
+" Set style for gVim
+hi SpellBad gui=undercurl
 
 " ===========================================================================
 "   Personal config
@@ -606,9 +595,9 @@ endfor
 " vim-grammarous {{{
 
 let g:grammarous#disabled_rules = {
-	  \ '*' : ['WHITESPACE_RULE', 'EN_QUOTES'],
-	  \ 'help' : ['WHITESPACE_RULE', 'EN_QUOTES', 'SENTENCE_WHITESPACE', 'UPPERCASE_SENTENCE_START'],
-	  \ }
+      \ '*' : ['WHITESPACE_RULE', 'EN_QUOTES'],
+      \ 'help' : ['WHITESPACE_RULE', 'EN_QUOTES', 'SENTENCE_WHITESPACE', 'UPPERCASE_SENTENCE_START'],
+      \ }
 
 let g:grammarous#hooks = {}
 function! g:grammarous#hooks.on_check(errs) abort
@@ -627,17 +616,15 @@ endfunction
 nnoremap <leader>L :GrammarousCheck --lang=en-US --preview<CR>
 nnoremap <leader>G :GrammarousCheck --lang=en-US --preview<CR>
 " }}}
-
 " LaTeX {{{
 let g:latex_indent_enabled = 1
 let g:latex_fold_envs = 0
 let g:latex_fold_sections = []
-let g:tex_conceal = ""
+"let g:tex_conceal = ""
 autocmd Filetype tex setl updatetime=1
 let g:livepreview_previewer = 'open -a Preview'
 autocmd BufNewFile,BufRead *.tex set syntax=context
 " }}}
-
 " Python is special {{{
 " NOTE: I only want to auto-format Python files that belong to me
 let g:black_linelength = 80
@@ -645,7 +632,7 @@ autocmd BufRead,BufNewFile $HOME/dev/projects/** let b:DevPythonFile=1
 autocmd BufWritePre *.py call DevPythonFormatter()
 fun! DevPythonFormatter()
   if !exists('b:DevPythonFile')
-	return
+    return
   endif
   " I use black, not autopep8 or yapf for now... I wonder the best practise
   execute ':Black'
@@ -681,7 +668,6 @@ if has("mac") || has("macunix")
   vmap <D-k> <M-k>
 endif
 " }}}
-
 " Delete trailing white space on save, useful for Python and CoffeeScript ;) {{{
 func! DeleteTrailingWS()
   exe "normal mz"
@@ -689,7 +675,6 @@ func! DeleteTrailingWS()
   exe "normal `z"
 endfunc
 " }}}
-
 " map wincmd {{{
 "
 " The right windcmd
@@ -733,9 +718,6 @@ let g:Illuminate_delay = 1500
 " vim-search-pulse
 let g:vim_search_pulse_duration = 200
 
-" gitgutter
-let g:gitgutter_enabled = 0
-
 " NERDCommenter {{{
 "
 " Add spaces after comment delimiters by default
@@ -752,11 +734,11 @@ let g:NERDTrimTrailingWhitespace = 1
 let g:NERDToggleCheckAllLines = 1
 " Add your own custom formats or override the defaults
 let g:NERDCustomDelimiters = {
-	  \ 'c': {'left': '//'},
-	  \ 'cpp': {'left': '//'},
-	  \ 'python': {'left': '#'},
-	  \ 'rust': {'left': '//'},
-	  \ }
+      \ 'c': {'left': '//'},
+      \ 'cpp': {'left': '//'},
+      \ 'python': {'left': '#'},
+      \ 'rust': {'left': '//'},
+      \ }
 " Nerd commenter keybindings
 "map <leader>\ <leader>c<Space>
 map <leader>cc <plug>NERDComToggleComment
@@ -769,28 +751,23 @@ let g:livepreview_previewer = 'open -a Preview'
 " poppy
 au! cursormoved * call PoppyInit()
 
-" auto pair jump
-"let g:AutoPairsShortcutJump = '<leader>\'
-"let g:AutoPairsShortcutJump = '<S-tab>'
-" let g:AutoPairsShortcutJump = '<C-l>'
-"let g:AutoPairsShortcutJump = '<M-n>'
-
 " chromatica
 if !empty(glob("/usr/local/opt/llvm/lib"))
   let g:chromatica#libclang_path='/usr/local/opt/llvm/lib'
   let g:chromatica#enable_at_startup=1
 endif
 
-" NOTE(jethros): This is the interesting bit, some keybinding in ALE and COC
-" are overlapping but it is fine b/c I only use the code completion part in
-" COC.
-source $HOME/.config/nvim/config/coc.vim
+source $HOME/.config/nvim/lib/airline.vim
 
-source $HOME/.config/nvim/config/writing.vim
+if has('unix')
+  " NOTE(jethros): In general we don't need ALE but o/w NetBricks won't work.
+  if has('mac')       " osx
+    source $HOME/.config/nvim/lib/coc.vim
+  else                " linux, bsd, etc
+    source $HOME/.config/nvim/lib/ncm2_ale.vim
+  endif
+endif
 
-source $HOME/.config/nvim/config/airline.vim
-
-" nvim
 if has('nvim')
   runtime! plugin/python_setup.vim
 endif

@@ -12,14 +12,6 @@ let g:airline_section_z = "%p%% \ue0a1 :%l/%L Col:%c"
 "let g:airline_section_z = '%3p%% %3l/%L:%3v'
 "let g:airline_section_z = '%3pp %l:%c'
 
-" Coc
-let g:airline#extensions#coc#error_symbol =  "•"
-let g:airline#extensions#coc#warning_symbol = "•"
-let airline#extensions#coc#stl_format_err = '%E{[%e(#%fe)]}'
-let airline#extensions#coc#stl_format_warn = '%W{[%w(#%fw)]}'
-let g:airline_section_error = '%{airline#util#wrap(airline#extensions#coc#get_error(),0)}'
-let g:airline_section_warning = '%{airline#util#wrap(airline#extensions#coc#get_warning(),0)}'
-
 " disable useless
 let g:airline_detect_paste = 0      " I Don't need this. Never did.
 let g:airline_detect_crypt = 0      " Useless.
@@ -51,5 +43,28 @@ let g:airline#extensions#tabline#enabled = 0
 "let g:airline_theme = 'term'        " Default theme
 let g:airline_theme='base16_atelierdune'
 
+"let g:airline_base16_improved_contrast = 1
 let g:airline_symbols_ascii = 1
 
+
+if has('unix')
+  if has('mac')       " osx
+ " Coc Airline
+let g:airline#extensions#coc#error_symbol =  "•"
+let g:airline#extensions#coc#warning_symbol = "•"
+let g:airline_section_error = '%{airline#util#wrap(airline#extensions#coc#get_error(),0)}'
+let g:airline_section_warning = '%{airline#util#wrap(airline#extensions#coc#get_warning(),0)}'
+" let airline#extensions#coc#stl_format_err = '%E{[%e(#%fe)]}'
+" let airline#extensions#coc#stl_format_warn = '%W{[%w(#%fw)]}'
+" let g:airline_section_error = '%{airline#util#wrap(airline#extensions#coc#get_error(),0)}'
+" let g:airline_section_warning = '%{airline#util#wrap(airline#extensions#coc#get_warning(),0)}'
+  else                " linux, bsd, etc
+ " ALE Airline
+let g:airline#extensions#ale#enabled = 1
+let airline#extensions#ale#error_symbol = "•"
+let airline#extensions#ale#warning_symbol = "•"
+"let airline#extensions#ale#show_line_numbers = 1
+"let airline#extensions#ale#open_lnum_symbol = '(L'
+"let airline#extensions#ale#close_lnum_symbol = ')' 
+  endif
+endif

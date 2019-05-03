@@ -68,4 +68,11 @@ augroup filetypedetect
 	au filetype ruby let b:AutoPairs = {'`': '`', '"': '"', '{': '}', '''': '''', '(': ')', '[': ']', '|':'|'}
 	au FileType markdown setlocal nofoldenable
 	"autocmd FileType vim setlocal foldmethod=expr
+
+	" indent line setup
+	au Filetype tex let b:indentLine_enabled = 0
+	au Filetype markdown let b:indentLine_enabled = 0
+	au Filetype text let b:indentLine_enabled = 0
+	au Filetype org let b:indentLine_enabled = 0
+
 augroup END
