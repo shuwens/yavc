@@ -18,35 +18,30 @@ Plug 'ciaranm/securemodelines'
 Plug 'vim-scripts/localvimrc'
 Plug 'Shougo/vimproc.vim', {'do' : 'make'}
 Plug 'tpope/vim-fugitive'
-Plug 'jreybert/vimagit'
-"Plug 'sheerun/vim-polyglot'   " I don't need this and it is buggy
+Plug 'sheerun/vim-polyglot'   " I don't need this and it is buggy
 Plug 'tpope/vim-sleuth'  " Heuristically set buffer options
 Plug 'scrooloose/nerdcommenter'
 Plug 'terryma/vim-multiple-cursors'
 Plug 'tpope/vim-speeddating'
-Plug 'mbbill/undotree'
 Plug 'tpope/vim-dispatch'
-Plug 'yaahallo/rscmake', { 'do': './install.sh' }
 Plug 'tpope/vim-sensible'
 
 "█▓▒░ GUI enhancements
 " ----------------
 Plug 'machakann/vim-highlightedyank'
 Plug 'andymass/vim-matchup'
-"Plug 'thaerkh/vim-indentguides'
 Plug 'Yggdroot/indentLine'
 Plug 'jaxbot/semantic-highlight.vim'
 Plug 'bounceme/poppy.vim'
 Plug 'ntpeters/vim-better-whitespace'
 Plug 'romainl/vim-cool'
-"Plug 'itchyny/lightline.vim'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 
 "█▓▒░ Fuzzy finder
 " ------------
 Plug 'airblade/vim-rooter'
-Plug 'junegunn/fzf.vim'
+Plug 'junegunn/fzf.vim'		    " Fuzzy finder (install fzf cmd line tool)
 if !empty(glob("/usr/local/opt/fzf"))
   Plug '/usr/local/opt/fzf'
   set rtp+=/usr/local/opt/fzf
@@ -57,33 +52,25 @@ endif
 
 "█▓▒░ Semantic language support
 " -------------------------
-" Completion plugins
-if has('unix')
-  if has('mac')       " osx
-    " Coc
-    Plug 'neoclide/coc.nvim', {'do': './install.sh nightly'}
-  else                " linux, bsd, etc
-    Plug 'w0rp/ale'
-    Plug 'ncm2/ncm2'
-    Plug 'roxma/nvim-yarp'
-    " Completion plugins
-    Plug 'ncm2/ncm2-bufword'
-    Plug 'ncm2/ncm2-tmux'
-    Plug 'ncm2/ncm2-path'
-    Plug 'jiangmiao/auto-pairs'
-  endif
-endif
+" Coc for completion
+Plug 'neoclide/coc.nvim', {'do': './install.sh nightly'}
+" and ALE for linting
+Plug 'w0rp/ale'
 " Showing function signature and inline doc.
 Plug 'Shougo/echodoc.vim'
 
 "█▓▒░ VIM editing enhancements
 " -------------------------
-Plug 'luochen1990/rainbow'
 Plug 'RRethy/vim-illuminate'
 Plug 'inside/vim-search-pulse'
 Plug 'numirias/semshi', {'do': ':UpdateRemotePlugins'}
 Plug 'lilydjwg/colorizer'
-Plug 'junegunn/vader.vim'
+if !empty(glob("~/notes"))
+  Plug 'Alok/notational-fzf-vim'
+endif
+if has("mac") || has("macunix")
+  Plug 'xuhdev/vim-latex-live-preview', { 'for': 'tex' }
+endif
 
 "█▓▒░ Syntactic language support
 " --------------------------
@@ -93,7 +80,6 @@ Plug 'fatih/vim-go'
 Plug 'dag/vim-fish'
 Plug 'jceb/vim-orgmode'
 Plug 'bfrg/vim-cpp-modern'
-""Plug 'octol/vim-cpp-enhanced-highlight'
 Plug 'godlygeek/tabular'
 Plug 'plasticboy/vim-markdown'
 Plug 'arakashic/chromatica.nvim'
@@ -102,9 +88,9 @@ Plug 'arakashic/chromatica.nvim'
 Plug 'rust-lang/rust.vim'
 
 "█▓▒░ LaTeX
-Plug 'lervag/vimtex'
+"Plug 'lervag/vimtex', {'for': 'tex'}
 Plug 'rhysd/vim-grammarous'
-Plug 'xuhdev/vim-latex-live-preview', { 'for': 'tex' }
+Plug 'ron89/thesaurus_query.vim'
 
 "█▓▒░ Color
 if !isdirectory("$HOME/dev/others/base16")
@@ -116,6 +102,8 @@ if has('nvim')
   set guicursor=n-v-c:block-Cursor/lCursor-blinkon0,i-ci:ver25-Cursor/lCursor,r-cr:hor20-Cursor/lCursor
   set inccommand=nosplit
   noremap <C-q> :confirm qall<CR>
+  set guicursor=
+  autocmd OptionSet guicursor noautocmd set guicursor=
 end
 
 if !has('gui_running')
@@ -123,51 +111,9 @@ if !has('gui_running')
 endif
 
 "█▓▒░ Plugin settings
-let g:secure_modelines_allowed_items = [
-      \ "textwidth",   "tw",
-      \ "softtabstop", "sts",
-      \ "tabstop",     "ts",
-      \ "shiftwidth",  "sw",
-      \ "expandtab",   "et",   "noexpandtab", "noet",
-      \ "filetype",    "ft",
-      \ "foldmethod",  "fdm",
-      \ "readonly",    "ro",   "noreadonly", "noro",
-      \ "rightleft",   "rl",   "norightleft", "norl",
-      \ "colorcolumn"
-      \ ]
-" }}}
-" echodoc {{{
-let g:echodoc_enable_at_startup = 1
-" }}}
 
 " Don't confirm .lvimrc
 let g:localvimrc_ask = 0
-
-" Javascript
-let javaScript_fold=0
-
-" Golang {{{
-autocmd FileType go nmap <leader>t <Plug>(go-test)
-autocmd FileType go nmap <Leader>r <Plug>(go-rename)
-autocmd FileType go nmap <leader>c <Plug>(go-coverage)
-let g:go_play_open_browser = 0
-let g:go_fmt_fail_silently = 1
-let g:go_fmt_command = "goimports"
-let g:go_bin_path = expand("~/dev/others/r/bin")
-let g:go_version_warning = 0
-" }}}
-"█▓▒░ Rust {{{
-" https://github.com/rust-lang/rust.vim/issues/192
-let g:rustfmt_command = "rustfmt +nightly"
-let g:rustfmt_autosave = 1
-let g:rustfmt_emit_files = 1
-let g:rustfmt_fail_silently = 0
-"let g:rust_keep_autopairs_default = 1
-"let g:rust_clip_command = 'xclip -selection clipboard'
-" <leader>= reformats current tange
-"autocmd FileType rust nnoremap <leader>= :'<,'>RustFmtRange<CR>
-autocmd FileType rust nnoremap <leader>= :RustFmt<CR>
-" }}}
 
 " ===========================================================================
 "   Editor settings
@@ -189,10 +135,6 @@ if (match($TERM, "xterm") != -1)
   " for the vagrant linux box
   set termguicolors
 endif
-
-let g:vim_markdown_new_list_item_indent = 0
-let g:vim_markdown_auto_insert_bullets = 0
-let g:vim_markdown_frontmatter = 1
 
 set printfont=:h14
 set printencoding=utf-8
@@ -220,11 +162,15 @@ set wildmenu
 set wildmode=list:longest
 set wildignore=.hg,.svn,*~,*.png,*.jpg,*.gif,*.settings,Thumbs.db,*.min.js,*.swp,publish/*,intermediate/*,*.o,*.hi,Zend,vendor
 
-" Use regular tabs (wide)
+" Use spaces instead of tabs
+set expandtab
+
+" Be smart when using tabs ;)
+set smarttab
+
+" 1 tab == 4 spaces
 set shiftwidth=4
-set softtabstop=4
 set tabstop=4
-set noexpandtab
 
 " Get syntax
 syntax on
@@ -241,18 +187,6 @@ set incsearch
 set ignorecase
 set smartcase
 set gdefault
-
-" Search results centered please
-nnoremap <silent> n nzz
-nnoremap <silent> N Nzz
-nnoremap <silent> * *zz
-nnoremap <silent> # #zz
-nnoremap <silent> g* g*zz
-
-" Very magic by default
-nnoremap ? ?\v
-nnoremap / /\v
-cnoremap %s/ %sm/
 
 " ==========================================================================
 "    GUI settings
@@ -273,9 +207,7 @@ set lazyredraw
 set synmaxcol=500
 set laststatus=2
 set relativenumber " Relative line numbers
-autocmd InsertEnter * :set number  " Now it is hybrid!
-autocmd InsertLeave * :set nonumber
-"set number " Also show current absolute line
+set number " Also show current absolute line
 set diffopt+=iwhite " No whitespace in vimdiff
 " Make diffing better: https://vimways.org/2018/the-power-of-diff/
 if has("patch-8.1.0360")
@@ -300,473 +232,25 @@ set background=dark
 let base16colorspace=256
 let g:base16_shell_path="$HOME/dev/others/base16/shell/scripts/"
 colorscheme base16-atelier-dune
-
+" extra setup that I might not need?
+hi Normal ctermbg=NONE
 hi Normal guibg=NONE
-"hi nonText guibg=NONE
-"hi Normal ctermbg=NONE
-"hi Folded ctermbg=234 ctermfg=red
 
-" Jump to last edit position on opening file
-" https://stackoverflow.com/questions/31449496/vim-ignore-specifc-file-in-autocommand
-au BufReadPost * if expand('%:p') !~# '\m/\.git/' && line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
+" Editing setup
+source $HOME/.config/nvim/lib/editing.vim
 
-" ===========================================================================
-"   Keyboard shortcuts
-" ===========================================================================
-" ; as :
-nnoremap ; :
-
-" Ctrl+c and Ctrl+j as Esc
-inoremap <C-j> <Esc>
-vnoremap <C-j> <Esc>
-inoremap <C-c> <Esc>
-vnoremap <C-c> <Esc>
-
-" Jump to start and end of line using the home row keys {{{
-""map H ^
-""map L $
-nnoremap <C-h> ^
-nnoremap <C-l> $
-inoremap <C-e> <Esc>A
-inoremap <C-a> <Esc>I
-nnoremap <C-e> <Esc>A
-nnoremap <C-a> <Esc>I
-" }}}
-" Neat X clipboard integration linux {{{
-"
-" ,p will paste clipboard into buffer
-" ,c will copy entire buffer into clipboard
-if has('unix')
-  if has('mac')       " osx
-    " Paste clipboard content to current line
-    noremap <localleader>v :r !pbpaste<CR>
-    noremap <localleader>c :w !pbcopy<CR><CR>
-  else                " linux, bsd, etc
-    noremap <localleader>v :read !xsel --clipboard --output<cr>
-    noremap <localleader>c :w !xsel -ib<cr><cr>
-  endif
-endif
-" }}}
-" fzf !!! {{{
-" from http://sheerun.net/2014/03/21/how-to-boost-your-vim-productivity/
-"
-let g:fzf_layout = { 'down': '~25%' }
-" Keybindings
-imap <c-x><c-l> <plug>(fzf-complete-line)
-nnoremap <leader>c :Commits<CR>
-" Open hotkeys
-nnoremap <leader>p :Files<CR>
-nnoremap <leader>; :Buffers<CR>
-nnoremap <leader>f :GFiles<CR>
-nnoremap <leader>g :GFiles?<CR>
-" <leader>s for Rg search
-noremap <leader>s :Rg<CR>
-noremap <leader>/ :Ag<CR>
-noremap <leader>rg :Rgg<CR>
-" }}}
-" fzf helper methods {{{
-
-if executable('ag')
-  set grepprg=ag\ --nogroup\ --nocolor
-endif
-if executable('rg')
-  set grepprg=rg\ --no-heading\ --vimgrep
-  set grepformat=%f:%l:%c:%m
-endif
-
-command! -bang -nargs=* Rgg
-      \ call fzf#vim#grep(
-      \   'rg --column --line-number --no-heading --color=always '.shellescape(<q-args>), 1,
-      \   <bang>0 ? fzf#vim#with_preview('up:60%')
-      \           : fzf#vim#with_preview('right:50%:hidden', '?'),
-      \   <bang>0)
-
-function! s:list_cmd()
-  let base = fnamemodify(expand('%'), ':h:.:S')
-  return base == '.' ? 'fd --type file --follow' : printf('fd --type file --follow | proximity-sort %s', shellescape(expand('%')))
-endfunction
-
-command! -bang -nargs=? -complete=dir Files
-      \ call fzf#vim#files(<q-args>, {'source': s:list_cmd(),
-      \ 'options': '--tiebreak=index'}, <bang>0)
-
-" Command for git grep
-" - fzf#vim#grep(command, with_column, [options], [fullscreen])
-command! -bang -nargs=* GGrep
-      \ call fzf#vim#grep(
-      \   'git grep --line-number '.shellescape(<q-args>), 0,
-      \   { 'dir': systemlist('git rev-parse --show-toplevel')[0] }, <bang>0)
-
-" Override Colors command. You can safely do this in your .vimrc as fzf.vim
-" will not override existing commands.
-command! -bang Colors
-      \ call fzf#vim#colors({'left': '15%', 'options': '--reverse --margin 30%,0'}, <bang>0)
-
-" Augmenting Ag command using fzf#vim#with_preview function
-"   * fzf#vim#with_preview([[options], [preview window], [toggle keys...]])
-"     * For syntax-highlighting, Ruby and any of the following tools are required:
-"       - Bat: https://github.com/sharkdp/bat
-"       - Highlight: http://www.andre-simon.de/doku/highlight/en/highlight.php
-"       - CodeRay: http://coderay.rubychan.de/
-"       - Rouge: https://github.com/jneen/rouge
-"
-"   :Ag  - Start fzf with hidden preview window that can be enabled with "?" key
-"   :Ag! - Start fzf in fullscreen and display the preview window above
-command! -bang -nargs=* Ag
-      \ call fzf#vim#ag(<q-args>,
-      \                 <bang>0 ? fzf#vim#with_preview('up:60%')
-      \                         : fzf#vim#with_preview('right:50%:hidden', '?'),
-      \                 <bang>0)
-
-" Similarly, we can apply it to fzf#vim#grep. To use ripgrep instead of ag:
-command! -bang -nargs=* Rg
-      \ call fzf#vim#grep(
-      \   'rg --column --line-number --no-heading --color=always --smart-case '.shellescape(<q-args>), 1,
-      \   <bang>0 ? fzf#vim#with_preview('up:60%')
-      \           : fzf#vim#with_preview('right:50%:hidden', '?'),
-      \   <bang>0)
-
-" Likewise, Files command with preview window
-command! -bang -nargs=? -complete=dir Files
-      \ call fzf#vim#files(<q-args>, fzf#vim#with_preview(), <bang>0)
-
-" TODO(jethros): write a GitFiles method that start fzf in full screen and
-" display GFiles
-command! -bang -nargs=? GitFiles
-      \ call fzf#vim#gitfiles('?',
-      \                 <bang>0 ? fzf#vim#with_preview('up:60%')
-      \                         : fzf#vim#with_preview('up:60%:hidden', '?'),
-      \                 <bang>0)
-" }}}
-
-" Open new file adjacent to current file
-nnoremap <leader>e :e <C-R>=expand("%:p:h") . "/" <CR>
-
-" No arrow keys --- force yourself to use the home row
-nnoremap <up> <nop>
-nnoremap <down> <nop>
-nnoremap <left> <nop>
-nnoremap <right> <nop>
-"inoremap <up> <nop>
-"inoremap <down> <nop>
-
-" Left and right can switch buffers
-nnoremap <left> :bp<CR>
-nnoremap <right> :bn<CR>
-
-" Move by line
-nnoremap j gj
-nnoremap k gk
-
-" <leader><leader> toggles between buffers
-nnoremap <leader><leader> <c-^>
-
-" <leader>, shows/hides hidden characters
-nnoremap <leader>, :set invlist<cr>
-
-" <leader>q shows stats
-"nnoremap <leader>p g<c-g>
-
-" Keymap for replacing up to next _ or -
-"noremap <leader>m ct_   " choosing over lsp ctx menu
-"noremap <leader>n ct-
-
-" M to make
-noremap M :!make -k -j4<cr>
-
-" I can type :help on my own, thanks.
-map <F1> <Esc>
-imap <F1> <Esc>
+" Syntax support
+source $HOME/.config/nvim/lib/syntax.vim
 
 " ===========================================================================
-"   Personal Keybindings
+"   Personal programming setup
 " ===========================================================================
-
-" Visual mode pressing * or # searches for the current selection
-vnoremap <silent> * :call VisualSelection('f')<CR>
-vnoremap <silent> # :call VisualSelection('b')<CR>
-
-" Quick-save
-nmap <leader>w :StripWhitespace<CR>:w<CR>
-nmap <leader>wq :wq<CR>
-nnoremap <leader>q :q!<CR>
-nnoremap <leader>qq :q!<Esc>:q!<CR>
-command! W w
-command! Wq wq
-command! WQ wq
-
-" detele things shortcut
-nnoremap <C-i> C
-"inoremap <C-i> C
-vnoremap <C-i> C
-nnoremap <leader>i C
-"inoremap <leader>i C
-vnoremap <leader>i C
-
-" F3 to insert a logical clock
-nmap <F3> <C-R>=strftime("%Y-%m-%d %a %I:%M %p")<CR><Esc>
-imap <F3> <C-R>=strftime("%Y-%m-%d %a %I:%M %p")<CR>
-inoremap <special> <F3> <c-r>=strftime('%c')<CR>
-
-" Fugitive Conflict Resolution
-nnoremap <leader>gd :Gvdiff<CR>
-nnoremap gdh :diffget //2<CR>
-nnoremap gdl :diffget //3<CR>
-
-" Replaced gundo with UndoTree, pure vimscript instead of dependencies
-nnoremap <leader>u :UndotreeToggle<CR>
-
-" vim-dispatch
-nnoremap <leader>d :Dispatch<CR>
-" special case for netbricks
-autocmd BufRead,BufNewFile $HOME/dev/netbricks/** let b:dispatch = './build.sh'
-"autocmd BufRead,BufNewFile $HOME/dev/netbricks/** nnoremap <leader>d :Dispatch!<CR>
-autocmd BufRead,BufNewFile $HOME/dev/projects/netbricks/** let b:dispatch = './build.sh'
-"autocmd BufRead,BufNewFile $HOME/dev/projects/netbricks/** nnoremap <leader>d :Dispatch!<CR>
-
-" ===========================================================================
-"    Autocommands
-" ===========================================================================
-
-" Prevent accidental writes to buffers that shouldn't be edited
-autocmd BufRead *.orig set readonly
-autocmd BufRead *.pacnew set readonly
-
-" Leave paste mode when leaving insert mode
-autocmd InsertLeave * set nopaste
-
-" Jump to last edit position on opening file
-if has("autocmd")
-  " https://stackoverflow.com/questions/31449496/vim-ignore-specifc-file-in-autocommand
-  au BufReadPost * if expand('%:p') !~# '\m/\.git/' && line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
-endif
-
-" A second kind of re-wrap {{{
-" Reformat lines (getting the spacing correct)
-"
-" https://tex.stackexchange.com/questions/1548/intelligent-paragraph-reflowing-in-vim
-fun! TeX_fmt()
-  if (getline(".") != "")
-    let save_cursor = getpos(".")
-    let op_wrapscan = &wrapscan
-    set nowrapscan
-    let par_begin = '^\(%D\)\=\s*\($\||\\begin\|\\end\|\\[\|\\]\|\\\(sub\)*section\>\|\\item\>\|\\NC\>\|\\blank\>\|\\noindent\>\)'
-    let par_end   = '^\(%D\)\=\s*\($\||\\begin\|\\end\|\\[\|\\]\|\\place\|\\\(sub\)*section\>\|\\item\>\|\\NC\>\|\\blank\>\)'
-    try
-      exe '?'.par_begin.'?+'
-    catch /E384/
-      1
-    endtry
-    norm V
-    try
-      exe '/'.par_end.'/-'
-    catch /E385/
-      $
-    endtry
-    norm gq
-    let &wrapscan = op_wrapscan
-    call setpos('.', save_cursor)
-  endif
-endfun
-" }}}
-"autocmd Filetype tex set ts=2 sw=2 et
-autocmd Filetype tex nmap Q :call TeX_fmt()<CR>zz
-autocmd Filetype markdown nmap Q :call TeX_fmt()<CR>zz
-
-" rainbow parentheses {{{
-let g:rainbow_active = 0
-" }}}
-
-" VIM spell
-set spelllang=en_us
-for d in glob('~/.config/nvim/spell/*.add', 1, 1)
-  if filereadable(d) && (!filereadable(d . '.spl') || getftime(d) > getftime(d . '.spl'))
-    exec 'mkspell! ' . fnameescape(d)
-  endif
-endfor
-hi clear SpellBad
-hi SpellBad cterm=underline
-" Set style for gVim
-hi SpellBad gui=undercurl
-
-" ===========================================================================
-"   Personal config
-" ===========================================================================
-" vim-grammarous {{{
-
-let g:grammarous#disabled_rules = {
-      \ '*' : ['WHITESPACE_RULE', 'EN_QUOTES'],
-      \ 'help' : ['WHITESPACE_RULE', 'EN_QUOTES', 'SENTENCE_WHITESPACE', 'UPPERCASE_SENTENCE_START'],
-      \ }
-
-let g:grammarous#hooks = {}
-function! g:grammarous#hooks.on_check(errs) abort
-  nmap <buffer><C-i> <Plug>(grammarous-move-to-info-window)
-  nmap <buffer><C-n> <Plug>(grammarous-move-to-next-error)
-  nmap <buffer><C-p> <Plug>(grammarous-move-to-previous-error)
-  nmap <buffer><leader>f <Plug>(grammarous-fixit)
-  nnoremap <buffer><C-f> <Plug>(grammarous-fixit)
-endfunction
-function! g:grammarous#hooks.on_reset(errs) abort
-  nunmap <buffer><C-j>
-  nunmap <buffer><C-k>
-  nunmap <buffer><leader>f
-endfunction
-
-nnoremap <leader>L :GrammarousCheck --lang=en-US --preview<CR>
-nnoremap <leader>G :GrammarousCheck --lang=en-US --preview<CR>
-" }}}
-" LaTeX {{{
-let g:latex_indent_enabled = 1
-let g:latex_fold_envs = 0
-let g:latex_fold_sections = []
-"let g:tex_conceal = ""
-autocmd Filetype tex setl updatetime=1
-let g:livepreview_previewer = 'open -a Preview'
-autocmd BufNewFile,BufRead *.tex set syntax=context
-" }}}
-" Python is special {{{
-" NOTE: I only want to auto-format Python files that belong to me
-let g:black_linelength = 80
-autocmd BufRead,BufNewFile $HOME/dev/projects/** let b:DevPythonFile=1
-autocmd BufWritePre *.py call DevPythonFormatter()
-fun! DevPythonFormatter()
-  if !exists('b:DevPythonFile')
-    return
-  endif
-  " I use black, not autopep8 or yapf for now... I wonder the best practise
-  execute ':Black'
-  ImpSort!
-  call DeleteTrailingWS()
-endfun
-" }}}
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"   Editing mappings
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-" Remap VIM 0 to first non-blank character
-map 0 ^
-
-" highlighted yank
-if !exists('##textyankpost')
-  map y <plug>(highlightedyank)
-endif
-
-" Mac setting, not important {{{
-"
-" Move a line of text using ALT+[jk] or Comamnd+[jk] on mac
-nmap <M-j> mz:m+<cr>`z
-nmap <M-k> mz:m-2<cr>`z
-vmap <M-j> :m'>+<cr>`<my`>mzgv`yo`z
-vmap <M-k> :m'<-2<cr>`>my`<mzgv`yo`z
-
-if has("mac") || has("macunix")
-  nmap <D-j> <M-j>
-  nmap <D-k> <M-k>
-  vmap <D-j> <M-j>
-  vmap <D-k> <M-k>
-endif
-" }}}
-" Delete trailing white space on save, useful for Python and CoffeeScript ;) {{{
-func! DeleteTrailingWS()
-  exe "normal mz"
-  %s/\s\+$//ge
-  exe "normal `z"
-endfunc
-" }}}
-" map wincmd {{{
-"
-" The right windcmd
-nmap <silent>J :wincmd j<CR>
-nmap <silent>K :wincmd k<CR>
-nmap <silent>H :wincmd h<CR>
-nmap <silent>L :wincmd l<CR>
-
-nmap <silent> <A-k> :wincmd k<CR>
-nmap <silent> <A-j> :wincmd j<CR>
-nmap <silent> <A-h> :wincmd h<CR>
-nmap <silent> <A-l> :wincmd l<CR>
-"}}}
-" provide hjkl movements in Insert mode via the <Alt> modifier key  {{{
-"
-inoremap <A-h> <C-o>h
-inoremap <A-j> <C-o>j
-inoremap <A-k> <C-o>k
-inoremap <A-l> <C-o>l
-" }}}
-" C++ reference look up  {{{
-" https://stackoverflow.com/questions/2272759/looking-up-c-documentation-inside-of-vim?utm_medium=organic&utm_source=google_rich_qa&utm_campaign=google_rich_qa
-command! -nargs=+ Cppman silent! call system("tmux split-window cppman " . expand(<q-args>))
-autocmd FileType cpp nnoremap <silent><buffer> K <Esc>:Cppman <cword><CR>
-" }}}
-" fugitive {{{
-"
-nnoremap <silent> gd :GDiff<CR>
-nnoremap <silent> dg :diffget<CR>
-" }}}
-
-" vim-illuminate
-hi link illuminatedWord Visual
-" Time in milliseconds (default 250)
-let g:Illuminate_delay = 1500
-"let g:Illuminate_ftHighlightGroups = {
-"      \ 'vim': ['vimVar', 'vimString', 'vimLineComment',
-"      \         'vimFuncName', 'vimFunction', 'vimUserFunc', 'vimFunc']
-"      \ }
-
-" vim-search-pulse
-let g:vim_search_pulse_duration = 200
-
-" NERDCommenter {{{
-"
-" Add spaces after comment delimiters by default
-let g:NERDSpaceDelims = 1
-" Use compact syntax for prettified multi-line comments
-let g:NERDCompactSexyComs = 1
-" Align line-wise comment delimiters flush left instead of following code indentation
-let g:NERDDefaultAlign = 'left'
-" Allow commenting and inverting empty lines (useful when commenting a region)
-let g:NERDCommentEmptyLines = 1
-" Enable trimming of trailing whitespace when uncommenting
-let g:NERDTrimTrailingWhitespace = 1
-" Enable NERDCommenterToggle to check all selected lines is commented or not
-let g:NERDToggleCheckAllLines = 1
-" Add your own custom formats or override the defaults
-let g:NERDCustomDelimiters = {
-      \ 'c': {'left': '//'},
-      \ 'cpp': {'left': '//'},
-      \ 'python': {'left': '#'},
-      \ 'rust': {'left': '//'},
-      \ }
-" Nerd commenter keybindings
-"map <leader>\ <leader>c<Space>
-map <leader>cc <plug>NERDComToggleComment
-map <C-\> <leader>c<Space>
-" }}}
-
-" Preview
-let g:livepreview_previewer = 'open -a Preview'
-
-" poppy
-au! cursormoved * call PoppyInit()
-
-" chromatica
-if !empty(glob("/usr/local/opt/llvm/lib"))
-  let g:chromatica#libclang_path='/usr/local/opt/llvm/lib'
-  let g:chromatica#enable_at_startup=1
-endif
-
 source $HOME/.config/nvim/lib/airline.vim
+source $HOME/.config/nvim/lib/coc.vim
+source $HOME/.config/nvim/lib/ale.vim
 
-if has('unix')
-  " NOTE(jethros): In general we don't need ALE but o/w NetBricks won't work.
-  if has('mac')       " osx
-    source $HOME/.config/nvim/lib/coc.vim
-  else                " linux, bsd, etc
-    source $HOME/.config/nvim/lib/ncm2_ale.vim
-  endif
-endif
+" echodoc
+let g:echodoc_enable_at_startup = 1
 
 if has('nvim')
   runtime! plugin/python_setup.vim

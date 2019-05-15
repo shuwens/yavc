@@ -11,8 +11,8 @@ augroup filetypedetect
 	au Filetype rust source $HOME/.config/nvim/scripts/spacetab.vim
 	au Filetype rust set colorcolumn=100
 	au FileType rust let b:dispatch = 'cargo check'
-	au filetype rust let b:AutoPairs = {'`': '`', '"': '"', '{': '}', '(': ')', '[': ']', '|':'|', '<':'>'}
-	au Filetype rust let b:ale_linters = ['rustup', 'run', 'nightly', 'rls']
+	"au filetype rust let b:AutoPairs = {'`': '`', '"': '"', '{': '}', '(': ')', '[': ']', '|':'|', '<':'>'}
+	"au Filetype rust let b:ale_linters = ['rustup', 'run', 'nightly', 'rls']
 
 	" Shorter columns in text
 	au Filetype text setlocal  tw=72 colorcolumn=73
@@ -75,4 +75,17 @@ augroup filetypedetect
 	au Filetype text let b:indentLine_enabled = 0
 	au Filetype org let b:indentLine_enabled = 0
 
+	" Prevent accidental writes to buffers that shouldn't be edited
+	autocmd BufRead *.orig set readonly
+	autocmd BufRead *.pacnew set readonly
+
+	" Jump to last edit position on opening file
+	if has("autocmd")
+		" https://stackoverflow.com/questions/31449496/vim-ignore-specifc-file-in-autocommand
+		au BufReadPost * if expand('%:p') !~# '\m/\.git/' && line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
+	endif
+
+	" Jump to last edit position on opening file
+	" https://stackoverflow.com/questions/31449496/vim-ignore-specifc-file-in-autocommand
+	au BufReadPost * if expand('%:p') !~# '\m/\.git/' && line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
 augroup END

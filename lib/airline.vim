@@ -1,8 +1,8 @@
 " Airline
 
 " if you want to disable auto detect, comment out those two lines
-"let g:airline#extensions#disable_rtp_load = 1
-"let g:airline_extensions = ['branch', 'hunks', 'coc']
+" let g:airline#extensions#disable_rtp_load = 1
+" let g:airline_extensions = ['branch', 'hunks', 'coc']
 
 let g:airline_powerline_fonts = 1
 
@@ -21,9 +21,9 @@ let g:airline_exclude_preview = 1
 " Extensions
 " ---------
 let g:airline#extensions#default#layout = [
-                  \ [ 'a', 'b', 'c' ],
-                  \ [ 'x', 'y', 'z', 'warning', 'error' ]
-                  \ ]
+         \ [ 'a', 'b', 'c' ],
+         \ [ 'x', 'y', 'z', 'warning', 'error' ]
+         \ ]
 let g:airline#extensions#branch#format = 0    " Branch names as 'f/b/baz'.
 let g:airline#extensions#syntastic#enabled = 0
 let g:airline#extensions#wordcount#enabled = 0
@@ -47,24 +47,8 @@ let g:airline_theme='base16_atelierdune'
 let g:airline_symbols_ascii = 1
 
 
-if has('unix')
-  if has('mac')       " osx
- " Coc Airline
-let g:airline#extensions#coc#error_symbol =  "•"
-let g:airline#extensions#coc#warning_symbol = "•"
-let g:airline_section_error = '%{airline#util#wrap(airline#extensions#coc#get_error(),0)}'
-let g:airline_section_warning = '%{airline#util#wrap(airline#extensions#coc#get_warning(),0)}'
-" let airline#extensions#coc#stl_format_err = '%E{[%e(#%fe)]}'
-" let airline#extensions#coc#stl_format_warn = '%W{[%w(#%fw)]}'
-" let g:airline_section_error = '%{airline#util#wrap(airline#extensions#coc#get_error(),0)}'
-" let g:airline_section_warning = '%{airline#util#wrap(airline#extensions#coc#get_warning(),0)}'
-  else                " linux, bsd, etc
- " ALE Airline
+" ALE Airline
 let g:airline#extensions#ale#enabled = 1
 let airline#extensions#ale#error_symbol = "•"
 let airline#extensions#ale#warning_symbol = "•"
-"let airline#extensions#ale#show_line_numbers = 1
-"let airline#extensions#ale#open_lnum_symbol = '(L'
-"let airline#extensions#ale#close_lnum_symbol = ')' 
-  endif
-endif
+let airline#extensions#ale#show_line_numbers = 0

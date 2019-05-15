@@ -5,7 +5,7 @@ call coc#add_extension('coc-snippets')
 call coc#add_extension('coc-python')
 call coc#add_extension('coc-rls')
 call coc#add_extension('coc-pairs')
-call coc#add_extension('coc-vimtex')
+"call coc#add_extension('coc-vimtex')
 
 " if hidden is not set, TextEdit might fail.
 set hidden
@@ -57,7 +57,11 @@ inoremap <silent><expr> <c-space> coc#refresh()
 
 " Use <cr> to confirm completion, `<C-g>u` means break undo chain at current position.
 " Coc only does snippet and additional edit on confirm.
-inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+" And to work as expected in coc-pairs.
+" https://github.com/neoclide/coc-pairs/issues/13
+"
+" inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm() : "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
 
 " Use `[c` and `]c` to navigate diagnostics
 nmap <silent> <C-k>  <Plug>(coc-diagnostic-prev)
@@ -161,14 +165,3 @@ function! s:check_back_space() abort
 endfunction
 
 let g:coc_snippet_next = '<tab>'
-
-call coc#config('coc', {
-      \ 'preferences.diagnostic.displayByAle': 'false',
-      \ 'preferences.diagnostic.errorSign': "✗",
-      \ 'preferences.diagnostic.warningSign': "⚠",
-      \ 'preferences.diagnostic.infoSign': 'i',
-      \ 'preferences.diagnostic.hintSign': "➤",
-      \ 'preferences.diagnostic.refreshOnInsertMode': 'true',
-      \ 'preferences.diagnostic.enableMessage': 'jump',
-      \})
-

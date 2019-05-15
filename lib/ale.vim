@@ -1,29 +1,33 @@
 " Linter -- ALE
 " lint should be handled by LSP, but seems like that Rust is bit broken
 let g:ale_linters = {
+      \ 'rust': ['rls'],
       \ 'cpp' : ['rscmake', 'cppcheck', 'clangtidy', 'gcovcheck'],
       \ 'python': ['pyls',],
       \ 'LaTeX': ['proselint',],
+      \	'sh': ['shellcheck']
       \ }
 let g:ale_fixers = {
       \	'*': ['remove_trailing_lines', ],
-      \ 'rust': ['rustfmt']
+      \ 'rust': ['rustfmt'],
+      \ 'c': ['clang-format'],
+      \ 'cpp': ['clang-format']
       \ }
 " only lint when I want
 let g:ale_lint_on_text_changed = 'never'
 let g:ale_lint_on_insert_leave = 1
 let g:ale_lint_on_save = 0
 let g:ale_lint_on_enter = 0
-let g:ale_completion_enabled = 1
+let g:ale_completion_enabled = 0
 let g:ale_virtualtext_cursor = 1
 " Figured out what these are for
 let g:ale_set_loclist = 0
 let g:ale_set_quickfix = 0
 let g:ale_set_ballons = 0
 " Rust
+let g:ale_rust_rls_toolchain = 'nightly'
 let g:ale_rust_rls_config = {
       \ 'rust': {
-      \ 'toolchain': 'nightly',
       \ 'all_targets': 1,
       \ 'build_on_save': 1,
       \ 'clippy_preference': 'off'
@@ -63,6 +67,8 @@ highlight link ALEVirtualTextError WarningMsg
 "highlight ALEWarning guibg=#333300
 highlight ALEError guibg=None
 highlight ALEWarning guibg=None
+hi ale_error   cterm=None ctermfg=124 ctermbg=237
+hi ale_warning cterm=None ctermfg=214 ctermbg=237
 
 let g:ale_sign_error = "✗"
 let g:ale_sign_warning = "⚠"
@@ -73,7 +79,3 @@ let g:ale_echo_msg_warning_str = 'WARN'
 let g:ale_echo_msg_info_str = 'INFO'
 let g:ale_error_format = '•%d'
 let g:ale_warning_format = '•%d'
-hi ale_error   cterm=None ctermfg=124 ctermbg=237
-hi ale_warning cterm=None ctermfg=214 ctermbg=237
-
-
