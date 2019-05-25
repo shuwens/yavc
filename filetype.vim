@@ -79,6 +79,8 @@ augroup filetypedetect
 	autocmd BufRead *.orig set readonly
 	autocmd BufRead *.pacnew set readonly
 
+	autocmd BufRead *.out set wrap
+
 	" Jump to last edit position on opening file
 	if has("autocmd")
 		" https://stackoverflow.com/questions/31449496/vim-ignore-specifc-file-in-autocommand
