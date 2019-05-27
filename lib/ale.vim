@@ -2,10 +2,10 @@
 " lint should be handled by LSP, but seems like that Rust is bit broken
 let g:ale_linters = {
       \ 'rust': ['rls'],
-      \ 'cpp' : ['rscmake', 'cppcheck', 'clangtidy', 'gcovcheck'],
+      \ 'cpp' : ['cppcheck', 'clangtidy', 'gcovcheck'],
       \ 'python': ['pyls',],
-      \ 'LaTeX': ['proselint',],
-      \	'sh': ['shellcheck']
+      \	'sh': ['shellcheck', 'language_server'],
+      \ 'make': ['checkmake']
       \ }
 let g:ale_fixers = {
       \	'*': ['remove_trailing_lines', ],

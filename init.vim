@@ -13,7 +13,7 @@ call plug#begin('$HOME/.local/share/nvim/plugged')
 "█▓▒░ Load plugins
 
 "█▓▒░ VIM enhancements
-" ----------------
+" --------------------
 Plug 'ciaranm/securemodelines'
 Plug 'vim-scripts/localvimrc'
 Plug 'Shougo/vimproc.vim', {'do' : 'make'}
@@ -27,7 +27,7 @@ Plug 'tpope/vim-dispatch'
 Plug 'tpope/vim-sensible'
 
 "█▓▒░ GUI enhancements
-" ----------------
+" --------------------
 Plug 'machakann/vim-highlightedyank'
 Plug 'andymass/vim-matchup'
 Plug 'Yggdroot/indentLine'
@@ -39,7 +39,7 @@ Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 
 "█▓▒░ Fuzzy finder
-" ------------
+" ----------------
 Plug 'airblade/vim-rooter'
 Plug 'junegunn/fzf.vim'		    " Fuzzy finder (install fzf cmd line tool)
 if !empty(glob("/usr/local/opt/fzf"))
@@ -51,7 +51,7 @@ else
 endif
 
 "█▓▒░ Semantic language support
-" -------------------------
+" -----------------------------
 " Coc for completion
 Plug 'neoclide/coc.nvim', {'do': './install.sh nightly'}
 " and ALE for linting
@@ -60,7 +60,7 @@ Plug 'w0rp/ale'
 Plug 'Shougo/echodoc.vim'
 
 "█▓▒░ VIM editing enhancements
-" -------------------------
+" ----------------------------
 Plug 'RRethy/vim-illuminate'
 Plug 'inside/vim-search-pulse'
 Plug 'numirias/semshi', {'do': ':UpdateRemotePlugins'}
@@ -73,7 +73,7 @@ if has("mac") || has("macunix")
 endif
 
 "█▓▒░ Syntactic language support
-" --------------------------
+" ------------------------------
 Plug 'vim-scripts/gnuplot-syntax-highlighting'
 Plug 'cespare/vim-toml'
 Plug 'fatih/vim-go'
