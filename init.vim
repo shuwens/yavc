@@ -21,7 +21,7 @@ Plug 'tpope/vim-fugitive'
 Plug 'sheerun/vim-polyglot'   " I don't need this and it is buggy
 Plug 'tpope/vim-sleuth'  " Heuristically set buffer options
 Plug 'scrooloose/nerdcommenter'
-Plug 'terryma/vim-multiple-cursors'
+"Plug 'terryma/vim-multiple-cursors'
 Plug 'tpope/vim-speeddating'
 Plug 'tpope/vim-dispatch'
 Plug 'tpope/vim-sensible'
@@ -35,13 +35,13 @@ Plug 'jaxbot/semantic-highlight.vim'
 Plug 'bounceme/poppy.vim'
 Plug 'ntpeters/vim-better-whitespace'
 Plug 'romainl/vim-cool'
-Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline'            " better status line
 Plug 'vim-airline/vim-airline-themes'
 
 "█▓▒░ Fuzzy finder
 " ----------------
 Plug 'airblade/vim-rooter'
-Plug 'junegunn/fzf.vim'		    " Fuzzy finder (install fzf cmd line tool)
+Plug 'junegunn/fzf.vim'		        " Fuzzy finder (install fzf cmd line tool)
 if !empty(glob("/usr/local/opt/fzf"))
   Plug '/usr/local/opt/fzf'
   set rtp+=/usr/local/opt/fzf
@@ -54,10 +54,8 @@ endif
 " -----------------------------
 " Coc for completion
 Plug 'neoclide/coc.nvim', {'do': './install.sh nightly'}
-" and ALE for linting
-Plug 'w0rp/ale'
-" Showing function signature and inline doc.
-Plug 'Shougo/echodoc.vim'
+Plug 'w0rp/ale'                    " and ALE for linting
+Plug 'Shougo/echodoc.vim'          " Showing function signature and inline doc.
 
 "█▓▒░ VIM editing enhancements
 " ----------------------------
