@@ -21,7 +21,6 @@ Plug 'tpope/vim-fugitive'
 Plug 'sheerun/vim-polyglot'   " I don't need this and it is buggy
 Plug 'tpope/vim-sleuth'  " Heuristically set buffer options
 Plug 'scrooloose/nerdcommenter'
-"Plug 'terryma/vim-multiple-cursors'
 Plug 'tpope/vim-speeddating'
 Plug 'tpope/vim-dispatch'
 Plug 'tpope/vim-sensible'
