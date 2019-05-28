@@ -1,18 +1,18 @@
 " Linter -- ALE
 " lint should be handled by LSP, but seems like that Rust is bit broken
 let g:ale_linters = {
-      \ 'rust': ['rls'],
-      \ 'cpp' : ['cppcheck', 'clangtidy', 'gcovcheck'],
-      \ 'python': ['pyls',],
-      \	'sh': ['shellcheck', 'language_server'],
-      \ 'make': ['checkmake']
-      \ }
+                  \ 'rust': ['rls'],
+                  \ 'cpp' : ['cppcheck', 'clangtidy', 'gcovcheck'],
+                  \ 'python': ['pyls',],
+                  \	'sh': ['shellcheck', 'language_server'],
+                  \ 'make': ['checkmake']
+                  \ }
 let g:ale_fixers = {
-      \	'*': ['remove_trailing_lines', ],
-      \ 'rust': ['rustfmt'],
-      \ 'c': ['clang-format'],
-      \ 'cpp': ['clang-format']
-      \ }
+                  \	'*': ['remove_trailing_lines', ],
+                  \ 'rust': ['rustfmt'],
+                  \ 'c': ['clang-format'],
+                  \ 'cpp': ['clang-format']
+                  \ }
 " only lint when I want
 let g:ale_lint_on_text_changed = 'never'
 let g:ale_lint_on_insert_leave = 1
@@ -27,14 +27,15 @@ let g:ale_set_ballons = 0
 " Rust
 let g:ale_rust_rls_toolchain = 'nightly'
 let g:ale_rust_rls_config = {
-      \ 'rust': {
-      \ 'all_targets': 1,
-      \ 'build_on_save': 1,
-      \ 'clippy_preference': 'off'
-      \ }
-      \ }
-"
+                  \ 'rust': {
+                  \ 'all_targets': 1,
+                  \ 'build_on_save': 1,
+                  \ 'clippy_preference': 'off'
+                  \ }
+                  \ }
+
 " ALE bindings
+"
 nmap <leader>l <Plug>(ale_lint)
 nmap <leader>k <Plug>(ale_hover)
 " Jump to next/previous error
@@ -56,7 +57,7 @@ nmap <leader>o <C-O>
 let g:ale_echo_msg_format = '[%severity%] %s [%linter%]'
 let g:ale_loclist_msg_format='%s: %linter% %severity% (%code%)'
 
-" complicated gui setup
+" Complicated gui setup
 "
 highlight link ALEWarningSign Todo
 highlight link ALEErrorSign WarningMsg

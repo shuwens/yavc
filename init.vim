@@ -21,21 +21,21 @@ Plug 'tpope/vim-fugitive'
 Plug 'sheerun/vim-polyglot'   " I don't need this and it is buggy
 Plug 'tpope/vim-sleuth'  " Heuristically set buffer options
 Plug 'scrooloose/nerdcommenter'
-Plug 'tpope/vim-speeddating'
 Plug 'tpope/vim-dispatch'
 Plug 'tpope/vim-sensible'
 
 "█▓▒░ GUI enhancements
 " --------------------
-Plug 'machakann/vim-highlightedyank'
-Plug 'andymass/vim-matchup'
+Plug 'machakann/vim-highlightedyank'   " how can I use it?
 Plug 'Yggdroot/indentLine'
-Plug 'jaxbot/semantic-highlight.vim'
+Plug 'jaxbot/semantic-highlight.vim'     " every variable has a different color
 Plug 'bounceme/poppy.vim'
 Plug 'ntpeters/vim-better-whitespace'
 Plug 'romainl/vim-cool'
+Plug 'RRethy/vim-illuminate'
 Plug 'vim-airline/vim-airline'            " better status line
 Plug 'vim-airline/vim-airline-themes'
+Plug 'lilydjwg/colorizer'
 
 "█▓▒░ Fuzzy finder
 " ----------------
@@ -58,10 +58,8 @@ Plug 'Shougo/echodoc.vim'          " Showing function signature and inline doc.
 
 "█▓▒░ VIM editing enhancements
 " ----------------------------
-Plug 'RRethy/vim-illuminate'
 Plug 'inside/vim-search-pulse'
 Plug 'numirias/semshi', {'do': ':UpdateRemotePlugins'}
-Plug 'lilydjwg/colorizer'
 if !empty(glob("~/notes"))
   Plug 'Alok/notational-fzf-vim'
 endif
@@ -85,7 +83,6 @@ Plug 'arakashic/chromatica.nvim'
 Plug 'rust-lang/rust.vim'
 
 "█▓▒░ LaTeX
-"Plug 'lervag/vimtex', {'for': 'tex'}
 Plug 'rhysd/vim-grammarous'
 Plug 'ron89/thesaurus_query.vim'
 

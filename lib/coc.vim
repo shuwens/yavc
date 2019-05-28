@@ -1,11 +1,10 @@
-" Coc
+" Coc setting
 "
 " Coc extensions
 call coc#add_extension('coc-snippets')
 call coc#add_extension('coc-python')
 call coc#add_extension('coc-rls')
 call coc#add_extension('coc-pairs')
-"call coc#add_extension('coc-vimtex')
 
 " if hidden is not set, TextEdit might fail.
 set hidden
@@ -63,7 +62,8 @@ inoremap <silent><expr> <c-space> coc#refresh()
 " inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
 inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm() : "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
 
-" Use `[c` and `]c` to navigate diagnostics
+" NOTE: the diagnostic is now in the ALE
+" Use `C-k` and `C-j` to navigate diagnostics
 nmap <silent> <C-k>  <Plug>(coc-diagnostic-prev)
 nmap <silent> <C-j>  <Plug>(coc-diagnostic-next)
 
@@ -72,8 +72,7 @@ nmap <silent> <leader>.  <Plug>(coc-definition)
 nmap <silent> <leader>y  <Plug>(coc-type-definition)
 nmap <silent> <leader>i  <Plug>(coc-implementation)
 nmap <silent> <leader>r  <Plug>(coc-references)
-"nmap <silent> <leader>o  <C-O>
-nmap <silent> <leader>\  <C-O>
+nmap <silent> <leader>o  <C-O>
 nmap <silent> <C-g> :close<cr>
 
 " Use K to show documentation in preview window
@@ -122,7 +121,7 @@ command! -nargs=? Fold :call CocAction('fold', <f-args>)
 
 " Using CocList
 " Show all diagnostics
-nnoremap <silent> <leader>a  :<C-u>CocList diagnostics<cr>
+"nnoremap <silent> <leader>a  :<C-u>CocList diagnostics<cr>
 " Manage extensions
 "nnoremap <silent> <leader>e  :<C-u>CocList extensions<cr>
 " Show commands
