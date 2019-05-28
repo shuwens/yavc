@@ -1,22 +1,93 @@
 augroup filetypedetect
-  " Mail
-  autocmd BufRead,BufNewFile /tmp/mutt*              setfiletype mail
-  autocmd BufRead,BufNewFile /tmp/mutt*              setlocal spell tw=72 colorcolumn=73
-  " Git commit message
-  autocmd Filetype gitcommit                         setlocal spell tw=72 colorcolumn=73
-  " Go shortcuts
-  au FileType go nmap <leader>t <Plug>(go-test)
-  au FileType go nmap <Leader>r <Plug>(go-rename)
-  au FileType go nmap <leader>c <Plug>(go-coverage)
-  " Rust language server
-  "au FileType rust :LanguageClientStart
-  " Shorter columns in text
-  autocmd Filetype tex setlocal spell tw=80 colorcolumn=81
-  autocmd Filetype text setlocal spell tw=72 colorcolumn=73
-  autocmd Filetype markdown setlocal spell tw=72 colorcolumn=73
-  " No autocomplete in text
-  autocmd BufRead,BufNewFile /tmp/mutt* let g:deoplete#enable_at_startup = 0
-  autocmd Filetype tex let g:deoplete#enable_at_startup = 0
-  autocmd Filetype text let g:deoplete#enable_at_startup = 0
-  autocmd Filetype markdown let g:deoplete#enable_at_startup = 0
+	" Git commit message
+	au Filetype gitcommit setlocal spell tw=72 colorcolumn=73
+
+	" nftables
+	autocmd BufRead,BufNewFile *.nft setfiletype nftables
+
+	" Rust language server
+	"autocmd FileType rust let b:ale_linters = ['rustup', 'run', 'nightly', 'rls']
+	" Follow Rust code style rules
+	au Filetype rust source $HOME/.config/nvim/scripts/spacetab.vim
+	au Filetype rust set colorcolumn=100
+	au FileType rust let b:dispatch = 'cargo check'
+	"au filetype rust let b:AutoPairs = {'`': '`', '"': '"', '{': '}', '(': ')', '[': ']', '|':'|', '<':'>'}
+	"au Filetype rust let b:ale_linters = ['rustup', 'run', 'nightly', 'rls']
+
+	" Shorter columns in text
+	au Filetype text setlocal  tw=72 colorcolumn=73
+	au Filetype markdown setlocal  tw=72 colorcolumn=73
+
+	" proselint!!!
+	au Filetype tex let b:ale_linters = ['proselint', "lacheck", "chktex"]
+	au Filetype text let b:ale_linters = ['proselint']
+	au Filetype markdown let b:ale_linters = ['proselint']
+
+	" LaTeX and TeX
+	autocmd BufRead *.tex set filetype=tex
+	au Filetype tex setlocal ts=2 sts=2 tw=80 colorcolumn=81 et
+	au Filetype tex let g:tex_flavor = 'latex'
+	"autocmd Filetype tex setlocal syntax=context
+	" LaTeX indent
+	au FileType tex let g:tex_indent_items=0
+	au FileType tex let g:tex_indent_and=0
+	au FileType tex let g:tex_indent_brace=0
+
+	" fish
+	au FileType fish compiler fish
+	au FileType fish setlocal textwidth=79
+	"au FileType fish setlocal nofoldenable
+	au FileType fish setlocal indentexpr=fish#Indent()
+	au FileType fish setlocal indentkeys+==end,=else,=case
+
+	" lisp
+	au BufNewFile,BufRead *.lsp,*.lisp,*.el,*.cl,*.jl,*.L,.emacs,.spacemacs setf lisp
+
+	" other file types
+	au BufNewFile,BufRead .chunkwmrc,.skhdrc set filetype=sh
+
+	" Auto-make less files on save
+	autocmd BufWritePost *.less if filereadable("Makefile") | make | endif
+
+	" Help filetype detection
+	autocmd BufRead *.plot set filetype=gnuplot
+	autocmd BufRead *.md set filetype=markdown
+	autocmd BufRead *.lds set filetype=ld
+	autocmd BufRead *.xlsx.axlsx set filetype=ruby
+	autocmd BufRead *.trm set filetype=c
+	autocmd BufRead *.org set filetype=org
+
+	" Script plugins
+	au Filetype html,xml,xsl,php source $HOME/.config/nvim/scripts/closetag.vim
+
+	" Spell checking for things I need
+	au Filetype tex setlocal spell
+	au Filetype rust setlocal spell
+
+	" additional
+	au filetype ruby let b:AutoPairs = {'`': '`', '"': '"', '{': '}', '''': '''', '(': ')', '[': ']', '|':'|'}
+	au FileType markdown setlocal nofoldenable
+	"autocmd FileType vim setlocal foldmethod=expr
+
+	" indent line setup
+	au Filetype tex let b:indentLine_enabled = 0
+	au Filetype markdown let b:indentLine_enabled = 0
+	au Filetype text let b:indentLine_enabled = 0
+	au Filetype org let b:indentLine_enabled = 0
+
+	" Prevent accidental writes to buffers that shouldn't be edited
+	autocmd BufRead *.orig set readonly
+	autocmd BufRead *.pacnew set readonly
+
+	autocmd BufRead *.out set wrap
+
+	" Jump to last edit position on opening file
+	if has("autocmd")
+		" https://stackoverflow.com/questions/31449496/vim-ignore-specifc-file-in-autocommand
+		au BufReadPost * if expand('%:p') !~# '\m/\.git/' && line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
+	endif
+
+	" Jump to last edit position on opening file
+	" https://stackoverflow.com/questions/31449496/vim-ignore-specifc-file-in-autocommand
+	au BufReadPost * if expand('%:p') !~# '\m/\.git/' && line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
 augroup END
