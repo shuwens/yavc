@@ -94,9 +94,9 @@ autocmd BufRead,BufNewFile $HOME/dev/netbricks/** nnoremap <leader>d :Dispatch!<
 autocmd BufRead,BufNewFile $HOME/dev/projects/netbricks/** let b:dispatch = './build.sh'
 autocmd BufRead,BufNewFile $HOME/dev/projects/netbricks/** nnoremap <leader>d :Dispatch!<CR>
 
-" Jump to start and end of line using the home row keys
-""map H ^
-""map L $
+" Jump to start and end of line using the home row key
+"map H ^
+"map L $
 nnoremap <C-h> ^
 nnoremap <C-l> $
 inoremap <C-e> <Esc>A
@@ -124,6 +124,7 @@ inoremap <A-j> <C-o>j
 inoremap <A-k> <C-o>k
 inoremap <A-l> <C-o>l
 
+
 " Neat X clipboard integration linux
 "
 " ,p will paste clipboard into buffer
@@ -134,10 +135,8 @@ if has('unix')
     nnoremap <silent>P :r !pbpaste<CR>
     vnoremap <silent>y :w !pbcopy<CR>
   else                " linux, bsd, etc
-    nnoremap <silent>P :read !xsel --clipboard --output<CR>
-    nnoremap <C-v> :read !xsel --clipboard --output<CR>
-    inoremap <C-v> :read !xsel --clipboard --output<CR>
-    vnoremap <silent>y :w !xsel -ib<CR>
+    noremap <leader>p :read !xsel --clipboard --output<cr>
+    noremap <leader>c :w !xsel -ib<cr><cr>
   endif
 endif
 
@@ -176,7 +175,7 @@ let g:fzf_layout = { 'down': '~25%' }
 imap <c-x><c-l> <plug>(fzf-complete-line)
 nnoremap <leader>c :Commits<CR>
 " Open hotkeys
-nnoremap <leader>p :Files<CR>
+nnoremap <C-p> :Files<CR>
 nnoremap <leader>; :Buffers<CR>
 nnoremap <leader>f :GFiles<CR>
 nnoremap <leader>g :GFiles?<CR>

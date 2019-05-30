@@ -18,30 +18,30 @@ Plug 'ciaranm/securemodelines'
 Plug 'vim-scripts/localvimrc'
 Plug 'Shougo/vimproc.vim', {'do' : 'make'}
 Plug 'tpope/vim-fugitive'
-Plug 'sheerun/vim-polyglot'   " I don't need this and it is buggy
-Plug 'tpope/vim-sleuth'  " Heuristically set buffer options
+Plug 'sheerun/vim-polyglot'                 " I don't need this and it is buggy
+Plug 'tpope/vim-sleuth'                     " Heuristically set buffer options
 Plug 'scrooloose/nerdcommenter'
 Plug 'tpope/vim-dispatch'
 Plug 'tpope/vim-sensible'
 
 "█▓▒░ GUI enhancements
 " --------------------
-Plug 'machakann/vim-highlightedyank'   " how can I use it?
+Plug 'machakann/vim-highlightedyank'        " how can I use it?
 Plug 'Yggdroot/indentLine'
-Plug 'jaxbot/semantic-highlight.vim'     " every variable has a different color
+Plug 'jaxbot/semantic-highlight.vim'        " every variable has a different color
 Plug 'bounceme/poppy.vim'
 Plug 'ntpeters/vim-better-whitespace'
 Plug 'romainl/vim-cool'
 Plug 'RRethy/vim-illuminate'
-Plug 'vim-airline/vim-airline'            " better status line
+Plug 'vim-airline/vim-airline'              " better status line
 Plug 'vim-airline/vim-airline-themes'
 Plug 'lilydjwg/colorizer'
 
 "█▓▒░ Fuzzy finder
 " ----------------
 Plug 'airblade/vim-rooter'
-Plug 'junegunn/fzf.vim'		        " Fuzzy finder (install fzf cmd line tool)
-if !empty(glob("/usr/local/opt/fzf"))
+Plug 'junegunn/fzf.vim'		                " Fuzzy finder that integrate with
+if !empty(glob("/usr/local/opt/fzf"))       " everything
   Plug '/usr/local/opt/fzf'
   set rtp+=/usr/local/opt/fzf
 else
@@ -112,11 +112,10 @@ let g:localvimrc_ask = 0
 " ===========================================================================
 "   Editor settings
 " ===========================================================================
-filetype plugin indent on
+filetype plugin indent on       " required
 set autoindent
-set timeoutlen=300 " http://stackoverflow.com/questions/2158516/delay-before-o-opens-a-new-line
-set encoding=utf-8
-set noshowmode
+set encoding=utf-8              " Set default encoding to UTF-8
+set noshowmode                  " We show the mode with airline or lightline
 set hidden
 set nowrap
 set nojoinspaces
@@ -137,15 +136,24 @@ set printoptions=paper:letter
 " Always draw sign column. Prevent buffer moving when adding/deleting sign.
 set signcolumn=yes
 
+" Time out on key codes but not mappings.
+" Basically this makes terminal Vim work sanely.
+set notimeout
+set ttimeout
+set ttimeoutlen=10
+set timeoutlen=300 " http://stackoverflow.com/questions/2158516/delay-before-o-opens-a-new-line
+
 " Settings needed for .lvimrc
 set exrc
 set secure
 
+set noswapfile                  " Don't use swapfile
+
 set tags=.git/tags
 
 " Sane splits
-set splitright
-set splitbelow
+set splitright                  " Split vertical windows right to the current windows
+set splitbelow                  " Split horizontal windows below to the current windows
 
 " Permanent undo
 set undodir=~/.vimdid
@@ -153,8 +161,23 @@ set undofile
 
 " Decent wildmenu
 set wildmenu
-set wildmode=list:longest
-set wildignore=.hg,.svn,*~,*.png,*.jpg,*.gif,*.settings,Thumbs.db,*.min.js,*.swp,publish/*,intermediate/*,*.o,*.hi,Zend,vendor
+"set wildmode=list:longest
+set wildmode=list:full
+"set wildignore=.hg,.svn,*~,*.png,*.jpg,*.gif,*.settings,Thumbs.db,*.min.js,*.swp,publish/*,intermediate/*,*.o,*.hi,Zend,vendor
+set wildignore+=.hg,.git,.svn                    " Version control
+set wildignore+=*.aux,*.out,*.toc                " LaTeX intermediate files
+set wildignore+=*.jpg,*.bmp,*.gif,*.png,*.jpeg   " binary images
+set wildignore+=*.o,*.obj,*.exe,*.dll,*.manifest " compiled object files
+set wildignore+=*.spl                            " compiled spelling word lists
+set wildignore+=*.sw?                            " Vim swap files
+set wildignore+=*.DS_Store                       " OSX bullshit
+set wildignore+=*.luac                           " Lua byte code
+set wildignore+=migrations                       " Django migrations
+set wildignore+=go/pkg                           " Go static files
+set wildignore+=go/bin                           " Go bin files
+set wildignore+=go/bin-vagrant                   " Go bin-vagrant files
+set wildignore+=*.pyc                            " Python byte code
+set wildignore+=*.orig                           " Merge resolution files
 
 " Use spaces instead of tabs
 set expandtab
