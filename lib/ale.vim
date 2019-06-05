@@ -8,7 +8,7 @@ let g:ale_linters = {
                   \ 'make': ['checkmake']
                   \ }
 let g:ale_fixers = {
-                  \	'*': ['remove_trailing_lines', ],
+                  \	'*': ['remove_trailing_lines'],
                   \ 'rust': ['rustfmt'],
                   \ 'c': ['clang-format'],
                   \ 'cpp': ['clang-format']

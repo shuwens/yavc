@@ -36,6 +36,7 @@ Plug 'RRethy/vim-illuminate'
 Plug 'vim-airline/vim-airline'              " better status line
 Plug 'vim-airline/vim-airline-themes'
 Plug 'lilydjwg/colorizer'
+Plug 'liuchengxu/vista.vim'
 
 "█▓▒░ Fuzzy finder
 " ----------------
@@ -83,6 +84,7 @@ Plug 'arakashic/chromatica.nvim'
 Plug 'rust-lang/rust.vim'
 
 "█▓▒░ LaTeX
+Plug 'lervag/vimtex'
 Plug 'rhysd/vim-grammarous'
 Plug 'ron89/thesaurus_query.vim'
 

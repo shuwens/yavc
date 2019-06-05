@@ -25,7 +25,7 @@ augroup filetypedetect
 
 	" LaTeX and TeX
 	autocmd BufRead *.tex set filetype=tex
-	au Filetype tex setlocal ts=2 sts=2 tw=80 colorcolumn=81 et
+	au Filetype tex setlocal tabstop=2 shiftwidth=2 tw=80 colorcolumn=81 et
 	au Filetype tex let g:tex_flavor = 'latex'
 	"autocmd Filetype tex setlocal syntax=context
 	" LaTeX indent

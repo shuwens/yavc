@@ -137,8 +137,8 @@ nnoremap <silent> <leader>j  :<C-u>CocNext<CR>
 " Do default action for previous item.
 nnoremap <silent> <leader>k  :<C-u>CocPrev<CR>
 
-" Use <C-l> for trigger snippet expand.
-imap <C-l> <Plug>(coc-snippets-expand)
+" Use <C-e> for trigger snippet expand.
+imap <C-e> <Plug>(coc-snippets-expand)
 
 " Use <C-j> for select text for visual placeholder of snippet.
 vmap <C-j> <Plug>(coc-snippets-select)

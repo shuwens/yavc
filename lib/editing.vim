@@ -97,12 +97,12 @@ autocmd BufRead,BufNewFile $HOME/dev/projects/netbricks/** nnoremap <leader>d :D
 " Jump to start and end of line using the home row key
 "map H ^
 "map L $
+map <C-h> <ESC>^
+imap <C-h> <ESC>I
+map <C-l> <ESC>$
+imap <C-l> <ESC>A
 nnoremap <C-h> ^
 nnoremap <C-l> $
-inoremap <C-e> <Esc>A
-inoremap <C-a> <Esc>I
-nnoremap <C-e> <Esc>A
-nnoremap <C-a> <Esc>I
 
 " map wincmd
 "
@@ -123,7 +123,6 @@ inoremap <A-h> <C-o>h
 inoremap <A-j> <C-o>j
 inoremap <A-k> <C-o>k
 inoremap <A-l> <C-o>l
-
 
 " Neat X clipboard integration linux
 "
@@ -169,7 +168,6 @@ endif
 
 " fzf !!! {{{
 " from http://sheerun.net/2014/03/21/how-to-boost-your-vim-productivity/
-"
 let g:fzf_layout = { 'down': '~25%' }
 " Keybindings
 imap <c-x><c-l> <plug>(fzf-complete-line)
@@ -180,25 +178,25 @@ nnoremap <leader>; :Buffers<CR>
 nnoremap <leader>f :GFiles<CR>
 nnoremap <leader>g :GFiles?<CR>
 " <leader>s for Rg search
-noremap <leader>s :Ag<CR>
+noremap <leader>s :Rg<CR>
 noremap <leader>/ :Rg<CR>
 noremap <leader>rg :Rgg<CR>
 " }}}
 " fzf helper methods {{{
-if executable('ag')
-  set grepprg=ag\ --nogroup\ --nocolor
-endif
 if executable('rg')
   set grepprg=rg\ --no-heading\ --vimgrep
   set grepformat=%f:%l:%c:%m
 endif
+if executable('ag')
+  set grepprg=ag\ --nogroup\ --nocolor
+endif
 
-command! -bang -nargs=* Rgg
-      \ call fzf#vim#grep(
-      \   'rg --column --line-number --no-heading --color=always '.shellescape(<q-args>), 1,
-      \   <bang>0 ? fzf#vim#with_preview('up:60%')
-      \           : fzf#vim#with_preview('right:50%:hidden', '?'),
-      \   <bang>0)
+command! -bang -nargs=* Rg
+  \ call fzf#vim#grep(
+  \   'rg --column --line-number --no-heading --color=always '.shellescape(<q-args>), 1,
+  \   <bang>0 ? fzf#vim#with_preview('up:60%')
+  \           : fzf#vim#with_preview('right:50%:hidden', '?'),
+  \   <bang>0)
 
 function! s:list_cmd()
   let base = fnamemodify(expand('%'), ':h:.:S')
@@ -206,56 +204,9 @@ function! s:list_cmd()
 endfunction
 
 command! -bang -nargs=? -complete=dir Files
-      \ call fzf#vim#files(<q-args>, {'source': s:list_cmd(),
-      \ 'options': '--tiebreak=index'}, <bang>0)
+  \ call fzf#vim#files(<q-args>, {'source': s:list_cmd(),
+  \                               'options': '--tiebreak=index'}, <bang>0)
 
-" Command for git grep
-" - fzf#vim#grep(command, with_column, [options], [fullscreen])
-command! -bang -nargs=* GGrep
-      \ call fzf#vim#grep(
-      \   'git grep --line-number '.shellescape(<q-args>), 0,
-      \   { 'dir': systemlist('git rev-parse --show-toplevel')[0] }, <bang>0)
-
-" Override Colors command. You can safely do this in your .vimrc as fzf.vim
-" will not override existing commands.
-command! -bang Colors
-      \ call fzf#vim#colors({'left': '15%', 'options': '--reverse --margin 30%,0'}, <bang>0)
-
-" Augmenting Ag command using fzf#vim#with_preview function
-"   * fzf#vim#with_preview([[options], [preview window], [toggle keys...]])
-"     * For syntax-highlighting, Ruby and any of the following tools are required:
-"       - Bat: https://github.com/sharkdp/bat
-"       - Highlight: http://www.andre-simon.de/doku/highlight/en/highlight.php
-"       - CodeRay: http://coderay.rubychan.de/
-"       - Rouge: https://github.com/jneen/rouge
-"
-"   :Ag  - Start fzf with hidden preview window that can be enabled with "?" key
-"   :Ag! - Start fzf in fullscreen and display the preview window above
-command! -bang -nargs=* Ag
-      \ call fzf#vim#ag(<q-args>,
-      \                 <bang>0 ? fzf#vim#with_preview('up:60%')
-      \                         : fzf#vim#with_preview('right:50%:hidden', '?'),
-      \                 <bang>0)
-
-" Similarly, we can apply it to fzf#vim#grep. To use ripgrep instead of ag:
-command! -bang -nargs=* Rg
-      \ call fzf#vim#grep(
-      \   'rg --column --line-number --no-heading --color=always --smart-case '.shellescape(<q-args>), 1,
-      \   <bang>0 ? fzf#vim#with_preview('up:60%')
-      \           : fzf#vim#with_preview('right:50%:hidden', '?'),
-      \   <bang>0)
-
-" Likewise, Files command with preview window
-command! -bang -nargs=? -complete=dir Files
-      \ call fzf#vim#files(<q-args>, fzf#vim#with_preview(), <bang>0)
-
-" TODO(jethros): write a GitFiles method that start fzf in full screen and
-" display GFiles
-command! -bang -nargs=? GitFiles
-      \ call fzf#vim#gitfiles('?',
-      \                 <bang>0 ? fzf#vim#with_preview('up:60%')
-      \                         : fzf#vim#with_preview('up:60%:hidden', '?'),
-      \                 <bang>0)
 " }}}
 
 " Mac setting, not important {{{
@@ -375,3 +326,7 @@ let g:NERDCustomDelimiters = {
 "map <leader>\ <leader>c<Space>
 map <leader>cc <plug>NERDComToggleComment
 map <C-\> <leader>c<Space>
+
+
+
+map q <Nop>
