@@ -29,14 +29,9 @@ let g:airline#extensions#syntastic#enabled = 0
 let g:airline#extensions#wordcount#enabled = 0
 let g:airline#extensions#ycm#enabled = 0
 "let g:airline#extensions#whitespace#checks = [ 'trailing' ]
-let g:airline#extensions#tabline#enabled = 0
+let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#buffer_nr_show = 1
 let g:airline#extensions#tabline#formatter = 'unique_tail'
-let g:airline#extensions#tabline#left_sep = ''
-let g:airline#extensions#tabline#left_alt_sep = ''
-let g:airline#extensions#tabline#right_sep = ''
-let g:airline#extensions#tabline#right_alt_sep = '|'
-let g:airline#extensions#tabline#enabled = 0
 
 " Themes
 " ------

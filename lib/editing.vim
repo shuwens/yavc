@@ -124,6 +124,12 @@ inoremap <A-j> <C-o>j
 inoremap <A-k> <C-o>k
 inoremap <A-l> <C-o>l
 
+" use tabline/bufline from airline
+nnoremap <C-N> :bnext<CR>
+nnoremap <C-P> :bprev<CR>
+nnoremap <s-k> :bprev<cr>
+nnoremap <s-j> :bnext<cr>
+
 " Neat X clipboard integration linux
 "
 " ,p will paste clipboard into buffer
@@ -138,6 +144,8 @@ if has('unix')
     noremap <leader>c :w !xsel -ib<cr><cr>
   endif
 endif
+" copy
+vnoremap <C-c> "*y
 
 " Search results centered please
 nnoremap <silent> n nzz

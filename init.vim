@@ -33,7 +33,7 @@ Plug 'bounceme/poppy.vim'
 Plug 'ntpeters/vim-better-whitespace'
 Plug 'romainl/vim-cool'
 Plug 'RRethy/vim-illuminate'
-Plug 'vim-airline/vim-airline'              " better status line
+Plug 'vim-airline/vim-airline'							" better status line
 Plug 'vim-airline/vim-airline-themes'
 Plug 'lilydjwg/colorizer'
 Plug 'liuchengxu/vista.vim'
@@ -41,7 +41,7 @@ Plug 'liuchengxu/vista.vim'
 "█▓▒░ Fuzzy finder
 " ----------------
 Plug 'airblade/vim-rooter'
-Plug 'junegunn/fzf.vim'		                " Fuzzy finder that integrate with
+Plug 'junegunn/fzf.vim'		                  " Fuzzy finder that integrate with
 if !empty(glob("/usr/local/opt/fzf"))       " everything
   Plug '/usr/local/opt/fzf'
   set rtp+=/usr/local/opt/fzf
@@ -54,8 +54,8 @@ endif
 " -----------------------------
 " Coc for completion
 Plug 'neoclide/coc.nvim', {'do': './install.sh nightly'}
-Plug 'w0rp/ale'                    " and ALE for linting
-Plug 'Shougo/echodoc.vim'          " Showing function signature and inline doc.
+Plug 'w0rp/ale'                   " and ALE for linting
+Plug 'Shougo/echodoc.vim'         " Showing function signature and inline doc.
 
 "█▓▒░ VIM editing enhancements
 " ----------------------------
@@ -114,21 +114,19 @@ let g:localvimrc_ask = 0
 " ===========================================================================
 "   Editor settings
 " ===========================================================================
-filetype plugin indent on       " required
+filetype plugin indent on					" required
 set autoindent
-set encoding=utf-8              " Set default encoding to UTF-8
-set noshowmode                  " We show the mode with airline or lightline
+set encoding=utf-8								" Set default encoding to UTF-8
+set noshowmode										" We show the mode with airline or lightline
 set hidden
 set nowrap
 set nojoinspaces
 " I only use VIM from the terminals
 if (match($TERM, "-256color") != -1) && (match($TERM, "screen-256color") != -1)
-  " screen does not (yet) support truecolor
-  set termguicolors
+  set termguicolors								" screen does not (yet) support truecolor
 endif
 if (match($TERM, "xterm") != -1)
-  " for the vagrant linux box
-  set termguicolors
+  set termguicolors								" for the vagrant linux box
 endif
 
 set printfont=:h14
@@ -149,13 +147,13 @@ set timeoutlen=300 " http://stackoverflow.com/questions/2158516/delay-before-o-o
 set exrc
 set secure
 
-set noswapfile                  " Don't use swapfile
+set noswapfile										" Don't use swapfile
 
 set tags=.git/tags
 
 " Sane splits
-set splitright                  " Split vertical windows right to the current windows
-set splitbelow                  " Split horizontal windows below to the current windows
+set splitright										" Split vertical windows right to the current windows
+set splitbelow										" Split horizontal windows below to the current windows
 
 " Permanent undo
 set undodir=~/.vimdid
@@ -181,6 +179,8 @@ set wildignore+=go/bin-vagrant                   " Go bin-vagrant files
 set wildignore+=*.pyc                            " Python byte code
 set wildignore+=*.orig                           " Merge resolution files
 
+"Some tips from http://stevelosh.com/blog/2010/09/coming-home-to-vim/
+
 " Use spaces instead of tabs
 set expandtab
 
@@ -189,17 +189,18 @@ set smarttab
 
 " 1 tab == 4 spaces
 set shiftwidth=4
-set tabstop=4
+set tabstop=2
+set softtabstop=2
 
 " Get syntax
 syntax on
 
 " Wrapping options
-set formatoptions=tc " wrap text and comments using textwidth
-set formatoptions+=r " continue comments when pressing ENTER in I mode
-set formatoptions+=q " enable formatting of comments with gq
-set formatoptions+=n " detect lists for formatting
-set formatoptions+=b " auto-wrap in insert mode, and do not wrap old long lines
+set formatoptions=tc							" wrap text and comments using textwidth
+set formatoptions+=r							" continue comments when pressing ENTER in I mode
+set formatoptions+=q							" enable formatting of comments with gq
+set formatoptions+=n							" detect lists for formatting
+set formatoptions+=b							" auto-wrap in insert mode, and do not wrap old long lines
 
 " Proper search
 set incsearch
@@ -210,33 +211,33 @@ set gdefault
 " ==========================================================================
 "    GUI settings
 " ==========================================================================
-set guioptions-=T " Remove toolbar
-set vb t_vb= " No more beeps
-set backspace=2 " Backspace over newlines
+set guioptions-=T									" Remove toolbar
+set vb t_vb=											" No more beeps
+set backspace=2										" Backspace over newlines
 set cmdheight=2
 set tw=79
 set cursorline
 set cursorcolumn
 "set nofoldenable
-set foldmethod=marker " Only fold on marks
-set ruler " Where am I?
+set foldmethod=marker							" Only fold on marks
+set ruler													" Where am I?
 set ttyfast
 " https://github.com/vim/vim/issues/1735#issuecomment-383353563
 set lazyredraw
 set synmaxcol=500
 set laststatus=2
-set relativenumber " Relative line numbers
-set number " Also show current absolute line
-set diffopt+=iwhite " No whitespace in vimdiff
+set relativenumber								" Relative line numbers
+set number												" Also show current absolute line
+set diffopt+=iwhite								" No whitespace in vimdiff
 " Make diffing better: https://vimways.org/2018/the-power-of-diff/
 if has("patch-8.1.0360")
   set diffopt+=internal,algorithm:patience
   set diffopt+=indent-heuristic
 endif
-set colorcolumn=80 " and give me a colored column
-set showcmd " Show (partial) command in status line.
-set mouse=a " Enable mouse usage (all modes) in terminals
-set shortmess+=c " don't give |ins-completion-menu| messages.
+set colorcolumn=80								" and give me a colored column
+set showcmd												" Show (partial) command in status line.
+set mouse=a												" Enable mouse usage (all modes) in terminals
+set shortmess+=c	                " don't give |ins-completion-menu| messages.
 
 " better whitespace
 " red #FF0000, coral #FF7F50, tomato #FF6347, orangered #FF4500, orange
