@@ -27,6 +27,8 @@ nnoremap <right> <nop>
 "inoremap <up> <nop>
 "inoremap <down> <nop>
 
+map q <Nop>
+
 " Left and right can switch buffers
 nnoremap <left> :bp<CR>
 nnoremap <right> :bn<CR>
@@ -117,6 +119,12 @@ nmap <silent> <A-j> :wincmd j<CR>
 nmap <silent> <A-h> :wincmd h<CR>
 nmap <silent> <A-l> :wincmd l<CR>
 
+" resize current split by +/- 5
+nnoremap <silent> + :exe "vertical resize +5"<CR>
+nnoremap <silent> - :exe "vertical resize -5"<CR>
+nnoremap <silent> <leader>] :exe "resize +5"<CR>
+nnoremap <silent> <leader>[ :exe "resize -5"<CR>
+
 " provide hjkl movements in Insert mode via the <Alt> modifier key
 "
 inoremap <A-h> <C-o>h
@@ -127,8 +135,8 @@ inoremap <A-l> <C-o>l
 " use tabline/bufline from airline
 nnoremap <C-N> :bnext<CR>
 nnoremap <C-P> :bprev<CR>
-nnoremap <s-k> :bprev<cr>
-nnoremap <s-j> :bnext<cr>
+"nnoremap <s-k> :bprev<cr>
+"nnoremap <s-j> :bnext<cr>
 
 " Neat X clipboard integration linux
 "
@@ -186,7 +194,7 @@ nnoremap <leader>; :Buffers<CR>
 nnoremap <leader>f :GFiles<CR>
 nnoremap <leader>g :GFiles?<CR>
 " <leader>s for Rg search
-noremap <leader>s :Rg<CR>
+noremap <leader>s :Ag<CR>
 noremap <leader>/ :Rg<CR>
 noremap <leader>rg :Rgg<CR>
 " }}}
@@ -200,11 +208,11 @@ if executable('ag')
 endif
 
 command! -bang -nargs=* Rg
-  \ call fzf#vim#grep(
-  \   'rg --column --line-number --no-heading --color=always '.shellescape(<q-args>), 1,
-  \   <bang>0 ? fzf#vim#with_preview('up:60%')
-  \           : fzf#vim#with_preview('right:50%:hidden', '?'),
-  \   <bang>0)
+      \ call fzf#vim#grep(
+      \   'rg --column --line-number --no-heading --color=always '.shellescape(<q-args>), 1,
+      \   <bang>0 ? fzf#vim#with_preview('up:60%')
+      \           : fzf#vim#with_preview('right:50%:hidden', '?'),
+      \   <bang>0)
 
 function! s:list_cmd()
   let base = fnamemodify(expand('%'), ':h:.:S')
@@ -212,8 +220,8 @@ function! s:list_cmd()
 endfunction
 
 command! -bang -nargs=? -complete=dir Files
-  \ call fzf#vim#files(<q-args>, {'source': s:list_cmd(),
-  \                               'options': '--tiebreak=index'}, <bang>0)
+      \ call fzf#vim#files(<q-args>, {'source': s:list_cmd(),
+      \                               'options': '--tiebreak=index'}, <bang>0)
 
 " }}}
 
@@ -274,7 +282,7 @@ endif
 
 " NnoreF and Preview are only for macOS
 if has("mac") || has("macunix")
-    " Preview
+  " Preview
   let g:livepreview_previewer = 'open -a Preview'
 endif
 
@@ -335,6 +343,22 @@ let g:NERDCustomDelimiters = {
 map <leader>cc <plug>NERDComToggleComment
 map <C-\> <leader>c<Space>
 
+" Undo tree
+nnoremap <leader>u :UndotreeToggle<cr>
 
+" Better commit window
+let g:committia_hooks = {}
+function! g:committia_hooks.edit_open(info)
+  " Additional settings
+  setlocal spell
 
-map q <Nop>
+  " If no commit message, start with insert mode
+  if a:info.vcs ==# 'git' && getline(1) ==# ''
+    startinsert
+  endif
+
+  " Scroll the diff window from insert mode
+  " Map <C-n> and <C-p>
+  imap <buffer><C-n> <Plug>(committia-scroll-diff-down-half)
+  imap <buffer><C-p> <Plug>(committia-scroll-diff-up-half)
+endfunction

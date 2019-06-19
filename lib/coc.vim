@@ -5,6 +5,10 @@ call coc#add_extension('coc-snippets')
 call coc#add_extension('coc-python')
 call coc#add_extension('coc-rls')
 call coc#add_extension('coc-pairs')
+call coc#add_extension('coc-lists')
+call coc#add_extension('coc-git')
+call coc#add_extension('coc-yank')
+call coc#add_extension('coc-tabnine')
 
 " if hidden is not set, TextEdit might fail.
 set hidden
@@ -164,3 +168,6 @@ function! s:check_back_space() abort
 endfunction
 
 let g:coc_snippet_next = '<tab>'
+
+" coc yank
+nnoremap <silent> <leader>y  :<C-u>CocList -A --normal yank<cr>

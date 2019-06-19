@@ -33,39 +33,41 @@ Plug 'bounceme/poppy.vim'
 Plug 'ntpeters/vim-better-whitespace'
 Plug 'romainl/vim-cool'
 Plug 'RRethy/vim-illuminate'
-Plug 'vim-airline/vim-airline'							" better status line
+Plug 'vim-airline/vim-airline'              " better status line
 Plug 'vim-airline/vim-airline-themes'
 Plug 'lilydjwg/colorizer'
 Plug 'liuchengxu/vista.vim'
+Plug 'mbbill/undotree'
+Plug 'rhysd/committia.vim'
 
 "█▓▒░ Fuzzy finder
 " ----------------
 Plug 'airblade/vim-rooter'
-Plug 'junegunn/fzf.vim'		                  " Fuzzy finder that integrate with
+Plug 'junegunn/fzf.vim'                     " Fuzzy finder that integrate with
 if !empty(glob("/usr/local/opt/fzf"))       " everything
-  Plug '/usr/local/opt/fzf'
-  set rtp+=/usr/local/opt/fzf
+	Plug '/usr/local/opt/fzf'
+	set rtp+=/usr/local/opt/fzf
 else
-  Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --bin' }
-  set rtp+=~/.fzf
+	Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --bin' }
+	set rtp+=~/.fzf
 endif
 
 "█▓▒░ Semantic language support
 " -----------------------------
 " Coc for completion
 Plug 'neoclide/coc.nvim', {'do': './install.sh nightly'}
-Plug 'w0rp/ale'                   " and ALE for linting
-Plug 'Shougo/echodoc.vim'         " Showing function signature and inline doc.
+Plug 'w0rp/ale'                             " and ALE for linting
+Plug 'Shougo/echodoc.vim'                   " Showing function signature and inline doc.
 
 "█▓▒░ VIM editing enhancements
 " ----------------------------
 Plug 'inside/vim-search-pulse'
 Plug 'numirias/semshi', {'do': ':UpdateRemotePlugins'}
 if !empty(glob("~/notes"))
-  Plug 'Alok/notational-fzf-vim'
+	Plug 'Alok/notational-fzf-vim'
 endif
 if has("mac") || has("macunix")
-  Plug 'xuhdev/vim-latex-live-preview', { 'for': 'tex' }
+	Plug 'xuhdev/vim-latex-live-preview', { 'for': 'tex' }
 endif
 
 "█▓▒░ Syntactic language support
@@ -90,20 +92,20 @@ Plug 'ron89/thesaurus_query.vim'
 
 "█▓▒░ Color
 if !isdirectory("$HOME/dev/others/base16")
-  Plug 'chriskempson/base16-vim'
+	Plug 'chriskempson/base16-vim'
 endif
 call plug#end()
 
 if has('nvim')
-  set guicursor=n-v-c:block-Cursor/lCursor-blinkon0,i-ci:ver25-Cursor/lCursor,r-cr:hor20-Cursor/lCursor
-  set inccommand=nosplit
-  noremap <C-q> :confirm qall<CR>
-  set guicursor=
-  autocmd OptionSet guicursor noautocmd set guicursor=
+	set guicursor=n-v-c:block-Cursor/lCursor-blinkon0,i-ci:ver25-Cursor/lCursor,r-cr:hor20-Cursor/lCursor
+	set inccommand=nosplit
+	noremap <C-q> :confirm qall<CR>
+	set guicursor=
+	autocmd OptionSet guicursor noautocmd set guicursor=
 end
 
 if !has('gui_running')
-  set t_Co=256
+	set t_Co=256
 endif
 
 "█▓▒░ Plugin settings
@@ -114,19 +116,19 @@ let g:localvimrc_ask = 0
 " ===========================================================================
 "   Editor settings
 " ===========================================================================
-filetype plugin indent on					" required
+filetype plugin indent on                   " required
 set autoindent
-set encoding=utf-8								" Set default encoding to UTF-8
-set noshowmode										" We show the mode with airline or lightline
-set hidden
-set nowrap
-set nojoinspaces
+set encoding=utf-8                          " Set default encoding to UTF-8
+set noshowmode                              " We show the mode with airline or lightline
+set hidden                                  " Hides buffers instead of closing them
+set nowrap                                  " do not wrap long lines by default
+set nojoinspaces                            " Prevents inserting two spaces after punctuation on a join (J)
 " I only use VIM from the terminals
 if (match($TERM, "-256color") != -1) && (match($TERM, "screen-256color") != -1)
-  set termguicolors								" screen does not (yet) support truecolor
+	set termguicolors                         " screen does not (yet) support truecolor
 endif
 if (match($TERM, "xterm") != -1)
-  set termguicolors								" for the vagrant linux box
+	set termguicolors                         " for the vagrant linux box
 endif
 
 set printfont=:h14
@@ -147,13 +149,13 @@ set timeoutlen=300 " http://stackoverflow.com/questions/2158516/delay-before-o-o
 set exrc
 set secure
 
-set noswapfile										" Don't use swapfile
+set noswapfile                              " Don't use swapfile
 
 set tags=.git/tags
 
 " Sane splits
-set splitright										" Split vertical windows right to the current windows
-set splitbelow										" Split horizontal windows below to the current windows
+set splitright                              " Split vertical windows right to the current windows
+set splitbelow                              " Split horizontal windows below to the current windows
 
 " Permanent undo
 set undodir=~/.vimdid
@@ -181,63 +183,63 @@ set wildignore+=*.orig                           " Merge resolution files
 
 "Some tips from http://stevelosh.com/blog/2010/09/coming-home-to-vim/
 
-" Use spaces instead of tabs
-set expandtab
-
-" Be smart when using tabs ;)
-set smarttab
-
-" 1 tab == 4 spaces
-set shiftwidth=4
-set tabstop=2
-set softtabstop=2
+" Use wide tabs
+set shiftwidth=8                            " 1 tab == 8 spaces
+set softtabstop=8                           " when hitting <BS>, pretend like a tab is removed, even if spaces
+set tabstop=8                               " a tab is eight spaces
+set noexpandtab                             " Don't use spaces instead of tabs
+" set expandtab                               " Use spaces instead of tabs
+" set smarttab                                " Be smart when using tabs ;)
+" set shiftwidth=4                            " 1 tab == 4 spaces
+" set tabstop=2                               " a tab is four spaces
+" set softtabstop=2                           " when hitting <BS>, pretend like a tab is removed, even if spaces
 
 " Get syntax
 syntax on
 
 " Wrapping options
-set formatoptions=tc							" wrap text and comments using textwidth
-set formatoptions+=r							" continue comments when pressing ENTER in I mode
-set formatoptions+=q							" enable formatting of comments with gq
-set formatoptions+=n							" detect lists for formatting
-set formatoptions+=b							" auto-wrap in insert mode, and do not wrap old long lines
+set formatoptions=tc                        " wrap text and comments using textwidth
+set formatoptions+=r                        " continue comments when pressing ENTER in I mode
+set formatoptions+=q                        " enable formatting of comments with gq
+set formatoptions+=n                        " detect lists for formatting
+set formatoptions+=b                        " auto-wrap in insert mode, and do not wrap old long lines
 
 " Proper search
-set incsearch
-set ignorecase
-set smartcase
-set gdefault
+set incsearch                               " Shows the match while typing
+set ignorecase                              " Search case insensitive...
+set smartcase                               " ... but not when search pattern contains upper case characters
+set gdefault                                " search/replace "globally" (on a line) by default
 
 " ==========================================================================
 "    GUI settings
 " ==========================================================================
-set guioptions-=T									" Remove toolbar
-set vb t_vb=											" No more beeps
-set backspace=2										" Backspace over newlines
+set guioptions-=T                           " Remove toolbar
+set vb t_vb=                                " No more beeps
+set backspace=2                             " Backspace over newlines
 set cmdheight=2
 set tw=79
 set cursorline
 set cursorcolumn
 "set nofoldenable
-set foldmethod=marker							" Only fold on marks
-set ruler													" Where am I?
+set foldmethod=marker                       " Only fold on marks
+set ruler                                   " Where am I?
 set ttyfast
 " https://github.com/vim/vim/issues/1735#issuecomment-383353563
-set lazyredraw
+set lazyredraw                              " don't update the display while executing macros<Paste>
 set synmaxcol=500
-set laststatus=2
-set relativenumber								" Relative line numbers
-set number												" Also show current absolute line
-set diffopt+=iwhite								" No whitespace in vimdiff
+set laststatus=2                            " always have a statusline
+set relativenumber                          " Relative line numbers
+set number                                  " Also show current absolute line
+set diffopt+=iwhite	                        " No whitespace in vimdiff
 " Make diffing better: https://vimways.org/2018/the-power-of-diff/
 if has("patch-8.1.0360")
-  set diffopt+=internal,algorithm:patience
-  set diffopt+=indent-heuristic
+	set diffopt+=internal,algorithm:patience
+	set diffopt+=indent-heuristic
 endif
-set colorcolumn=80								" and give me a colored column
-set showcmd												" Show (partial) command in status line.
-set mouse=a												" Enable mouse usage (all modes) in terminals
-set shortmess+=c	                " don't give |ins-completion-menu| messages.
+set colorcolumn=80                          " and give me a colored column
+set showcmd                                 " Show (partial) command in status line.
+set mouse=a                                 " Enable mouse usage (all modes) in terminals
+set shortmess+=c                            " don't give |ins-completion-menu| messages.
 
 " better whitespace
 " red #FF0000, coral #FF7F50, tomato #FF6347, orangered #FF4500, orange
@@ -273,5 +275,5 @@ source $HOME/.config/nvim/lib/ale.vim
 let g:echodoc_enable_at_startup = 1
 
 if has('nvim')
-  runtime! plugin/python_setup.vim
+	runtime! plugin/python_setup.vim
 endif

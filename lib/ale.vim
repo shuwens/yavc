@@ -39,13 +39,14 @@ let g:ale_rust_rls_config = {
 nmap <leader>l <Plug>(ale_lint)
 nmap <leader>k <Plug>(ale_hover)
 " Jump to next/previous error
-nmap <silent> <C-j> <Plug>(ale_next_wrap)
-nmap <silent> <C-k> <Plug>(ale_previous_wrap)
+nmap <silent> <C-j> <Plug>(ale_next_wrap)zz
+nmap <silent> <C-k> <Plug>(ale_previous_wrap)zz
 nmap <leader>a <Plug>(ale_detail)
 nmap <silent> <C-g> :close<cr>
 " Emacs style
 nmap <leader>. <Plug>(ale_go_to_definition)
-nmap <leader>y <Plug>(ale_go_to_definition_in_vsplit)
+"nmap <leader>y <Plug>(ale_go_to_definition_in_vsplit)
+nmap <leader>v <Plug>(ale_go_to_definition_in_vsplit)
 nmap <leader>dd <Plug>(ale_go_to_type_definition)
 nmap <leader>r <Plug>(ale_find_references)
 " nmap <leader>\ <C-O>
