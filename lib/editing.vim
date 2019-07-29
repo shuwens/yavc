@@ -195,7 +195,7 @@ nnoremap <leader>f :GFiles<CR>
 nnoremap <leader>g :GFiles?<CR>
 " <leader>s for Rg search
 noremap <leader>s :Ag<CR>
-noremap <leader>/ :Rg<CR>
+"noremap <leader>/ :Rg<CR>
 noremap <leader>rg :Rgg<CR>
 " }}}
 " fzf helper methods {{{

@@ -15,7 +15,7 @@ call plug#begin('$HOME/.local/share/nvim/plugged')
 "█▓▒░ VIM enhancements
 " --------------------
 Plug 'ciaranm/securemodelines'
-Plug 'vim-scripts/localvimrc'
+Plug 'editorconfig/editorconfig-vim'
 Plug 'Shougo/vimproc.vim', {'do' : 'make'}
 Plug 'tpope/vim-fugitive'
 Plug 'sheerun/vim-polyglot'                 " I don't need this and it is buggy
@@ -73,6 +73,7 @@ endif
 "█▓▒░ Syntactic language support
 " ------------------------------
 Plug 'vim-scripts/gnuplot-syntax-highlighting'
+Plug 'stephpy/vim-yaml'
 Plug 'cespare/vim-toml'
 Plug 'fatih/vim-go'
 Plug 'dag/vim-fish'
@@ -81,6 +82,7 @@ Plug 'bfrg/vim-cpp-modern'
 Plug 'godlygeek/tabular'
 Plug 'plasticboy/vim-markdown'
 Plug 'arakashic/chromatica.nvim'
+Plug 'elixir-editors/vim-elixir'
 
 "█▓▒░ Rust
 Plug 'rust-lang/rust.vim'
