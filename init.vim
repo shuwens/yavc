@@ -36,9 +36,9 @@ Plug 'RRethy/vim-illuminate'
 Plug 'vim-airline/vim-airline'              " better status line
 Plug 'vim-airline/vim-airline-themes'
 Plug 'lilydjwg/colorizer'
-Plug 'liuchengxu/vista.vim'
 Plug 'mbbill/undotree'
 Plug 'rhysd/committia.vim'
+Plug 'liuchengxu/vista.vim'
 
 "█▓▒░ Fuzzy finder
 " ----------------

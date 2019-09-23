@@ -19,9 +19,9 @@ augroup filetypedetect
 	au Filetype markdown setlocal  tw=72 colorcolumn=73
 
 	" proselint!!!
-	au Filetype tex let b:ale_linters = ['proselint', "lacheck", "chktex"]
-	au Filetype text let b:ale_linters = ['proselint']
-	au Filetype markdown let b:ale_linters = ['proselint']
+	au Filetype tex let b:ale_linters = ['proselint', 'languagetool', 'lacheck', 'chktex']
+	au Filetype text let b:ale_linters = ['proselint', 'languagetool']
+	au Filetype markdown let b:ale_linters = ['proselint', 'languagetool']
 
 	" LaTeX and TeX
 	autocmd BufRead *.tex set filetype=tex

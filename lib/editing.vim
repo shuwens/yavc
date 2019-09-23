@@ -317,6 +317,31 @@ endfun
 autocmd Filetype tex nmap Q :call TeX_fmt()<CR>zz
 autocmd Filetype markdown nmap Q :call TeX_fmt()<CR>zz
 
+" vim-grammarous
+let g:grammarous#disabled_rules = {
+      \ '*' : ['WHITESPACE_RULE', 'EN_QUOTES'],
+      \ 'help' : ['WHITESPACE_RULE', 'EN_QUOTES', 'SENTENCE_WHITESPACE', 'UPPERCASE_SENTENCE_START'],
+      \ }
+
+let g:grammarous#hooks = {}
+function! g:grammarous#hooks.on_check(errs) abort
+  nmap <buffer><C-i> <Plug>(grammarous-move-to-info-window)
+  nmap <buffer><C-n> <Plug>(grammarous-move-to-next-error)
+  nmap <buffer><C-p> <Plug>(grammarous-move-to-previous-error)
+  nmap <buffer><leader>f <Plug>(grammarous-fixit)
+  nnoremap <buffer><C-f> <Plug>(grammarous-fixit)
+endfunction
+function! g:grammarous#hooks.on_reset(errs) abort
+  nunmap <buffer><C-j>
+  nunmap <buffer><C-k>
+  nunmap <buffer><leader>f
+endfunction
+
+nnoremap <leader>L :GrammarousCheck --lang=en-US --preview<CR>
+nnoremap <leader>G :GrammarousCheck --lang=en-US --preview<CR>
+
+
+
 " NERDCommenter
 "
 " Add spaces after comment delimiters by default

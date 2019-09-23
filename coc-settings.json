@@ -1,4 +1,16 @@
 {
+  "languageserver": {
+    "cquery": {
+      "command": "~/dev/others/cquery/build/cquery",
+      "args": ["--log-file=/tmp/cq.log"],
+      "filetypes": ["c", "cpp"],
+      "rootPatterns": ["compile_flags.txt", "compile_commands.json", ".vim/", ".git/", ".hg/"],
+      "initializationOptions": {
+        "cacheDirectory": "/tmp/cquery"
+      }
+    }
+  },
+
   "python.jediEnabled": false,
   "python.formatting.provider": "black",
   "python.linting.mypyEnabled": true,
