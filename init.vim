@@ -56,7 +56,7 @@ endif
 " -----------------------------
 " Coc for completion
 Plug 'neoclide/coc.nvim', {'do': './install.sh nightly'}
-Plug 'w0rp/ale'                             " and ALE for linting
+Plug 'dense-analysis/ale'		    " and ALE for linting
 Plug 'Shougo/echodoc.vim'                   " Showing function signature and inline doc.
 
 "█▓▒░ VIM editing enhancements

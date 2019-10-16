@@ -6,3 +6,4 @@ tmp/
 mthesaur.txt
 *.spl
 *.sug
+.mypy_cache

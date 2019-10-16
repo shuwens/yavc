@@ -69,6 +69,7 @@ augroup filetypedetect
 	au FileType markdown setlocal nofoldenable
 	"autocmd FileType vim setlocal foldmethod=expr
 
+	autocmd FileType python nnoremap <leader>y :0,$!yapf<Cr><C-o>
 	" indent line setup
 	au Filetype tex let b:indentLine_enabled = 0
 	au Filetype markdown let b:indentLine_enabled = 0
