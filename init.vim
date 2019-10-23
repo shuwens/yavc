@@ -255,10 +255,11 @@ let g:strip_whitespace_on_save=0
 set background=dark
 let base16colorspace=256
 let g:base16_shell_path="$HOME/dev/others/base16/shell/scripts/"
-colorscheme base16-atelier-dune
+" colorscheme base16-atelier-dune
+colorscheme base16-gruvbox-dark-medium
 " extra setup that I might not need?
-hi Normal ctermbg=NONE
-hi Normal guibg=NONE
+" hi Normal ctermbg=NONE
+" hi Normal guibg=NONE
 
 " Editing setup
 source $HOME/.config/nvim/lib/editing.vim
