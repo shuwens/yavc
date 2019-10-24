@@ -316,6 +316,7 @@ endfun
 " }}}
 autocmd Filetype tex nmap Q :call TeX_fmt()<CR>zz
 autocmd Filetype markdown nmap Q :call TeX_fmt()<CR>zz
+autocmd Filetype text nmap Q :call TeX_fmt()<CR>zz
 
 " vim-grammarous
 let g:grammarous#disabled_rules = {

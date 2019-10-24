@@ -55,7 +55,7 @@ endif
 "█▓▒░ Semantic language support
 " -----------------------------
 " Coc for completion
-Plug 'neoclide/coc.nvim', {'do': './install.sh nightly'}
+Plug 'neoclide/coc.nvim', {'tag': '*', 'branch': 'release'}
 Plug 'dense-analysis/ale'		    " and ALE for linting
 Plug 'Shougo/echodoc.vim'                   " Showing function signature and inline doc.
 
@@ -271,6 +271,7 @@ source $HOME/.config/nvim/lib/syntax.vim
 "   Personal programming setup
 " ===========================================================================
 source $HOME/.config/nvim/lib/airline.vim
+" source $HOME/.config/nvim/lib/lightline.vim
 source $HOME/.config/nvim/lib/coc.vim
 source $HOME/.config/nvim/lib/ale.vim
 

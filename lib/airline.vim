@@ -4,7 +4,7 @@
 " let g:airline#extensions#disable_rtp_load = 1
 " let g:airline_extensions = ['branch', 'hunks', 'coc']
 
-let g:airline_powerline_fonts = 1
+let g:airline_powerline_fonts = 0
 
 " Sections
 " --------
@@ -36,7 +36,7 @@ let g:airline#extensions#tabline#formatter = 'unique_tail'
 " Themes
 " ------
 "let g:airline_theme = 'term'        " Default theme
-let g:airline_theme='base16_atelierdune'
+" let g:airline_theme='base16_gruvbox'
 
 "let g:airline_base16_improved_contrast = 1
 let g:airline_symbols_ascii = 1
