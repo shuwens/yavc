@@ -11,6 +11,7 @@
     }
   },
 
+  "rust-analyzer.enableCargoWatchOnStartup": "disabled",
   "python.jediEnabled": false,
   "python.formatting.provider": "black",
   "python.linting.mypyEnabled": true,

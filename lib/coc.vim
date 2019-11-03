@@ -8,6 +8,12 @@ call coc#add_extension('coc-pairs')
 call coc#add_extension('coc-lists')
 call coc#add_extension('coc-git')
 call coc#add_extension('coc-yank')
+call coc#add_extension('coc-tsserver')
+call coc#add_extension('coc-eslint')
+call coc#add_extension('coc-tsserver')
+call coc#add_extension('coc-json')
+call coc#add_extension('coc-css')
+call coc#add_extension('coc-prettier')
 call coc#add_extension('coc-tabnine')
 
 " if hidden is not set, TextEdit might fail.
