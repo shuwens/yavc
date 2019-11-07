@@ -3,13 +3,15 @@
 " Coc extensions
 call coc#add_extension('coc-snippets')
 call coc#add_extension('coc-python')
-call coc#add_extension('coc-rls')
 call coc#add_extension('coc-pairs')
 call coc#add_extension('coc-lists')
 call coc#add_extension('coc-git')
 call coc#add_extension('coc-yank')
 call coc#add_extension('coc-tsserver')
-call coc#add_extension('coc-eslint')
+call coc#add_extension('coc-rust-analyzer')
+call coc#add_extension('coc-texlab')
+" call coc#add_extension('coc-rls')
+" call coc#add_extension('coc-eslint')
 call coc#add_extension('coc-tsserver')
 call coc#add_extension('coc-json')
 call coc#add_extension('coc-css')
@@ -44,9 +46,6 @@ hi CocWarningSign guifg=#ddaa00
 hi CocInfoSign guifg=#ffaf00
 hi CocInfoFloat guifg=#ffaf00
 hi CocHintFloat guifg=#2ed1cd
-
-" Rust
-call coc#config('rust', { 'clippy_preference': 'on' })
 
 " Use tab for trigger completion with characters ahead and navigate.
 " Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
