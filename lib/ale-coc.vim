@@ -3,11 +3,11 @@
 let g:ale_linters = {
                   \ 'cpp' : ['cppcheck', 'clangtidy', 'gcovcheck'],
                   \ 'python': ['pyls',],
-                  \	'sh': ['shellcheck', 'language_server'],
+                  \ 'sh': ['shellcheck', 'language_server'],
                   \ 'make': ['checkmake']
                   \ }
 let g:ale_fixers = {
-                  \	'*': ['remove_trailing_lines'],
+                  \ '*': ['remove_trailing_lines'],
                   \ 'c': ['clang-format'],
                   \ 'cpp': ['clang-format']
                   \ }

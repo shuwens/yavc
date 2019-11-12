@@ -5,6 +5,8 @@
   "diagnostic.enable": true,
   "diagnostic.displayByAle": true,
   "diagnostic.refreshOnInsertMode": true,
+  "diagnostic.virtualText": false,
+  "diagnostic.virtualTextLineSeparator": "^@",
 
   "rust.clippy_preference": "off",
   "rust-analyzer.enableCargoWatchOnStartup": "disabled",

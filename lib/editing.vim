@@ -184,7 +184,7 @@ endif
 
 " fzf !!! {{{
 " from http://sheerun.net/2014/03/21/how-to-boost-your-vim-productivity/
-let g:fzf_layout = { 'down': '~25%' }
+let g:fzf_layout = { 'down': '~35%' }
 " Keybindings
 imap <c-x><c-l> <plug>(fzf-complete-line)
 nnoremap <leader>c :Commits<CR>

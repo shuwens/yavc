@@ -56,6 +56,7 @@ augroup filetypedetect
 	autocmd BufRead *.xlsx.axlsx set filetype=ruby
 	autocmd BufRead *.trm set filetype=c
 	autocmd BufRead *.org set filetype=org
+	autocmd BufRead *.java set filetype=java
 
 	" Script plugins
 	au Filetype html,xml,xsl,php source $HOME/.config/nvim/scripts/closetag.vim
@@ -75,6 +76,7 @@ augroup filetypedetect
 	au Filetype markdown let b:indentLine_enabled = 0
 	au Filetype text let b:indentLine_enabled = 0
 	au Filetype org let b:indentLine_enabled = 0
+	au Filetype java let java_ignore_javadoc = 1
 
 	" Prevent accidental writes to buffers that shouldn't be edited
 	autocmd BufRead *.orig set readonly
