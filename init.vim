@@ -56,6 +56,8 @@ if (match($TERM, "-256color") != -1) && (match($TERM, "screen-256color") == -1)
   set termguicolors
 endif
 
+set termguicolors
+
 " Colors: Base16
 set background=dark
 let base16colorspace=256
@@ -155,6 +157,7 @@ inoremap <silent><expr> <c-.> coc#refresh()
 " inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
 " Or use `complete_info` if your vim support it, like:
 inoremap <expr> <cr> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>"
+call coc#add_extension('coc-rust-analyzer')
 
 " Golang
 let g:go_play_open_browser = 0
