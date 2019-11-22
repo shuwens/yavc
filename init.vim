@@ -39,6 +39,11 @@ Plug 'dag/vim-fish'
 Plug 'godlygeek/tabular'
 Plug 'plasticboy/vim-markdown'
 
+"█▓▒░ Color
+if !isdirectory("$HOME/dev/others/base16")
+	Plug 'chriskempson/base16-vim'
+endif
+
 call plug#end()
 
 if has('nvim')
