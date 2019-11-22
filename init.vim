@@ -18,9 +18,11 @@ Plug 'editorconfig/editorconfig-vim'
 Plug 'justinmk/vim-sneak'
 
 " GUI enhancements
-Plug 'itchyny/lightline.vim'
+Plug 'vim-airline/vim-airline'              " better status line
+Plug 'vim-airline/vim-airline-themes'
 Plug 'machakann/vim-highlightedyank'
 Plug 'andymass/vim-matchup'
+Plug 'Yggdroot/indentLine'
 
 " Fuzzy finder
 Plug 'airblade/vim-rooter'
@@ -47,18 +49,18 @@ endif
 call plug#end()
 
 if has('nvim')
-    set guicursor=n-v-c:block-Cursor/lCursor-blinkon0,i-ci:ver25-Cursor/lCursor,r-cr:hor20-Cursor/lCursor
-    set inccommand=nosplit
-    noremap <C-q> :confirm qall<CR>
+	set guicursor=n-v-c:block-Cursor/lCursor-blinkon0,i-ci:ver25-Cursor/lCursor,r-cr:hor20-Cursor/lCursor
+	set inccommand=nosplit
+	noremap <C-q> :confirm qall<CR>
 end
 
 " deal with colors
 if !has('gui_running')
-  set t_Co=256
+	set t_Co=256
 endif
 if (match($TERM, "-256color") != -1) && (match($TERM, "screen-256color") == -1)
-  " screen does not (yet) support truecolor
-  set termguicolors
+	" screen does not (yet) support truecolor
+	set termguicolors
 endif
 
 set termguicolors
@@ -75,17 +77,17 @@ syntax on
 
 " Plugin settings
 let g:secure_modelines_allowed_items = [
-                \ "textwidth",   "tw",
-                \ "softtabstop", "sts",
-                \ "tabstop",     "ts",
-                \ "shiftwidth",  "sw",
-                \ "expandtab",   "et",   "noexpandtab", "noet",
-                \ "filetype",    "ft",
-                \ "foldmethod",  "fdm",
-                \ "readonly",    "ro",   "noreadonly", "noro",
-                \ "rightleft",   "rl",   "norightleft", "norl",
-                \ "colorcolumn"
-                \ ]
+			\ "textwidth",   "tw",
+			\ "softtabstop", "sts",
+			\ "tabstop",     "ts",
+			\ "shiftwidth",  "sw",
+			\ "expandtab",   "et",   "noexpandtab", "noet",
+			\ "filetype",    "ft",
+			\ "foldmethod",  "fdm",
+			\ "readonly",    "ro",   "noreadonly", "noro",
+			\ "rightleft",   "rl",   "norightleft", "norl",
+			\ "colorcolumn"
+			\ ]
 
 " Base16
 let base16colorspace=256
@@ -94,12 +96,12 @@ let g:base16_shell_path="~/dev/others/base16/builder/templates/shell/scripts/"
 " Lightline
 " let g:lightline = { 'colorscheme': 'wombat' }
 let g:lightline = {
-      \ 'component_function': {
-      \   'filename': 'LightlineFilename',
-      \ },
-\ }
+			\ 'component_function': {
+			\   'filename': 'LightlineFilename',
+			\ },
+			\ }
 function! LightlineFilename()
-  return expand('%:t') !=# '' ? @% : '[No Name]'
+	return expand('%:t') !=# '' ? @% : '[No Name]'
 endfunction
 
 " from http://sheerun.net/2014/03/21/how-to-boost-your-vim-productivity/
@@ -147,13 +149,13 @@ set updatetime=300
 " Use tab for trigger completion with characters ahead and navigate.
 " Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
 inoremap <silent><expr> <TAB>
-      \ pumvisible() ? "\<C-n>" :
-      \ <SID>check_back_space() ? "\<TAB>" :
-      \ coc#refresh()
+			\ pumvisible() ? "\<C-n>" :
+			\ <SID>check_back_space() ? "\<TAB>" :
+			\ coc#refresh()
 inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 function! s:check_back_space() abort
-  let col = col('.') - 1
-  return !col || getline('.')[col - 1]  =~# '\s'
+	let col = col('.') - 1
+	return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
 " Use <c-.> to trigger completion.
 inoremap <silent><expr> <c-.> coc#refresh()
@@ -324,20 +326,20 @@ noremap <leader>c :w !xsel -ib<cr><cr>
 noremap <leader>s :Rg
 let g:fzf_layout = { 'down': '~20%' }
 command! -bang -nargs=* Rg
-  \ call fzf#vim#grep(
-  \   'rg --column --line-number --no-heading --color=always '.shellescape(<q-args>), 1,
-  \   <bang>0 ? fzf#vim#with_preview('up:60%')
-  \           : fzf#vim#with_preview('right:50%:hidden', '?'),
-  \   <bang>0)
+			\ call fzf#vim#grep(
+			\   'rg --column --line-number --no-heading --color=always '.shellescape(<q-args>), 1,
+			\   <bang>0 ? fzf#vim#with_preview('up:60%')
+			\           : fzf#vim#with_preview('right:50%:hidden', '?'),
+			\   <bang>0)
 
 function! s:list_cmd()
-  let base = fnamemodify(expand('%'), ':h:.:S')
-  return base == '.' ? 'fd --type file --follow' : printf('fd --type file --follow | proximity-sort %s', shellescape(expand('%')))
+	let base = fnamemodify(expand('%'), ':h:.:S')
+	return base == '.' ? 'fd --type file --follow' : printf('fd --type file --follow | proximity-sort %s', shellescape(expand('%')))
 endfunction
 
 command! -bang -nargs=? -complete=dir Files
-  \ call fzf#vim#files(<q-args>, {'source': s:list_cmd(),
-  \                               'options': '--tiebreak=index'}, <bang>0)
+			\ call fzf#vim#files(<q-args>, {'source': s:list_cmd(),
+			\                               'options': '--tiebreak=index'}, <bang>0)
 
 
 " Open new file adjacent to current file
@@ -369,11 +371,11 @@ nmap <silent> gr <Plug>(coc-references)
 " Use K to show documentation in preview window
 nnoremap <silent> K :call <SID>show_documentation()<CR>
 function! s:show_documentation()
-  if (index(['vim','help'], &filetype) >= 0)
-    execute 'h '.expand('<cword>')
-  else
-    call CocAction('doHover')
-  endif
+	if (index(['vim','help'], &filetype) >= 0)
+		execute 'h '.expand('<cword>')
+	else
+		call CocAction('doHover')
+	endif
 endfunction
 " nmap <silent> F <Plug>(ale_lint)
 " nmap <silent> <C-l> <Plug>(ale_detail)
@@ -417,8 +419,8 @@ autocmd InsertLeave * set nopaste
 
 " Jump to last edit position on opening file
 if has("autocmd")
-  " https://stackoverflow.com/questions/31449496/vim-ignore-specifc-file-in-autocommand
-  au BufReadPost * if expand('%:p') !~# '\m/\.git/' && line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
+	" https://stackoverflow.com/questions/31449496/vim-ignore-specifc-file-in-autocommand
+	au BufReadPost * if expand('%:p') !~# '\m/\.git/' && line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
 endif
 
 " Auto-make less files on save
@@ -438,6 +440,9 @@ autocmd BufRead *.xlsx.axlsx set filetype=ruby
 
 " Script plugins
 autocmd Filetype html,xml,xsl,php source ~/.config/nvim/scripts/closetag.vim
+
+source $HOME/.config/nvim/airline.vim
+source $HOME/.config/nvim/coc.vim
 
 " =============================================================================
 " # Footer
