@@ -8,8 +8,8 @@ let mapleader = "\<Space>"
 " Load vundle
 set nocompatible
 filetype off
-set rtp+=~/dev/others/base16/builder/templates/vim/
-call plug#begin()
+set rtp+=~/dev/others/base16/vim/
+call plug#begin('$HOME/.local/share/nvim/plugged')
 
 " Load plugins
 " VIM enhancements
@@ -55,10 +55,14 @@ if (match($TERM, "-256color") != -1) && (match($TERM, "screen-256color") == -1)
   " screen does not (yet) support truecolor
   set termguicolors
 endif
-" Colors
+
+" Colors: Base16
 set background=dark
-colorscheme base16-gruvbox-dark-hard
-hi Normal ctermbg=NONE
+let base16colorspace=256
+let g:base16_shell_path="$HOME/dev/others/base16/shell/scripts/"
+" colorscheme base16-atelier-dune
+colorscheme base16-gruvbox-dark-medium
+
 " Get syntax
 syntax on
 
