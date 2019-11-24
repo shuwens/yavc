@@ -23,6 +23,7 @@ Plug 'tpope/vim-sleuth'                     " Heuristically set buffer options
 Plug 'scrooloose/nerdcommenter'
 Plug 'tpope/vim-dispatch'
 Plug 'tpope/vim-sensible'
+Plug 'justinmk/vim-sneak'
 
 "█▓▒░ GUI enhancements
 " --------------------
@@ -38,6 +39,7 @@ Plug 'vim-airline/vim-airline-themes'
 Plug 'lilydjwg/colorizer'
 Plug 'mbbill/undotree'
 Plug 'rhysd/committia.vim'
+Plug 'andymass/vim-matchup'
 Plug 'liuchengxu/vista.vim'
 
 "█▓▒░ Fuzzy finder
@@ -242,6 +244,8 @@ set colorcolumn=80                          " and give me a colored column
 set showcmd                                 " Show (partial) command in status line.
 set mouse=a                                 " Enable mouse usage (all modes) in terminals
 set shortmess+=c                            " don't give |ins-completion-menu| messages.
+
+let g:sneak#s_next = 1
 
 " better whitespace
 " red #FF0000, coral #FF7F50, tomato #FF6347, orangered #FF4500, orange
