@@ -9,7 +9,9 @@ let g:ale_linters = {
 let g:ale_fixers = {
                   \ '*': ['remove_trailing_lines'],
                   \ 'c': ['clang-format'],
-                  \ 'cpp': ['clang-format']
+                  \ 'cpp': ['clang-format'],
+                  \   'javascript': ['prettier'],
+                  \   'css': ['prettier'],
                   \ }
 " only lint when I want
 let g:ale_lint_on_text_changed = 'never'

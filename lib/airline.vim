@@ -35,8 +35,9 @@ let g:airline#extensions#tabline#formatter = 'unique_tail'
 
 " Themes
 " ------
-"let g:airline_theme = 'term'        " Default theme
-" let g:airline_theme='base16_gruvbox'
+" let g:airline_theme = 'term'        " Default theme
+" let g:airline_theme='base16_gruvbox_dark_hard'
+let g:airline_theme='base16'
 
 "let g:airline_base16_improved_contrast = 1
 let g:airline_symbols_ascii = 1
