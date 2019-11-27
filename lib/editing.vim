@@ -30,8 +30,14 @@ nnoremap <right> <nop>
 map q <Nop>
 
 " Left and right can switch buffers
-nnoremap <left> :bp<CR>
-nnoremap <right> :bn<CR>
+" nnoremap <left> :bp<CR>
+" nnoremap <right> :bn<CR>
+nnoremap <C-N> :bn<CR>
+nnoremap <C-P> :bp<CR>
+" nnoremap <s-left> :bprev<cr>
+" nnoremap <s-right> :bnext<cr>
+nnoremap <Tab> :bn<CR>
+nnoremap <S-Tab> :bp<CR>
 
 " Move by line
 nnoremap j gj
@@ -132,12 +138,6 @@ inoremap <A-j> <C-o>j
 inoremap <A-k> <C-o>k
 inoremap <A-l> <C-o>l
 
-" use tabline/bufline from airline
-nnoremap <C-N> :bnext<CR>
-nnoremap <C-P> :bprev<CR>
-"nnoremap <s-k> :bprev<cr>
-"nnoremap <s-j> :bnext<cr>
-
 " Neat X clipboard integration linux
 "
 " ,p will paste clipboard into buffer
@@ -147,6 +147,8 @@ if has('unix')
     " Paste clipboard content to current line
     nnoremap <silent>P :r !pbpaste<CR>
     vnoremap <silent>y :w !pbcopy<CR>
+    noremap <leader>p :r !pbpaste<CR>
+    noremap <leader>c :w !pbcopy<CR>
   else                " linux, bsd, etc
     noremap <leader>p :read !xsel --clipboard --output<cr>
     noremap <leader>c :w !xsel -ib<cr><cr>
@@ -189,7 +191,8 @@ let g:fzf_layout = { 'down': '~35%' }
 imap <c-x><c-l> <plug>(fzf-complete-line)
 nnoremap <leader>c :Commits<CR>
 " Open hotkeys
-nnoremap <C-p> :Files<CR>
+" nnoremap <C-p> :Files<CR>
+nmap F :Files<CR>
 nnoremap <leader>; :Buffers<CR>
 nnoremap <leader>f :GFiles<CR>
 nnoremap <leader>g :GFiles?<CR>
