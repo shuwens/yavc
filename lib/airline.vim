@@ -35,9 +35,8 @@ let g:airline#extensions#ycm#enabled = 0
 
 " Themes
 " ------
-" let g:airline_theme = 'term'        " Default theme
-" let g:airline_theme='base16_gruvbox_dark_hard'
-let g:airline_theme='base16'
+let g:airline_theme='base16_atelierdune'
+" let g:airline_theme='base16'
 
 "let g:airline_base16_improved_contrast = 1
 let g:airline_symbols_ascii = 1
