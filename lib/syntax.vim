@@ -8,21 +8,6 @@ autocmd Filetype tex setl updatetime=1
 let g:livepreview_previewer = 'open -a Preview'
 autocmd BufNewFile,BufRead *.tex set syntax=context
 
-" Python is special
-" NOTE: I only want to auto-format Python files that belong to me
-let g:black_linelength = 80
-autocmd BufRead,BufNewFile $HOME/dev/projects/** let b:DevPythonFile=1
-autocmd BufWritePre *.py call DevPythonFormatter()
-fun! DevPythonFormatter()
-  if !exists('b:DevPythonFile')
-    return
-  endif
-  " I use black, not autopep8 or yapf for now... I wonder the best practise
-  execute ':Black'
-  ImpSort!
-  call DeleteTrailingWS()
-endfun
-
 " chromatica
 if !empty(glob("/usr/local/opt/llvm/lib"))
   let g:chromatica#libclang_path='/usr/local/opt/llvm/lib'

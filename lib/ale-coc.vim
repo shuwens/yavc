@@ -2,7 +2,6 @@
 " lint should be handled by LSP, but seems like that Rust is bit broken
 let g:ale_linters = {
                   \ 'cpp' : ['cppcheck', 'clangtidy', 'gcovcheck'],
-                  \ 'python': ['pyls',],
                   \ 'sh': ['shellcheck', 'language_server'],
                   \ 'make': ['checkmake']
                   \ }
@@ -10,8 +9,8 @@ let g:ale_fixers = {
                   \ '*': ['remove_trailing_lines'],
                   \ 'c': ['clang-format'],
                   \ 'cpp': ['clang-format'],
-                  \   'javascript': ['prettier'],
-                  \   'css': ['prettier'],
+                  \ 'javascript': ['prettier'],
+                  \ 'css': ['prettier'],
                   \ }
 " only lint when I want
 let g:ale_lint_on_text_changed = 'never'
