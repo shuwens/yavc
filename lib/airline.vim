@@ -29,9 +29,9 @@ let g:airline#extensions#syntastic#enabled = 0
 let g:airline#extensions#wordcount#enabled = 0
 let g:airline#extensions#ycm#enabled = 0
 "let g:airline#extensions#whitespace#checks = [ 'trailing' ]
-let g:airline#extensions#tabline#enabled = 1
-let g:airline#extensions#tabline#buffer_nr_show = 1
-let g:airline#extensions#tabline#formatter = 'unique_tail'
+" let g:airline#extensions#tabline#enabled = 1
+" let g:airline#extensions#tabline#buffer_nr_show = 1
+" let g:airline#extensions#tabline#formatter = 'unique_tail'
 
 " Themes
 " ------
