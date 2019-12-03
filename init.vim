@@ -58,7 +58,7 @@ endif
 " -----------------------------
 " Coc for completion
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
-Plug 'dense-analysis/ale'		    " and ALE for linting
+" Plug 'dense-analysis/ale'		    " and ALE for linting
 Plug 'Shougo/echodoc.vim'                   " Showing function signature and inline doc.
 
 "█▓▒░ VIM editing enhancements
@@ -277,7 +277,7 @@ source $HOME/.config/nvim/lib/syntax.vim
 source $HOME/.config/nvim/lib/airline.vim
 " source $HOME/.config/nvim/lib/lightline.vim
 source $HOME/.config/nvim/lib/coc.vim
-source $HOME/.config/nvim/lib/ale-coc.vim
+" source $HOME/.config/nvim/lib/ale-coc.vim
 " source $HOME/.config/nvim/lib/ale.vim
 
 " echodoc

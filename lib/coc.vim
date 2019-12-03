@@ -10,6 +10,8 @@ call coc#add_extension('coc-yank')
 call coc#add_extension('coc-tsserver')
 call coc#add_extension('coc-rust-analyzer')
 call coc#add_extension('coc-texlab')
+call coc#add_extension('coc-gocode')
+call coc#add_extension('coc-vimlsp')
 " call coc#add_extension('coc-rls')
 " call coc#add_extension('coc-eslint')
 call coc#add_extension('coc-tsserver')
@@ -99,11 +101,11 @@ endfunction
 autocmd CursorHold * silent call CocActionAsync('highlight')
 
 " Remap for rename current word
-nmap <silent> <leader>n  <Plug>(coc-rename)
+nmap <leader>rn <Plug>(coc-rename)
 
 " Remap for format selected region
-vmap <silent> <leader>f  <Plug>(coc-format-selected)
-nmap <silent> <leader>f  <Plug>(coc-format-selected)
+xmap <leader>f  <Plug>(coc-format-selected)
+nmap <leader>f  <Plug>(coc-format-selected)
 
 augroup mygroup
   autocmd!
@@ -122,17 +124,30 @@ nmap <silent> <leader>ac  <Plug>(coc-codeaction)
 " Fix autofix problem of current line
 nmap <silent> <leader>qf  <Plug>(coc-fix-current)
 
+" Create mappings for function text object, requires document symbols feature of languageserver.
+xmap if <Plug>(coc-funcobj-i)
+xmap af <Plug>(coc-funcobj-a)
+omap if <Plug>(coc-funcobj-i)
+omap af <Plug>(coc-funcobj-a)
+
+" Use <C-d> for select selections ranges, needs server support, like: coc-tsserver, coc-python
+nmap <silent> <C-d> <Plug>(coc-range-select)
+xmap <silent> <C-d> <Plug>(coc-range-select)
+
 " Use `:Format` to format current buffer
 command! -nargs=0 Format :call CocAction('format')
 
 " Use `:Fold` to fold current buffer
 command! -nargs=? Fold :call CocAction('fold', <f-args>)
 
+" use `:OR` for organize import of current buffer
+command! -nargs=0 OR   :call     CocAction('runCommand', 'editor.action.organizeImport')
+
 " Using CocList
 " Show all diagnostics
-"nnoremap <silent> <leader>a  :<C-u>CocList diagnostics<cr>
+nnoremap <silent> <leader>a  :<C-u>CocList diagnostics<cr>
 " Manage extensions
-"nnoremap <silent> <leader>e  :<C-u>CocList extensions<cr>
+nnoremap <silent> <leader>x  :<C-u>CocList extensions<cr>
 " Show commands
 "nnoremap <silent> <leader>c  :<C-u>CocList commands<cr>
 " Find symbol of current document
@@ -145,6 +160,9 @@ nnoremap <silent> <leader>]  :<C-u>CocList -I symbols<cr>
 nnoremap <silent> <leader>j  :<C-u>CocNext<CR>
 " Do default action for previous item.
 nnoremap <silent> <leader>k  :<C-u>CocPrev<CR>
+
+nnoremap <silent> <leader>oj  :<C-u>CocNext<CR>
+nnoremap <silent> <leader>ok  :<C-u>CocPrev<CR>
 
 " Use <C-e> for trigger snippet expand.
 imap <C-e> <Plug>(coc-snippets-expand)
@@ -176,3 +194,10 @@ let g:coc_snippet_next = '<tab>'
 
 " coc yank
 nnoremap <silent> <leader>y  :<C-u>CocList -A --normal yank<cr>
+
+autocmd FileType tex let b:coc_pairs = [["$", "$"]]
+autocmd FileType tex let b:coc_pairs_disabled = ["`", "'","<"]
+autocmd FileType tex setlocal spell spelllang=en_us
+autocmd FileType html let b:coc_pairs_disabled = ['<']
+autocmd FileType markdown let b:coc_pairs_disabled = ['`']
+autocmd FileType markdown let b:coc_pairs = [["$", "$"]]
