@@ -260,7 +260,12 @@ set background=dark
 let base16colorspace=256
 let g:base16_shell_path="$HOME/dev/others/base16/shell/scripts/"
 " colorscheme base16-atelier-dune
-colorscheme base16-gruvbox-dark-medium
+if has("mac") || has("macunix")
+	colorscheme base16-gruvbox-dark-soft
+else
+	colorscheme base16-gruvbox-dark-medium
+endif
+
 " extra setup that I might not need?
 " hi Normal ctermbg=NONE
 " hi Normal guibg=NONE
