@@ -19,10 +19,11 @@ let g:ale_lint_on_save = 0
 let g:ale_lint_on_enter = 0
 let g:ale_completion_enabled = 0
 let g:ale_virtualtext_cursor = 1
-" Figured out what these are for
+" loclist and quicklist
 let g:ale_set_loclist = 0
-let g:ale_set_quickfix = 0
-let g:ale_set_ballons = 0
+let g:ale_set_quickfix = 0      " set it to 1 makes ale like syntastic
+let g:ale_set_ballons = 0       " I live in the terminal!
+let g:ale_open_list = 1
 
 " ALE bindings
 "
