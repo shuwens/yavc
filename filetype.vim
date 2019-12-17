@@ -57,6 +57,12 @@ augroup filetypedetect
 	autocmd BufRead *.trm set filetype=c
 	autocmd BufRead *.org set filetype=org
 	autocmd BufRead *.java set filetype=java
+	" autocmd BufRead *.js set filetype=js
+	autocmd BufRead *.html set filetype=html
+
+	" html, js, d3
+	autocmd FileType javascript setlocal tabstop=2 softtabstop=2 shiftwidth=2
+	autocmd FileType html setlocal tabstop=2 softtabstop=2 shiftwidth=2
 
 	" Script plugins
 	au Filetype html,xml,xsl,php source $HOME/.config/nvim/scripts/closetag.vim
@@ -77,6 +83,9 @@ augroup filetypedetect
 	au Filetype text let b:indentLine_enabled = 0
 	au Filetype org let b:indentLine_enabled = 0
 	au Filetype java let java_ignore_javadoc = 1
+
+	" clang format
+	au FileType c,cpp ClangFormatAutoEnable
 
 	" Prevent accidental writes to buffers that shouldn't be edited
 	autocmd BufRead *.orig set readonly

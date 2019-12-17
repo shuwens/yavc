@@ -10,6 +10,8 @@
 
   "rust.clippy_preference": "off",
   "rust-analyzer.enableCargoWatchOnStartup": "disabled",
+  "python.formatting.provider": "yapf",
+  "coc.preferences.formatOnSaveFiletypes": ["py"],
   "python.jediEnabled": false,
   "python.linting.mypyEnabled": true,
 

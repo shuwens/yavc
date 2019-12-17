@@ -40,7 +40,7 @@ Plug 'lilydjwg/colorizer'
 Plug 'mbbill/undotree'
 Plug 'rhysd/committia.vim'
 Plug 'andymass/vim-matchup'
-Plug 'liuchengxu/vista.vim'
+" Plug 'liuchengxu/vista.vim'
 
 "█▓▒░ Fuzzy finder
 " ----------------
@@ -85,6 +85,7 @@ Plug 'godlygeek/tabular'
 Plug 'plasticboy/vim-markdown'
 Plug 'arakashic/chromatica.nvim'
 Plug 'elixir-editors/vim-elixir'
+Plug 'rhysd/vim-clang-format'
 
 "█▓▒░ Rust
 Plug 'rust-lang/rust.vim'
@@ -226,7 +227,7 @@ set cursorline
 set cursorcolumn
 "set nofoldenable
 set foldmethod=marker                       " Only fold on marks
-set ruler                                   " Where am I?
+" set ruler                                   " Where am I?
 set ttyfast
 " https://github.com/vim/vim/issues/1735#issuecomment-383353563
 set lazyredraw                              " don't update the display while executing macros<Paste>
@@ -245,6 +246,10 @@ set showcmd                                 " Show (partial) command in status l
 set mouse=a                                 " Enable mouse usage (all modes) in terminals
 set shortmess+=c                            " don't give |ins-completion-menu| messages.
 
+" Show those damn hidden characters
+" Verbose: set listchars=nbsp:¬,eol:¶,extends:»,precedes:«,trail:•
+set listchars=nbsp:¬,extends:»,precedes:«,trail:•
+
 let g:sneak#s_next = 1
 
 " better whitespace
@@ -260,7 +265,7 @@ set background=dark
 let base16colorspace=256
 let g:base16_shell_path="$HOME/dev/others/base16/shell/scripts/"
 " colorscheme base16-atelier-dune
-colorscheme base16-gruvbox-dark-hard
+colorscheme base16-gruvbox-dark-medium
 
 " extra setup that I might not need?
 " hi Normal ctermbg=NONE

@@ -83,6 +83,7 @@ nmap <silent> <leader>.  <Plug>(coc-definition)
 nmap <silent> <leader>y  <Plug>(coc-type-definition)
 nmap <silent> <leader>i  <Plug>(coc-implementation)
 nmap <silent> <leader>r  <Plug>(coc-references)
+nmap <silent> <leader>l <Plug>(coc-diagnostic-info)
 nmap <silent> <leader>o  <C-O>
 nmap <silent> <C-g> :close<cr>
 

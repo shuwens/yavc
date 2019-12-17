@@ -50,11 +50,11 @@ nnoremap <leader><leader> <c-^>
 nnoremap <leader>, :set invlist<cr>
 
 " Keymap for replacing up to next _ or -
-"noremap <leader>m ct_   " choosing over lsp ctx menu
+noremap <leader>m ct_   " choosing over lsp ctx menu
 "noremap <leader>n ct-
 
 " M to make
-noremap M :!make -k -j4<cr>
+" noremap M :!make -k -j4<cr>
 
 " I can type :help on my own, thanks.
 map <F1> <Esc>
