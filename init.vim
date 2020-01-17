@@ -15,38 +15,33 @@ call plug#begin('$HOME/.local/share/nvim/plugged')
 "█▓▒░ VIM enhancements
 " --------------------
 Plug 'ciaranm/securemodelines'
-Plug 'editorconfig/editorconfig-vim'
-Plug 'Shougo/vimproc.vim', {'do' : 'make'}
+Plug 'editorconfig/editorconfig-vim'		" Assume an editor config is enforced
 Plug 'tpope/vim-fugitive'
-Plug 'sheerun/vim-polyglot'                 " I don't need this and it is buggy
-Plug 'tpope/vim-sleuth'                     " Heuristically set buffer options
+" Plug 'sheerun/vim-polyglot'			" I don't need this and it is buggy
 Plug 'scrooloose/nerdcommenter'
-Plug 'tpope/vim-dispatch'
-Plug 'tpope/vim-sensible'
-Plug 'justinmk/vim-sneak'
+Plug 'justinmk/vim-sneak'			" Need to remember its syntax
 
 "█▓▒░ GUI enhancements
 " --------------------
-Plug 'machakann/vim-highlightedyank'        " how can I use it?
+Plug 'machakann/vim-highlightedyank'		" highlight yank
 Plug 'Yggdroot/indentLine'
-Plug 'jaxbot/semantic-highlight.vim'        " every variable has a different color
-Plug 'bounceme/poppy.vim'
+Plug 'jaxbot/semantic-highlight.vim'		" different color for every variable
+Plug 'bounceme/poppy.vim'			" rainbow parens
 Plug 'ntpeters/vim-better-whitespace'
-Plug 'romainl/vim-cool'
-Plug 'RRethy/vim-illuminate'
-Plug 'vim-airline/vim-airline'              " better status line
+Plug 'romainl/vim-cool'				" disables search highlighting when you are done
+Plug 'RRethy/vim-illuminate'			" highlighting other uses of the current word
+Plug 'vim-airline/vim-airline'			" better status line
 Plug 'vim-airline/vim-airline-themes'
-Plug 'lilydjwg/colorizer'
-Plug 'mbbill/undotree'
-Plug 'rhysd/committia.vim'
+Plug 'lilydjwg/colorizer'			" colorize text in the form
+" Plug 'mbbill/undotree'
+Plug 'rhysd/committia.vim'			" better git commit layout
 Plug 'andymass/vim-matchup'
-" Plug 'liuchengxu/vista.vim'
 
 "█▓▒░ Fuzzy finder
 " ----------------
 Plug 'airblade/vim-rooter'
-Plug 'junegunn/fzf.vim'                     " Fuzzy finder that integrate with
-if !empty(glob("/usr/local/opt/fzf"))       " everything
+Plug 'junegunn/fzf.vim'				" Fuzzy finder that integrate with
+if !empty(glob("/usr/local/opt/fzf"))		" everything
 	Plug '/usr/local/opt/fzf'
 	set rtp+=/usr/local/opt/fzf
 else
@@ -58,19 +53,18 @@ endif
 " -----------------------------
 " Coc for completion
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
-" Plug 'dense-analysis/ale'		    " and ALE for linting
-Plug 'Shougo/echodoc.vim'                   " Showing function signature and inline doc.
+" Plug 'dense-analysis/ale'			" and ALE for linting
+Plug 'Shougo/echodoc.vim'			" Showing function signature and inline doc.
 
 "█▓▒░ VIM editing enhancements
 " ----------------------------
 Plug 'inside/vim-search-pulse'
-Plug 'numirias/semshi', {'do': ':UpdateRemotePlugins'}
 if !empty(glob("~/notes"))
 	Plug 'Alok/notational-fzf-vim'
 endif
-if has("mac") || has("macunix")
-	Plug 'xuhdev/vim-latex-live-preview', { 'for': 'tex' }
-endif
+" if has("mac") || has("macunix")
+"         Plug 'xuhdev/vim-latex-live-preview', { 'for': 'tex' }
+" endif
 
 "█▓▒░ Syntactic language support
 " ------------------------------
@@ -80,20 +74,21 @@ Plug 'cespare/vim-toml'
 Plug 'fatih/vim-go'
 Plug 'dag/vim-fish'
 Plug 'jceb/vim-orgmode'
-Plug 'bfrg/vim-cpp-modern'
-Plug 'godlygeek/tabular'
 Plug 'plasticboy/vim-markdown'
-Plug 'arakashic/chromatica.nvim'
 Plug 'elixir-editors/vim-elixir'
-Plug 'rhysd/vim-clang-format'
+Plug 'numirias/semshi', {'do': ':UpdateRemotePlugins'}  " Python syntax highlight
 
 "█▓▒░ Rust
 Plug 'rust-lang/rust.vim'
 
+"█▓▒░ C++ and Clang
+Plug 'bfrg/vim-cpp-modern'
+Plug 'arakashic/chromatica.nvim'
+Plug 'rhysd/vim-clang-format'
+
 "█▓▒░ LaTeX
 Plug 'lervag/vimtex'
 Plug 'rhysd/vim-grammarous'
-Plug 'ron89/thesaurus_query.vim'
 
 "█▓▒░ Color
 if !isdirectory("$HOME/dev/others/base16")
@@ -265,7 +260,7 @@ set background=dark
 let base16colorspace=256
 let g:base16_shell_path="$HOME/dev/others/base16/shell/scripts/"
 " colorscheme base16-atelier-dune
-colorscheme base16-gruvbox-dark-medium
+colorscheme base16-gruvbox-dark-hard
 
 " extra setup that I might not need?
 " hi Normal ctermbg=NONE

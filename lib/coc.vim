@@ -6,7 +6,7 @@ call coc#add_extension('coc-python')
 call coc#add_extension('coc-pairs')
 call coc#add_extension('coc-lists')
 call coc#add_extension('coc-git')
-call coc#add_extension('coc-yank')
+" call coc#add_extension('coc-yank')
 call coc#add_extension('coc-tsserver')
 call coc#add_extension('coc-rust-analyzer')
 call coc#add_extension('coc-texlab')
@@ -194,7 +194,7 @@ endfunction
 let g:coc_snippet_next = '<tab>'
 
 " coc yank
-nnoremap <silent> <leader>y  :<C-u>CocList -A --normal yank<cr>
+" nnoremap <silent> <leader>y  :<C-u>CocList -A --normal yank<cr>
 
 autocmd FileType tex let b:coc_pairs = [["$", "$"]]
 autocmd FileType tex let b:coc_pairs_disabled = ["`", "'","<"]
