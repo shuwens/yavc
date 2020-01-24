@@ -31,9 +31,6 @@ hi SpellBad cterm=underline
 " Set style for gVim
 hi SpellBad gui=undercurl
 
-" Javascript
-let javaScript_fold=0
-
 " Golang
 autocmd FileType go nmap <leader>t <Plug>(go-test)
 autocmd FileType go nmap <Leader>r <Plug>(go-rename)

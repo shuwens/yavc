@@ -59,19 +59,13 @@ Plug 'Shougo/echodoc.vim'			" Showing function signature and inline doc.
 "█▓▒░ VIM editing enhancements
 " ----------------------------
 Plug 'inside/vim-search-pulse'
-if !empty(glob("~/notes"))
-	Plug 'Alok/notational-fzf-vim'
-endif
-" if has("mac") || has("macunix")
-"         Plug 'xuhdev/vim-latex-live-preview', { 'for': 'tex' }
-" endif
 
 "█▓▒░ Syntactic language support
 " ------------------------------
 Plug 'vim-scripts/gnuplot-syntax-highlighting'
 Plug 'stephpy/vim-yaml'
 Plug 'cespare/vim-toml'
-Plug 'fatih/vim-go'
+" Plug 'fatih/vim-go'
 Plug 'dag/vim-fish'
 Plug 'jceb/vim-orgmode'
 Plug 'plasticboy/vim-markdown'
@@ -222,7 +216,7 @@ set cursorline
 set cursorcolumn
 "set nofoldenable
 set foldmethod=marker                       " Only fold on marks
-" set ruler                                   " Where am I?
+set ruler                                   " Where am I?
 set ttyfast
 " https://github.com/vim/vim/issues/1735#issuecomment-383353563
 set lazyredraw                              " don't update the display while executing macros<Paste>
@@ -276,10 +270,7 @@ source $HOME/.config/nvim/lib/syntax.vim
 "   Personal programming setup
 " ===========================================================================
 source $HOME/.config/nvim/lib/airline.vim
-" source $HOME/.config/nvim/lib/lightline.vim
 source $HOME/.config/nvim/lib/coc.vim
-" source $HOME/.config/nvim/lib/ale-coc.vim
-" source $HOME/.config/nvim/lib/ale.vim
 
 " echodoc
 let g:echodoc_enable_at_startup = 1
