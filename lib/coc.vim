@@ -1,23 +1,34 @@
 " Coc setting
 "
-" Coc extensions
+" Coc util extensions
 call coc#add_extension('coc-snippets')
-call coc#add_extension('coc-python')
 call coc#add_extension('coc-pairs')
 call coc#add_extension('coc-lists')
 call coc#add_extension('coc-git')
+call coc#add_extension('coc-tabnine')
 " call coc#add_extension('coc-yank')
+" call coc#add_extension('coc-highlight')
+" call coc#add_extension('coc-smartf')
+" call coc#add_extension('coc-vimtex')
+
+" Coc syntax extensions
+call coc#add_extension('coc-python')
 call coc#add_extension('coc-rust-analyzer')
-call coc#add_extension('coc-texlab')
-call coc#add_extension('coc-gocode')
-call coc#add_extension('coc-vimlsp')
 " call coc#add_extension('coc-rls')
-" call coc#add_extension('coc-eslint')
+call coc#add_extension('coc-texlab')
+" call coc#add_extension('coc-gocode')
+" call coc#add_extension('coc-vimlsp')
+" call coc#add_extension('coc-java')
+
+" Coc web dev extensions
 call coc#add_extension('coc-tsserver')
+call coc#add_extension('coc-tslint-plugin')
+call coc#add_extension('coc-stylelint')
+call coc#add_extension('coc-eslint')
 call coc#add_extension('coc-json')
 call coc#add_extension('coc-css')
+call coc#add_extension('coc-html')
 call coc#add_extension('coc-prettier')
-call coc#add_extension('coc-tabnine')
 
 " if hidden is not set, TextEdit might fail.
 set hidden
@@ -192,9 +203,7 @@ endfunction
 
 let g:coc_snippet_next = '<tab>'
 
-" coc yank
-" nnoremap <silent> <leader>y  :<C-u>CocList -A --normal yank<cr>
-
+" Additional filetype for coc pairs
 autocmd FileType tex let b:coc_pairs = [["$", "$"]]
 autocmd FileType tex let b:coc_pairs_disabled = ["`", "'","<"]
 autocmd FileType tex setlocal spell spelllang=en_us
