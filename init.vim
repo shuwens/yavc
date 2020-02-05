@@ -36,6 +36,7 @@ Plug 'lilydjwg/colorizer'			" colorize text in the form
 " Plug 'mbbill/undotree'
 Plug 'rhysd/committia.vim'			" better git commit layout
 Plug 'andymass/vim-matchup'
+Plug 'preservim/nerdtree'
 
 "█▓▒░ Fuzzy finder
 " ----------------

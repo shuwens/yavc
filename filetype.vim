@@ -103,4 +103,7 @@ augroup filetypedetect
 	" Jump to last edit position on opening file
 	" https://stackoverflow.com/questions/31449496/vim-ignore-specifc-file-in-autocommand
 	au BufReadPost * if expand('%:p') !~# '\m/\.git/' && line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
+
+	" NerdTree behavior
+	autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 augroup END

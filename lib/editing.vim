@@ -5,7 +5,8 @@
 " ; as :
 nnoremap ; :
 
-inoremap jj <esc>
+inoremap jj <Esc>
+inoremap jk <Esc>
 nnoremap Y y$
 nnoremap gUiw mzgUiw`z
 nnoremap guiw mzguiw`z
@@ -391,3 +392,7 @@ function! g:committia_hooks.edit_open(info)
   imap <buffer><C-n> <Plug>(committia-scroll-diff-down-half)
   imap <buffer><C-p> <Plug>(committia-scroll-diff-up-half)
 endfunction
+
+" Nerd Tree
+let g:NERDTreeWinPos = "right"
+map <leader>n :NERDTreeToggle<CR>
