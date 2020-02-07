@@ -91,6 +91,8 @@ if !isdirectory("$HOME/dev/others/base16")
 endif
 call plug#end()
 
+"█▓▒░ Make pyenv and neovim work nice together
+
 if has('nvim')
 	set guicursor=n-v-c:block-Cursor/lCursor-blinkon0,i-ci:ver25-Cursor/lCursor,r-cr:hor20-Cursor/lCursor
 	set inccommand=nosplit

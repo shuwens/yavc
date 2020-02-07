@@ -1,12 +1,17 @@
-
 " LaTeX
 let g:latex_indent_enabled = 1
 let g:latex_fold_envs = 0
 let g:latex_fold_sections = []
+let g:tex_flavor = 'latex'
 "let g:tex_conceal = ""
-autocmd Filetype tex setl updatetime=1
-let g:livepreview_previewer = 'open -a Preview'
-autocmd BufNewFile,BufRead *.tex set syntax=context
+if has('mac')       " osx
+	let g:livepreview_previewer = 'open -a Preview'
+else                " linux, bsd, etc
+	let g:vimtex_compiler_progname = 'nvr'
+	" use Zathura for visualization
+	let g:vimtex_view_method = 'zathura'
+	let g:latex_view_general_viewer = 'zathura'
+endif
 
 " chromatica
 if !empty(glob("/usr/local/opt/llvm/lib"))
@@ -57,4 +62,3 @@ autocmd FileType rust nnoremap <leader>= :RustFmt<CR>
 let g:vim_markdown_new_list_item_indent = 0
 let g:vim_markdown_auto_insert_bullets = 0
 let g:vim_markdown_frontmatter = 1
-

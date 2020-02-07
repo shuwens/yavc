@@ -31,14 +31,12 @@ nnoremap <right> <nop>
 map q <Nop>
 
 " Left and right can switch buffers
-" nnoremap <left> :bp<CR>
-" nnoremap <right> :bn<CR>
+nnoremap <left> :bp<CR>
+nnoremap <right> :bn<CR>
 nnoremap <C-N> :bn<CR>
 nnoremap <C-P> :bp<CR>
-" nnoremap <s-left> :bprev<cr>
-" nnoremap <s-right> :bnext<cr>
-nnoremap <Tab> :bn<CR>
-nnoremap <S-Tab> :bp<CR>
+" nnoremap <Tab> :bn<CR>
+" nnoremap <S-Tab> :bp<CR>
 
 " Move by line
 nnoremap j gj
@@ -363,14 +361,14 @@ let g:NERDTrimTrailingWhitespace = 1
 let g:NERDToggleCheckAllLines = 1
 " Add your own custom formats or override the defaults
 let g:NERDCustomDelimiters = {
-      \ 'c': {'left': '//'},
-      \ 'cpp': {'left': '//'},
-      \ 'python': {'left': '#'},
-      \ 'rust': {'left': '//'},
-      \ }
+	\ 'c': { 'left': '/**','right': '*/' },
+	\ 'cpp': {'left': '//'},
+	\ 'python': {'left': '#'},
+	\ 'rust': {'left': '//'},
+	\ }
 " Nerd commenter keybindings
 "map <leader>\ <leader>c<Space>
-map <leader>cc <plug>NERDComToggleComment
+" map <leader>cc <plug>NERDComToggleComment
 map <C-\> <leader>c<Space>
 
 " Undo tree

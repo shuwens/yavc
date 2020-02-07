@@ -19,9 +19,9 @@ augroup filetypedetect
 	au Filetype markdown setlocal  tw=72 colorcolumn=73
 
 	" proselint!!!
-	au Filetype tex let b:ale_linters = ['proselint', 'languagetool', 'lacheck', 'chktex']
-	au Filetype text let b:ale_linters = ['proselint', 'languagetool']
-	au Filetype markdown let b:ale_linters = ['proselint', 'languagetool']
+	" au Filetype tex let b:ale_linters = ['proselint', 'languagetool', 'lacheck', 'chktex']
+	" au Filetype text let b:ale_linters = ['proselint', 'languagetool']
+	" au Filetype markdown let b:ale_linters = ['proselint', 'languagetool']
 
 	" LaTeX and TeX
 	autocmd BufRead *.tex set filetype=tex
@@ -32,6 +32,8 @@ augroup filetypedetect
 	au FileType tex let g:tex_indent_items=0
 	au FileType tex let g:tex_indent_and=0
 	au FileType tex let g:tex_indent_brace=0
+	au Filetype tex setl updatetime=1
+	autocmd BufNewFile,BufRead *.tex set syntax=context
 
 	" fish
 	au FileType fish compiler fish
