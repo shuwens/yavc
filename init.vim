@@ -85,11 +85,28 @@ Plug 'rhysd/vim-clang-format'
 Plug 'lervag/vimtex'
 Plug 'rhysd/vim-grammarous'
 
+"█▓▒░ Google plugins
+" Add maktaba and codefmt to the runtimepath.
+" (The latter must be installed before it can be used.)
+Plug 'google/vim-maktaba'
+Plug 'google/vim-codefmt'
+" Also add Glaive, which is used to configure codefmt's maktaba flags. See
+" `:help :Glaive` for usage.
+Plug 'google/vim-glaive'
+Plug 'google/vim-colorscheme-primary'
+
 "█▓▒░ Color
 if !isdirectory("$HOME/dev/others/base16")
 	Plug 'chriskempson/base16-vim'
 endif
 call plug#end()
+
+" ...
+" the glaive#Install() should go after the "call vundle#end()"
+call glaive#Install()
+" Optional: Enable codefmt's default mappings on the <Leader>= prefix.
+Glaive codefmt plugin[mappings]
+
 
 "█▓▒░ Make pyenv and neovim work nice together
 

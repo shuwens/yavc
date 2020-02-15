@@ -54,9 +54,6 @@ let g:rustfmt_emit_files = 1
 let g:rustfmt_fail_silently = 0
 "let g:rust_keep_autopairs_default = 1
 "let g:rust_clip_command = 'xclip -selection clipboard'
-" <leader>= reformats current tange
-"autocmd FileType rust nnoremap <leader>= :'<,'>RustFmtRange<CR>
-autocmd FileType rust nnoremap <leader>= :RustFmt<CR>
 
 " markdown
 let g:vim_markdown_new_list_item_indent = 0
