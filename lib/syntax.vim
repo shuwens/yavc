@@ -12,6 +12,7 @@ else                " linux, bsd, etc
 	let g:vimtex_view_method = 'zathura'
 	let g:latex_view_general_viewer = 'zathura'
 endif
+let g:vimtex_compiler_progname = 'nvr'
 
 " chromatica
 if !empty(glob("/usr/local/opt/llvm/lib"))
@@ -59,3 +60,12 @@ let g:rustfmt_fail_silently = 0
 let g:vim_markdown_new_list_item_indent = 0
 let g:vim_markdown_auto_insert_bullets = 0
 let g:vim_markdown_frontmatter = 1
+
+" Python
+" let g:python3_host_prog = expand('~/.pyenv/versions/3.8.0/bin/python3.8')
+
+let g:python_host_prog  = $HOME . '/.pyenv/shims/python2'
+let g:python3_host_prog = $HOME . '/.pyenv/shims/python3'
+"
+" let g:python_host_prog  = expand('~/.pyenv/versions/py2neovim/bin/python')
+" let g:python3_host_prog = expand('~/.pyenv/versions/py3neovim/bin/python')
