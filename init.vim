@@ -75,6 +75,7 @@ Plug 'numirias/semshi', {'do': ':UpdateRemotePlugins'}  " Python syntax highligh
 
 "█▓▒░ Rust
 Plug 'rust-lang/rust.vim'
+Plug 'arzg/vim-rust-syntax-ext'
 
 "█▓▒░ C++ and Clang
 Plug 'bfrg/vim-cpp-modern'
