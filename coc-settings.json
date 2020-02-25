@@ -7,7 +7,7 @@
 	"diagnostic.refreshOnInsertMode": true,
 	"rust.clippy_preference": "off",
 	"rust-analyzer.enableCargoWatchOnStartup": "disabled",
-	"rust-analyzer.raLspServerPath": "~/.cargo/bin/ra_lsp_server",
+	"rust-analyzer.raLspServerPath": "~/.cargo/bin/rust-analyzer",
 	"python.formatting.provider": "yapf",
 	"coc.preferences.formatOnSaveFiletypes": ["py"],
 	"python.jediEnabled": false,
