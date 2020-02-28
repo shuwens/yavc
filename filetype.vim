@@ -108,4 +108,12 @@ augroup filetypedetect
 
 	" NerdTree behavior
 	autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+
+	" magic color setting
+	" autocmd BufEnter * set background=dark
+	" autocmd BufEnter * colorscheme base16-gruvbox-dark-hard
+	" autocmd BufEnter * let g:airline_theme='base16'
+	" autocmd BufEnter *.tex set background=light
+	" autocmd BufEnter *.tex colorscheme PaperColor
+	" autocmd BufEnter *.tex let b:airline_theme='papercolor'
 augroup END
