@@ -344,7 +344,6 @@ nnoremap <leader>L :GrammarousCheck --lang=en-US --preview<CR>
 nnoremap <leader>G :GrammarousCheck --lang=en-US --preview<CR>
 
 
-
 " NERDCommenter
 "
 " Add spaces after comment delimiters by default
@@ -394,3 +393,9 @@ endfunction
 " Nerd Tree
 let g:NERDTreeWinPos = "right"
 map <leader>n :NERDTreeToggle<CR>
+
+" Easy Align
+" Start interactive EasyAlign in visual mode (e.g. vipga)
+xmap ga <Plug>(EasyAlign)
+" Start interactive EasyAlign for a motion/text object (e.g. gaip)
+nmap ga <Plug>(EasyAlign)

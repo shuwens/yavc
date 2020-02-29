@@ -20,6 +20,7 @@ Plug 'tpope/vim-fugitive'
 Plug 'sheerun/vim-polyglot'			" I don't need this and it is buggy
 Plug 'scrooloose/nerdcommenter'
 Plug 'justinmk/vim-sneak'			" Need to remember its syntax
+Plug 'junegunn/vim-easy-align'			" Make writiing easy with align
 
 "█▓▒░ GUI enhancements
 " --------------------
@@ -37,6 +38,7 @@ Plug 'lilydjwg/colorizer'			" colorize text in the form
 Plug 'rhysd/committia.vim'			" better git commit layout
 Plug 'andymass/vim-matchup'
 Plug 'preservim/nerdtree'
+Plug 'godlygeek/tabular'
 
 "█▓▒░ Fuzzy finder
 " ----------------
