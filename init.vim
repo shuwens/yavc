@@ -281,14 +281,15 @@ let g:base16_shell_path="$HOME/dev/others/base16/shell/scripts/"
 " colorscheme base16-atelier-dune
 colorscheme base16-gruvbox-dark-hard
 
+hi Comment cterm=italic gui=italic
+" extra setup that I might not need?
+" hi Normal ctermbg=NONE
+" hi Normal guibg=NONE
+
 " the configuration options should be placed before `colorscheme forest-night`
 " let g:forest_night_enable_italic = 1
 " let g:forest_night_disable_italic_comment = 1
 " colorscheme forest-night
-
-" extra setup that I might not need?
-" hi Normal ctermbg=NONE
-" hi Normal guibg=NONE
 
 " Editing setup
 source $HOME/.config/nvim/lib/editing.vim

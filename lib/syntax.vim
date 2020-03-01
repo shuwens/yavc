@@ -33,9 +33,8 @@ for d in glob('~/.config/nvim/spell/*.add', 1, 1)
   endif
 endfor
 hi clear SpellBad
-hi SpellBad cterm=underline
-" Set style for gVim
-hi SpellBad gui=undercurl
+" hi SpellBad ctermfg=000 guifg=#000
+hi SpellBad cterm=underline gui=undercurl
 
 " Golang
 autocmd FileType go nmap <leader>t <Plug>(go-test)
@@ -63,9 +62,10 @@ let g:vim_markdown_frontmatter = 1
 
 " Python
 " let g:python3_host_prog = expand('~/.pyenv/versions/3.8.0/bin/python3.8')
-
-let g:python_host_prog  = $HOME . '/.pyenv/shims/python2'
-let g:python3_host_prog = $HOME . '/.pyenv/shims/python3'
+if has('mac')       " osx
+	let g:python_host_prog  = $HOME . '/.pyenv/shims/python2'
+	let g:python3_host_prog = $HOME . '/.pyenv/shims/python3'
+endif
 "
 " let g:python_host_prog  = expand('~/.pyenv/versions/py2neovim/bin/python')
 " let g:python3_host_prog = expand('~/.pyenv/versions/py3neovim/bin/python')

@@ -15,6 +15,7 @@ call coc#add_extension('coc-tabnine')
 call coc#add_extension('coc-python')
 call coc#add_extension('coc-rust-analyzer')
 " call coc#add_extension('coc-rls')
+call coc#add_extension('coc-clangd')
 call coc#add_extension('coc-texlab')
 " call coc#add_extension('coc-gocode')
 " call coc#add_extension('coc-vimlsp')
@@ -206,7 +207,7 @@ let g:coc_snippet_next = '<tab>'
 " Additional filetype for coc pairs
 autocmd FileType tex let b:coc_pairs = [["$", "$"]]
 autocmd FileType tex let b:coc_pairs_disabled = ["`", "'","<"]
-autocmd FileType tex setlocal spell spelllang=en_us
+" autocmd FileType tex setlocal spell spelllang=en_us
 autocmd FileType html let b:coc_pairs_disabled = ['<']
 autocmd FileType markdown let b:coc_pairs_disabled = ['`']
 autocmd FileType markdown let b:coc_pairs = [["$", "$"]]
