@@ -4,7 +4,7 @@
 " let g:airline#extensions#disable_rtp_load = 1
 " let g:airline_extensions = ['branch', 'hunks', 'coc']
 
-let g:airline_powerline_fonts = 0
+let g:airline_powerline_fonts = 1
 
 " Sections
 " --------

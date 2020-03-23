@@ -39,6 +39,7 @@ Plug 'rhysd/committia.vim'			" better git commit layout
 Plug 'andymass/vim-matchup'
 Plug 'preservim/nerdtree'
 Plug 'godlygeek/tabular'
+Plug 'ryanoasis/vim-devicons'
 
 "█▓▒░ Fuzzy finder
 " ----------------
