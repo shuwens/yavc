@@ -9,5 +9,6 @@ augroup autoformat_settings
   autocmd FileType python AutoFormatBuffer yapf
   " Alternative: autocmd FileType python AutoFormatBuffer autopep8
   autocmd FileType rust AutoFormatBuffer rustfmt
+  autocmd FileType js AutoFormatBuffer prettier
   autocmd FileType vue AutoFormatBuffer prettier
 augroup END

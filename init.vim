@@ -89,6 +89,9 @@ Plug 'rhysd/vim-clang-format'
 Plug 'lervag/vimtex'
 Plug 'rhysd/vim-grammarous'
 
+"█▓▒░ JS
+Plug 'prettier/vim-prettier', { 'do': 'yarn install' }
+
 "█▓▒░ Google plugins
 " Add maktaba and codefmt to the runtimepath.
 " (The latter must be installed before it can be used.)
