@@ -16,7 +16,7 @@ call plug#begin('$HOME/.local/share/nvim/plugged')
 " --------------------
 Plug 'ciaranm/securemodelines'
 Plug 'editorconfig/editorconfig-vim'		" Assume an editor config is enforced
-Plug 'tpope/vim-fugitive'
+" Plug 'tpope/vim-fugitive'
 Plug 'sheerun/vim-polyglot'			" I don't need this and it is buggy
 Plug 'scrooloose/nerdcommenter'
 Plug 'justinmk/vim-sneak'			" Need to remember its syntax
