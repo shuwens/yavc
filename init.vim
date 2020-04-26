@@ -16,6 +16,7 @@ call plug#begin('$HOME/.local/share/nvim/plugged')
 Plug 'ciaranm/securemodelines'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'justinmk/vim-sneak'
+Plug 'tweekmonster/startuptime.vim'
 
 " GUI enhancements
 Plug 'vim-airline/vim-airline'              " better status line
