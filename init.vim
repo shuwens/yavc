@@ -15,13 +15,13 @@ call plug#begin('$HOME/.local/share/nvim/plugged')
 "█▓▒░ VIM enhancements
 " --------------------
 Plug 'ciaranm/securemodelines'
-Plug 'editorconfig/editorconfig-vim'		" Assume an editor config is enforced
-Plug 'tpope/vim-fugitive'
-Plug 'sheerun/vim-polyglot'			" I don't need this and it is buggy
+" Plug 'editorconfig/editorconfig-vim'		" Assume an editor config is enforced
+" Plug 'tpope/vim-fugitive'
+" Plug 'sheerun/vim-polyglot'			" I don't need this and it is buggy
 Plug 'scrooloose/nerdcommenter'
-Plug 'justinmk/vim-sneak'			" Need to remember its syntax
-Plug 'junegunn/vim-easy-align'			" Make writiing easy with align
-" Plug 'tweekmonster/startuptime.vim'
+" Plug 'justinmk/vim-sneak'			" Need to remember its syntax
+Plug 'junegunn/vim-easy-align', {'for': ['tex', 'latex']}  " Make writing easy with align
+Plug 'tweekmonster/startuptime.vim'
 
 "█▓▒░ GUI enhancements
 " --------------------
@@ -30,16 +30,16 @@ Plug 'Yggdroot/indentLine'
 Plug 'jaxbot/semantic-highlight.vim'		" different color for every variable
 Plug 'bounceme/poppy.vim'			" rainbow parens
 Plug 'ntpeters/vim-better-whitespace'
-Plug 'romainl/vim-cool'				" disables search highlighting when you are done
-Plug 'RRethy/vim-illuminate'			" highlighting other uses of the current word
+" Plug 'romainl/vim-cool'				" disables search highlighting when you are done
+" Plug 'RRethy/vim-illuminate'			" highlighting other uses of the current word
 Plug 'vim-airline/vim-airline'			" better status line
 Plug 'vim-airline/vim-airline-themes'
-Plug 'lilydjwg/colorizer'			" colorize text in the form
+" Plug 'lilydjwg/colorizer'			" colorize text in the form
 " Plug 'mbbill/undotree'
 Plug 'rhysd/committia.vim'			" better git commit layout
-Plug 'andymass/vim-matchup'
-Plug 'preservim/nerdtree'
-Plug 'godlygeek/tabular'
+" Plug 'andymass/vim-matchup', { 'for': ['tex', 'latex'] }
+Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
+" Plug 'godlygeek/tabular', { 'for': ['tex', 'latex'] }
 Plug 'ryanoasis/vim-devicons'
 
 "█▓▒░ Fuzzy finder
@@ -67,31 +67,33 @@ Plug 'inside/vim-search-pulse'
 
 "█▓▒░ Syntactic language support
 " ------------------------------
-Plug 'vim-scripts/gnuplot-syntax-highlighting'
-Plug 'stephpy/vim-yaml'
-Plug 'cespare/vim-toml'
+" Plug 'vim-scripts/gnuplot-syntax-highlighting', { 'for': 'gnuplot' }
+Plug 'stephpy/vim-yaml', { 'for': 'yaml' }
+Plug 'cespare/vim-toml', { 'for': 'toml' }
 " Plug 'fatih/vim-go'
-Plug 'dag/vim-fish'
+Plug 'dag/vim-fish', { 'for': 'fish' }
 Plug 'jceb/vim-orgmode'
-Plug 'plasticboy/vim-markdown'
-Plug 'elixir-editors/vim-elixir'
-Plug 'numirias/semshi', {'do': ':UpdateRemotePlugins'}  " Python syntax highlight
+Plug 'plasticboy/vim-markdown', { 'for': 'markdown' }
+" Plug 'elixir-editors/vim-elixir', { 'for': 'elixir' }
+" Plug 'numirias/semshi', {'do': ':UpdateRemotePlugins'}  " Python syntax highlight
 
 "█▓▒░ Rust
-Plug 'rust-lang/rust.vim'
-Plug 'arzg/vim-rust-syntax-ext'
+Plug 'rust-lang/rust.vim', { 'for': 'rust' }
+Plug 'arzg/vim-rust-syntax-ext', { 'for': 'rust' }
 
 "█▓▒░ C++ and Clang
-Plug 'bfrg/vim-cpp-modern'
-Plug 'arakashic/chromatica.nvim'
-Plug 'rhysd/vim-clang-format'
+" Plug 'octol/vim-cpp-enhanced-highlight', {'for': ['cpp'] }
+" Plug 'drmikehenry/vim-headerguard', {'for': ['cpp', 'hpp'] }
+" Plug 'bfrg/vim-cpp-modern', {'for': ['cpp', 'hpp'] }
+" Plug 'arakashic/chromatica.nvim', {'for': ['cpp', 'hpp'] }
+" Plug 'rhysd/vim-clang-format', {'for': ['c', 'cpp', 'hpp'] }
 
 "█▓▒░ LaTeX
-Plug 'lervag/vimtex'
-Plug 'rhysd/vim-grammarous'
+Plug 'lervag/vimtex', { 'for': ['tex', 'latex'] }
+Plug 'rhysd/vim-grammarous', { 'for': ['tex', 'latex'] }
 
 "█▓▒░ JS
-Plug 'prettier/vim-prettier', { 'do': 'yarn install' }
+" Plug 'prettier/vim-prettier', { 'do': 'yarn install', 'for': ['javascript', 'javascript.jsx'] }
 
 "█▓▒░ Google plugins
 " Add maktaba and codefmt to the runtimepath.
@@ -314,8 +316,3 @@ let g:echodoc_enable_at_startup = 1
 if has('nvim')
 	runtime! plugin/python_setup.vim
 endif
-
-" dark magic to reduce loading time
-let loaded_matchit = 1
-let g:loaded_python_provider = 0
-let g:loaded_python3_provider = 0
