@@ -16,11 +16,12 @@ call plug#begin('$HOME/.local/share/nvim/plugged')
 " --------------------
 Plug 'ciaranm/securemodelines'
 Plug 'editorconfig/editorconfig-vim'		" Assume an editor config is enforced
-" Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-fugitive'
 Plug 'sheerun/vim-polyglot'			" I don't need this and it is buggy
 Plug 'scrooloose/nerdcommenter'
 Plug 'justinmk/vim-sneak'			" Need to remember its syntax
 Plug 'junegunn/vim-easy-align'			" Make writiing easy with align
+" Plug 'tweekmonster/startuptime.vim'
 
 "█▓▒░ GUI enhancements
 " --------------------
@@ -95,26 +96,26 @@ Plug 'prettier/vim-prettier', { 'do': 'yarn install' }
 "█▓▒░ Google plugins
 " Add maktaba and codefmt to the runtimepath.
 " (The latter must be installed before it can be used.)
-Plug 'google/vim-maktaba'
-Plug 'google/vim-codefmt'
+" Plug 'google/vim-maktaba'
+" Plug 'google/vim-codefmt'
 " Also add Glaive, which is used to configure codefmt's maktaba flags. See
 " `:help :Glaive` for usage.
-Plug 'google/vim-glaive'
-Plug 'google/vim-colorscheme-primary'
+" Plug 'google/vim-glaive'
+" Plug 'google/vim-colorscheme-primary'
 
 "█▓▒░ Color
-Plug 'sainnhe/vim-color-forest-night'
-Plug 'NLKNguyen/papercolor-theme'
+" Plug 'sainnhe/vim-color-forest-night'
+" Plug 'NLKNguyen/papercolor-theme'
 if !isdirectory("$HOME/dev/others/base16")
-	Plug 'chriskempson/base16-vim'
+	" Plug 'chriskempson/base16-vim'
 endif
 call plug#end()
 
 " ...
 " the glaive#Install() should go after the "call vundle#end()"
-call glaive#Install()
+" call glaive#Install()
 " Optional: Enable codefmt's default mappings on the <Leader>= prefix.
-Glaive codefmt plugin[mappings]
+" Glaive codefmt plugin[mappings]
 
 
 "█▓▒░ Make pyenv and neovim work nice together
@@ -313,3 +314,8 @@ let g:echodoc_enable_at_startup = 1
 if has('nvim')
 	runtime! plugin/python_setup.vim
 endif
+
+" dark magic to reduce loading time
+let loaded_matchit = 1
+let g:loaded_python_provider = 0
+let g:loaded_python3_provider = 0
