@@ -108,8 +108,8 @@ Plug 'rhysd/vim-grammarous', { 'for': ['tex', 'latex'] }
 "█▓▒░ Color
 " Plug 'sainnhe/vim-color-forest-night'
 " Plug 'NLKNguyen/papercolor-theme'
-if !isdirectory("$HOME/dev/others/base16")
-	" Plug 'chriskempson/base16-vim'
+if !isdirectory(expand("$HOME/dev/others/base16"))
+	Plug 'chriskempson/base16-vim'
 endif
 call plug#end()
 
