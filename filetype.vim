@@ -114,7 +114,7 @@ augroup filetypedetect
 	" autocmd BufEnter * colorscheme base16-gruvbox-dark-hard
 	" autocmd BufEnter * let g:airline_theme='base16'
 	" autocmd BufEnter *.tex set background=light
-	autocmd BufEnter *.tex colorscheme forest-night
-	autocmd BufEnter *.sty colorscheme forest-night
+	" autocmd BufEnter *.tex colorscheme forest-night
+	" autocmd BufEnter *.sty colorscheme forest-night
 	" autocmd BufEnter *.tex let b:airline_theme='papercolor'
 augroup END

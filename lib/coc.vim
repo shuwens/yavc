@@ -61,7 +61,8 @@ hi CocInfoFloat guifg=#ffaf00
 hi CocHintFloat guifg=#2ed1cd
 
 " Use tab for trigger completion with characters ahead and navigate.
-" Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
+" NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
+" other plugin before putting this into your config.
 inoremap <silent><expr> <TAB>
       \ pumvisible() ? "\<C-n>" :
       \ <SID>check_back_space() ? "\<TAB>" :
@@ -76,43 +77,46 @@ endfunction
 " Use <c-space> to trigger completion.
 inoremap <silent><expr> <c-space> coc#refresh()
 
-" Use <cr> to confirm completion, `<C-g>u` means break undo chain at current position.
-" Coc only does snippet and additional edit on confirm.
-" And to work as expected in coc-pairs.
-" https://github.com/neoclide/coc-pairs/issues/13
-"
-" inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
-inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm() : "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+" Use <c-.> to trigger completion.
+inoremap <silent><expr> <c-.> coc#refresh()
 
-" NOTE: the diagnostic is now in the ALE
+" Use <cr> to confirm completion, `<C-g>u` means break undo chain at current
+" position. Coc only does snippet and additional edit on confirm.
+if exists('*complete_info')
+  inoremap <expr> <cr> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>"
+else
+  imap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+endif
+
 " Use `C-k` and `C-j` to navigate diagnostics
-nmap <silent> <C-k>  <Plug>(coc-diagnostic-prev)
+nmap <silent> <C-k> <Plug>(coc-diagnostic-prev)
 nmap <silent> <C-j>  <Plug>(coc-diagnostic-next)
 
-" Remap keys for gotos
-nmap <silent> <leader>.  <Plug>(coc-definition)
-nmap <silent> <leader>y  <Plug>(coc-type-definition)
-nmap <silent> <leader>i  <Plug>(coc-implementation)
-nmap <silent> <leader>r  <Plug>(coc-references)
+" GoTo code navigation.
+nmap <silent> <leader>. <Plug>(coc-definition)
+nmap <silent> <leader>y <Plug>(coc-type-definition)
+nmap <silent> <leader>i <Plug>(coc-implementation)
+nmap <silent> <leader>r <Plug>(coc-references)
 nmap <silent> <leader>l <Plug>(coc-diagnostic-info)
 nmap <silent> <leader>o  <C-O>
 nmap <silent> <C-g> :close<cr>
 
-" Use K to show documentation in preview window
+" Use K to show documentation in preview window.
+nnoremap <silent> K :call <SID>show_documentation()<CR>
 nnoremap <silent> <leader>k :call <SID>show_documentation()<CR>
 
 function! s:show_documentation()
-  if &filetype == 'vim'
+  if (index(['vim','help'], &filetype) >= 0)
     execute 'h '.expand('<cword>')
   else
     call CocAction('doHover')
   endif
 endfunction
 
-" Highlight symbol under cursor on CursorHold
+" Highlight the symbol and its references when holding the cursor.
 autocmd CursorHold * silent call CocActionAsync('highlight')
 
-" Remap for rename current word
+" Symbol renaming.
 nmap <leader>rn <Plug>(coc-rename)
 
 " Remap for format selected region
@@ -136,7 +140,8 @@ nmap <silent> <leader>ac  <Plug>(coc-codeaction)
 " Fix autofix problem of current line
 nmap <silent> <leader>qf  <Plug>(coc-fix-current)
 
-" Create mappings for function text object, requires document symbols feature of languageserver.
+" Introduce function text object
+" NOTE: Requires 'textDocument.documentSymbol' support from the language server.
 xmap if <Plug>(coc-funcobj-i)
 xmap af <Plug>(coc-funcobj-a)
 omap if <Plug>(coc-funcobj-i)
@@ -169,12 +174,12 @@ nnoremap <silent> <leader>]  :<C-u>CocList -I symbols<cr>
 " Resume latest coc list
 "nnoremap <silent> <leader>p  :<C-u>CocListResume<CR>
 " Do default action for next item.
-nnoremap <silent> <leader>j  :<C-u>CocNext<CR>
-" Do default action for previous item.
-nnoremap <silent> <leader>k  :<C-u>CocPrev<CR>
+" nnoremap <silent> <leader>j  :<C-u>CocNext<CR>
+" nnoremap <silent> <leader>oj  :<C-u>CocNext<CR>
 
-nnoremap <silent> <leader>oj  :<C-u>CocNext<CR>
-nnoremap <silent> <leader>ok  :<C-u>CocPrev<CR>
+" Do default action for previous item.
+" nnoremap <silent> <leader>k  :<C-u>CocPrev<CR>
+" nnoremap <silent> <leader>ok  :<C-u>CocPrev<CR>
 
 " Use <C-e> for trigger snippet expand.
 imap <C-e> <Plug>(coc-snippets-expand)
