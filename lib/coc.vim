@@ -22,14 +22,14 @@ call coc#add_extension('coc-texlab')
 " call coc#add_extension('coc-java')
 
 " Coc web dev extensions
-call coc#add_extension('coc-tsserver')
-call coc#add_extension('coc-tslint-plugin')
-call coc#add_extension('coc-stylelint')
+" call coc#add_extension('coc-tsserver')
+" call coc#add_extension('coc-tslint-plugin')
+" call coc#add_extension('coc-stylelint')
 " call coc#add_extension('coc-eslint')
-call coc#add_extension('coc-json')
-call coc#add_extension('coc-css')
-call coc#add_extension('coc-html')
-call coc#add_extension('coc-prettier')
+" call coc#add_extension('coc-json')
+" call coc#add_extension('coc-css')
+" call coc#add_extension('coc-html')
+" call coc#add_extension('coc-prettier')
 
 " if hidden is not set, TextEdit might fail.
 set hidden

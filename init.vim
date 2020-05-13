@@ -93,7 +93,7 @@ Plug 'lervag/vimtex', { 'for': ['tex', 'latex'] }
 Plug 'rhysd/vim-grammarous', { 'for': ['tex', 'latex'] }
 
 "█▓▒░ JS
-" Plug 'prettier/vim-prettier', { 'do': 'yarn install', 'for': ['javascript', 'javascript.jsx'] }
+Plug 'prettier/vim-prettier', { 'do': 'yarn install', 'for': ['javascript', 'javascript.jsx'] }
 
 "█▓▒░ Google plugins
 " Add maktaba and codefmt to the runtimepath.

@@ -7,6 +7,7 @@
 	"diagnostic.refreshOnInsertMode": true,
 	"rust-analyzer.cargo-watch.command": "clippy",
 	"rust-analyzer.serverPath": "~/.cargo/bin/rust-analyzer",
+"python.pythonPath": "/home/jethros/.config/nvim/scripts/python",
 	"python.formatting.provider": "yapf",
 	"coc.preferences.formatOnSaveFiletypes": ["py"],
 	"python.jediEnabled": false,
