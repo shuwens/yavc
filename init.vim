@@ -210,9 +210,9 @@ set wildignore+=*.orig                           " Merge resolution files
 "Some tips from http://stevelosh.com/blog/2010/09/coming-home-to-vim/
 
 " Use wide tabs
-set shiftwidth=8                            " 1 tab == 8 spaces
-set softtabstop=8                           " when hitting <BS>, pretend like a tab is removed, even if spaces
-set tabstop=8                               " a tab is eight spaces
+set shiftwidth=4                            " 1 tab == 8 spaces
+set softtabstop=4                           " when hitting <BS>, pretend like a tab is removed, even if spaces
+set tabstop=4                               " a tab is eight spaces
 set noexpandtab                             " Don't use spaces instead of tabs
 " set expandtab                               " Use spaces instead of tabs
 " set smarttab                                " Be smart when using tabs ;)
