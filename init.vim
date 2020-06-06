@@ -74,6 +74,7 @@ Plug 'cespare/vim-toml', { 'for': 'toml' }
 Plug 'dag/vim-fish', { 'for': 'fish' }
 Plug 'jceb/vim-orgmode'
 Plug 'plasticboy/vim-markdown', { 'for': 'markdown' }
+Plug 'mzlogin/vim-markdown-toc'
 " Plug 'elixir-editors/vim-elixir', { 'for': 'elixir' }
 " Plug 'numirias/semshi', {'do': ':UpdateRemotePlugins'}  " Python syntax highlight
 
