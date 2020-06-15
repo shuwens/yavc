@@ -76,7 +76,7 @@ Plug 'jceb/vim-orgmode'
 Plug 'plasticboy/vim-markdown', { 'for': 'markdown' }
 Plug 'mzlogin/vim-markdown-toc'
 " Plug 'elixir-editors/vim-elixir', { 'for': 'elixir' }
-" Plug 'numirias/semshi', {'do': ':UpdateRemotePlugins'}  " Python syntax highlight
+Plug 'numirias/semshi', {'do': ':UpdateRemotePlugins'}  " Python syntax highlight
 
 "█▓▒░ Rust
 Plug 'rust-lang/rust.vim', { 'for': 'rust' }
@@ -96,6 +96,9 @@ Plug 'rhysd/vim-grammarous', { 'for': ['tex', 'latex'] }
 "█▓▒░ JS
 Plug 'prettier/vim-prettier', { 'do': 'yarn install', 'for': ['javascript', 'javascript.jsx'] }
 
+"█▓▒░ Python
+Plug 'mindriot101/vim-yapf'
+
 "█▓▒░ Google plugins
 " Add maktaba and codefmt to the runtimepath.
 " (The latter must be installed before it can be used.)
@@ -109,6 +112,7 @@ Plug 'prettier/vim-prettier', { 'do': 'yarn install', 'for': ['javascript', 'jav
 "█▓▒░ Color
 " Plug 'sainnhe/vim-color-forest-night'
 " Plug 'NLKNguyen/papercolor-theme'
+
 if !isdirectory(expand("$HOME/dev/others/base16"))
 	Plug 'chriskempson/base16-vim'
 endif
