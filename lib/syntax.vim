@@ -48,7 +48,6 @@ let g:go_version_warning = 0
 
 "█▓▒░ Rust
 " https://github.com/rust-lang/rust.vim/issues/192
-let g:rustfmt_command = "rustfmt +nightly"
 let g:rustfmt_autosave = 1
 let g:rustfmt_emit_files = 1
 let g:rustfmt_fail_silently = 0
