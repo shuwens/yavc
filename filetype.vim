@@ -8,9 +8,9 @@ augroup filetypedetect
 	" Rust language server
 	"autocmd FileType rust let b:ale_linters = ['rustup', 'run', 'nightly', 'rls']
 	" Follow Rust code style rules
-	au Filetype rust source $HOME/.config/nvim/scripts/spacetab.vim
-	au Filetype rust set colorcolumn=100
-	au FileType rust let b:dispatch = 'cargo check'
+	" au Filetype rust source $HOME/.config/nvim/scripts/spacetab.vim
+	" au Filetype rust set colorcolumn=100
+	" au FileType rust let b:dispatch = 'cargo check'
 	"au filetype rust let b:AutoPairs = {'`': '`', '"': '"', '{': '}', '(': ')', '[': ']', '|':'|', '<':'>'}
 	"au Filetype rust let b:ale_linters = ['rustup', 'run', 'nightly', 'rls']
 

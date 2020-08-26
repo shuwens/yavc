@@ -16,8 +16,8 @@ call plug#begin('$HOME/.local/share/nvim/plugged')
 " --------------------
 Plug 'ciaranm/securemodelines'
 " Plug 'editorconfig/editorconfig-vim'		" Assume an editor config is enforced
-" Plug 'tpope/vim-fugitive'
-" Plug 'sheerun/vim-polyglot'			" I don't need this and it is buggy
+Plug 'tpope/vim-fugitive'
+Plug 'sheerun/vim-polyglot'			" I don't need this and it is buggy
 Plug 'scrooloose/nerdcommenter'
 " Plug 'justinmk/vim-sneak'			" Need to remember its syntax
 Plug 'junegunn/vim-easy-align', {'for': ['tex', 'latex']}  " Make writing easy with align
@@ -70,13 +70,12 @@ Plug 'inside/vim-search-pulse'
 " Plug 'vim-scripts/gnuplot-syntax-highlighting', { 'for': 'gnuplot' }
 Plug 'stephpy/vim-yaml', { 'for': 'yaml' }
 Plug 'cespare/vim-toml', { 'for': 'toml' }
-" Plug 'fatih/vim-go'
 Plug 'dag/vim-fish', { 'for': 'fish' }
 Plug 'jceb/vim-orgmode'
 Plug 'plasticboy/vim-markdown', { 'for': 'markdown' }
 Plug 'mzlogin/vim-markdown-toc'
-" Plug 'elixir-editors/vim-elixir', { 'for': 'elixir' }
-Plug 'numirias/semshi', {'do': ':UpdateRemotePlugins'}  " Python syntax highlight
+" Plug 'numirias/semshi', {'do': ':UpdateRemotePlugins'}  " Python syntax highlight
+Plug 'alvan/vim-closetag'
 
 "█▓▒░ Rust
 Plug 'rust-lang/rust.vim', { 'for': 'rust' }
@@ -98,20 +97,6 @@ Plug 'prettier/vim-prettier', { 'do': 'yarn install', 'for': ['javascript', 'jav
 
 "█▓▒░ Python
 Plug 'mindriot101/vim-yapf'
-
-"█▓▒░ Google plugins
-" Add maktaba and codefmt to the runtimepath.
-" (The latter must be installed before it can be used.)
-" Plug 'google/vim-maktaba'
-" Plug 'google/vim-codefmt'
-" Also add Glaive, which is used to configure codefmt's maktaba flags. See
-" `:help :Glaive` for usage.
-" Plug 'google/vim-glaive'
-" Plug 'google/vim-colorscheme-primary'
-
-"█▓▒░ Color
-" Plug 'sainnhe/vim-color-forest-night'
-" Plug 'NLKNguyen/papercolor-theme'
 
 if !isdirectory(expand("$HOME/dev/others/base16"))
 	Plug 'chriskempson/base16-vim'
@@ -317,7 +302,3 @@ source $HOME/.config/nvim/lib/coc.vim
 
 " echodoc
 let g:echodoc_enable_at_startup = 1
-
-if has('nvim')
-	runtime! plugin/python_setup.vim
-endif
