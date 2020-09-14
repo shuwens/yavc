@@ -68,3 +68,6 @@ endif
 "
 " let g:python_host_prog  = expand('~/.pyenv/versions/py2neovim/bin/python')
 " let g:python3_host_prog = expand('~/.pyenv/versions/py3neovim/bin/python')
+
+" C++
+let g:clang_format#auto_format=1
