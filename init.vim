@@ -42,6 +42,10 @@ Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
 " Plug 'godlygeek/tabular', { 'for': ['tex', 'latex'] }
 Plug 'ryanoasis/vim-devicons'
 
+"█▓▒░ Additional func..
+" ----------------
+Plug 'tpope/vim-dispatch'
+
 "█▓▒░ Fuzzy finder
 " ----------------
 Plug 'airblade/vim-rooter'

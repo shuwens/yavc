@@ -97,9 +97,43 @@ nnoremap <leader>u :UndotreeToggle<CR>
 nnoremap <leader>d :Dispatch<CR>
 " special case for netbricks
 autocmd BufRead,BufNewFile $HOME/dev/netbricks/** let b:dispatch = './build.sh'
-autocmd BufRead,BufNewFile $HOME/dev/netbricks/** nnoremap <leader>d :Dispatch!<CR>
+" autocmd BufRead,BufNewFile $HOME/dev/netbricks/** nnoremap <leader>d :Dispatch!<CR>
 autocmd BufRead,BufNewFile $HOME/dev/projects/netbricks/** let b:dispatch = './build.sh'
-autocmd BufRead,BufNewFile $HOME/dev/projects/netbricks/** nnoremap <leader>d :Dispatch!<CR>
+" autocmd BufRead,BufNewFile $HOME/dev/projects/netbricks/** nnoremap <leader>d :Dispatch!<CR>
+autocmd BufRead,BufNewFile $HOME/dev/achtung/nfv-survey/** let b:dispatch = 'make all'
+
+" manage quick fix
+
+function! GetBufferList()
+  redir =>buflist
+  silent! ls!
+  redir END
+  return buflist
+endfunction
+
+function! ToggleList(bufname, pfx)
+  let buflist = GetBufferList()
+  for bufnum in map(filter(split(buflist, '\n'), 'v:val =~ "'.a:bufname.'"'), 'str2nr(matchstr(v:val, "\\d\\+"))')
+    if bufwinnr(bufnum) != -1
+      exec(a:pfx.'close')
+      return
+    endif
+  endfor
+  if a:pfx == 'l' && len(getloclist(0)) == 0
+      echohl ErrorMsg
+      echo "Location List is Empty."
+      return
+  endif
+  let winnr = winnr()
+  exec(a:pfx.'open')
+  if winnr() != winnr
+    wincmd p
+  endif
+endfunction
+
+" nmap <silent> <leader>l :call ToggleList("Location List", 'l')<CR>
+nmap <silent> <leader>\ :call ToggleList("Quickfix List", 'c')<CR>
+
 
 " Jump to start and end of line using the home row key
 "map H ^
