@@ -97,10 +97,9 @@ nnoremap <leader>u :UndotreeToggle<CR>
 nnoremap <leader>d :Dispatch<CR>
 " special case for netbricks
 autocmd BufRead,BufNewFile $HOME/dev/netbricks/** let b:dispatch = './build.sh'
-" autocmd BufRead,BufNewFile $HOME/dev/netbricks/** nnoremap <leader>d :Dispatch!<CR>
 autocmd BufRead,BufNewFile $HOME/dev/projects/netbricks/** let b:dispatch = './build.sh'
-" autocmd BufRead,BufNewFile $HOME/dev/projects/netbricks/** nnoremap <leader>d :Dispatch!<CR>
 autocmd BufRead,BufNewFile $HOME/dev/achtung/nfv-survey/** let b:dispatch = 'make all'
+autocmd BufRead,BufNewFile $HOME/writings/blogs/** let b:dispatch = 'zola build'
 
 " manage quick fix
 
