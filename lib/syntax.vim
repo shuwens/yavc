@@ -60,15 +60,12 @@ let g:vim_markdown_auto_insert_bullets = 0
 let g:vim_markdown_frontmatter = 1
 
 " Python
-let g:python3_host_prog = $HOME . '/.pyenv/shims/python'
-let g:python_host_prog  = $HOME . '/.pyenv/shims/python'
-"     let g:python_host_prog  = $HOME . '/.pyenv/shims/python2'
-" let g:python3_host_prog = expand('~/.pyenv/versions/3.8.0/bin/python3.8')
-" if has('mac')       " osx
-" endif
-"
-" let g:python_host_prog  = expand('~/.pyenv/versions/py2neovim/bin/python')
-" let g:python3_host_prog = expand('~/.pyenv/versions/py3neovim/bin/python')
+" https://quinoa42.github.io/en/oceanus/neovim-python/
+if has("nvim")
+    let g:python_host_prog = $HOME . "/.pyenv/versions/neovim2/bin/python"
+    let g:python3_host_prog = $HOME . "/.pyenv/versions/neovim3/bin/python"
+endif
+
 
 " C++
 let g:clang_format#auto_format=1

@@ -10,16 +10,69 @@
 
 	"rust-analyzer.checkOnSave.enable": true,
 	"rust-analyzer.checkOnSave.command": "clippy",
-	"rust-analyzer.serverPath": "/usr/bin/rust-analyzer",
+	"rust-analyzer.serverPath": "~/.cargo/bin/rust-analyzer",
 
 	"python.linting.pylintEnabled": false,
 	"python.linting.flake8Enabled": false,
 	"python.linting.mypyEnabled": true,
 	"python.linting.enabled": true,
-	"python.pythonPath": "/home/jethros/.pyenv/versions/neovim3/bin/python",
+	"python.pythonPath": "~/.pyenv/versions/neovim3/bin/python",
 	"python.formatting.provider": "yapf",
 	"python.jediEnabled": false,
 
+	"diagnostic-languageserver.filetypes": {
+		"vim": "vint",
+		"email": "languagetool",
+		"markdown": [ "write-good", "markdownlint" ,"languagetool"],
+		"sh": "shellcheck",
+		"tex": ["write-good", "languagetool"]
+	},
+	"diagnostic-languageserver.formatFiletypes": {
+		"sh": "shfmt"
+	},
+	"diagnostic-languageserver.linters": {
+		"languagetool": {
+			"command": "languagetool",
+			"debounce": 200,
+			"args": [ "--language", "en-US", "-"],
+			"offsetLine": 0,
+			"offsetColumn": 0,
+			"sourceName": "languagetool",
+			"formatLines": 2,
+			"formatPattern": [
+				"^\\d+?\\.\\)\\s+Line\\s+(\\d+),\\s+column\\s+(\\d+),\\s+([^\\n]+)\nMessage:\\s+(.*)$",
+				{
+					"line": 1,
+					"column": 2,
+					"message": [4, 3]
+				}
+			]
+		},
+		"shellcheck": {
+  "command": "shellcheck",
+  "debounce": 100,
+  "args": [
+    "--format",
+    "json",
+    "-"
+  ],
+  "sourceName": "shellcheck",
+  "parseJson": {
+    "line": "line",
+    "column": "column",
+    "endLine": "endLine",
+    "endColumn": "endColumn",
+    "message": "${message} [${code}]",
+    "security": "level"
+  },
+  "securities": {
+    "error": "error",
+    "warning": "warning",
+    "info": "info",
+    "style": "hint"
+  }
+}
+	},
 	"languageserver":{
 		"clangd":{
 			"command":"clangd",
