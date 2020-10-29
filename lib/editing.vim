@@ -98,11 +98,10 @@ nnoremap <leader>d :Dispatch<CR>
 " special case for netbricks
 autocmd BufRead,BufNewFile $HOME/dev/netbricks/** let b:dispatch = './build.sh'
 autocmd BufRead,BufNewFile $HOME/dev/projects/netbricks/** let b:dispatch = './build.sh'
-autocmd BufRead,BufNewFile $HOME/dev/achtung/nfv-survey/** let b:dispatch = 'make all'
+autocmd BufRead,BufNewFile $HOME/dev/achtung/nfv-survey/** let b:dispatch = 'make'
 autocmd BufRead,BufNewFile $HOME/writings/blogs/** let b:dispatch = 'zola build'
 
 " manage quick fix
-
 function! GetBufferList()
   redir =>buflist
   silent! ls!
@@ -128,6 +127,12 @@ function! ToggleList(bufname, pfx)
   if winnr() != winnr
     wincmd p
   endif
+endfunction
+
+" auto set quickfix height
+au FileType qf call AdjustWindowHeight(3, 8)
+function! AdjustWindowHeight(minheight, maxheight)
+  exe max([min([line("$"), a:maxheight]), a:minheight]) . "wincmd _"
 endfunction
 
 " nmap <silent> <leader>l :call ToggleList("Location List", 'l')<CR>
