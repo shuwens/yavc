@@ -71,14 +71,12 @@ Plug 'inside/vim-search-pulse'
 
 "█▓▒░ Syntactic language support
 " ------------------------------
-" Plug 'vim-scripts/gnuplot-syntax-highlighting', { 'for': 'gnuplot' }
 Plug 'stephpy/vim-yaml', { 'for': 'yaml' }
 Plug 'cespare/vim-toml', { 'for': 'toml' }
 Plug 'dag/vim-fish', { 'for': 'fish' }
 Plug 'jceb/vim-orgmode'
 Plug 'plasticboy/vim-markdown', { 'for': 'markdown' }
 Plug 'mzlogin/vim-markdown-toc'
-" Plug 'numirias/semshi', {'do': ':UpdateRemotePlugins'}  " Python syntax highlight
 Plug 'alvan/vim-closetag'
 
 "█▓▒░ Rust
@@ -94,24 +92,12 @@ Plug 'arzg/vim-rust-syntax-ext', { 'for': 'rust' }
 
 "█▓▒░ LaTeX
 Plug 'lervag/vimtex', { 'for': ['tex', 'latex'] }
-Plug 'rhysd/vim-grammarous', { 'for': ['tex', 'latex'] }
-
-"█▓▒░ JS
-Plug 'prettier/vim-prettier', { 'do': 'yarn install', 'for': ['javascript', 'javascript.jsx'] }
-
-"█▓▒░ Python
-Plug 'mindriot101/vim-yapf'
+Plug 'rhysd/vim-grammarous', { 'for': ['tex', 'latex', 'markdown'] }
 
 if !isdirectory(expand("$HOME/dev/others/base16"))
 	Plug 'chriskempson/base16-vim'
 endif
 call plug#end()
-
-" ...
-" the glaive#Install() should go after the "call vundle#end()"
-" call glaive#Install()
-" Optional: Enable codefmt's default mappings on the <Leader>= prefix.
-" Glaive codefmt plugin[mappings]
 
 
 "█▓▒░ Make pyenv and neovim work nice together
