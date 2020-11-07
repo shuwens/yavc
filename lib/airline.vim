@@ -42,9 +42,3 @@ let g:airline_theme='base16'
 "let g:airline_base16_improved_contrast = 1
 let g:airline_symbols_ascii = 1
 
-
-" ALE Airline
-" let g:airline#extensions#ale#enabled = 1
-" let airline#extensions#ale#error_symbol = "•"
-" let airline#extensions#ale#warning_symbol = "•"
-" let airline#extensions#ale#show_line_numbers = 0
