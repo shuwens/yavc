@@ -66,6 +66,5 @@ if has("nvim")
     let g:python3_host_prog = $HOME . "/.pyenv/versions/neovim3/bin/python"
 endif
 
-
 " C++
 let g:clang_format#auto_format=1

@@ -27,7 +27,8 @@
 		"tex": ["write-good"]
 	},
 	"diagnostic-languageserver.formatFiletypes": {
-		"sh": "shfmt"
+		"sh": "shfmt",
+		"fish": "fish_indent"
 	},
 	"diagnostic-languageserver.linters": {
 		"languagetool": {
