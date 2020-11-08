@@ -368,10 +368,10 @@ let g:grammarous#disabled_rules = {
 let g:grammarous#hooks = {}
 function! g:grammarous#hooks.on_check(errs) abort
   nmap <buffer><C-i> <Plug>(grammarous-move-to-info-window)
-  nmap <buffer><C-n> <Plug>(grammarous-move-to-next-error)
-  nmap <buffer><C-p> <Plug>(grammarous-move-to-previous-error)
+  nmap <buffer><C-j> <Plug>(grammarous-move-to-next-error)
+  nmap <buffer><C-k> <Plug>(grammarous-move-to-previous-error)
   nmap <buffer><leader>f <Plug>(grammarous-fixit)
-  nnoremap <buffer><C-f> <Plug>(grammarous-fixit)
+  nmap <buffer><C-f> <Plug>(grammarous-fixit)
 endfunction
 function! g:grammarous#hooks.on_reset(errs) abort
   nunmap <buffer><C-j>

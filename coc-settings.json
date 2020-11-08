@@ -24,11 +24,10 @@
 		"email": "languagetool",
 		"markdown": ["write-good", "markdownlint"],
 		"sh": "shellcheck",
-		"tex": ["write-good"]
+		//"tex": ["write-good", "languagetool"]
 	},
 	"diagnostic-languageserver.formatFiletypes": {
-		"sh": "shfmt",
-		"fish": "fish_indent"
+		"sh": "shfmt"
 	},
 	"diagnostic-languageserver.linters": {
 		"languagetool": {
@@ -44,7 +43,7 @@
 				{
 					"line": 1,
 					"column": 2,
-					"message": [4, 3]
+					"message": [4]
 				}
 			]
 		},

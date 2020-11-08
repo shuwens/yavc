@@ -6,30 +6,20 @@ call coc#add_extension('coc-pairs')
 call coc#add_extension('coc-lists')
 call coc#add_extension('coc-git')
 call coc#add_extension('coc-tabnine')
-" call coc#add_extension('coc-diagnostic')
-" call coc#add_extension('coc-yank')
-" call coc#add_extension('coc-highlight')
-" call coc#add_extension('coc-smartf')
-" call coc#add_extension('coc-vimtex')
+call coc#add_extension('coc-diagnostic')
+call coc#add_extension('coc-yank')
+call coc#add_extension('coc-highlight')
+call coc#add_extension('coc-smartf')
 
 " Coc syntax extensions
 call coc#add_extension('coc-python')
 call coc#add_extension('coc-rust-analyzer')
 call coc#add_extension('coc-clangd')
 call coc#add_extension('coc-texlab')
+" call coc#add_extension('coc-vimtex')
 " call coc#add_extension('coc-gocode')
 " call coc#add_extension('coc-vimlsp')
 " call coc#add_extension('coc-java')
-
-" Coc web dev extensions
-" call coc#add_extension('coc-tsserver')
-" call coc#add_extension('coc-tslint-plugin')
-" call coc#add_extension('coc-stylelint')
-" call coc#add_extension('coc-eslint')
-" call coc#add_extension('coc-json')
-" call coc#add_extension('coc-css')
-" call coc#add_extension('coc-html')
-" call coc#add_extension('coc-prettier')
 
 " if hidden is not set, TextEdit might fail.
 set hidden

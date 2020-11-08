@@ -17,7 +17,7 @@ call plug#begin('$HOME/.local/share/nvim/plugged')
 Plug 'ciaranm/securemodelines'
 " Plug 'editorconfig/editorconfig-vim'		" Assume an editor config is enforced
 Plug 'tpope/vim-fugitive'
-Plug 'sheerun/vim-polyglot'			" I don't need this and it is buggy
+" Plug 'sheerun/vim-polyglot'			" I don't need this and it is buggy
 Plug 'scrooloose/nerdcommenter'
 " Plug 'justinmk/vim-sneak'			" Need to remember its syntax
 Plug 'junegunn/vim-easy-align', {'for': ['tex', 'latex']}  " Make writing easy with align
@@ -91,7 +91,7 @@ Plug 'arzg/vim-rust-syntax-ext', { 'for': 'rust' }
 " Plug 'rhysd/vim-clang-format', {'for': ['c', 'cpp', 'hpp'] }
 
 "█▓▒░ LaTeX
-Plug 'lervag/vimtex', { 'for': ['tex', 'latex'] }
+" Plug 'lervag/vimtex', { 'for': ['tex', 'latex'] }
 Plug 'rhysd/vim-grammarous', { 'for': ['tex', 'latex', 'markdown'] }
 
 if !isdirectory(expand("$HOME/dev/others/base16"))
