@@ -40,15 +40,22 @@ set shortmess+=c
 " always show signcolumns
 set signcolumn=yes
 
+let g:coc_status_error_sign = "✗"
+let g:coc_status_warning_sign = "⚠"
+
 " Float color highlight
-"hi CocErrorFloat guifg=#af0000
-hi CocErrorFloat guifg=#ff5874
-hi CocErrorSign guifg=#ff5874
-hi CocWarningFloat guifg=#ddaa00
-hi CocWarningSign guifg=#ddaa00
-hi CocInfoSign guifg=#ffaf00
-hi CocInfoFloat guifg=#ffaf00
-hi CocHintFloat guifg=#2ed1cd
+" hi CocErrorFloat guifg=#af0000
+" hi CocErrorFloat guifg=#ff5874
+" hi CocErrorSign guifg=#ff5874
+" hi CocWarningFloat guifg=#ddaa00
+" hi CocWarningSign guifg=#ddaa00
+" hi CocInfoSign guifg=#ffaf00
+" hi CocInfoFloat guifg=#ffaf00
+" hi CocHintFloat guifg=#2ed1cd
+
+" hi! CocErrorSign guifg=#d1666a
+" hi! CocInfoSign guibg=#353b45
+" hi! CocWarningSign guifg=#d1cd66
 
 " Use tab for trigger completion with characters ahead and navigate.
 " NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by

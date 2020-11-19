@@ -1,10 +1,17 @@
 {
-	"suggest.echodocSupport": true,
-	"suggest.snippetIndicator": "[+] ",
-	"snippets.priority": 100,
 	"diagnostic.enable": true,
 	"diagnostic.displayByAle": false,
 	"diagnostic.refreshOnInsertMode": true,
+	//"diagnostic.errorSign": "✗",
+	//"diagnostic.warningSign": "⚠",
+	//"diagnostic.infoSign": "",
+	"diagnostic.errorSign":  "",
+	"diagnostic.warningSign":  "",
+	"diagnostic.infoSign":  "",
+
+	"suggest.echodocSupport": true,
+	"suggest.snippetIndicator": "[+] ",
+	"snippets.priority": 100,
 
 	"coc.preferences.formatOnSaveFiletypes": ["rust", "python"],
 	"rust-analyzer.checkOnSave.enable": true,
@@ -24,7 +31,7 @@
 		"email": "languagetool",
 		"markdown": ["write-good", "markdownlint"],
 		"sh": "shellcheck",
-		//"tex": ["write-good", "languagetool"]
+		"tex": ["write-good", "languagetool"]
 	},
 	"diagnostic-languageserver.formatFiletypes": {
 		"sh": "shfmt"
