@@ -98,7 +98,7 @@ nnoremap <leader>d :Dispatch<CR>
 " special case for netbricks
 autocmd BufRead,BufNewFile $HOME/dev/netbricks/** let b:dispatch = './build.sh'
 autocmd BufRead,BufNewFile $HOME/dev/projects/netbricks/** let b:dispatch = './build.sh'
-autocmd BufRead,BufNewFile $HOME/dev/achtung/nfv-survey/** let b:dispatch = 'make'
+autocmd BufRead,BufNewFile $HOME/dev/achtung/nfv/** let b:dispatch = 'make clean; make'
 autocmd BufRead,BufNewFile $HOME/writings/blogs/** let b:dispatch = 'zola build'
 
 " manage quick fix

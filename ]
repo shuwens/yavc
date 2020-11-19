@@ -9,7 +9,7 @@ call coc#add_extension('coc-tabnine')
 call coc#add_extension('coc-diagnostic')
 call coc#add_extension('coc-yank')
 call coc#add_extension('coc-highlight')
-" call coc#add_extension('coc-smartf')
+call coc#add_extension('coc-smartf')
 
 " Coc syntax extensions
 call coc#add_extension('coc-python')
