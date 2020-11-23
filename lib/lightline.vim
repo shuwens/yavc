@@ -26,12 +26,17 @@ let g:lightline = {
       \ 'component_function': {
       \   'gitbranch': 'fugitive#head',
       \   'currentfunction': 'CocCurrentFunction',
+      \   'filename': 'LightlineFilename',
       \   'fileformat': 'LightlineFileformat',
       \   'filetype': 'LightlineFiletype'
       \ },
 		\   'separator': { 'left': '▒', 'right': '▒' },
         \   'subseparator': { 'left': '▒', 'right': '░' }
       \ }
+
+function! LightlineFilename()
+  return expand('%:t') !=# '' ? @% : '[No Name]'
+endfunction
 
 function! LightlineFileformat()
   return winwidth(0) > 70 ? &fileformat : ''

@@ -228,7 +228,7 @@ let g:fzf_layout = { 'down': '~35%' }
 imap <c-x><c-l> <plug>(fzf-complete-line)
 nnoremap <leader>c :Commits<CR>
 " Open hotkeys
-" nnoremap <C-p> :Files<CR>
+nnoremap <C-p> :Files<CR>
 nmap F :Files<CR>
 nnoremap <leader>; :Buffers<CR>
 nnoremap <leader>f :GFiles<CR>
