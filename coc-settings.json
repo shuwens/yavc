@@ -2,6 +2,7 @@
 	"diagnostic.enable": true,
 	"diagnostic.displayByAle": false,
 	"diagnostic.refreshOnInsertMode": true,
+	"diagnostic.checkCurrentLine": true,
 	"diagnostic.errorSign": "✗",
 	"diagnostic.warningSign": "⚠",
 	"diagnostic.infoSign": "",
