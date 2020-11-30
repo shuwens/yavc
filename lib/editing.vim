@@ -228,11 +228,13 @@ let g:fzf_layout = { 'down': '~35%' }
 imap <c-x><c-l> <plug>(fzf-complete-line)
 nnoremap <leader>c :Commits<CR>
 " Open hotkeys
+nnoremap <leader>p :Files<CR>
 nnoremap <C-p> :Files<CR>
+" map <C-p> :Files<CR>
 nmap F :Files<CR>
 nnoremap <leader>; :Buffers<CR>
-nnoremap <leader>f :GFiles<CR>
-nnoremap <leader>g :GFiles?<CR>
+" nnoremap <leader>f :GFiles<CR>
+" nnoremap <leader>g :GFiles?<CR>
 " <leader>s for Rg search
 noremap <leader>s :Ag<CR>
 "noremap <leader>/ :Rg<CR>
@@ -260,9 +262,8 @@ function! s:list_cmd()
 endfunction
 
 command! -bang -nargs=? -complete=dir Files
-      \ call fzf#vim#files(<q-args>, {'source': s:list_cmd(),
-      \                               'options': '--tiebreak=index'}, <bang>0)
-
+  \ call fzf#vim#files(<q-args>, {'source': s:list_cmd(),
+  \                               'options': '--tiebreak=index'}, <bang>0)
 " }}}
 
 " Mac setting, not important {{{
@@ -309,7 +310,7 @@ let g:Illuminate_delay = 1500
 "      \ }
 
 " vim-search-pulse
-let g:vim_search_pulse_duration = 250
+" let g:vim_search_pulse_duration = 250
 
 " poppy
 au! cursormoved * call PoppyInit()
