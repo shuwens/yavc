@@ -89,6 +89,10 @@ endif
 nmap <silent> <C-k> <Plug>(coc-diagnostic-prev)
 nmap <silent> <C-j>  <Plug>(coc-diagnostic-next)
 
+" Use `[g` and `]g` to navigate diagnostics
+nmap <silent> [g <Plug>(coc-diagnostic-prev)
+nmap <silent> ]g <Plug>(coc-diagnostic-next)
+
 " GoTo code navigation.
 nmap <silent> <leader>. <Plug>(coc-definition)
 nmap <silent> <leader>y <Plug>(coc-type-definition)
@@ -97,6 +101,12 @@ nmap <silent> <leader>r <Plug>(coc-references)
 nmap <silent> <leader>l <Plug>(coc-diagnostic-info)
 nmap <silent> <leader>o  <C-O>
 nmap <silent> <C-g> :close<cr>
+
+" GoTo code navigation.
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
 
 " Use K to show documentation in preview window.
 nnoremap <silent> K :call <SID>show_documentation()<CR>
@@ -148,6 +158,10 @@ omap af <Plug>(coc-funcobj-a)
 nmap <silent> <C-d> <Plug>(coc-range-select)
 xmap <silent> <C-d> <Plug>(coc-range-select)
 
+" Use <TAB> for selections ranges.
+nmap <silent> <TAB> <Plug>(coc-range-select)
+xmap <silent> <TAB> <Plug>(coc-range-select)
+
 " Use `:Format` to format current buffer
 command! -nargs=0 Format :call CocAction('format')
 
@@ -168,6 +182,7 @@ nnoremap <silent> <leader>x  :<C-u>CocList extensions<cr>
 nnoremap <silent> <leader>o  :<C-u>CocList outline<cr>
 " Search workspace symbols
 nnoremap <silent> <leader>]  :<C-u>CocList -I symbols<cr>
+" nnoremap <silent> <space>s  :<C-u>CocList -I symbols<cr>
 " Resume latest coc list
 "nnoremap <silent> <leader>p  :<C-u>CocListResume<CR>
 " Do default action for next item.
@@ -177,6 +192,17 @@ nnoremap <silent> <leader>]  :<C-u>CocList -I symbols<cr>
 " Do default action for previous item.
 " nnoremap <silent> <leader>k  :<C-u>CocPrev<CR>
 " nnoremap <silent> <leader>ok  :<C-u>CocPrev<CR>
+
+
+" Implement methods for trait
+nnoremap <silent> <space>i  :call CocActionAsync('codeAction', '', 'Implement missing members')<cr>
+
+" Show actions available at this location
+nnoremap <silent> <space>a  :CocAction<cr>
+
+"
+" Coc snippet
+" 
 
 " Use <C-e> for trigger snippet expand.
 imap <C-e> <Plug>(coc-snippets-expand)
