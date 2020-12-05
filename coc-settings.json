@@ -32,7 +32,7 @@
 		"email": "languagetool",
 		"markdown": ["write-good", "markdownlint"],
 		"sh": "shellcheck",
-		"tex": ["write-good", "languagetool"]
+		"tex": ["write-good"]
 	},
 	"diagnostic-languageserver.formatFiletypes": {
 		"sh": "shfmt"

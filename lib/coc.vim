@@ -202,7 +202,7 @@ nnoremap <silent> <space>a  :CocAction<cr>
 
 "
 " Coc snippet
-" 
+"
 
 " Use <C-e> for trigger snippet expand.
 imap <C-e> <Plug>(coc-snippets-expand)
