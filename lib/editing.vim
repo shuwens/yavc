@@ -12,10 +12,35 @@ nnoremap gUiw mzgUiw`z
 nnoremap guiw mzguiw`z
 
 " Ctrl+c and Ctrl+j as Esc
+" inoremap <C-j> <Esc>
+" vnoremap <C-j> <Esc>
+" inoremap <C-c> <Esc>
+" vnoremap <C-c> <Esc>
+
+" Ctrl+j and Ctrl+k as Esc
+" Ctrl-j is a little awkward unfortunately:
+" https://github.com/neovim/neovim/issues/5916
+" So we also map Ctrl+k
+nnoremap <C-j> <Esc>
 inoremap <C-j> <Esc>
 vnoremap <C-j> <Esc>
-inoremap <C-c> <Esc>
-vnoremap <C-c> <Esc>
+snoremap <C-j> <Esc>
+xnoremap <C-j> <Esc>
+cnoremap <C-j> <C-c>
+onoremap <C-j> <Esc>
+lnoremap <C-j> <Esc>
+tnoremap <C-j> <Esc>
+
+nnoremap <C-k> <Esc>
+inoremap <C-k> <Esc>
+vnoremap <C-k> <Esc>
+snoremap <C-k> <Esc>
+xnoremap <C-k> <Esc>
+cnoremap <C-k> <C-c>
+onoremap <C-k> <Esc>
+lnoremap <C-k> <Esc>
+tnoremap <C-k> <Esc>
+
 
 " Open new file adjacent to current file
 nnoremap <leader>e :e <C-R>=expand("%:p:h") . "/" <CR>
@@ -44,6 +69,9 @@ nnoremap k gk
 
 " <leader><leader> toggles between buffers
 nnoremap <leader><leader> <c-^>
+
+" <leader>q shows stats
+nnoremap <leader>Q g<c-g>
 
 " <leader>, shows/hides hidden characters
 nnoremap <leader>, :set invlist<cr>
@@ -439,3 +467,6 @@ map <leader>n :NERDTreeToggle<CR>
 xmap ga <Plug>(EasyAlign)
 " Start interactive EasyAlign for a motion/text object (e.g. gaip)
 nmap ga <Plug>(EasyAlign)
+
+" find merge conflict markers
+nmap <silent> <leader>fc <ESC>/\v^[<=>]{7}( .*\|$)<CR>

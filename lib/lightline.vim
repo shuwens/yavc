@@ -88,7 +88,8 @@ function! LightlineGitBranch()
   return "\uE725 " . (exists('*fugitive#head') ? fugitive#head() : '')
 endfunction
 
-autocmd User CocDiagnosticChange call lightline#update()
+" Use auocmd to force lightline update.
+autocmd User CocStatusChange,CocDiagnosticChange call lightline#update()
 
 
 " Lightline config
