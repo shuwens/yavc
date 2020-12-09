@@ -265,8 +265,7 @@ nnoremap <leader>; :Buffers<CR>
 " nnoremap <leader>g :GFiles?<CR>
 " <leader>s for Rg search
 noremap <leader>s :Ag<CR>
-"noremap <leader>/ :Rg<CR>
-noremap <leader>rg :Rgg<CR>
+noremap <leader>s :Rg<CR>
 " }}}
 " fzf helper methods {{{
 if executable('rg')
