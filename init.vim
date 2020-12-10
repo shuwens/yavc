@@ -92,7 +92,7 @@ Plug 'arzg/vim-rust-syntax-ext', { 'for': 'rust' }
 " Plug 'rhysd/vim-clang-format', {'for': ['c', 'cpp', 'hpp'] }
 
 "█▓▒░ LaTeX
-" Plug 'lervag/vimtex', { 'for': ['tex', 'latex'] }
+Plug 'lervag/vimtex', { 'for': ['tex', 'latex'] }
 Plug 'rhysd/vim-grammarous', { 'for': ['tex', 'latex', 'markdown'] }
 
 if !isdirectory(expand("$HOME/dev/others/base16"))
