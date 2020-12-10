@@ -249,7 +249,7 @@ if !exists('##textyankpost')
   map y <plug>(highlightedyank)
 endif
 
-" fzf !!! {{{
+" fzf
 " from http://sheerun.net/2014/03/21/how-to-boost-your-vim-productivity/
 let g:fzf_layout = { 'down': '~35%' }
 " Keybindings
@@ -257,8 +257,6 @@ imap <c-x><c-l> <plug>(fzf-complete-line)
 nnoremap <leader>c :Commits<CR>
 " Open hotkeys
 nnoremap <leader>p :Files<CR>
-nnoremap <C-p> :Files<CR>
-" map <C-p> :Files<CR>
 nmap F :Files<CR>
 nnoremap <leader>; :Buffers<CR>
 " nnoremap <leader>f :GFiles<CR>
@@ -266,7 +264,7 @@ nnoremap <leader>; :Buffers<CR>
 " <leader>s for Rg search
 noremap <leader>s :Ag<CR>
 noremap <leader>s :Rg<CR>
-" }}}
+
 " fzf helper methods {{{
 if executable('rg')
   set grepprg=rg\ --no-heading\ --vimgrep

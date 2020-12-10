@@ -50,14 +50,8 @@ Plug 'tpope/vim-dispatch'
 "█▓▒░ Fuzzy finder
 " ----------------
 Plug 'airblade/vim-rooter'
-Plug 'junegunn/fzf.vim'				" Fuzzy finder that integrate with
-if !empty(glob("/usr/local/opt/fzf"))		" everything
-	Plug '/usr/local/opt/fzf'
-	set rtp+=/usr/local/opt/fzf
-else
-	Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --bin' }
-	set rtp+=~/.fzf
-endif
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
 
 "█▓▒░ Semantic language support
 " -----------------------------
