@@ -7,3 +7,4 @@ mthesaur.txt
 *.spl
 *.sug
 .mypy_cache
+.DS_Store
