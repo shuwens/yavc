@@ -12,7 +12,7 @@ call coc#add_extension('coc-highlight')
 " call coc#add_extension('coc-smartf')
 
 " Coc syntax extensions
-call coc#add_extension('coc-python')
+call coc#add_extension('coc-pyright')
 call coc#add_extension('coc-rust-analyzer')
 call coc#add_extension('coc-clangd')
 " call coc#add_extension('coc-texlab')
