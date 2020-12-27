@@ -12,10 +12,10 @@ call coc#add_extension('coc-highlight')
 " call coc#add_extension('coc-smartf')
 
 " Coc syntax extensions
-call coc#add_extension('coc-pyright')
-call coc#add_extension('coc-rust-analyzer')
-call coc#add_extension('coc-clangd')
-" call coc#add_extension('coc-texlab')
+call coc#add_extension('coc-pyright')  " python
+call coc#add_extension('coc-rust-analyzer')  " rust
+call coc#add_extension('coc-clangd')  " cpp
+" call coc#add_extension('coc-texlab')  " latex
 call coc#add_extension('coc-vimtex')
 " call coc#add_extension('coc-gocode')
 " call coc#add_extension('coc-vimlsp')
