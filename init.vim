@@ -21,7 +21,8 @@ Plug 'tpope/vim-fugitive'
 Plug 'scrooloose/nerdcommenter'
 " Plug 'justinmk/vim-sneak'			" Need to remember its syntax
 Plug 'junegunn/vim-easy-align', {'for': ['tex', 'latex']}  " Make writing easy with align
-Plug 'tweekmonster/startuptime.vim'
+" Plug 'tweekmonster/startuptime.vim'
+" Plug 'tricktux/pomodoro.vim'
 
 "█▓▒░ GUI enhancements
 " --------------------
@@ -284,6 +285,7 @@ source $HOME/.config/nvim/lib/syntax.vim
 " ===========================================================================
 " source $HOME/.config/nvim/lib/airline.vim
 source $HOME/.config/nvim/lib/lightline.vim
+" source $HOME/.config/nvim/lib/pomodoro.vim
 source $HOME/.config/nvim/lib/coc.vim
 
 " echodoc
