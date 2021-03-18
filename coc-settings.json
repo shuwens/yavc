@@ -36,7 +36,7 @@
 		"email": "languagetool",
 		"markdown": ["write-good", "markdownlint"],
 		"sh": "shellcheck",
-		"tex": ["write-good"]
+		"tex": ["write-good", "proselint"]
 	},
 	"diagnostic-languageserver.formatFiletypes": {
 		"sh": "shfmt"

@@ -47,6 +47,7 @@ augroup filetypedetect
 
 	" other file types
 	au BufNewFile,BufRead .chunkwmrc,.skhdrc set filetype=sh
+	autocmd BufRead *.jemdoc set filetype=jemdoc
 
 	" Auto-make less files on save
 	autocmd BufWritePost *.less if filereadable("Makefile") | make | endif

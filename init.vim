@@ -77,7 +77,7 @@ Plug 'alvan/vim-closetag'
 
 "█▓▒░ Rust
 Plug 'rust-lang/rust.vim', { 'for': 'rust' }
-Plug 'arzg/vim-rust-syntax-ext', { 'for': 'rust' }
+Plug 'arzg/vim-rust-syntax-ext', { 'for': 'rust' } " broken?
 
 "█▓▒░ C++ and Clang
 " Plug 'octol/vim-cpp-enhanced-highlight', {'for': ['cpp'] }
@@ -87,7 +87,8 @@ Plug 'arzg/vim-rust-syntax-ext', { 'for': 'rust' }
 " Plug 'rhysd/vim-clang-format', {'for': ['c', 'cpp', 'hpp'] }
 
 "█▓▒░ LaTeX
-Plug 'lervag/vimtex', { 'for': ['tex', 'latex'] }
+" https://www.reddit.com/r/neovim/comments/idthcb/vimtex_vs_texlab/
+" Plug 'lervag/vimtex', { 'for': ['tex', 'latex'] }
 Plug 'rhysd/vim-grammarous', { 'for': ['tex', 'latex', 'markdown'] }
 
 if !isdirectory(expand("$HOME/dev/others/base16"))

@@ -383,6 +383,7 @@ endfun
 autocmd Filetype markdown nmap Q :call TeX_fmt()<CR>zz
 autocmd Filetype tex nmap Q :call TeX_fmt()<CR>zz
 autocmd Filetype org nmap Q :call TeX_fmt()<CR>zz
+autocmd Filetype jemdoc nmap Q :call TeX_fmt()<CR>zz
 autocmd Filetype text nmap Q :call TeX_fmt()<CR>zz
 
 " vim-grammarous
