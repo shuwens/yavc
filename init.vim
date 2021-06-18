@@ -91,6 +91,8 @@ Plug 'arzg/vim-rust-syntax-ext', { 'for': 'rust' } " broken?
 " Plug 'lervag/vimtex', { 'for': ['tex', 'latex'] }
 Plug 'rhysd/vim-grammarous', { 'for': ['tex', 'latex', 'markdown'] }
 
+Plug 'colepeters/spacemacs-theme.vim'
+
 if !isdirectory(expand("$HOME/dev/others/base16"))
 	Plug 'chriskempson/base16-vim'
 endif
@@ -128,6 +130,9 @@ set nowrap                                  " do not wrap long lines by default
 set nojoinspaces                            " Prevents inserting two spaces after punctuation on a join (J)
 " I only use VIM from the terminals
 if (match($TERM, "-256color") != -1) && (match($TERM, "screen-256color") != -1)
+	set termguicolors                         " screen does not (yet) support truecolor
+endif
+if (match($TERM, "-256color") != -1) && (match($TERM, "tmux-256color") != -1)
 	set termguicolors                         " screen does not (yet) support truecolor
 endif
 if (match($TERM, "xterm") != -1)
@@ -258,19 +263,22 @@ let g:better_whitespace_guicolor='#FF4500'
 let g:better_whitespace_enabled=1
 let g:strip_whitespace_on_save=0
 
-" Colors: Base16
 set background=dark
-let base16colorspace=256
-let g:base16_shell_path="$HOME/dev/others/base16/shell/scripts/"
-" colorscheme base16-atelier-dune
-colorscheme base16-gruvbox-dark-hard
-
 hi Comment cterm=italic gui=italic
-call Base16hi("Comment", g:base16_gui09, "", g:base16_cterm09, "", "", "")
-call Base16hi("CocHintSign", g:base16_gui03, "", g:base16_cterm03, "", "", "")
 " extra setup that I might not need?
 " hi Normal ctermbg=NONE
 " hi Normal guibg=NONE
+
+" Colors: Spacemacs
+colorscheme spacemacs-theme
+
+" Colors: Base16
+" let base16colorspace=256
+" let g:base16_shell_path="$HOME/dev/others/base16/shell/scripts/"
+" " colorscheme base16-atelier-dune
+" colorscheme base16-gruvbox-dark-hard
+" call Base16hi("Comment", g:base16_gui09, "", g:base16_cterm09, "", "", "")
+" call Base16hi("CocHintSign", g:base16_gui03, "", g:base16_cterm03, "", "", "")
 
 " the configuration options should be placed before `colorscheme forest-night`
 " let g:forest_night_enable_italic = 1

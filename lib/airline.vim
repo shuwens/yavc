@@ -21,9 +21,9 @@ let g:airline_exclude_preview = 1
 " Extensions
 " ---------
 let g:airline#extensions#default#layout = [
-         \ [ 'a', 'b', 'c' ],
-         \ [ 'x', 'y', 'z', 'warning', 'error' ]
-         \ ]
+			\ [ 'a', 'b', 'c' ],
+			\ [ 'x', 'y', 'z', 'warning', 'error' ]
+			\ ]
 let g:airline#extensions#branch#format = 0    " Branch names as 'f/b/baz'.
 let g:airline#extensions#syntastic#enabled = 0
 let g:airline#extensions#wordcount#enabled = 0

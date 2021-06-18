@@ -131,36 +131,36 @@ autocmd BufRead,BufNewFile $HOME/writings/blogs/** let b:dispatch = 'zola build'
 
 " manage quick fix
 function! GetBufferList()
-  redir =>buflist
-  silent! ls!
-  redir END
-  return buflist
+	redir =>buflist
+	silent! ls!
+	redir END
+	return buflist
 endfunction
 
 function! ToggleList(bufname, pfx)
-  let buflist = GetBufferList()
-  for bufnum in map(filter(split(buflist, '\n'), 'v:val =~ "'.a:bufname.'"'), 'str2nr(matchstr(v:val, "\\d\\+"))')
-    if bufwinnr(bufnum) != -1
-      exec(a:pfx.'close')
-      return
-    endif
-  endfor
-  if a:pfx == 'l' && len(getloclist(0)) == 0
-      echohl ErrorMsg
-      echo "Location List is Empty."
-      return
-  endif
-  let winnr = winnr()
-  exec(a:pfx.'open')
-  if winnr() != winnr
-    wincmd p
-  endif
+	let buflist = GetBufferList()
+	for bufnum in map(filter(split(buflist, '\n'), 'v:val =~ "'.a:bufname.'"'), 'str2nr(matchstr(v:val, "\\d\\+"))')
+		if bufwinnr(bufnum) != -1
+			exec(a:pfx.'close')
+			return
+		endif
+	endfor
+	if a:pfx == 'l' && len(getloclist(0)) == 0
+		echohl ErrorMsg
+		echo "Location List is Empty."
+		return
+	endif
+	let winnr = winnr()
+	exec(a:pfx.'open')
+	if winnr() != winnr
+		wincmd p
+	endif
 endfunction
 
 " auto set quickfix height
 au FileType qf call AdjustWindowHeight(3, 8)
 function! AdjustWindowHeight(minheight, maxheight)
-  exe max([min([line("$"), a:maxheight]), a:minheight]) . "wincmd _"
+	exe max([min([line("$"), a:maxheight]), a:minheight]) . "wincmd _"
 endfunction
 
 " nmap <silent> <leader>l :call ToggleList("Location List", 'l')<CR>
@@ -208,16 +208,16 @@ inoremap <A-l> <C-o>l
 " ,p will paste clipboard into buffer
 " ,c will copy entire buffer into clipboard
 if has('unix')
-  if has('mac')       " osx
-    " Paste clipboard content to current line
-    nnoremap <silent>P :r !pbpaste<CR>
-    vnoremap <silent>y :w !pbcopy<CR>
-    noremap <leader>p :r !pbpaste<CR>
-    noremap <leader>c :w !pbcopy<CR>
-  else                " linux, bsd, etc
-    noremap <leader>p :read !xsel --clipboard --output<cr>
-    noremap <leader>c :w !xsel -ib<cr><cr>
-  endif
+	if has('mac')       " osx
+		" Paste clipboard content to current line
+		nnoremap <silent>P :r !pbpaste<CR>
+		vnoremap <silent>y :w !pbcopy<CR>
+		noremap <leader>p :r !pbpaste<CR>
+		noremap <leader>c :w !pbcopy<CR>
+	else                " linux, bsd, etc
+		noremap <leader>p :read !xsel --clipboard --output<cr>
+		noremap <leader>c :w !xsel -ib<cr><cr>
+	endif
 endif
 " copy
 vnoremap <C-c> "*y
@@ -246,7 +246,7 @@ map 0 ^
 
 " highlighted yank
 if !exists('##textyankpost')
-  map y <plug>(highlightedyank)
+	map y <plug>(highlightedyank)
 endif
 
 " fzf
@@ -267,28 +267,28 @@ noremap <leader>s :Rg<CR>
 
 " fzf helper methods {{{
 if executable('rg')
-  set grepprg=rg\ --no-heading\ --vimgrep
-  set grepformat=%f:%l:%c:%m
+	set grepprg=rg\ --no-heading\ --vimgrep
+	set grepformat=%f:%l:%c:%m
 endif
 if executable('ag')
-  set grepprg=ag\ --nogroup\ --nocolor
+	set grepprg=ag\ --nogroup\ --nocolor
 endif
 
 command! -bang -nargs=* Rg
-      \ call fzf#vim#grep(
-      \   'rg --column --line-number --no-heading --color=always '.shellescape(<q-args>), 1,
-      \   <bang>0 ? fzf#vim#with_preview('up:60%')
-      \           : fzf#vim#with_preview('right:50%:hidden', '?'),
-      \   <bang>0)
+			\ call fzf#vim#grep(
+			\   'rg --column --line-number --no-heading --color=always '.shellescape(<q-args>), 1,
+			\   <bang>0 ? fzf#vim#with_preview('up:60%')
+			\           : fzf#vim#with_preview('right:50%:hidden', '?'),
+			\   <bang>0)
 
 function! s:list_cmd()
-  let base = fnamemodify(expand('%'), ':h:.:S')
-  return base == '.' ? 'fd --type file --follow' : printf('fd --type file --follow | proximity-sort %s', shellescape(expand('%')))
+	let base = fnamemodify(expand('%'), ':h:.:S')
+	return base == '.' ? 'fd --type file --follow' : printf('fd --type file --follow | proximity-sort %s', shellescape(expand('%')))
 endfunction
 
 command! -bang -nargs=? -complete=dir Files
-  \ call fzf#vim#files(<q-args>, {'source': s:list_cmd(),
-  \                               'options': '--tiebreak=index'}, <bang>0)
+			\ call fzf#vim#files(<q-args>, {'source': s:list_cmd(),
+			\                               'options': '--tiebreak=index'}, <bang>0)
 " }}}
 
 " Mac setting, not important {{{
@@ -300,17 +300,17 @@ vmap <M-j> :m'>+<cr>`<my`>mzgv`yo`z
 vmap <M-k> :m'<-2<cr>`>my`<mzgv`yo`z
 
 if has("mac") || has("macunix")
-  nmap <D-j> <M-j>
-  nmap <D-k> <M-k>
-  vmap <D-j> <M-j>
-  vmap <D-k> <M-k>
+	nmap <D-j> <M-j>
+	nmap <D-k> <M-k>
+	vmap <D-j> <M-j>
+	vmap <D-k> <M-k>
 endif
 " }}}
 " Delete trailing white space on save, useful for Python and CoffeeScript ;) {{{
 func! DeleteTrailingWS()
-  exe "normal mz"
-  %s/\s\+$//ge
-  exe "normal `z"
+	exe "normal mz"
+	%s/\s\+$//ge
+	exe "normal `z"
 endfunc
 " }}}
 
@@ -342,14 +342,14 @@ au! cursormoved * call PoppyInit()
 
 " notational-fzf-vim
 if !empty(glob("~/notes"))
-  let g:nv_search_paths = ['~/notes']
-  nnoremap NN :NV<CR>
+	let g:nv_search_paths = ['~/notes']
+	nnoremap NN :NV<CR>
 endif
 
 " NnoreF and Preview are only for macOS
 if has("mac") || has("macunix")
-  " Preview
-  let g:livepreview_previewer = 'open -a Preview'
+	" Preview
+	let g:livepreview_previewer = 'open -a Preview'
 endif
 
 " A second kind of re-wrap {{{
@@ -357,27 +357,27 @@ endif
 "
 " https://tex.stackexchange.com/questions/1548/intelligent-paragraph-reflowing-in-vim
 fun! TeX_fmt()
-  if (getline(".") != "")
-    let save_cursor = getpos(".")
-    let op_wrapscan = &wrapscan
-    set nowrapscan
-    let par_begin = '^\(%D\)\=\s*\($\||\\begin\|\\end\|\\[\|\\]\|\\\(sub\)*section\>\|\\item\>\|\\NC\>\|\\blank\>\|\\noindent\>\)'
-    let par_end   = '^\(%D\)\=\s*\($\||\\begin\|\\end\|\\[\|\\]\|\\place\|\\\(sub\)*section\>\|\\item\>\|\\NC\>\|\\blank\>\)'
-    try
-      exe '?'.par_begin.'?+'
-    catch /E384/
-      1
-    endtry
-    norm V
-    try
-      exe '/'.par_end.'/-'
-    catch /E385/
-      $
-    endtry
-    norm gq
-    let &wrapscan = op_wrapscan
-    call setpos('.', save_cursor)
-  endif
+	if (getline(".") != "")
+		let save_cursor = getpos(".")
+		let op_wrapscan = &wrapscan
+		set nowrapscan
+		let par_begin = '^\(%D\)\=\s*\($\||\\begin\|\\end\|\\[\|\\]\|\\\(sub\)*section\>\|\\item\>\|\\NC\>\|\\blank\>\|\\noindent\>\)'
+		let par_end   = '^\(%D\)\=\s*\($\||\\begin\|\\end\|\\[\|\\]\|\\place\|\\\(sub\)*section\>\|\\item\>\|\\NC\>\|\\blank\>\)'
+		try
+			exe '?'.par_begin.'?+'
+		catch /E384/
+			1
+		endtry
+		norm V
+		try
+			exe '/'.par_end.'/-'
+		catch /E385/
+			$
+		endtry
+		norm gq
+		let &wrapscan = op_wrapscan
+		call setpos('.', save_cursor)
+	endif
 endfun
 " }}}
 autocmd Filetype markdown nmap Q :call TeX_fmt()<CR>zz
@@ -388,22 +388,22 @@ autocmd Filetype text nmap Q :call TeX_fmt()<CR>zz
 
 " vim-grammarous
 let g:grammarous#disabled_rules = {
-      \ '*' : ['WHITESPACE_RULE', 'EN_QUOTES'],
-      \ 'help' : ['WHITESPACE_RULE', 'EN_QUOTES', 'SENTENCE_WHITESPACE', 'UPPERCASE_SENTENCE_START'],
-      \ }
+			\ '*' : ['WHITESPACE_RULE', 'EN_QUOTES'],
+			\ 'help' : ['WHITESPACE_RULE', 'EN_QUOTES', 'SENTENCE_WHITESPACE', 'UPPERCASE_SENTENCE_START'],
+			\ }
 
 let g:grammarous#hooks = {}
 function! g:grammarous#hooks.on_check(errs) abort
-  nmap <buffer><C-i> <Plug>(grammarous-move-to-info-window)
-  nmap <buffer><C-j> <Plug>(grammarous-move-to-next-error)
-  nmap <buffer><C-k> <Plug>(grammarous-move-to-previous-error)
-  nmap <buffer><leader>f <Plug>(grammarous-fixit)
-  nmap <buffer><C-f> <Plug>(grammarous-fixit)
+	nmap <buffer><C-i> <Plug>(grammarous-move-to-info-window)
+	nmap <buffer><C-j> <Plug>(grammarous-move-to-next-error)
+	nmap <buffer><C-k> <Plug>(grammarous-move-to-previous-error)
+	nmap <buffer><leader>f <Plug>(grammarous-fixit)
+	nmap <buffer><C-f> <Plug>(grammarous-fixit)
 endfunction
 function! g:grammarous#hooks.on_reset(errs) abort
-  nunmap <buffer><C-j>
-  nunmap <buffer><C-k>
-  nunmap <buffer><leader>f
+	nunmap <buffer><C-j>
+	nunmap <buffer><C-k>
+	nunmap <buffer><leader>f
 endfunction
 
 nnoremap <leader>L :GrammarousCheck --lang=en-US --preview<CR>
@@ -426,11 +426,11 @@ let g:NERDTrimTrailingWhitespace = 1
 let g:NERDToggleCheckAllLines = 1
 " Add your own custom formats or override the defaults
 let g:NERDCustomDelimiters = {
-	\ 'c': { 'left': '/**','right': '*/' },
-	\ 'cpp': {'left': '//'},
-	\ 'python': {'left': '#'},
-	\ 'rust': {'left': '//'},
-	\ }
+			\ 'c': { 'left': '/**','right': '*/' },
+			\ 'cpp': {'left': '//'},
+			\ 'python': {'left': '#'},
+			\ 'rust': {'left': '//'},
+			\ }
 " Nerd commenter keybindings
 "map <leader>\ <leader>c<Space>
 " map <leader>cc <plug>NERDComToggleComment
@@ -442,18 +442,18 @@ nnoremap <leader>u :UndotreeToggle<cr>
 " Better commit window
 let g:committia_hooks = {}
 function! g:committia_hooks.edit_open(info)
-  " Additional settings
-  setlocal spell
+	" Additional settings
+	setlocal spell
 
-  " If no commit message, start with insert mode
-  if a:info.vcs ==# 'git' && getline(1) ==# ''
-    startinsert
-  endif
+	" If no commit message, start with insert mode
+	if a:info.vcs ==# 'git' && getline(1) ==# ''
+		startinsert
+	endif
 
-  " Scroll the diff window from insert mode
-  " Map <C-n> and <C-p>
-  imap <buffer><C-n> <Plug>(committia-scroll-diff-down-half)
-  imap <buffer><C-p> <Plug>(committia-scroll-diff-up-half)
+	" Scroll the diff window from insert mode
+	" Map <C-n> and <C-p>
+	imap <buffer><C-n> <Plug>(committia-scroll-diff-down-half)
+	imap <buffer><C-p> <Plug>(committia-scroll-diff-up-half)
 endfunction
 
 " Nerd Tree

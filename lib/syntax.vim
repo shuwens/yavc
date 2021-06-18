@@ -16,8 +16,8 @@ let g:vimtex_compiler_progname = 'nvr'
 
 " chromatica
 if !empty(glob("/usr/local/opt/llvm/lib"))
-  let g:chromatica#libclang_path='/usr/local/opt/llvm/lib'
-  let g:chromatica#enable_at_startup=1
+	let g:chromatica#libclang_path='/usr/local/opt/llvm/lib'
+	let g:chromatica#enable_at_startup=1
 endif
 
 " thesaurus_query.vim
@@ -28,9 +28,9 @@ vnoremap <leader>t y:ThesaurusQueryReplace <C-r>"<CR>
 " VIM spell
 set spelllang=en_us
 for d in glob('~/.config/nvim/spell/*.add', 1, 1)
-  if filereadable(d) && (!filereadable(d . '.spl') || getftime(d) > getftime(d . '.spl'))
-    exec 'mkspell! ' . fnameescape(d)
-  endif
+	if filereadable(d) && (!filereadable(d . '.spl') || getftime(d) > getftime(d . '.spl'))
+		exec 'mkspell! ' . fnameescape(d)
+	endif
 endfor
 hi clear SpellBad
 " hi SpellBad ctermfg=000 guifg=#000
@@ -62,8 +62,8 @@ let g:vim_markdown_frontmatter = 1
 " Python
 " https://quinoa42.github.io/en/oceanus/neovim-python/
 if has("nvim")
-    let g:python_host_prog = $HOME . "/.pyenv/versions/neovim2/bin/python"
-    let g:python3_host_prog = $HOME . "/.pyenv/versions/neovim3/bin/python"
+	let g:python_host_prog = $HOME . "/.pyenv/versions/neovim2/bin/python"
+	let g:python3_host_prog = $HOME . "/.pyenv/versions/py3/bin/python"
 endif
 
 " C++
