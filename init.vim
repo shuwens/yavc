@@ -40,9 +40,6 @@ Plug 'dag/vim-fish'
 Plug 'godlygeek/tabular'
 Plug 'plasticboy/vim-markdown'
 
-if !isdirectory(expand("$HOME/dev/others/base16"))
-	Plug 'chriskempson/base16-vim'
-endif
 call plug#end()
 
 if has('nvim')
@@ -55,21 +52,17 @@ end
 if !has('gui_running')
   set t_Co=256
 endif
-if (match($TERM, "-256color") != -1) && (match($TERM, "screen-256color") != -1)
-	set termguicolors                         " screen does not (yet) support truecolor
+if (match($TERM, "-256color") != -1) && (match($TERM, "screen-256color") == -1)
+  " screen does not (yet) support truecolor
+  set termguicolors
 endif
-if (match($TERM, "-256color") != -1) && (match($TERM, "tmux-256color") != -1)
-	set termguicolors                         " screen does not (yet) support truecolor
-endif
-if (match($TERM, "xterm") != -1)
-	set termguicolors                         " for the vagrant linux box
-endif
-
-
+set background=dark
 let base16colorspace=256
-let g:base16_shell_path="$HOME/dev/others/base16/shell/scripts/"
-" colorscheme base16-atelier-dune
+let g:base16_shell_path="~/dev/others/base16/shell/scripts/"
 colorscheme base16-gruvbox-dark-hard
+syntax on
+hi Normal ctermbg=NONE
+" Brighter comments
 call Base16hi("Comment", g:base16_gui09, "", g:base16_cterm09, "", "", "")
 call Base16hi("CocHintSign", g:base16_gui03, "", g:base16_cterm03, "", "", "")
 

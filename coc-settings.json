@@ -1,26 +1,3 @@
 {
-	"suggest.echodocSupport": true,
-	"suggest.snippetIndicator": "[+] ",
-	"snippets.priority": 100,
-	"diagnostic.enable": true,
-	"diagnostic.refreshOnInsertMode": true,
-
-	"rust.clippy_preference": "off",
-	"rust-analyzer.enableCargoWatchOnStartup": "disabled",
-	"rust-analyzer.raLspServerPath": "~/.cargo/bin/ra_lsp_server",
-	"python.jediEnabled": false,
-	"python.formatting.provider": "black",
-	"python.linting.mypyEnabled": true,
-
-	"languageserver": {
-		"cquery": {
-			"command": "~/dev/others/cquery/build/cquery",
-			"args": ["--log-file=/tmp/cq.log"],
-			"filetypes": ["c", "cpp"],
-			"rootPatterns": ["compile_flags.txt", "compile_commands.json", ".vim/", ".git/", ".hg/"],
-			"initializationOptions": {
-				"cacheDirectory": "/tmp/cquery"
-			}
-		}
-	}
+  "rust-analyzer.cargo.allFeatures": true
 }
