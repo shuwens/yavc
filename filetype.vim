@@ -1,4 +1,84 @@
+" functions
+fu Map_ftype(ftypes, cmd)
+	for ftype in a:ftypes
+		execute 'au Filetype' ftype a:cmd
+	endfor
+endf
+
+" foldenable
+set nofen
+set foldmethod=indent
+
+" Fix vim's braindead autocomplete defaults:
+set wildmode=list:longest
+set wildignorecase
+let fen_fts = ['vim']
+
+" classify filetypes
+let prose_fts = ['gitcommit', 'mail',  'markdown',  'text']
+
+" tabexpand
+let et_fts = ['haskell',  'java',  'yaml', 'ats', 'hy', 'lua', 'scala']
+let et_fts += ['clojure', 'ocaml', 'ruby', 'scheme', 'cabal']
+let et_fts += ['erlang', 'markdown', 'text', 'mail', 'gitcommit']
+let et_fts += ['puppet', 'julia', 'elm', 'rust', 'idris', 'pony']
+let et_fts += ['zig', 'json', 'unison']
+
+let noet_fts = ['html', 'xml', 'c']
+
+" tabstop
+
+let ts8_fts = ['c', 'go']
+
+let ts2_fts = ['yaml', 'ats', 'html', 'hy', 'lua', 'clojure', 'scala']
+let ts2_fts += ['ocaml', 'ruby', 'scheme', 'cabal', 'erlang', 'xml']
+let ts2_fts += ['puppet', 'htmldjango', 'json', 'javascript', 'pony']
+let ts2_fts += ['cpp', 'capnp', 'unison']
+
+let ts4_fts = ['idris', 'haskell', 'python', 'java', 'julia', 'rust']
+let ts4_fts += ['elm', 'zig'] + prose_fts
+
 augroup filetypedetect
+	call Map_ftype(fen_fts, 'setlocal foldmethod=marker fen')
+	call Map_ftype(et_fts, 'setlocal et')
+	call Map_ftype(noet_fts, 'setlocal noet')
+
+	call Map_ftype(ts2_fts, 'setlocal ts=2 sw=2')
+	call Map_ftype(ts4_fts, 'setlocal ts=4 sw=4')
+	call Map_ftype(ts8_fts, 'setlocal ts=8 sw=8')
+
+	au FileType c set cscopetag
+
+	au FileType yaml filetype plugin indent off
+	" repls {{{
+	au FileType lisp nnoremap M :!clisp -repl %<cr><cr>
+	au FileType python nnoremap M :!python -i %<cr><cr>
+	au FileType scheme nnoremap M :!rlwrap guile -l %<cr><cr>
+	" }}}
+	" prose {{{
+	" We want word wrapping for 'prose'. We also want spell check.
+	au BufRead,BufNewFile /*.md setlocal ft=markdown
+	call Map_ftype(prose_fts, 'setlocal tw=72 fo=aw2tq spell')
+	au FileType help setlocal nospell
+	" }}}
+	" filetypes {{{
+	au BufRead,BufNewFile *.pyi setlocal ft=python
+	au BufRead,BufNewFile *.hamlet setlocal ft=haskell
+	au BufRead,BufNewFile *.bkp setlocal ft=haskell
+	au BufRead,BufNewFile *.hsig setlocal ft=haskell
+	au BufRead,BufNewFile /tmp/alot.* setlocal ft=mail
+	au BufRead,BufNewFile *.mail setlocal ft=mail
+	au BufRead,BufNewFile *.pl setlocal ft=prolog
+	au BufRead,BufNewFile *.h setlocal ft=c
+	au BufRead,BufNewFile jbuild setlocal ft=scheme
+	au BufRead,BufNewFile dune setlocal ft=scheme
+	" }}}
+	au FileType python match BadWhitespace /\s\+$/
+
+	" The usual 80ish characters tends to be too short for go programs.
+	au FileType go setlocal tw=100
+
+
 	" Git commit message
 	au Filetype gitcommit setlocal spell tw=72 colorcolumn=73
 

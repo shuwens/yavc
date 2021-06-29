@@ -192,10 +192,10 @@ set wildignore+=*.orig                           " Merge resolution files
 "Some tips from http://stevelosh.com/blog/2010/09/coming-home-to-vim/
 
 " Use wide tabs
-set shiftwidth=4                            " 1 tab == 8 spaces
-set softtabstop=4                           " when hitting <BS>, pretend like a tab is removed, even if spaces
-set tabstop=4                               " a tab is eight spaces
-set noexpandtab                             " Don't use spaces instead of tabs
+" set shiftwidth=4                            " 1 tab == 8 spaces
+" set softtabstop=4                           " when hitting <BS>, pretend like a tab is removed, even if spaces
+" set tabstop=4                               " a tab is eight spaces
+" set noexpandtab                             " Don't use spaces instead of tabs
 " set expandtab                               " Use spaces instead of tabs
 " set smarttab                                " Be smart when using tabs ;)
 " set shiftwidth=4                            " 1 tab == 4 spaces
@@ -270,15 +270,15 @@ hi Comment cterm=italic gui=italic
 " hi Normal guibg=NONE
 
 " Colors: Spacemacs
-colorscheme spacemacs-theme
+" colorscheme spacemacs-theme
 
 " Colors: Base16
-" let base16colorspace=256
-" let g:base16_shell_path="$HOME/dev/others/base16/shell/scripts/"
-" " colorscheme base16-atelier-dune
-" colorscheme base16-gruvbox-dark-hard
-" call Base16hi("Comment", g:base16_gui09, "", g:base16_cterm09, "", "", "")
-" call Base16hi("CocHintSign", g:base16_gui03, "", g:base16_cterm03, "", "", "")
+let base16colorspace=256
+let g:base16_shell_path="$HOME/dev/others/base16/shell/scripts/"
+" colorscheme base16-atelier-dune
+colorscheme base16-gruvbox-dark-hard
+call Base16hi("Comment", g:base16_gui09, "", g:base16_cterm09, "", "", "")
+call Base16hi("CocHintSign", g:base16_gui03, "", g:base16_cterm03, "", "", "")
 
 " the configuration options should be placed before `colorscheme forest-night`
 " let g:forest_night_enable_italic = 1
