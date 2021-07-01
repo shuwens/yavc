@@ -36,7 +36,7 @@ let ts2_fts += ['puppet', 'htmldjango', 'json', 'javascript', 'pony']
 let ts2_fts += ['cpp', 'capnp', 'unison']
 
 let ts4_fts = ['idris', 'haskell', 'python', 'java', 'julia', 'rust']
-let ts4_fts += ['elm', 'zig'] + prose_fts
+let ts4_fts += ['elm', 'zig', 'vim'] + prose_fts
 
 augroup filetypedetect
 	call Map_ftype(fen_fts, 'setlocal foldmethod=marker fen')

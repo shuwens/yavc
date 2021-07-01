@@ -210,8 +210,8 @@ inoremap <A-l> <C-o>l
 if has('unix')
 	if has('mac')       " osx
 		" Paste clipboard content to current line
-		vnoremap <silent>y :w !pbcopy<CR>
-		vnoremap <silent>Y :w !pbcopy<CR>
+		vnoremap <silent>y :w !pbcopy<CR><CR>
+		vnoremap <silent>Y :w !pbcopy<CR><CR>
 		" noremap <leader>c :w !pbcopy<CR>
 		" noremap <leader>y :w !pbcopy<CR>
 		" noremap <leader>p :r !pbpaste<CR>
