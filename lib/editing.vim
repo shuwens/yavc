@@ -218,7 +218,7 @@ if has('unix')
 	else                " linux, bsd, etc
 		" noremap <leader>c :w !xsel -ib<cr><cr>
 		" noremap <leader>y :w !xsel -ib<cr><cr>
-		voremap <silent>Y :w !xsel -ib<cr><cr>
+		vnoremap <silent>Y :w !xsel -ib<cr><cr>
 		" noremap <leader>p :read !xsel --clipboard --output<cr>
 		noremap <silent>P :read !xsel --clipboard --output<cr>
 	endif
