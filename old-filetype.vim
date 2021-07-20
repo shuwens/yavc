@@ -50,18 +50,16 @@ augroup filetypedetect
 	au FileType c set cscopetag
 
 	au FileType yaml filetype plugin indent off
-	" repls {{{
+	" repls 
 	au FileType lisp nnoremap M :!clisp -repl %<cr><cr>
 	au FileType python nnoremap M :!python -i %<cr><cr>
 	au FileType scheme nnoremap M :!rlwrap guile -l %<cr><cr>
-	" }}}
-	" prose {{{
+	" prose 
 	" We want word wrapping for 'prose'. We also want spell check.
 	au BufRead,BufNewFile /*.md setlocal ft=markdown
 	call Map_ftype(prose_fts, 'setlocal tw=72 fo=aw2tq spell')
 	au FileType help setlocal nospell
-	" }}}
-	" filetypes {{{
+	" filetypes 
 	au BufRead,BufNewFile *.pyi setlocal ft=python
 	au BufRead,BufNewFile *.hamlet setlocal ft=haskell
 	au BufRead,BufNewFile *.bkp setlocal ft=haskell
@@ -72,7 +70,6 @@ augroup filetypedetect
 	au BufRead,BufNewFile *.h setlocal ft=c
 	au BufRead,BufNewFile jbuild setlocal ft=scheme
 	au BufRead,BufNewFile dune setlocal ft=scheme
-	" }}}
 	au FileType python match BadWhitespace /\s\+$/
 
 	" The usual 80ish characters tends to be too short for go programs.

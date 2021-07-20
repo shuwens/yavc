@@ -1,4 +1,150 @@
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"   User leader
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" Neat X clipboard integration linux
+"
+" ,p will paste clipboard into buffer
+" ,c will copy entire buffer into clipboard
+if has('unix')
+	if has('mac')       " osx
+		" Paste clipboard content to current line
+		vnoremap <silent>Y :w !pbcopy<CR><CR>
+		" noremap <leader>c :w !pbcopy<CR>
+		" noremap <leader>y :w !pbcopy<CR>
+		" noremap <leader>p :r !pbpaste<CR>
+		nnoremap <silent>P :r !pbpaste<CR>
+	else                " linux, bsd, etc
+		" noremap <leader>c :w !xsel -ib<cr><cr>
+		" noremap <leader>y :w !xsel -ib<cr><cr>
+		vnoremap <silent>Y :w !xsel -ib<cr><cr>
+		" noremap <leader>p :read !xsel --clipboard --output<cr>
+		noremap <silent>P :read !xsel --clipboard --output<cr>
+	endif
+endif
+" copy
+vnoremap <C-c> "*y
+
+" Nerd commenter keybindings
+"map <leader>\ <leader>c<Space>
+" map <leader>cc <plug>NERDComToggleComment
+" map <C-\> <leader>c<Space>
+
+" Undo tree
+nnoremap <leader>u :UndotreeToggle<cr>
+
+" Nerd Tree
+let g:NERDTreeWinPos = "right"
+map <leader>n :NERDTreeToggle<CR>
+
+
+" find merge conflict markers
+nmap <silent> <leader>fc <ESC>/\v^[<=>]{7}( .*\|$)<CR>
+
+
+
+" nmap <silent> <leader>l :call ToggleList("Location List", 'l')<CR>
+nmap <silent> <leader>\ :call ToggleList("Quickfix List", 'c')<CR>
+
+" Open new file adjacent to current file
+nnoremap <leader>e :e <C-R>=expand("%:p:h") . "/" <CR>
+
+" <leader><leader> toggles between buffers
+nnoremap <leader><leader> <c-^>
+
+" <leader>q shows stats
+nnoremap <leader>Q g<c-g>
+
+" <leader>, shows/hides hidden characters
+nnoremap <leader>, :set invlist<cr>
+
+" Keymap for replacing up to next _ or -
+noremap <leader>m ct_   " choosing over lsp ctx menu
+"noremap <leader>n ct-
+
+" Quick-save
+nmap <leader>w :StripWhitespace<CR>:w<CR>
+nmap <leader>wq :wq<CR>
+nnoremap <leader>q :q!<CR>
+nnoremap <leader>qq :q!<Esc>:q!<CR>
+command! W w
+command! Wq wq
+command! WQ wq
+
+" Open hotkeys
+nnoremap <C-p> :Files<CR>
+nnoremap <leader>p :Files<CR>
+nmap F :Files<CR>
+nnoremap <leader>; :Buffers<CR>
+" nnoremap <leader>f :GFiles<CR>
+" nnoremap <leader>g :GFiles?<CR>
+" <leader>s for Rg search
+noremap <leader>s :Ag<CR>
+noremap <leader>s :Rg<CR>
+
+" detele things shortcut
+nnoremap <C-i> C
+"inoremap <C-i> C
+"vnoremap <C-i> C
+nnoremap <leader>i C
+"inoremap <leader>i C
+"vnoremap <leader>i C
+
+" Fugitive Conflict Resolution
+nnoremap <leader>gd :Gvdiff<CR>
+nnoremap gdh :diffget //2<CR>
+nnoremap gdl :diffget //3<CR>
+
+" Replaced gundo with UndoTree, pure vimscript instead of dependencies
+nnoremap <leader>u :UndotreeToggle<CR>
+
+" Grammar check
+nnoremap <leader>L :GrammarousCheck --lang=en-US --preview<CR>
+nnoremap <leader>G :GrammarousCheck --lang=en-US --preview<CR>
+
+" vim-dispatch
+nnoremap <leader>d :Dispatch<CR>
+" special case for netbricks
+autocmd BufRead,BufNewFile $HOME/dev/netbricks/** let b:dispatch = './build.sh'
+autocmd BufRead,BufNewFile $HOME/dev/projects/netbricks/** let b:dispatch = './build.sh'
+autocmd BufRead,BufNewFile $HOME/dev/achtung/nfv/** let b:dispatch = 'make clean; make'
+autocmd BufRead,BufNewFile $HOME/writings/blogs/** let b:dispatch = 'zola build'
+
+" fzf
+" from http://sheerun.net/2014/03/21/how-to-boost-your-vim-productivity/
+let g:fzf_layout = { 'down': '~35%' }
+" Keybindings
+imap <c-x><c-l> <plug>(fzf-complete-line)
+nnoremap <leader>c :Commits<CR>
+
+" fzf helper methods {{{
+if executable('rg')
+	set grepprg=rg\ --no-heading\ --vimgrep
+	set grepformat=%f:%l:%c:%m
+endif
+if executable('ag')
+	set grepprg=ag\ --nogroup\ --nocolor
+endif
+
+command! -bang -nargs=* Rg
+			\ call fzf#vim#grep(
+			\   'rg --column --line-number --no-heading --color=always '.shellescape(<q-args>), 1,
+			\   <bang>0 ? fzf#vim#with_preview('up:60%')
+			\           : fzf#vim#with_preview('right:50%:hidden', '?'),
+			\   <bang>0)
+
+function! s:list_cmd()
+	let base = fnamemodify(expand('%'), ':h:.:S')
+	return base == '.' ? 'fd --type file --follow' : printf('fd --type file --follow | proximity-sort %s', shellescape(expand('%')))
+endfunction
+
+command! -bang -nargs=? -complete=dir Files
+			\ call fzf#vim#files(<q-args>, {'source': s:list_cmd(),
+			\                               'options': '--tiebreak=index'}, <bang>0)
+" }}}
+
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "   Keyboard shortcuts
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
@@ -42,9 +188,6 @@ lnoremap <C-k> <Esc>
 tnoremap <C-k> <Esc>
 
 
-" Open new file adjacent to current file
-nnoremap <leader>e :e <C-R>=expand("%:p:h") . "/" <CR>
-
 " No arrow keys --- force yourself to use the home row
 nnoremap <up> <nop>
 nnoremap <down> <nop>
@@ -67,19 +210,6 @@ nnoremap <C-P> :bp<CR>
 nnoremap j gj
 nnoremap k gk
 
-" <leader><leader> toggles between buffers
-nnoremap <leader><leader> <c-^>
-
-" <leader>q shows stats
-nnoremap <leader>Q g<c-g>
-
-" <leader>, shows/hides hidden characters
-nnoremap <leader>, :set invlist<cr>
-
-" Keymap for replacing up to next _ or -
-noremap <leader>m ct_   " choosing over lsp ctx menu
-"noremap <leader>n ct-
-
 " M to make
 " noremap M :!make -k -j4<cr>
 
@@ -91,43 +221,13 @@ imap <F1> <Esc>
 vnoremap <silent> * :call VisualSelection('f')<CR>
 vnoremap <silent> # :call VisualSelection('b')<CR>
 
-" Quick-save
-nmap <leader>w :StripWhitespace<CR>:w<CR>
-nmap <leader>wq :wq<CR>
-nnoremap <leader>q :q!<CR>
-nnoremap <leader>qq :q!<Esc>:q!<CR>
-command! W w
-command! Wq wq
-command! WQ wq
-
-" detele things shortcut
-nnoremap <C-i> C
-"inoremap <C-i> C
-"vnoremap <C-i> C
-nnoremap <leader>i C
-"inoremap <leader>i C
-"vnoremap <leader>i C
-
 " F3 to insert a logical clock
 nmap <F3> <C-R>=strftime("%Y-%m-%d %a %I:%M %p")<CR><Esc>
 imap <F3> <C-R>=strftime("%Y-%m-%d %a %I:%M %p")<CR>
 inoremap <special> <F3> <c-r>=strftime('%c')<CR>
 
-" Fugitive Conflict Resolution
-nnoremap <leader>gd :Gvdiff<CR>
-nnoremap gdh :diffget //2<CR>
-nnoremap gdl :diffget //3<CR>
-
-" Replaced gundo with UndoTree, pure vimscript instead of dependencies
-nnoremap <leader>u :UndotreeToggle<CR>
-
-" vim-dispatch
-nnoremap <leader>d :Dispatch<CR>
-" special case for netbricks
-autocmd BufRead,BufNewFile $HOME/dev/netbricks/** let b:dispatch = './build.sh'
-autocmd BufRead,BufNewFile $HOME/dev/projects/netbricks/** let b:dispatch = './build.sh'
-autocmd BufRead,BufNewFile $HOME/dev/achtung/nfv/** let b:dispatch = 'make clean; make'
-autocmd BufRead,BufNewFile $HOME/writings/blogs/** let b:dispatch = 'zola build'
+" https://askubuntu.com/questions/202075/how-do-i-get-vim-to-remember-the-line-i-was-on-when-i-reopen-a-file
+au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
 
 " manage quick fix
 function! GetBufferList()
@@ -162,10 +262,6 @@ au FileType qf call AdjustWindowHeight(3, 8)
 function! AdjustWindowHeight(minheight, maxheight)
 	exe max([min([line("$"), a:maxheight]), a:minheight]) . "wincmd _"
 endfunction
-
-" nmap <silent> <leader>l :call ToggleList("Location List", 'l')<CR>
-nmap <silent> <leader>\ :call ToggleList("Quickfix List", 'c')<CR>
-
 
 " Jump to start and end of line using the home row key
 "map H ^
@@ -203,28 +299,6 @@ inoremap <A-j> <C-o>j
 inoremap <A-k> <C-o>k
 inoremap <A-l> <C-o>l
 
-" Neat X clipboard integration linux
-"
-" ,p will paste clipboard into buffer
-" ,c will copy entire buffer into clipboard
-if has('unix')
-	if has('mac')       " osx
-		" Paste clipboard content to current line
-		vnoremap <silent>Y :w !pbcopy<CR><CR>
-		" noremap <leader>c :w !pbcopy<CR>
-		" noremap <leader>y :w !pbcopy<CR>
-		" noremap <leader>p :r !pbpaste<CR>
-		nnoremap <silent>P :r !pbpaste<CR>
-	else                " linux, bsd, etc
-		" noremap <leader>c :w !xsel -ib<cr><cr>
-		" noremap <leader>y :w !xsel -ib<cr><cr>
-		vnoremap <silent>Y :w !xsel -ib<cr><cr>
-		" noremap <leader>p :read !xsel --clipboard --output<cr>
-		noremap <silent>P :read !xsel --clipboard --output<cr>
-	endif
-endif
-" copy
-vnoremap <C-c> "*y
 
 " Search results centered please
 nnoremap <silent> n nzz
@@ -253,47 +327,9 @@ if !exists('##textyankpost')
 	map y <plug>(highlightedyank)
 endif
 
-" fzf
-" from http://sheerun.net/2014/03/21/how-to-boost-your-vim-productivity/
-let g:fzf_layout = { 'down': '~35%' }
-" Keybindings
-imap <c-x><c-l> <plug>(fzf-complete-line)
-nnoremap <leader>c :Commits<CR>
-" Open hotkeys
-nnoremap <leader>p :Files<CR>
-nmap F :Files<CR>
-nnoremap <leader>; :Buffers<CR>
-" nnoremap <leader>f :GFiles<CR>
-" nnoremap <leader>g :GFiles?<CR>
-" <leader>s for Rg search
-noremap <leader>s :Ag<CR>
-noremap <leader>s :Rg<CR>
-
-" fzf helper methods {{{
-if executable('rg')
-	set grepprg=rg\ --no-heading\ --vimgrep
-	set grepformat=%f:%l:%c:%m
-endif
-if executable('ag')
-	set grepprg=ag\ --nogroup\ --nocolor
-endif
-
-command! -bang -nargs=* Rg
-			\ call fzf#vim#grep(
-			\   'rg --column --line-number --no-heading --color=always '.shellescape(<q-args>), 1,
-			\   <bang>0 ? fzf#vim#with_preview('up:60%')
-			\           : fzf#vim#with_preview('right:50%:hidden', '?'),
-			\   <bang>0)
-
-function! s:list_cmd()
-	let base = fnamemodify(expand('%'), ':h:.:S')
-	return base == '.' ? 'fd --type file --follow' : printf('fd --type file --follow | proximity-sort %s', shellescape(expand('%')))
-endfunction
-
-command! -bang -nargs=? -complete=dir Files
-			\ call fzf#vim#files(<q-args>, {'source': s:list_cmd(),
-			\                               'options': '--tiebreak=index'}, <bang>0)
-" }}}
+" auto pair config
+let g:AutoPairsFlyMode = 1
+au filetype rust let b:AutoPairs = {'`': '`', '"': '"', '{': '}', '(': ')', '[': ']', '|':'|', '<':'>'}
 
 " Mac setting, not important {{{
 "
@@ -340,9 +376,6 @@ let g:Illuminate_delay = 1500
 
 " vim-search-pulse
 " let g:vim_search_pulse_duration = 250
-
-" poppy
-au! cursormoved * call PoppyInit()
 
 " notational-fzf-vim
 if !empty(glob("~/notes"))
@@ -410,9 +443,6 @@ function! g:grammarous#hooks.on_reset(errs) abort
 	nunmap <buffer><leader>f
 endfunction
 
-nnoremap <leader>L :GrammarousCheck --lang=en-US --preview<CR>
-nnoremap <leader>G :GrammarousCheck --lang=en-US --preview<CR>
-
 
 " NERDCommenter
 "
@@ -435,13 +465,6 @@ let g:NERDCustomDelimiters = {
 			\ 'python': {'left': '#'},
 			\ 'rust': {'left': '//'},
 			\ }
-" Nerd commenter keybindings
-"map <leader>\ <leader>c<Space>
-" map <leader>cc <plug>NERDComToggleComment
-map <C-\> <leader>c<Space>
-
-" Undo tree
-nnoremap <leader>u :UndotreeToggle<cr>
 
 " Better commit window
 let g:committia_hooks = {}
@@ -460,15 +483,11 @@ function! g:committia_hooks.edit_open(info)
 	imap <buffer><C-p> <Plug>(committia-scroll-diff-up-half)
 endfunction
 
-" Nerd Tree
-let g:NERDTreeWinPos = "right"
-map <leader>n :NERDTreeToggle<CR>
-
 " Easy Align
 " Start interactive EasyAlign in visual mode (e.g. vipga)
 xmap ga <Plug>(EasyAlign)
 " Start interactive EasyAlign for a motion/text object (e.g. gaip)
 nmap ga <Plug>(EasyAlign)
 
-" find merge conflict markers
-nmap <silent> <leader>fc <ESC>/\v^[<=>]{7}( .*\|$)<CR>
+" echodoc
+let g:echodoc_enable_at_startup = 1

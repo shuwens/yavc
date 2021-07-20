@@ -10,6 +10,8 @@ Welcome! This is my neovim config dir!
 nvim +PlugInstall +PlugClean +PlugUpdate +UpdateRemotePlugins +qall!
 ```
 
+sudo snap install nvim --beta --classic
+
 ## Current look
 
 ![Current look of my neovim](imgs/nvim-look.png?raw=true "Title")

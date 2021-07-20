@@ -17,32 +17,37 @@ call plug#begin('$HOME/.local/share/nvim/plugged')
 Plug 'ciaranm/securemodelines'
 " Plug 'editorconfig/editorconfig-vim'		" Assume an editor config is enforced
 Plug 'tpope/vim-fugitive'
-" Plug 'sheerun/vim-polyglot'			" I don't need this and it is buggy
-Plug 'scrooloose/nerdcommenter'
-" Plug 'justinmk/vim-sneak'			" Need to remember its syntax
+" Plug 'sheerun/vim-polyglot'				" I don't need this and it is buggy
+" Plug 'justinmk/vim-sneak'					" Need to remember its syntax
 Plug 'junegunn/vim-easy-align', {'for': ['tex', 'latex']}  " Make writing easy with align
+Plug 'tpope/vim-commentary'
+Plug 'scrooloose/nerdcommenter'
 " Plug 'tweekmonster/startuptime.vim'
-" Plug 'tricktux/pomodoro.vim'
+Plug 'tpope/vim-sleuth' 					" Auto configure indentation
+Plug 'jiangmiao/auto-pairs'					" Autopairs
+
 
 "█▓▒░ GUI enhancements
 " --------------------
 Plug 'machakann/vim-highlightedyank'		" highlight yank
 Plug 'Yggdroot/indentLine'
 Plug 'jaxbot/semantic-highlight.vim'		" different color for every variable
-Plug 'bounceme/poppy.vim'			" rainbow parens
+Plug 'bounceme/poppy.vim'					" rainbow parens
 Plug 'ntpeters/vim-better-whitespace'
-" Plug 'romainl/vim-cool'				" disables search highlighting when you are done
-" Plug 'RRethy/vim-illuminate'			" highlighting other uses of the current word
+" Plug 'romainl/vim-cool'					" disables search highlighting when you are done
+" Plug 'RRethy/vim-illuminate'				" highlighting other uses of the current word
 " Plug 'vim-airline/vim-airline'			" better status line
 " Plug 'vim-airline/vim-airline-themes'
 Plug 'itchyny/lightline.vim'
-" Plug 'lilydjwg/colorizer'			" colorize text in the form
+" Plug 'lilydjwg/colorizer'					" colorize text in the form
 " Plug 'mbbill/undotree'
-Plug 'rhysd/committia.vim'			" better git commit layout
+Plug 'rhysd/committia.vim'					" better git commit layout
 " Plug 'andymass/vim-matchup', { 'for': ['tex', 'latex'] }
 Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
 " Plug 'godlygeek/tabular', { 'for': ['tex', 'latex'] }
 Plug 'ryanoasis/vim-devicons'
+Plug 'nvim-lua/plenary.nvim'
+Plug 'nvim-lua/popup.nvim'
 
 "█▓▒░ Additional func..
 " ----------------
@@ -57,9 +62,19 @@ Plug 'junegunn/fzf.vim'
 "█▓▒░ Semantic language support
 " -----------------------------
 " Coc for completion
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
-" Plug 'jiangmiao/auto-pairs' | Plug 'dense-analysis/ale'			" and ALE for linting
-Plug 'Shougo/echodoc.vim'			" Showing function signature and inline doc.
+" Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'neovim/nvim-lspconfig'
+Plug 'nvim-lua/lsp_extensions.nvim'
+Plug 'hrsh7th/cmp-nvim-lsp', {'branch': 'main'}
+Plug 'hrsh7th/cmp-buffer', {'branch': 'main'}
+Plug 'hrsh7th/cmp-path', {'branch': 'main'}
+Plug 'hrsh7th/nvim-cmp', {'branch': 'main'}
+Plug 'ray-x/lsp_signature.nvim'
+
+" Only because nvim-cmp _requires_ snippets
+Plug 'hrsh7th/cmp-vsnip', {'branch': 'main'}
+Plug 'hrsh7th/vim-vsnip'
+Plug 'Shougo/echodoc.vim'					" Showing function signature and inline doc.
 
 "█▓▒░ VIM editing enhancements
 " ----------------------------
@@ -77,7 +92,7 @@ Plug 'alvan/vim-closetag'
 
 "█▓▒░ Rust
 Plug 'rust-lang/rust.vim', { 'for': 'rust' }
-Plug 'arzg/vim-rust-syntax-ext', { 'for': 'rust' } " broken?
+" Plug 'arzg/vim-rust-syntax-ext', { 'for': 'rust' } " broken?
 
 "█▓▒░ C++ and Clang
 " Plug 'octol/vim-cpp-enhanced-highlight', {'for': ['cpp'] }
@@ -90,8 +105,6 @@ Plug 'arzg/vim-rust-syntax-ext', { 'for': 'rust' } " broken?
 " https://www.reddit.com/r/neovim/comments/idthcb/vimtex_vs_texlab/
 " Plug 'lervag/vimtex', { 'for': ['tex', 'latex'] }
 Plug 'rhysd/vim-grammarous', { 'for': ['tex', 'latex', 'markdown'] }
-
-Plug 'colepeters/spacemacs-theme.vim'
 
 if !isdirectory(expand("$HOME/dev/others/base16"))
 	Plug 'chriskempson/base16-vim'
@@ -152,6 +165,12 @@ set notimeout
 set ttimeout
 set ttimeoutlen=10
 set timeoutlen=300 " http://stackoverflow.com/questions/2158516/delay-before-o-opens-a-new-line
+
+" Set the width of the tab to 4 wide
+" This gets overridden by vim-sleuth, so that's nice
+set tabstop=4
+set shiftwidth=4
+set softtabstop=4
 
 " Settings needed for .lvimrc
 set exrc
@@ -249,6 +268,9 @@ set showcmd                                 " Show (partial) command in status l
 set mouse=a                                 " Enable mouse usage (all modes) in terminals
 set shortmess+=c                            " don't give |ins-completion-menu| messages.
 
+" Make it so there are always ten lines below my cursor
+set scrolloff=10
+
 " Show those damn hidden characters
 " Verbose: set listchars=nbsp:¬,eol:¶,extends:»,precedes:«,trail:•
 set listchars=nbsp:¬,extends:»,precedes:«,trail:•
@@ -269,16 +291,143 @@ hi Comment cterm=italic gui=italic
 " hi Normal ctermbg=NONE
 " hi Normal guibg=NONE
 
-" Colors: Spacemacs
-" colorscheme spacemacs-theme
-
 " Colors: Base16
 let base16colorspace=256
 let g:base16_shell_path="$HOME/dev/others/base16/shell/scripts/"
 " colorscheme base16-atelier-dune
 colorscheme base16-gruvbox-dark-hard
+
+" Customize the highlight a bit.
+" Make comments more prominent -- they are important.
 call Base16hi("Comment", g:base16_gui09, "", g:base16_cterm09, "", "", "")
-call Base16hi("CocHintSign", g:base16_gui03, "", g:base16_cterm03, "", "", "")
+" Make it clearly visible which argument we're at.
+call Base16hi("LspSignatureActiveParameter", g:base16_gui05, g:base16_gui03, g:base16_cterm05, g:base16_cterm03, "bold", "")
+" Would be nice to customize the highlighting of warnings and the like to make
+" them less glaring. But alas
+
+" LSP configuration
+lua << END
+local cmp = require'cmp'
+
+local lspconfig = require'lspconfig'
+cmp.setup({
+  snippet = {
+    -- REQUIRED by nvim-cmp. get rid of it once we can
+    expand = function(args)
+      vim.fn["vsnip#anonymous"](args.body)
+    end,
+  },
+  mapping = {
+    -- Tab immediately completes. C-n/C-p to select.
+    ['<Tab>'] = cmp.mapping.confirm({ select = true })
+  },
+  sources = cmp.config.sources({
+    -- TODO: currently snippets from lsp end up getting prioritized -- stop that!
+    { name = 'nvim_lsp' },
+  }, {
+    { name = 'path' },
+  }),
+  experimental = {
+    ghost_text = true,
+  },
+})
+
+-- Enable completing paths in :
+cmp.setup.cmdline(':', {
+  sources = cmp.config.sources({
+    { name = 'path' }
+  })
+})
+
+-- Setup lspconfig.
+local on_attach = function(client, bufnr)
+local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
+local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
+
+--Enable completion triggered by <c-x><c-o>
+buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
+
+-- Mappings.
+local opts = { noremap=true, silent=true }
+
+-- See `:help vim.lsp.*` for documentation on any of the below functions
+buf_set_keymap('n', 'gD', '<Cmd>lua vim.lsp.buf.declaration()<CR>', opts)
+buf_set_keymap('n', 'gd', '<Cmd>lua vim.lsp.buf.definition()<CR>', opts)
+buf_set_keymap('n', 'K', '<Cmd>lua vim.lsp.buf.hover()<CR>', opts)
+buf_set_keymap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
+buf_set_keymap('n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
+buf_set_keymap('n', '<space>D', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
+buf_set_keymap('n', '<space>r', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
+buf_set_keymap('n', '<space>a', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
+buf_set_keymap('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
+buf_set_keymap('n', '<space>o', '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>', opts)
+buf_set_keymap('n', '[d', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', opts)
+buf_set_keymap('n', ']d', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
+buf_set_keymap('n', '<space>q', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', opts)
+buf_set_keymap("n", "<space>f", "<cmd>lua vim.lsp.buf.formatting()<CR>", opts)
+
+  -- Get signatures (and _only_ signatures) when in argument lists.
+  require "lsp_signature".on_attach({
+    doc_lines = 0,
+    handler_opts = {
+      border = "none"
+    },
+  })
+end
+
+local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
+lspconfig.rust_analyzer.setup {
+  on_attach = on_attach,
+  flags = {
+    debounce_text_changes = 150,
+  },
+  settings = {
+    ["rust-analyzer"] = {
+      cargo = {
+        allFeatures = true,
+      },
+    },
+  },
+  capabilities = capabilities,
+}
+
+vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
+vim.lsp.diagnostic.on_publish_diagnostics, {
+	virtual_text = true,
+	signs = true,
+	update_in_insert = true,
+	}
+)
+END
+
+" Enable type inlay hints
+autocmd CursorHold,CursorHoldI *.rs :lua require'lsp_extensions'.inlay_hints{ only_current_line = true }
+
+" rust
+let g:rustfmt_autosave = 1
+let g:rustfmt_emit_files = 1
+let g:rustfmt_fail_silently = 0
+let g:rust_clip_command = 'xclip -selection clipboard'
+
+" Follow Rust code style rules
+au Filetype rust source ~/.config/nvim/scripts/spacetab.vim
+au Filetype rust set colorcolumn=100
+
+" Completion
+" Better completion
+" menuone: popup even when there's only one match
+" noinsert: Do not insert text until a selection is made
+" noselect: Do not select, force user to select one from the menu
+set completeopt=menuone,noinsert,noselect
+
+" Use <Tab> and <S-Tab> to navigate through popup menu
+" inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
+" inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+
+" use <Tab> as trigger keys
+" imap <Tab> <Plug>(completion_smart_tab)
+" imap <S-Tab> <Plug>(completion_smart_s_tab)
+
 
 " the configuration options should be placed before `colorscheme forest-night`
 " let g:forest_night_enable_italic = 1
@@ -291,13 +440,7 @@ source $HOME/.config/nvim/lib/editing.vim
 " Syntax support
 source $HOME/.config/nvim/lib/syntax.vim
 
-" ===========================================================================
-"   Personal programming setup
-" ===========================================================================
-" source $HOME/.config/nvim/lib/airline.vim
+" lightline as status line
 source $HOME/.config/nvim/lib/lightline.vim
-" source $HOME/.config/nvim/lib/pomodoro.vim
-source $HOME/.config/nvim/lib/coc.vim
 
-" echodoc
-let g:echodoc_enable_at_startup = 1
+" EoF
