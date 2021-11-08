@@ -65,10 +65,10 @@ Plug 'junegunn/fzf.vim'
 " Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'neovim/nvim-lspconfig'
 Plug 'nvim-lua/lsp_extensions.nvim'
+Plug 'hrsh7th/nvim-cmp', {'branch': 'main'}
 Plug 'hrsh7th/cmp-nvim-lsp', {'branch': 'main'}
 Plug 'hrsh7th/cmp-buffer', {'branch': 'main'}
 Plug 'hrsh7th/cmp-path', {'branch': 'main'}
-Plug 'hrsh7th/nvim-cmp', {'branch': 'main'}
 Plug 'ray-x/lsp_signature.nvim'
 
 " Only because nvim-cmp _requires_ snippets
@@ -107,23 +107,22 @@ Plug 'rust-lang/rust.vim', { 'for': 'rust' }
 Plug 'rhysd/vim-grammarous', { 'for': ['tex', 'latex', 'markdown'] }
 
 if !isdirectory(expand("$HOME/dev/others/base16"))
-	Plug 'chriskempson/base16-vim'
+  Plug 'chriskempson/base16-vim'
 endif
 call plug#end()
 
 
 "█▓▒░ Make pyenv and neovim work nice together
-
 if has('nvim')
-	set guicursor=n-v-c:block-Cursor/lCursor-blinkon0,i-ci:ver25-Cursor/lCursor,r-cr:hor20-Cursor/lCursor
-	set inccommand=nosplit
-	noremap <C-q> :confirm qall<CR>
-	set guicursor=
-	autocmd OptionSet guicursor noautocmd set guicursor=
+  set guicursor=n-v-c:block-Cursor/lCursor-blinkon0,i-ci:ver25-Cursor/lCursor,r-cr:hor20-Cursor/lCursor
+  set inccommand=nosplit
+  noremap <C-q> :confirm qall<CR>
+  set guicursor=
+  autocmd OptionSet guicursor noautocmd set guicursor=
 end
 
 if !has('gui_running')
-	set t_Co=256
+  set t_Co=256
 endif
 
 "█▓▒░ Plugin settings
@@ -143,13 +142,13 @@ set nowrap                                  " do not wrap long lines by default
 set nojoinspaces                            " Prevents inserting two spaces after punctuation on a join (J)
 " I only use VIM from the terminals
 if (match($TERM, "-256color") != -1) && (match($TERM, "screen-256color") != -1)
-	set termguicolors                         " screen does not (yet) support truecolor
+  set termguicolors                         " screen does not (yet) support truecolor
 endif
 if (match($TERM, "-256color") != -1) && (match($TERM, "tmux-256color") != -1)
-	set termguicolors                         " screen does not (yet) support truecolor
+  set termguicolors                         " screen does not (yet) support truecolor
 endif
 if (match($TERM, "xterm") != -1)
-	set termguicolors                         " for the vagrant linux box
+  set termguicolors                         " for the vagrant linux box
 endif
 
 set printfont=:h14
@@ -260,8 +259,8 @@ set number                                  " Also show current absolute line
 set diffopt+=iwhite	                        " No whitespace in vimdiff
 " Make diffing better: https://vimways.org/2018/the-power-of-diff/
 if has("patch-8.1.0360")
-	set diffopt+=internal,algorithm:patience
-	set diffopt+=indent-heuristic
+  set diffopt+=internal,algorithm:patience
+  set diffopt+=indent-heuristic
 endif
 set colorcolumn=80                          " and give me a colored column
 set showcmd                                 " Show (partial) command in status line.
@@ -311,31 +310,31 @@ local cmp = require'cmp'
 
 local lspconfig = require'lspconfig'
 cmp.setup({
-  snippet = {
-    -- REQUIRED by nvim-cmp. get rid of it once we can
-    expand = function(args)
-      vim.fn["vsnip#anonymous"](args.body)
-    end,
-  },
+snippet = {
+  -- REQUIRED by nvim-cmp. get rid of it once we can
+  expand = function(args)
+  vim.fn["vsnip#anonymous"](args.body)
+end,
+},
   mapping = {
     -- Tab immediately completes. C-n/C-p to select.
     ['<Tab>'] = cmp.mapping.confirm({ select = true })
-  },
+    },
   sources = cmp.config.sources({
-    -- TODO: currently snippets from lsp end up getting prioritized -- stop that!
-    { name = 'nvim_lsp' },
+  -- TODO: currently snippets from lsp end up getting prioritized -- stop that!
+  { name = 'nvim_lsp' },
   }, {
-    { name = 'path' },
+  { name = 'path' },
   }),
-  experimental = {
-    ghost_text = true,
+experimental = {
+  ghost_text = true,
   },
 })
 
 -- Enable completing paths in :
 cmp.setup.cmdline(':', {
   sources = cmp.config.sources({
-    { name = 'path' }
+  { name = 'path' }
   })
 })
 
@@ -366,37 +365,64 @@ buf_set_keymap('n', ']d', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
 buf_set_keymap('n', '<space>q', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', opts)
 buf_set_keymap("n", "<space>f", "<cmd>lua vim.lsp.buf.formatting()<CR>", opts)
 
-  -- Get signatures (and _only_ signatures) when in argument lists.
-  require "lsp_signature".on_attach({
-    doc_lines = 0,
-    handler_opts = {
-      border = "none"
-    },
-  })
+-- Get signatures (and _only_ signatures) when in argument lists.
+require "lsp_signature".on_attach({
+doc_lines = 0,
+handler_opts = {
+  border = "none"
+  },
+})
 end
 
 local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
-lspconfig.rust_analyzer.setup {
-  on_attach = on_attach,
-  flags = {
-    debounce_text_changes = 150,
-  },
-  settings = {
-    ["rust-analyzer"] = {
-      cargo = {
-        allFeatures = true,
+-- List of installed LSP servers
+if vim.fn.executable("bash-language-server") == 1 then
+  lspconfig.bashls.setup {
+    cmd = {
+      "bash-language-server",
+      "start"
       },
-    },
-  },
-  capabilities = capabilities,
-}
+    filetypes = {
+      "sh",
+      "zsh"
+      },
+    root_dir = lspconfig.util.root_pattern(".git"),
+    on_attach = on_attach
+    }
+end
+
+if vim.fn.executable("rust-analyzer") > 0 then
+  lspconfig.rust_analyzer.setup {
+    on_attach = on_attach,
+    checkOnSave = {
+      command = "clippy"
+      },
+    flags = {
+      debounce_text_changes = 150,
+      },
+    settings = {
+      ["rust-analyzer"] = {
+        cargo = {
+          allFeatures = true,
+          },
+        },
+      },
+    capabilities = capabilities,
+    }
+end
+if vim.fn.executable("pyright") > 0 then
+  lspconfig.pyright.setup {
+    on_attach = on_attach,
+    capabilities = capabilities,
+  }
+end
 
 vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
 vim.lsp.diagnostic.on_publish_diagnostics, {
-	virtual_text = true,
-	signs = true,
-	update_in_insert = true,
-	}
+  virtual_text = true,
+  signs = true,
+  update_in_insert = true,
+  }
 )
 END
 
