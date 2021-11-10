@@ -328,7 +328,7 @@ if !exists('##textyankpost')
 endif
 
 " auto pair config
-let g:AutoPairsFlyMode = 1
+" let g:AutoPairsFlyMode = 1
 au filetype rust let b:AutoPairs = {'`': '`', '"': '"', '{': '}', '(': ')', '[': ']', '|':'|', '<':'>'}
 
 " Mac setting, not important {{{
