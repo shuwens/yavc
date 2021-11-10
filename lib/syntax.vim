@@ -1,3 +1,5 @@
+let g:sneak#s_next = 1
+
 " LaTeX
 let g:latex_indent_enabled = 1
 let g:latex_fold_envs = 0
@@ -52,7 +54,11 @@ let g:rustfmt_autosave = 1
 let g:rustfmt_emit_files = 1
 let g:rustfmt_fail_silently = 0
 "let g:rust_keep_autopairs_default = 1
-"let g:rust_clip_command = 'xclip -selection clipboard'
+let g:rust_clip_command = 'xclip -selection clipboard'
+
+" Follow Rust code style rules
+au Filetype rust source ~/.config/nvim/scripts/spacetab.vim
+au Filetype rust set colorcolumn=100
 
 " markdown
 let g:vim_markdown_new_list_item_indent = 0

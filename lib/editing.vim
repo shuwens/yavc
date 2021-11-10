@@ -151,6 +151,7 @@ command! -bang -nargs=? -complete=dir Files
 " ; as :
 nnoremap ; :
 
+inoremap jh <Esc>
 inoremap jj <Esc>
 inoremap jk <Esc>
 nnoremap Y y$
