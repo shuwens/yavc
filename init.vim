@@ -8,7 +8,7 @@ let mapleader = "\<Space>"
 " Load vundle
 set nocompatible
 filetype off
-set rtp+=~/dev/others/base16/templates/vim/
+set rtp+=~/dev/others/base16/vim/
 call plug#begin()
 
 " Load plugins
@@ -68,7 +68,7 @@ if (match($TERM, "-256color") != -1) && (match($TERM, "screen-256color") == -1)
 endif
 set background=dark
 let base16colorspace=256
-let g:base16_shell_path="~/dev/others/base16/templates/shell/scripts/"
+let g:base16_shell_path="~/dev/others/base16/shell/scripts/"
 colorscheme base16-gruvbox-dark-hard
 syntax on
 hi Normal ctermbg=NONE
