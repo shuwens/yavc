@@ -1,15 +1,14 @@
 # yavc
 
-Special thanks to inspirations from [Jonhoo](https://github.com/jonhoo/configs), and [amix](https://github.com/amix/vimrc).
+My nvim configuration draws inspirations from from [jonhoo/config](https://github.com/jonhoo/configs) and [smb374/my-nvim-dots](https://github.com/smb374/my-nvim-dots)
 
 ## Neovim Config
 
 Welcome! This is my neovim config dir!
 
 ```
-nvim +PlugInstall +PlugClean +PlugUpdate +UpdateRemotePlugins +qall!
+nvim --headless -c 'autocmd User PackerComplete quitall' -c 'PackerSync'
 ```
-
 sudo snap install nvim --beta --classic
 
 ## Current look
@@ -17,8 +16,9 @@ sudo snap install nvim --beta --classic
 ![Current look of my neovim](imgs/nvim-look.png?raw=true "Title")
 
 ## ChangeList
-- Nov 19, 2020: [Ditch coc.nvim and switch to nvim lsp](https://github.com/jethrosun/yavc/commit/837aa7a6e3dec6d40263d2308918124fd1e058f7)
-- Nov 19, 2020: [Switched back to lightline from airline](https://github.com/jethrosun/yavc/commit/fa77bad8eb396ce021d313ce4d16e730ffbb5f3d)
+- Nov 19, 2020: [config nvim with coq and packer using lua](https://github.com/jethrosun/yavc/commit/46628fb7cd72f02c50c9faaf36bf212f8b6d8c85)
+- Nov 15, 2020: [Ditch coc.nvim and switch to nvim lsp](https://github.com/jethrosun/yavc/commit/837aa7a6e3dec6d40263d2308918124fd1e058f7)
+- Nov 10, 2020: [Switched back to lightline from airline](https://github.com/jethrosun/yavc/commit/fa77bad8eb396ce021d313ce4d16e730ffbb5f3d)
 - Nov 6, 2020: [More tweaks on coc setup](https://github.com/jethrosun/yavc/commit/a756b0e15fe4117cd96c52fa47133d0083cb7d2f)
 - Aug 22, 2020: [Fixed rustfmt and coc setting](https://github.com/jethrosun/yavc/commit/3de540d3aaf52ca844027e31f5b292de72a1bf71)
 - Nov 27, 2019: [Fixed airline and added js](https://github.com/jethrosun/yavc/commit/7b5dc6e642b784eea054da8b8bf7c6dff6beef33)

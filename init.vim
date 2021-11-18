@@ -7,7 +7,15 @@ filetype off
 set rtp+=~/dev/others/base16/vim/
 
 "█▓▒░ Load plugins
+lua require('plugin-list')
+"█▓▒░ General configurations
+lua require('options')
+"█▓▒░ Plugin configurations
 lua require('plugins')
+"█▓▒░  Langauge server configuration
+lua require('lsp')
+"█▓▒░  Colors
+lua require('colors')
 
 "█▓▒░ Make pyenv and neovim work nice together
 if has('nvim')
@@ -24,9 +32,7 @@ endif
 " Don't confirm .lvimrc
 let g:localvimrc_ask = 0
 
-" ===========================================================================
-"   Editor settings
-" ===========================================================================
+" Editor settings {{{
 filetype plugin indent on                   " required
 set autoindent
 set encoding=utf-8                          " Set default encoding to UTF-8
@@ -35,15 +41,7 @@ set hidden                                  " Hides buffers instead of closing t
 set nowrap                                  " do not wrap long lines by default
 set nojoinspaces                            " Prevents inserting two spaces after punctuation on a join (J)
 " I only use VIM from the terminals
-if (match($TERM, "-256color") != -1) && (match($TERM, "screen-256color") != -1)
-  set termguicolors                         " screen does not (yet) support truecolor
-endif
-if (match($TERM, "-256color") != -1) && (match($TERM, "tmux-256color") != -1)
-  set termguicolors                         " screen does not (yet) support truecolor
-endif
-if (match($TERM, "xterm") != -1)
-  set termguicolors                         " for the vagrant linux box
-endif
+set termguicolors                         " screen does not (yet) support truecolor
 
 set printfont=:h14
 set printencoding=utf-8
@@ -129,10 +127,9 @@ set incsearch                               " Shows the match while typing
 set ignorecase                              " Search case insensitive...
 set smartcase                               " ... but not when search pattern contains upper case characters
 set gdefault                                " search/replace "globally" (on a line) by default
+" }}}
 
-" ==========================================================================
-"    GUI settings
-" ==========================================================================
+" GUI settings {{{
 set guioptions-=T                           " Remove toolbar
 set vb t_vb=                                " No more beeps
 set backspace=2                             " Backspace over newlines
@@ -140,8 +137,8 @@ set cmdheight=2
 set tw=79
 set cursorline
 set cursorcolumn
-set nofoldenable
-"set foldmethod=marker                       " Only fold on marks
+" set nofoldenable
+set foldmethod=marker                       " Only fold on marks
 set ruler                                   " Where am I?
 set ttyfast
 " https://github.com/vim/vim/issues/1735#issuecomment-383353563
@@ -199,17 +196,10 @@ call Base16hi("LspSignatureActiveParameter", g:base16_gui05, g:base16_gui03, g:b
 " Enable type inlay hints
 autocmd CursorHold,CursorHoldI *.rs :lua require'lsp_extensions'.inlay_hints{ only_current_line = true }
 
+" }}} 
 
 " Editing setup
 source $HOME/.config/nvim/lib/editing.vim
 
 " Syntax support
 source $HOME/.config/nvim/lib/syntax.vim
-
-"█▓▒░ Plugin settings
-lua require('lsp')
-
-lua require('statusline')
-
-" lightline as status line
-" source $HOME/.config/nvim/lib/lightline.vim
