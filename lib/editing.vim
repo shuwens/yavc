@@ -7,20 +7,20 @@
 " ,p will paste clipboard into buffer
 " ,c will copy entire buffer into clipboard
 if has('unix')
-	if has('mac')       " osx
-		" Paste clipboard content to current line
-		vnoremap <silent>Y :w !pbcopy<CR><CR>
-		" noremap <leader>c :w !pbcopy<CR>
-		" noremap <leader>y :w !pbcopy<CR>
-		" noremap <leader>p :r !pbpaste<CR>
-		nnoremap <silent>P :r !pbpaste<CR>
-	else                " linux, bsd, etc
-		" noremap <leader>c :w !xsel -ib<cr><cr>
-		" noremap <leader>y :w !xsel -ib<cr><cr>
-		vnoremap <silent>Y :w !xsel -ib<cr><cr>
-		" noremap <leader>p :read !xsel --clipboard --output<cr>
-		noremap <silent>P :read !xsel --clipboard --output<cr>
-	endif
+   if has('mac')       " osx
+      " Paste clipboard content to current line
+      vnoremap <silent>Y :w !pbcopy<CR><CR>
+      " noremap <leader>c :w !pbcopy<CR>
+      " noremap <leader>y :w !pbcopy<CR>
+      " noremap <leader>p :r !pbpaste<CR>
+      nnoremap <silent>P :r !pbpaste<CR>
+   else                " linux, bsd, etc
+      " noremap <leader>c :w !xsel -ib<cr><cr>
+      " noremap <leader>y :w !xsel -ib<cr><cr>
+      vnoremap <silent>Y :w !xsel -ib<cr><cr>
+      " noremap <leader>p :read !xsel --clipboard --output<cr>
+      noremap <silent>P :read !xsel --clipboard --output<cr>
+   endif
 endif
 " copy
 vnoremap <C-c> "*y
@@ -37,11 +37,8 @@ nnoremap <leader>u :UndotreeToggle<cr>
 let g:NERDTreeWinPos = "right"
 map <leader>n :NERDTreeToggle<CR>
 
-
 " find merge conflict markers
 nmap <silent> <leader>fc <ESC>/\v^[<=>]{7}( .*\|$)<CR>
-
-
 
 " nmap <silent> <leader>l :call ToggleList("Location List", 'l')<CR>
 nmap <silent> <leader>\ :call ToggleList("Quickfix List", 'c')<CR>
@@ -70,6 +67,18 @@ nnoremap <leader>qq :q!<Esc>:q!<CR>
 command! W w
 command! Wq wq
 command! WQ wq
+" These are all terminal shorthands
+" I've made them to recognize common typos
+" cnoreabbrev wq w<bar>bd
+" cnoreabbrev Wq w<bar>bd
+" cnoreabbrev WQ w<bar>bd
+cnoreabbrev wqa1 wqa!
+cnoreabbrev qa1 qa!
+cnoreabbrev Qa qa
+cnoreabbrev Wqa wqa
+cnoreabbrev W w
+cnoreabbrev Q q
+cnoreabbrev B buffer
 
 " Open hotkeys
 nnoremap <C-p> :Files<CR>
@@ -117,33 +126,6 @@ let g:fzf_layout = { 'down': '~35%' }
 imap <c-x><c-l> <plug>(fzf-complete-line)
 nnoremap <leader>c :Commits<CR>
 
-" fzf helper methods {{{
-if executable('rg')
-	set grepprg=rg\ --no-heading\ --vimgrep
-	set grepformat=%f:%l:%c:%m
-endif
-if executable('ag')
-	set grepprg=ag\ --nogroup\ --nocolor
-endif
-
-command! -bang -nargs=* Rg
-			\ call fzf#vim#grep(
-			\   'rg --column --line-number --no-heading --color=always '.shellescape(<q-args>), 1,
-			\   <bang>0 ? fzf#vim#with_preview('up:60%')
-			\           : fzf#vim#with_preview('right:50%:hidden', '?'),
-			\   <bang>0)
-
-function! s:list_cmd()
-	let base = fnamemodify(expand('%'), ':h:.:S')
-	return base == '.' ? 'fd --type file --follow' : printf('fd --type file --follow | proximity-sort %s', shellescape(expand('%')))
-endfunction
-
-command! -bang -nargs=? -complete=dir Files
-			\ call fzf#vim#files(<q-args>, {'source': s:list_cmd(),
-			\                               'options': '--tiebreak=index'}, <bang>0)
-" }}}
-
-
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "   Keyboard shortcuts
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -188,7 +170,6 @@ onoremap <C-k> <Esc>
 lnoremap <C-k> <Esc>
 tnoremap <C-k> <Esc>
 
-
 " No arrow keys --- force yourself to use the home row
 nnoremap <up> <nop>
 nnoremap <down> <nop>
@@ -232,36 +213,36 @@ au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$") | exe "normal! g
 
 " manage quick fix
 function! GetBufferList()
-	redir =>buflist
-	silent! ls!
-	redir END
-	return buflist
+   redir =>buflist
+   silent! ls!
+   redir END
+   return buflist
 endfunction
 
 function! ToggleList(bufname, pfx)
-	let buflist = GetBufferList()
-	for bufnum in map(filter(split(buflist, '\n'), 'v:val =~ "'.a:bufname.'"'), 'str2nr(matchstr(v:val, "\\d\\+"))')
-		if bufwinnr(bufnum) != -1
-			exec(a:pfx.'close')
-			return
-		endif
-	endfor
-	if a:pfx == 'l' && len(getloclist(0)) == 0
-		echohl ErrorMsg
-		echo "Location List is Empty."
-		return
-	endif
-	let winnr = winnr()
-	exec(a:pfx.'open')
-	if winnr() != winnr
-		wincmd p
-	endif
+   let buflist = GetBufferList()
+   for bufnum in map(filter(split(buflist, '\n'), 'v:val =~ "'.a:bufname.'"'), 'str2nr(matchstr(v:val, "\\d\\+"))')
+      if bufwinnr(bufnum) != -1
+	 exec(a:pfx.'close')
+	 return
+      endif
+   endfor
+   if a:pfx == 'l' && len(getloclist(0)) == 0
+      echohl ErrorMsg
+      echo "Location List is Empty."
+      return
+   endif
+   let winnr = winnr()
+   exec(a:pfx.'open')
+   if winnr() != winnr
+      wincmd p
+   endif
 endfunction
 
 " auto set quickfix height
 au FileType qf call AdjustWindowHeight(3, 8)
 function! AdjustWindowHeight(minheight, maxheight)
-	exe max([min([line("$"), a:maxheight]), a:minheight]) . "wincmd _"
+   exe max([min([line("$"), a:maxheight]), a:minheight]) . "wincmd _"
 endfunction
 
 " Jump to start and end of line using the home row key
@@ -300,7 +281,6 @@ inoremap <A-j> <C-o>j
 inoremap <A-k> <C-o>k
 inoremap <A-l> <C-o>l
 
-
 " Search results centered please
 nnoremap <silent> n nzz
 nnoremap <silent> N Nzz
@@ -325,7 +305,7 @@ map 0 ^
 
 " highlighted yank
 if !exists('##textyankpost')
-	map y <plug>(highlightedyank)
+   map y <plug>(highlightedyank)
 endif
 
 " auto pair config
@@ -341,17 +321,17 @@ vmap <M-j> :m'>+<cr>`<my`>mzgv`yo`z
 vmap <M-k> :m'<-2<cr>`>my`<mzgv`yo`z
 
 if has("mac") || has("macunix")
-	nmap <D-j> <M-j>
-	nmap <D-k> <M-k>
-	vmap <D-j> <M-j>
-	vmap <D-k> <M-k>
+   nmap <D-j> <M-j>
+   nmap <D-k> <M-k>
+   vmap <D-j> <M-j>
+   vmap <D-k> <M-k>
 endif
 " }}}
 " Delete trailing white space on save, useful for Python and CoffeeScript ;) {{{
 func! DeleteTrailingWS()
-	exe "normal mz"
-	%s/\s\+$//ge
-	exe "normal `z"
+   exe "normal mz"
+   %s/\s\+$//ge
+   exe "normal `z"
 endfunc
 " }}}
 
@@ -361,33 +341,20 @@ command! -nargs=+ Cppman silent! call system("tmux split-window cppman " . expan
 autocmd FileType cpp nnoremap <silent><buffer> K <Esc>:Cppman <cword><CR>
 " }}}
 " fugitive {{{
-"
 nnoremap <silent> gd :GDiff<CR>
 nnoremap <silent> dg :diffget<CR>
 " }}}
 
-" vim-illuminate
-hi link illuminatedWord Visual
-" Time in milliseconds (default 250)
-let g:Illuminate_delay = 1500
-"let g:Illuminate_ftHighlightGroups = {
-"      \ 'vim': ['vimVar', 'vimString', 'vimLineComment',
-"      \         'vimFuncName', 'vimFunction', 'vimUserFunc', 'vimFunc']
-"      \ }
-
-" vim-search-pulse
-" let g:vim_search_pulse_duration = 250
-
 " notational-fzf-vim
 if !empty(glob("~/notes"))
-	let g:nv_search_paths = ['~/notes']
-	nnoremap NN :NV<CR>
+   let g:nv_search_paths = ['~/notes']
+   nnoremap NN :NV<CR>
 endif
 
 " NnoreF and Preview are only for macOS
 if has("mac") || has("macunix")
-	" Preview
-	let g:livepreview_previewer = 'open -a Preview'
+   " Preview
+   let g:livepreview_previewer = 'open -a Preview'
 endif
 
 " A second kind of re-wrap {{{
@@ -395,27 +362,27 @@ endif
 "
 " https://tex.stackexchange.com/questions/1548/intelligent-paragraph-reflowing-in-vim
 fun! TeX_fmt()
-	if (getline(".") != "")
-		let save_cursor = getpos(".")
-		let op_wrapscan = &wrapscan
-		set nowrapscan
-		let par_begin = '^\(%D\)\=\s*\($\||\\begin\|\\end\|\\[\|\\]\|\\\(sub\)*section\>\|\\item\>\|\\NC\>\|\\blank\>\|\\noindent\>\)'
-		let par_end   = '^\(%D\)\=\s*\($\||\\begin\|\\end\|\\[\|\\]\|\\place\|\\\(sub\)*section\>\|\\item\>\|\\NC\>\|\\blank\>\)'
-		try
-			exe '?'.par_begin.'?+'
-		catch /E384/
-			1
-		endtry
-		norm V
-		try
-			exe '/'.par_end.'/-'
-		catch /E385/
-			$
-		endtry
-		norm gq
-		let &wrapscan = op_wrapscan
-		call setpos('.', save_cursor)
-	endif
+   if (getline(".") != "")
+      let save_cursor = getpos(".")
+      let op_wrapscan = &wrapscan
+      set nowrapscan
+      let par_begin = '^\(%D\)\=\s*\($\||\\begin\|\\end\|\\[\|\\]\|\\\(sub\)*section\>\|\\item\>\|\\NC\>\|\\blank\>\|\\noindent\>\)'
+      let par_end   = '^\(%D\)\=\s*\($\||\\begin\|\\end\|\\[\|\\]\|\\place\|\\\(sub\)*section\>\|\\item\>\|\\NC\>\|\\blank\>\)'
+      try
+	 exe '?'.par_begin.'?+'
+      catch /E384/
+	 1
+      endtry
+      norm V
+      try
+	 exe '/'.par_end.'/-'
+      catch /E385/
+	 $
+      endtry
+      norm gq
+      let &wrapscan = op_wrapscan
+      call setpos('.', save_cursor)
+   endif
 endfun
 " }}}
 autocmd Filetype markdown nmap Q :call TeX_fmt()<CR>zz
@@ -426,24 +393,23 @@ autocmd Filetype text nmap Q :call TeX_fmt()<CR>zz
 
 " vim-grammarous
 let g:grammarous#disabled_rules = {
-			\ '*' : ['WHITESPACE_RULE', 'EN_QUOTES'],
-			\ 'help' : ['WHITESPACE_RULE', 'EN_QUOTES', 'SENTENCE_WHITESPACE', 'UPPERCASE_SENTENCE_START'],
-			\ }
+	 \ '*' : ['WHITESPACE_RULE', 'EN_QUOTES'],
+	 \ 'help' : ['WHITESPACE_RULE', 'EN_QUOTES', 'SENTENCE_WHITESPACE', 'UPPERCASE_SENTENCE_START'],
+	 \ }
 
 let g:grammarous#hooks = {}
 function! g:grammarous#hooks.on_check(errs) abort
-	nmap <buffer><C-i> <Plug>(grammarous-move-to-info-window)
-	nmap <buffer><C-j> <Plug>(grammarous-move-to-next-error)
-	nmap <buffer><C-k> <Plug>(grammarous-move-to-previous-error)
-	nmap <buffer><leader>f <Plug>(grammarous-fixit)
-	nmap <buffer><C-f> <Plug>(grammarous-fixit)
+   nmap <buffer><C-i> <Plug>(grammarous-move-to-info-window)
+   nmap <buffer><C-j> <Plug>(grammarous-move-to-next-error)
+   nmap <buffer><C-k> <Plug>(grammarous-move-to-previous-error)
+   nmap <buffer><leader>f <Plug>(grammarous-fixit)
+   nmap <buffer><C-f> <Plug>(grammarous-fixit)
 endfunction
 function! g:grammarous#hooks.on_reset(errs) abort
-	nunmap <buffer><C-j>
-	nunmap <buffer><C-k>
-	nunmap <buffer><leader>f
+   nunmap <buffer><C-j>
+   nunmap <buffer><C-k>
+   nunmap <buffer><leader>f
 endfunction
-
 
 " NERDCommenter
 "
@@ -461,27 +427,27 @@ let g:NERDTrimTrailingWhitespace = 1
 let g:NERDToggleCheckAllLines = 1
 " Add your own custom formats or override the defaults
 let g:NERDCustomDelimiters = {
-			\ 'c': { 'left': '/**','right': '*/' },
-			\ 'cpp': {'left': '//'},
-			\ 'python': {'left': '#'},
-			\ 'rust': {'left': '//'},
-			\ }
+	 \ 'c': { 'left': '/**','right': '*/' },
+	 \ 'cpp': {'left': '//'},
+	 \ 'python': {'left': '#'},
+	 \ 'rust': {'left': '//'},
+	 \ }
 
 " Better commit window
 let g:committia_hooks = {}
 function! g:committia_hooks.edit_open(info)
-	" Additional settings
-	setlocal spell
+   " Additional settings
+   setlocal spell
 
-	" If no commit message, start with insert mode
-	if a:info.vcs ==# 'git' && getline(1) ==# ''
-		startinsert
-	endif
+   " If no commit message, start with insert mode
+   if a:info.vcs ==# 'git' && getline(1) ==# ''
+      startinsert
+   endif
 
-	" Scroll the diff window from insert mode
-	" Map <C-n> and <C-p>
-	imap <buffer><C-n> <Plug>(committia-scroll-diff-down-half)
-	imap <buffer><C-p> <Plug>(committia-scroll-diff-up-half)
+   " Scroll the diff window from insert mode
+   " Map <C-n> and <C-p>
+   imap <buffer><C-n> <Plug>(committia-scroll-diff-down-half)
+   imap <buffer><C-p> <Plug>(committia-scroll-diff-up-half)
 endfunction
 
 " Easy Align
@@ -492,3 +458,76 @@ nmap ga <Plug>(EasyAlign)
 
 " echodoc
 let g:echodoc_enable_at_startup = 1
+
+" Telescope
+" Fuzzy file finder
+nnoremap <silent><leader>ff :Telescope find_files hidden=true<CR>
+" Fuzzy buffer finder
+nnoremap <silent><leader>fb :Telescope buffers<CR>
+" Fuzzy help-tages finder
+nnoremap <silent><leader>fh :Telescope help_tags<CR>
+" Search with ripgrep
+nnoremap <silent><leader>fi :Telescope live_grep<CR>
+" Fuzzy git status
+nnoremap <silent><leader>fg :Telescope git_status<CR>
+" Fuzzy old-files finder
+nnoremap <silent><leader>fo :Telescope oldfiles<CR>
+" Fuzzy command finder
+nnoremap <silent><leader>fc :Telescope commands<CR>
+" Fuzzy current file word finder
+nnoremap <silent><leader>fz :Telescope current_buffer_fuzzy_find<CR>
+" Fuzzy workspace symbols
+nnoremap <silent><leader>fs :Telescope lsp_workspace_symbols<CR>
+" Search projects (projects.nvim)
+nnoremap <silent><leader>fp :Telescope projects<CR>
+
+" Symbols Finder
+nnoremap <silent> gh <cmd>lua require'lspsaga.provider'.lsp_finder()<CR>
+" Show hovering documentation
+nnoremap <silent> K <cmd>lua require('lspsaga.hover').render_hover_doc()<CR>
+" Scroll down in lspsaga menus
+nnoremap <silent> <C-f> <cmd>lua require('lspsaga.action').smart_scroll_with_saga(1)<CR>
+" Scroll up in lspsaga menus
+nnoremap <silent> <C-b> <cmd>lua require('lspsaga.action').smart_scroll_with_saga(-1)<CR>
+" Show signature help(imo not thaat useful)
+nnoremap <silent> gs <cmd>lua require('lspsaga.signaturehelp').signature_help()<CR>
+" Rename symbols
+nnoremap <silent>gr <cmd>lua require('lspsaga.rename').rename()<CR>
+" Preview definition
+nnoremap <silent> gd <cmd>lua require'lspsaga.provider'.preview_definition()<CR>
+" Show suggestions/errors/warnings for the line
+nnoremap <silent><leader>cd <cmd>lua require'lspsaga.diagnostic'.show_line_diagnostics()<CR>
+nnoremap <silent><leader>cc <cmd>lua require'lspsaga.diagnostic'.show_cursor_diagnostics()<CR>
+
+" Jump to definition
+nnoremap <silent> gD <cmd>lua vim.lsp.buf.definition()<CR>
+
+" Toggle error menu
+nnoremap <silent><leader>h :TroubleToggle<CR>
+
+" Show symbols outline
+nnoremap <silent><leader>so :Vista nvim_lsp<CR>
+" Show blame for line
+nnoremap <silent><leader>bb :Gitsigns toggle_current_line_blame<CR>
+
+" Toggle comment for line
+" nnoremap <silent><leader>/ :Commentary<CR>
+" Toggle comment for selections
+" vnoremap <silent><leader>/ :Commentary<CR>
+
+function! ToggleNvimTree()
+   if exists(":NvimTreeToggle") == 0
+      " lazy load nvim-tree
+      silent! packadd nvim-tree.lua
+   endif
+
+   NvimTreeToggle
+endfunction
+
+" Call nvim-tree lazy load function
+nnoremap <silent> <F3> :call ToggleNvimTree()<CR>
+
+"Open lazygit
+nnoremap <silent> <leader>lg :LazyGit<CR>
+
+nnoremap <silent> gb :BufferLinePick<CR>

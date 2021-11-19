@@ -489,4 +489,3 @@ feline.setup({
   },
   components = components,
 })
-

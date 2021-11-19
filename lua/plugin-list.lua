@@ -57,30 +57,33 @@ require("packer").startup(function(use)
 	use("tpope/vim-fugitive")
 	use("tpope/vim-sleuth")  -- Auto configure indentation
 	use("tpope/vim-surround")
-	use("folke/which-key.nvim")
+	use("gpanders/editorconfig.nvim")
+	use("airblade/vim-rooter")
 
 	-- GUI enhancements
-	use({
-		'lewis6991/gitsigns.nvim', requires = { 'nvim-lua/plenary.nvim' },
-	})
 	use("machakann/vim-highlightedyank")  -- highlight yank
 	use("Yggdroot/indentLine")
 	use("jaxbot/semantic-highlight.vim")  -- different color for every variable
 	use("ntpeters/vim-better-whitespace")
-	use("rhysd/committia.vim")  -- better git commit layout
-	use({
-		"folke/trouble.nvim",
-		requires = "kyazdani42/nvim-web-devicons",
-	})
-	use("kdheepak/lazygit.nvim")
 	use("p00f/nvim-ts-rainbow")
 	use("lukas-reineke/indent-blankline.nvim")
 	use("famiu/feline.nvim")
-	use("windwp/nvim-autopairs")
-	use("ahmedkhalf/project.nvim")
-	use({ 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' })
 	use("kyazdani42/nvim-web-devicons")
 	use({"NvChad/nvim-base16.lua",})
+	use({
+		'lewis6991/gitsigns.nvim', requires = { 'nvim-lua/plenary.nvim' },
+		config = function() require('gitsigns').setup() end
+	})
+
+	-- nvim tools
+	use("rhysd/committia.vim")  -- better git commit layout
+	use({"folke/trouble.nvim", requires = "kyazdani42/nvim-web-devicons"})
+	use("kdheepak/lazygit.nvim")
+	use("windwp/nvim-autopairs")
+	use("ahmedkhalf/project.nvim")
+	use("folke/which-key.nvim")
+	use("liuchengxu/vista.vim")
+	use({ 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' })
 	use({
 		"kyazdani42/nvim-tree.lua",
 		opt = true,
@@ -95,8 +98,8 @@ require("packer").startup(function(use)
 	-- LSP support
 	use("glepnir/lspsaga.nvim")
 	use("kabouzeid/nvim-lspinstall")
-	use("neovim/nvim-lspconfig")
 	use("nvim-lua/lsp_extensions.nvim")  -- lsp signatures
+	use("neovim/nvim-lspconfig")
 	use({
 		"nvim-telescope/telescope.nvim",
 		requires = { { "nvim-lua/popup.nvim" }, { "nvim-lua/plenary.nvim" } },
@@ -112,19 +115,22 @@ require("packer").startup(function(use)
 		},
 	})
 	use("folke/lua-dev.nvim")
-	use("gpanders/editorconfig.nvim")
 
 	-- Language support
-	use("stephpy/vim-yaml")
-	use("cespare/vim-toml")
-	use("dag/vim-fish")
-	use("jceb/vim-orgmode")
-	use("plasticboy/vim-markdown")
-	use("mzlogin/vim-markdown-toc")
+	use({ "stephpy/vim-yaml", ft = 'yaml', opt = true })
+	use({ "cespare/vim-toml", ft = 'toml', opt = true })
+	use({ "dag/vim-fish", ft = 'fish', opt = true })
+	use({ "jceb/vim-orgmode", ft = 'org', opt = true })
+	use({ "plasticboy/vim-markdown", ft = 'markdown' ,opt = true })
+	use({ "mzlogin/vim-markdown-toc", ft = 'markdown', opt = true })
 	use("alvan/vim-closetag")
 
 	-- Rust
 	-- use("rust-lang/rust.vim")
+	-- use({'simrat39/rust-tools.nvim', after = 'nvim-lspconfig',
+	-- 	ft = { 'rust' }, event = { 'BufEnter Cargo.toml' },
+	-- 	config = function() require'plugins.rust-tools' end })
+	-- use({ "simrat39/rust-tools.nvim", ft = 'rust', config = 'require(plugins.rust-tools)', opt = true })
 	use("simrat39/rust-tools.nvim")
 	-- C++ and Clang
 	--use("octol/vim-cpp-enhanced-highlight', {'for': ['cpp'] }
@@ -136,12 +142,5 @@ require("packer").startup(function(use)
 	-- LaTeX
 	--https://www.reddit.com/r/neovim/comments/idthcb/vimtex_vs_texlab/
 	--use("lervag/vimtex', { 'for': ['tex', 'latex'] }
-	use({
-		"rhysd/vim-grammarous",
-		ft = {'tex', 'latex', 'markdown'},
-	})
-	-- use("airblade/vim-rooter'
-	-- use("junegunn/fzf', { 'do': { -> fzf#install() } }
-	-- use("junegunn/fzf.vim'
-
+	use({ "rhysd/vim-grammarous", ft = {'tex', 'latex', 'markdown'} })
 end)

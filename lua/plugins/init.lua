@@ -1,5 +1,7 @@
 -- lualine configuration
 require("plugins.statusline")
+-- require("plugins.lualine")
+-- require("plugins.galaxyline")
 -- fuzzy finder configuration
 require("plugins.telescope")
 -- auto pair

@@ -6,10 +6,18 @@ My nvim configuration draws inspirations from from [jonhoo/config](https://githu
 
 Welcome! This is my neovim config dir!
 
-```
-nvim --headless -c 'autocmd User PackerComplete quitall' -c 'PackerSync'
-```
-sudo snap install nvim --beta --classic
+To update nvim config:
+
+`nvim --headless -c 'autocmd User PackerComplete quitall' -c 'PackerSync'`
+
+To install neovim:
+
+`wget https://github.com/neovim/neovim/releases/download/nightly/nvim.appimage && chmod u+x nvim.appimage && mv nvim.appimage nvim`
+
+To install packer:
+`
+git clone --depth 1 https://github.com/wbthomason/packer.nvim\
+ ~/.local/share/nvim/site/pack/packer/start/packer.nvim`
 
 ## Current look
 

@@ -80,4 +80,5 @@ local opts = {
 }
 
 rtools.setup(opts)
-
+-- vim.g.rustfmt_autosave = true
+vim.cmd("autocmd BufWritePre *.rs lua vim.lsp.buf.formatting_sync()")
