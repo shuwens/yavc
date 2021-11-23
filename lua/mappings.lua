@@ -69,7 +69,7 @@ elseif vim.fn.has("unix") == 1 then
 else
   print("Unsupported system!")
 end
-api.nvim_set_keymap('v', '<C-C', '"*y', { noremap = true, silent = true })
+api.nvim_set_keymap('v', '<C-c>', '"*y', { noremap = true, silent = true })
 
 -- Undo tree
 api.nvim_set_keymap('n', g.mapleader..'u', ':UndotreeToggle<CR>', { noremap = true, silent = false })
@@ -238,7 +238,7 @@ api.nvim_set_keymap('n', 'K', '<cmd>lua require("lspsaga.hover").render_hover_do
 -- Scroll down in lspsaga menus
 api.nvim_set_keymap('n', '<C-f>', '<cmd>lua require("lspsaga.action").smart_scroll_with_saga(1)<CR>', { noremap = true, silent = true })
 -- Scroll up in lspsaga menus
-api.nvim_set_keymap('n', 'C-b', '<cmd>lua require("lspsaga.action").smart_scroll_with_saga(-1)<CR>', { noremap = true, silent = true })
+api.nvim_set_keymap('n', '<C-b>', '<cmd>lua require("lspsaga.action").smart_scroll_with_saga(-1)<CR>', { noremap = true, silent = true })
 -- Show signature help(imo not thaat useful)
 api.nvim_set_keymap('n', 'gs', '<cmd>lua require("lspsaga.signaturehelp").signature_help()<CR>', { noremap = true, silent = true })
 -- Rename symbols

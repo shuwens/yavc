@@ -55,15 +55,14 @@ require("packer").startup(function(use)
 	use("tpope/vim-commentary")
 	use({"tpope/vim-dispatch", opt = true, cmd = {'Dispatch', 'Make', 'Focus', 'Start'}})
 	use("tpope/vim-fugitive")
-	use("tpope/vim-sleuth")  -- Auto configure indentation
+	use("tpope/vim-sleuth")						-- Auto configure indentation
 	use("tpope/vim-surround")
 	use("gpanders/editorconfig.nvim")
 	use("airblade/vim-rooter")
 
 	-- GUI enhancements
-	use("machakann/vim-highlightedyank")  -- highlight yank
-	use("Yggdroot/indentLine")
-	use("jaxbot/semantic-highlight.vim")  -- different color for every variable
+	use("machakann/vim-highlightedyank")		-- highlight yank
+	use("jaxbot/semantic-highlight.vim")		-- different color for every variable
 	use("ntpeters/vim-better-whitespace")
 	use("p00f/nvim-ts-rainbow")
 	use("lukas-reineke/indent-blankline.nvim")
@@ -76,7 +75,7 @@ require("packer").startup(function(use)
 	})
 
 	-- nvim tools
-	use("rhysd/committia.vim")  -- better git commit layout
+	use("rhysd/committia.vim")					-- better git commit layout
 	use({"folke/trouble.nvim", requires = "kyazdani42/nvim-web-devicons"})
 	use("kdheepak/lazygit.nvim")
 	use("windwp/nvim-autopairs")
@@ -98,7 +97,7 @@ require("packer").startup(function(use)
 	-- LSP support
 	use("glepnir/lspsaga.nvim")
 	use("kabouzeid/nvim-lspinstall")
-	use("nvim-lua/lsp_extensions.nvim")  -- lsp signatures
+	use("nvim-lua/lsp_extensions.nvim")			-- lsp signatures
 	use("neovim/nvim-lspconfig")
 	use({
 		"nvim-telescope/telescope.nvim",

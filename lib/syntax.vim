@@ -27,17 +27,6 @@ let g:tq_map_keys=0
 nnoremap <leader>t :ThesaurusQueryReplaceCurrentWord<CR>
 vnoremap <leader>t y:ThesaurusQueryReplace <C-r>"<CR>
 
-" VIM spell
-set spelllang=en_us
-for d in glob('~/.config/nvim/spell/*.add', 1, 1)
-	if filereadable(d) && (!filereadable(d . '.spl') || getftime(d) > getftime(d . '.spl'))
-		exec 'mkspell! ' . fnameescape(d)
-	endif
-endfor
-hi clear SpellBad
-" hi SpellBad ctermfg=000 guifg=#000
-hi SpellBad cterm=underline gui=undercurl
-
 " Golang
 autocmd FileType go nmap <leader>t <Plug>(go-test)
 autocmd FileType go nmap <Leader>r <Plug>(go-rename)

@@ -2,6 +2,7 @@ local vim = vim
 local opt = vim.opt
 
 vim.cmd([[
+set shell=/bin/bash
 set nocompatible
 filetype off
 filetype plugin indent on
@@ -39,13 +40,13 @@ opt.whichwrap:append("<>hl")
 opt.pumheight = 20
 
 -- opt.nofoldenable
--- foldmethod=marker,  manual                       
+-- foldmethod=marker,  manual
 opt.foldmethod = "marker"       -- Only fold on marks
 -- Permanent undo
 opt.undofile = true
 opt.undodir = "/tmp"
 
--- vim.cmd("opt.wildcharm=<Tab>")
+vim.cmd "set wildcharm=<Tab>"
 
 -- Editor settings
 -- filetype plugin indent on                   " required
@@ -54,7 +55,7 @@ opt.encoding = "utf-8"          -- default encoding to UTF-8
 opt.showmode = false -- We show the mode with airline or lightline
 opt.wrap = false               -- do not wrap long lines by default
 opt.joinspaces = false -- Prevents inserting two spaces after punctuation on a join (J)
-opt.printfont = ":h14" 
+opt.printfont = ":h14"
 opt.printencoding = "utf-8"
 opt.printoptions = "paper:letter"
 
@@ -75,29 +76,25 @@ opt.swapfile = false -- Don't use swapfile
 
 opt.tags = ".git/tags"
 
--- Decent wildmenu 
+-- Decent wildmenu
 opt.wildmenu = true
 --opt.wildmode=list:longest
 opt.wildmode = "list:full"
 --opt.wildignore=.hg,.svn,*~,*.png,*.jpg,*.gif,*.settings,Thumbs.db,*.min.js,*.swp,publish/*,intermediate/*,*.o,*.hi,Zend,vendor
--- opt.wildignore += .hg,.git,.svn                    " Version control
--- opt.wildignore+=*.aux,*.out,*.toc                " LaTeX intermediate files
--- opt.wildignore+=*.jpg,*.bmp,*.gif,*.png,*.jpeg   " binary images
--- opt.wildignore+=*.o,*.obj,*.exe,*.dll,*.manifest " compiled object files
--- opt.wildignore+=*.spl                            " compiled spelling word lists
--- opt.wildignore+=*.sw?                            " Vim swap files
--- opt.wildignore+=*.DS_Store                       " OSX bullshit
--- opt.wildignore+=*.luac                           " Lua byte code
--- opt.wildignore+=migrations                       " Django migrations
--- opt.wildignore+=go/pkg                           " Go static files
--- opt.wildignore+=go/bin                           " Go bin files
--- opt.wildignore+=go/bin-vagrant                   " Go bin-vagrant files
--- opt.wildignore+=*.pyc                            " Python byte code
--- opt.wildignore+=*.orig                           " Merge resolution files
-
-
--- Get syntax
--- syntax on
+opt.wildignore = "+= .hg,.git,.svn"                     --Version control
+opt.wildignore = "+=*.aux,*.out,*.toc"                  --LaTeX intermediate files
+opt.wildignore = "+=*.jpg,*.bmp,*.gif,*.png,*.jpeg"     --binary images
+opt.wildignore = "+=*.o,*.obj,*.exe,*.dll,*.manifest"   --compiled object files
+opt.wildignore = "+=*.spl"                              --compiled spelling word lists
+opt.wildignore = "+=*.sw?"                              --Vim swap files
+opt.wildignore = "+=*.DS_Store"                         --OSX bullshit
+opt.wildignore = "+=*.luac"                             --Lua byte code
+opt.wildignore = "+=migrations"                         --Django migrations
+opt.wildignore = "+=go/pkg"                             --Go static files
+opt.wildignore = "+=go/bin"                             --Go bin files
+opt.wildignore = "+=go/bin-vagrant"                     --Go bin-vagrant files
+opt.wildignore = "+=*.pyc"                              --Python byte code
+opt.wildignore = "+=*.orig"                             --Merge resolution files
 
 -- Wrapping options
 opt.formatoptions = "tc" -- wrap text and comments using textwidth
@@ -116,24 +113,24 @@ opt.gdefault = true  -- search/replace "globally" (on a line) by default
 -- opt.guioptions = opt.guioptions - "T" -- Remove toolbar
 -- opt.vb = "t_vb=" -- No more beeps
 opt.backspace = "2" --Backspace over newlines
-opt.cmdheight = 2 
+opt.cmdheight = 2
 opt.tw = 79
-opt.cursorline = true 
+opt.cursorline = true
 opt.cursorcolumn = true
 opt.ttyfast = true
 -- https://github.com/vim/vim/issues/1735#issuecomment-383353563
-opt.lazyredraw = true -- don't update the display while executing macros<Paste>
+opt.lazyredraw = true                   -- don't update the display while executing macros<Paste>
 opt.synmaxcol=500
-opt.laststatus=2      --  always have a statusline
-opt.relativenumber = true -- Relative line numbers
-opt.number = true -- Also show current absolute line
-opt.diffopt = opt.diffopt + "iwhite" -- No whitespace in vimdiff
+opt.laststatus=2                        --  always have a statusline
+opt.relativenumber = true               -- Relative line numbers
+opt.number = true                       -- Also show current absolute line
+opt.diffopt = opt.diffopt + "iwhite"    -- No whitespace in vimdiff
 -- Make diffing better: https://vimways.org/2018/the-power-of-diff/
 opt.diffopt = opt.diffopt + "internal,algorithm:patience"
 opt.diffopt = opt.diffopt + "indent-heuristic"
-opt.colorcolumn = "80"  -- and give me a colored column
-opt.showcmd = true  -- Show (partial) command in status line.
-opt.shortmess = opt.shortmess + "c" -- don't give |ins-completion-menu| messages.
+opt.colorcolumn = "80"                  -- and give me a colored column
+opt.showcmd = true                      -- Show (partial) command in status line.
+opt.shortmess = opt.shortmess + "c"     -- don't give |ins-completion-menu| messages.
 
 -- Completion
 -- Better completion
@@ -155,6 +152,19 @@ opt.inccommand = "nosplit"
 
 -- noremap <C-q> :confirm qall<CR>
 if not vim.fn.has('gui_running') then vim.opt.t_Co = 256 end
+
+-- spell setting
+vim.cmd([[
+set spelllang=en_us
+for d in glob('~/.config/nvim/spell/*.add', 1, 1)
+  if filereadable(d) && (!filereadable(d . '.spl') || getftime(d) > getftime(d . '.spl'))
+    exec 'mkspell! ' . fnameescape(d)
+  endif
+endfor
+hi clear SpellBad
+" hi SpellBad ctermfg=000 guifg=#000
+hi SpellBad cterm=underline gui=undercurl
+]])
 
 local disabled_built_ins = {
   "netrw",
