@@ -208,7 +208,6 @@ api.nvim_set_keymap('n', '*', '*zz', { noremap = true, silent = false })
 api.nvim_set_keymap('n', '#', '#zz', { noremap = true, silent = false })
 api.nvim_set_keymap('n', 'g*', 'g*zz', { noremap = true, silent = false})
 
-
 -- Telescope
 -- Fuzzy file finder
 api.nvim_set_keymap('n', g.mapleader..'ff', ':Telescope find_files hidden=true<CR>', { noremap = true, silent = true })

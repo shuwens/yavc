@@ -1,11 +1,8 @@
 local vim = vim
-
 local opt = vim.opt
-local cmd = vim.cmd
 
 opt.nu = true
 opt.rnu = true
-
 
 --█▓▒░ Load plugins
 require('plugin-list')
@@ -24,5 +21,4 @@ require('lsp')
 --█▓▒░  Colors
 require('colors')
 
--- Syntax support
--- cmd("source $HOME/.config/nvim/lib/syntax.vim")
+-- cmd("source $HOME/.config/nvim/lib/roam.vim")

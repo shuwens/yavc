@@ -99,6 +99,16 @@ _G.packer_plugins = {
     path = "/Users/jethros/.local/share/nvim/site/pack/packer/start/feline.nvim",
     url = "https://github.com/famiu/feline.nvim"
   },
+  fzf = {
+    loaded = true,
+    path = "/Users/jethros/.local/share/nvim/site/pack/packer/start/fzf",
+    url = "https://github.com/junegunn/fzf"
+  },
+  ["fzf.vim"] = {
+    loaded = true,
+    path = "/Users/jethros/.local/share/nvim/site/pack/packer/start/fzf.vim",
+    url = "https://github.com/junegunn/fzf.vim"
+  },
   ["gitsigns.nvim"] = {
     config = { "\27LJ\2\n6\0\0\3\0\3\0\0066\0\0\0'\2\1\0B\0\2\0029\0\2\0B\0\1\1K\0\1\0\nsetup\rgitsigns\frequire\0" },
     loaded = true,
@@ -130,6 +140,15 @@ _G.packer_plugins = {
     path = "/Users/jethros/.local/share/nvim/site/pack/packer/start/lua-dev.nvim",
     url = "https://github.com/folke/lua-dev.nvim"
   },
+  ["notational-fzf-vim"] = {
+    cond = { "\27LJ\2\n\\\0\0\5\0\5\0\n6\0\0\0009\0\1\0009\0\2\0006\2\0\0009\2\1\0029\2\3\2'\4\4\0B\2\2\0A\0\0\1K\0\1\0\23~/Dropbox/GS/notes\vexpand\16isdirectory\afn\bvim\0" },
+    config = { "\27LJ\2\n2\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\1K\0\1\0\23plugins.notational\frequire\0" },
+    loaded = false,
+    needs_bufread = false,
+    only_cond = true,
+    path = "/Users/jethros/.local/share/nvim/site/pack/packer/opt/notational-fzf-vim",
+    url = "https://github.com/alok/notational-fzf-vim"
+  },
   ["nvim-autopairs"] = {
     loaded = true,
     path = "/Users/jethros/.local/share/nvim/site/pack/packer/start/nvim-autopairs",
@@ -140,15 +159,15 @@ _G.packer_plugins = {
     path = "/Users/jethros/.local/share/nvim/site/pack/packer/start/nvim-base16.lua",
     url = "https://github.com/NvChad/nvim-base16.lua"
   },
+  ["nvim-lsp-installer"] = {
+    loaded = true,
+    path = "/Users/jethros/.local/share/nvim/site/pack/packer/start/nvim-lsp-installer",
+    url = "https://github.com/williamboman/nvim-lsp-installer"
+  },
   ["nvim-lspconfig"] = {
     loaded = true,
     path = "/Users/jethros/.local/share/nvim/site/pack/packer/start/nvim-lspconfig",
     url = "https://github.com/neovim/nvim-lspconfig"
-  },
-  ["nvim-lspinstall"] = {
-    loaded = true,
-    path = "/Users/jethros/.local/share/nvim/site/pack/packer/start/nvim-lspinstall",
-    url = "https://github.com/kabouzeid/nvim-lspinstall"
   },
   ["nvim-tree.lua"] = {
     commands = { "NvimTreeToggle" },
@@ -333,6 +352,10 @@ time([[Defining packer_plugins]], false)
 time([[Config for gitsigns.nvim]], true)
 try_loadstring("\27LJ\2\n6\0\0\3\0\3\0\0066\0\0\0'\2\1\0B\0\2\0029\0\2\0B\0\1\1K\0\1\0\nsetup\rgitsigns\frequire\0", "config", "gitsigns.nvim")
 time([[Config for gitsigns.nvim]], false)
+-- Conditional loads
+time([[Conditional loading of notational-fzf-vim]], true)
+  require("packer.load")({"notational-fzf-vim"}, {}, _G.packer_plugins)
+time([[Conditional loading of notational-fzf-vim]], false)
 
 -- Command lazy-loads
 time([[Defining lazy-load commands]], true)
@@ -347,22 +370,19 @@ vim.cmd [[augroup packer_load_aucmds]]
 vim.cmd [[au!]]
   -- Filetype lazy-loads
 time([[Defining lazy-load filetype autocommands]], true)
-vim.cmd [[au FileType tex ++once lua require("packer.load")({'vim-grammarous'}, { ft = "tex" }, _G.packer_plugins)]]
-vim.cmd [[au FileType latex ++once lua require("packer.load")({'vim-grammarous'}, { ft = "latex" }, _G.packer_plugins)]]
-vim.cmd [[au FileType markdown ++once lua require("packer.load")({'vim-grammarous', 'vim-markdown', 'vim-markdown-toc'}, { ft = "markdown" }, _G.packer_plugins)]]
 vim.cmd [[au FileType org ++once lua require("packer.load")({'vim-orgmode'}, { ft = "org" }, _G.packer_plugins)]]
-vim.cmd [[au FileType toml ++once lua require("packer.load")({'vim-toml'}, { ft = "toml" }, _G.packer_plugins)]]
 vim.cmd [[au FileType yaml ++once lua require("packer.load")({'vim-yaml'}, { ft = "yaml" }, _G.packer_plugins)]]
+vim.cmd [[au FileType latex ++once lua require("packer.load")({'vim-grammarous'}, { ft = "latex" }, _G.packer_plugins)]]
+vim.cmd [[au FileType toml ++once lua require("packer.load")({'vim-toml'}, { ft = "toml" }, _G.packer_plugins)]]
+vim.cmd [[au FileType markdown ++once lua require("packer.load")({'vim-markdown', 'vim-grammarous', 'vim-markdown-toc'}, { ft = "markdown" }, _G.packer_plugins)]]
 vim.cmd [[au FileType fish ++once lua require("packer.load")({'vim-fish'}, { ft = "fish" }, _G.packer_plugins)]]
+vim.cmd [[au FileType tex ++once lua require("packer.load")({'vim-grammarous'}, { ft = "tex" }, _G.packer_plugins)]]
 time([[Defining lazy-load filetype autocommands]], false)
 vim.cmd("augroup END")
 vim.cmd [[augroup filetypedetect]]
 time([[Sourcing ftdetect script at: /Users/jethros/.local/share/nvim/site/pack/packer/opt/vim-markdown/ftdetect/markdown.vim]], true)
 vim.cmd [[source /Users/jethros/.local/share/nvim/site/pack/packer/opt/vim-markdown/ftdetect/markdown.vim]]
 time([[Sourcing ftdetect script at: /Users/jethros/.local/share/nvim/site/pack/packer/opt/vim-markdown/ftdetect/markdown.vim]], false)
-time([[Sourcing ftdetect script at: /Users/jethros/.local/share/nvim/site/pack/packer/opt/vim-markdown-toc/ftdetect/markdown.vim]], true)
-vim.cmd [[source /Users/jethros/.local/share/nvim/site/pack/packer/opt/vim-markdown-toc/ftdetect/markdown.vim]]
-time([[Sourcing ftdetect script at: /Users/jethros/.local/share/nvim/site/pack/packer/opt/vim-markdown-toc/ftdetect/markdown.vim]], false)
 time([[Sourcing ftdetect script at: /Users/jethros/.local/share/nvim/site/pack/packer/opt/vim-orgmode/ftdetect/org.vim]], true)
 vim.cmd [[source /Users/jethros/.local/share/nvim/site/pack/packer/opt/vim-orgmode/ftdetect/org.vim]]
 time([[Sourcing ftdetect script at: /Users/jethros/.local/share/nvim/site/pack/packer/opt/vim-orgmode/ftdetect/org.vim]], false)
@@ -372,6 +392,9 @@ time([[Sourcing ftdetect script at: /Users/jethros/.local/share/nvim/site/pack/p
 time([[Sourcing ftdetect script at: /Users/jethros/.local/share/nvim/site/pack/packer/opt/vim-fish/ftdetect/fish.vim]], true)
 vim.cmd [[source /Users/jethros/.local/share/nvim/site/pack/packer/opt/vim-fish/ftdetect/fish.vim]]
 time([[Sourcing ftdetect script at: /Users/jethros/.local/share/nvim/site/pack/packer/opt/vim-fish/ftdetect/fish.vim]], false)
+time([[Sourcing ftdetect script at: /Users/jethros/.local/share/nvim/site/pack/packer/opt/vim-markdown-toc/ftdetect/markdown.vim]], true)
+vim.cmd [[source /Users/jethros/.local/share/nvim/site/pack/packer/opt/vim-markdown-toc/ftdetect/markdown.vim]]
+time([[Sourcing ftdetect script at: /Users/jethros/.local/share/nvim/site/pack/packer/opt/vim-markdown-toc/ftdetect/markdown.vim]], false)
 vim.cmd("augroup END")
 if should_profile then save_profiles() end
 

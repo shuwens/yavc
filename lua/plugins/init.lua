@@ -21,3 +21,5 @@ require("plugins.project")
 require("plugins.coq")
 require("plugins.coq3p")
 require("plugins.rust-tools")
+
+require("plugins.notational")

@@ -7,6 +7,7 @@ set nocompatible
 filetype off
 filetype plugin indent on
 syntax on
+set nowrap
 ]])
 
 opt.ruler = true                -- Where am I?

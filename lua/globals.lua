@@ -55,16 +55,21 @@ vim.cmd "au Filetype rust set colorcolumn=100"
 
 -- Markdown
 g.vim_markdown_conceal = 0
-g.vim_markdown_folding_disabled = 1
+-- g.vim_markdown_folding_disabled = 1
 g.vim_markdown_new_list_item_indent = 0
 g.vim_markdown_auto_insert_bullets = 0
 g.vim_markdown_frontmatter = 1
+g.vim_markdown_math = 1
+
+-- Base markdown settings (tpope)
+g.markdown_folding = 1
 
 -- Python
 -- https://quinoa42.github.io/en/oceanus/neovim-python/
 local pyenv_root = os.getenv('PYENV_ROOT')
 g.python_host_prog = pyenv_root .. '/versions/neovim2/bin/python'
 g.python3_host_prog = pyenv_root .. '/versions/py3/bin/python'
+
 
 -- uncomment this out if you are experiencing issues with nvim-tree.lua
 -- g.nvim_tree_git_hl = 0
