@@ -350,16 +350,13 @@ time([[Defining lazy-load filetype autocommands]], true)
 vim.cmd [[au FileType tex ++once lua require("packer.load")({'vim-grammarous'}, { ft = "tex" }, _G.packer_plugins)]]
 vim.cmd [[au FileType latex ++once lua require("packer.load")({'vim-grammarous'}, { ft = "latex" }, _G.packer_plugins)]]
 vim.cmd [[au FileType markdown ++once lua require("packer.load")({'vim-grammarous', 'vim-markdown', 'vim-markdown-toc'}, { ft = "markdown" }, _G.packer_plugins)]]
-vim.cmd [[au FileType yaml ++once lua require("packer.load")({'vim-yaml'}, { ft = "yaml" }, _G.packer_plugins)]]
-vim.cmd [[au FileType toml ++once lua require("packer.load")({'vim-toml'}, { ft = "toml" }, _G.packer_plugins)]]
 vim.cmd [[au FileType org ++once lua require("packer.load")({'vim-orgmode'}, { ft = "org" }, _G.packer_plugins)]]
+vim.cmd [[au FileType toml ++once lua require("packer.load")({'vim-toml'}, { ft = "toml" }, _G.packer_plugins)]]
+vim.cmd [[au FileType yaml ++once lua require("packer.load")({'vim-yaml'}, { ft = "yaml" }, _G.packer_plugins)]]
 vim.cmd [[au FileType fish ++once lua require("packer.load")({'vim-fish'}, { ft = "fish" }, _G.packer_plugins)]]
 time([[Defining lazy-load filetype autocommands]], false)
 vim.cmd("augroup END")
 vim.cmd [[augroup filetypedetect]]
-time([[Sourcing ftdetect script at: /Users/jethros/.local/share/nvim/site/pack/packer/opt/vim-fish/ftdetect/fish.vim]], true)
-vim.cmd [[source /Users/jethros/.local/share/nvim/site/pack/packer/opt/vim-fish/ftdetect/fish.vim]]
-time([[Sourcing ftdetect script at: /Users/jethros/.local/share/nvim/site/pack/packer/opt/vim-fish/ftdetect/fish.vim]], false)
 time([[Sourcing ftdetect script at: /Users/jethros/.local/share/nvim/site/pack/packer/opt/vim-markdown/ftdetect/markdown.vim]], true)
 vim.cmd [[source /Users/jethros/.local/share/nvim/site/pack/packer/opt/vim-markdown/ftdetect/markdown.vim]]
 time([[Sourcing ftdetect script at: /Users/jethros/.local/share/nvim/site/pack/packer/opt/vim-markdown/ftdetect/markdown.vim]], false)
@@ -372,6 +369,9 @@ time([[Sourcing ftdetect script at: /Users/jethros/.local/share/nvim/site/pack/p
 time([[Sourcing ftdetect script at: /Users/jethros/.local/share/nvim/site/pack/packer/opt/vim-toml/ftdetect/toml.vim]], true)
 vim.cmd [[source /Users/jethros/.local/share/nvim/site/pack/packer/opt/vim-toml/ftdetect/toml.vim]]
 time([[Sourcing ftdetect script at: /Users/jethros/.local/share/nvim/site/pack/packer/opt/vim-toml/ftdetect/toml.vim]], false)
+time([[Sourcing ftdetect script at: /Users/jethros/.local/share/nvim/site/pack/packer/opt/vim-fish/ftdetect/fish.vim]], true)
+vim.cmd [[source /Users/jethros/.local/share/nvim/site/pack/packer/opt/vim-fish/ftdetect/fish.vim]]
+time([[Sourcing ftdetect script at: /Users/jethros/.local/share/nvim/site/pack/packer/opt/vim-fish/ftdetect/fish.vim]], false)
 vim.cmd("augroup END")
 if should_profile then save_profiles() end
 
