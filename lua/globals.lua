@@ -68,7 +68,7 @@ g.markdown_folding = 1
 -- https://quinoa42.github.io/en/oceanus/neovim-python/
 local pyenv_root = os.getenv('PYENV_ROOT')
 g.python_host_prog = pyenv_root .. '/versions/neovim2/bin/python'
-g.python3_host_prog = pyenv_root .. '/versions/py3/bin/python'
+g.python3_host_prog = pyenv_root .. '/versions/neovim3/bin/python'
 
 
 -- uncomment this out if you are experiencing issues with nvim-tree.lua
