@@ -29,23 +29,26 @@ opt.updatetime = 250            -- update interval for gitsigns
 
 -- Time out on key codes but not mappings.
 -- Basically this makes terminal Vim work sanely.
-opt.timeoutlen = 300
+opt.timeoutlen = 350
 -- opt.notimeout = true
 -- opt.ttimeout = true
 -- opt.ttimeoutlen = 10
 -- opt.timeoutlen = 300  -- http://stackoverflow.com/questions/2158516/delay-before-o-opens-a-new-line
 
-
 opt.background = "dark"
 opt.whichwrap:append("<>hl")
 opt.pumheight = 20
 
+opt.foldmethod = "manual"
 -- opt.nofoldenable
 -- foldmethod=marker,  manual
-opt.foldmethod = "marker"       -- Only fold on marks
+-- opt.foldmethod = "marker"       -- Only fold on marks
+-- opt.foldmethod = 'expr'
+-- opt.foldexpr = 'nvim_treesitter#foldexpr()'
+
 -- Permanent undo
 opt.undofile = true
-opt.undodir = "/tmp"
+opt.undodir = vim.fn.getenv("HOME") .. "/.vimdid"
 
 vim.cmd "set wildcharm=<Tab>"
 

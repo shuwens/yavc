@@ -119,7 +119,10 @@ require("packer").startup(function(use)
   use({ "stephpy/vim-yaml", ft = 'yaml', opt = true })
   use({ "cespare/vim-toml", ft = 'toml', opt = true })
   use({ "dag/vim-fish", ft = 'fish', opt = true })
-  use({ "jceb/vim-orgmode", ft = 'org', opt = true })
+  use({'nvim-orgmode/orgmode', config = function()
+        require('orgmode').setup{}
+      end
+    })
   use({ "plasticboy/vim-markdown", ft = 'markdown' ,opt = true })
   use({ "mzlogin/vim-markdown-toc", ft = 'markdown', opt = true })
   use("alvan/vim-closetag")

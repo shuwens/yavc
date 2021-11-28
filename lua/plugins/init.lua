@@ -14,6 +14,7 @@ require("plugins.which-key")
 require("plugins.misc")
 -- Treesitter configurations
 require("plugins.tree-sitter")
+require("plugins.orgmode")
 -- Error finder configurations
 require("plugins.trouble")
 -- Project management

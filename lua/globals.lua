@@ -62,7 +62,7 @@ g.vim_markdown_frontmatter = 1
 g.vim_markdown_math = 1
 
 -- Base markdown settings (tpope)
-g.markdown_folding = 1
+g.markdown_folding = 0
 
 -- Python
 -- https://quinoa42.github.io/en/oceanus/neovim-python/

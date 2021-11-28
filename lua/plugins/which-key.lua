@@ -76,7 +76,7 @@ wk.register({
     c = "Cursor Diagnostics",
     d = "Line Diagnostics",
   },
-  e = "Show Line diagnostics",
+  o = "Show Line diagnostics",
   -- fc-commands, fz-current_buff_fuzzy_find, fs-workspacesymols;
   f = {
     name = "+Search",
