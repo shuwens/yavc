@@ -109,7 +109,7 @@ local languages = {
     html = {prettier},
     scss = {prettier},
     css = {prettier},
-    -- markdown = {markdownlint},
+    markdown = {markdownlint},
     python = {isort, yapf},
     sh = {shfmt, shellcheck}
 }
