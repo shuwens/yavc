@@ -1,5 +1,7 @@
 local g = vim.g
 
+vim.cmd "colorscheme codedark"
+
 -- Ignore for indent levels
 g.indent_blankline_filetype_exclude = {
   "help",
@@ -14,8 +16,11 @@ g.indent_blankline_buftype_exclude = { "terminal", "nofile" }
 g.mapleader = " "
 g.maplocalleader = ","
 
--- extra plugins to install (must only be strings)
-g.kyoto_extra_plugins = {}
+-- mini map
+g.minimap_width = 10
+g.minimap_auto_start = 1
+g.minimap_auto_start_win_enter = 1
+g.minimap_close_filetypes = {'dashboard', 'gitcommit'}
 
 -- Configs for LSPs
 g.lsp_config = {
@@ -49,10 +54,6 @@ g.rustfmt_fail_silently = 0
 --g['rust_keep_autopairs_default ']= 1
 g.rust_clip_command = 'xclip -selection clipboard'
 
--- Follow Rust code style rules
-vim.cmd "au Filetype rust source ~/.config/nvim/scripts/spacetab.vim"
-vim.cmd "au Filetype rust set colorcolumn=100"
-
 -- Markdown
 g.vim_markdown_conceal = 0
 -- g.vim_markdown_folding_disabled = 1
@@ -70,12 +71,9 @@ local pyenv_root = os.getenv('PYENV_ROOT')
 g.python_host_prog = pyenv_root .. '/versions/neovim2/bin/python'
 g.python3_host_prog = pyenv_root .. '/versions/neovim3/bin/python'
 
-
--- uncomment this out if you are experiencing issues with nvim-tree.lua
--- g.nvim_tree_git_hl = 0
--- g.nvim_tree_gitignore = 0
--- g.nvim_tree_show_icons = {
---   git = 0,
---   folders = 1,
---   files = 1
--- }
+-- vimtex
+g.tex_flavor = 'latex'
+g.vimtex_view_method = 'zathura'
+g.vimtex_quickfix_mode = 0
+vim.cmd "set conceallevel=1"
+g.tex_conceal = 'abdmg'

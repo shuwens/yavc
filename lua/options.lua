@@ -39,8 +39,8 @@ opt.background = "dark"
 opt.whichwrap:append("<>hl")
 opt.pumheight = 20
 
-opt.foldmethod = "manual"
--- opt.nofoldenable
+vim.cmd "set nofoldenable"
+-- opt.foldmethod = "manual"
 -- foldmethod=marker,  manual
 -- opt.foldmethod = "marker"       -- Only fold on marks
 -- opt.foldmethod = 'expr'
@@ -142,6 +142,8 @@ opt.shortmess = opt.shortmess + "c"     -- don't give |ins-completion-menu| mess
 -- noinsert: Do not insert text until a selection is made
 -- noselect: Do not select, force user to select one from the menu
 opt.completeopt = "menuone,noinsert,noselect"
+opt.completeopt = "menu,menuone,noselect"
+vim.cmd "let g:completion_matching_strategy_list = ['exact', 'substring', 'fuzzy']"
 
 -- Make it so there are always ten lines below my cursor
 opt.scrolloff = 10

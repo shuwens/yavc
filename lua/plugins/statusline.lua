@@ -97,7 +97,6 @@ components.active[1][1] = {
     fg = colors.statusline_bg,
     bg = colors.nord_blue,
   },
-
   right_sep = {
     str = statusline_style.right,
     hl = {

@@ -51,58 +51,56 @@ require("packer").startup(function(use)
   use("wbthomason/packer.nvim")
 
   -- VIM enhancements
-  use("ciaranm/securemodelines")
-  use("tpope/vim-commentary")
   use({"tpope/vim-dispatch", opt = true, cmd = {'Dispatch', 'Make', 'Focus', 'Start'}})
   use("tpope/vim-fugitive")
-  use("tpope/vim-sleuth")						-- Auto configure indentation
+  use("tpope/vim-sleuth")			    -- Auto configure indentation
   use("tpope/vim-surround")
   use("gpanders/editorconfig.nvim")
-  use("airblade/vim-rooter")
+  use({
+    'numToStr/Comment.nvim',
+    config = function()
+        require('Comment').setup()
+    end
+  })
 
   -- GUI enhancements
-  use("machakann/vim-highlightedyank")		-- highlight yank
-  use("jaxbot/semantic-highlight.vim")		-- different color for every variable
+  use("machakann/vim-highlightedyank")		    -- highlight yank
+  use("jaxbot/semantic-highlight.vim")		    -- different color for every variable
   use("ntpeters/vim-better-whitespace")
   use("p00f/nvim-ts-rainbow")
   use("lukas-reineke/indent-blankline.nvim")
-  use("famiu/feline.nvim")
-  use("kyazdani42/nvim-web-devicons")
-  use({"NvChad/nvim-base16.lua",})
+  use({ 'wfxr/minimap.vim', run = ':!cargo install --locked code-minimap' })
+  use({"tomasiser/vim-code-dark",})
+  use({
+    'nvim-lualine/lualine.nvim',
+    requires = {'kyazdani42/nvim-web-devicons', opt = true}
+  })
   use({
     'lewis6991/gitsigns.nvim', requires = { 'nvim-lua/plenary.nvim' },
     config = function() require('gitsigns').setup() end
   })
 
   -- nvim tools
+  use({ 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' })
   use("rhysd/committia.vim")					-- better git commit layout
   use({"folke/trouble.nvim", requires = "kyazdani42/nvim-web-devicons"})
   use("kdheepak/lazygit.nvim")
   use("windwp/nvim-autopairs")
-  use("ahmedkhalf/project.nvim")
   use("folke/which-key.nvim")
-  use("liuchengxu/vista.vim")
-  use({ 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' })
-  use({
-    "kyazdani42/nvim-tree.lua",
-    opt = true,
-    cmd = { "NvimTreeToggle" },
-    requires = "kyazdani42/nvim-web-devicons",
-    config = function()
-      local tree = require('nvim-tree')
-      tree.setup({})
-    end
+  use({ 'ibhagwan/fzf-lua',
+    requires = { 'kyazdani42/nvim-web-devicons' }
+  })
+  use({ 'junegunn/fzf.vim',
+    requires = { 'airblade/vim-rooter' },
+    { 'junegunn/fzf', run = './install --bin', }
   })
 
   -- LSP support
-  use("glepnir/lspsaga.nvim")
-  use("williamboman/nvim-lsp-installer")
-  use("nvim-lua/lsp_extensions.nvim")			-- lsp signatures
   use("neovim/nvim-lspconfig")
-  use({
-    "nvim-telescope/telescope.nvim",
-    requires = { { "nvim-lua/popup.nvim" }, { "nvim-lua/plenary.nvim" } },
-  })
+  use("glepnir/lspsaga.nvim")
+  use("nvim-lua/lsp_extensions.nvim")
+  use("ray-x/lsp_signature.nvim")               -- lsp signatures
+  use("williamboman/nvim-lsp-installer")
 
   -- Coq
   use({
@@ -129,10 +127,6 @@ require("packer").startup(function(use)
 
   -- Rust
   -- use("rust-lang/rust.vim")
-  -- use({'simrat39/rust-tools.nvim', after = 'nvim-lspconfig',
-  -- 	ft = { 'rust' }, event = { 'BufEnter Cargo.toml' },
-  -- 	config = function() require'plugins.rust-tools' end })
-  -- use({ "simrat39/rust-tools.nvim", ft = 'rust', config = 'require(plugins.rust-tools)', opt = true })
   use("simrat39/rust-tools.nvim")
   -- C++ and Clang
   --use("octol/vim-cpp-enhanced-highlight', {'for': ['cpp'] }
@@ -143,27 +137,6 @@ require("packer").startup(function(use)
 
   -- LaTeX
   --https://www.reddit.com/r/neovim/comments/idthcb/vimtex_vs_texlab/
-  --use("lervag/vimtex', { 'for': ['tex', 'latex'] }
+  use({"lervag/vimtex", ft = {'tex', 'latex'} })
   use({ "rhysd/vim-grammarous", ft = {'tex', 'latex', 'markdown'} })
-
-  -- Productivity tools
-  use {'junegunn/fzf.vim', requires = {{'junegunn/fzf'}}}
-  use {
-    'alok/notational-fzf-vim',
-    config = function() require('plugins.notational') end,
-    cond = function() vim.fn.isdirectory(vim.fn.expand("~/Dropbox/GS/notes"))  end
-  }
-
-  -- use({ "godlygeek/tabular" })
-  -- use({ "samgriesemer/vim-roam-md" })
-  -- use({ "dkarter/bullets.vim" })
-  -- use({
-  -- 	"samgriesemer/vim-roam",
-  -- 	requires = {
-  -- 		{ "samgriesemer/wiki.vim" },
-  -- 		{ "skywind3000/asyncrun.vim" },
-  -- 		{ "samgriesemer/vim-roam-search" },
-  -- 		{ "samgriesemer/vim-roam-task" },
-  -- 	},
-  -- })
 end)

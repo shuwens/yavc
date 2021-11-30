@@ -8,3 +8,4 @@ mthesaur.txt
 *.sug
 .mypy_cache
 .DS_Store
+tags

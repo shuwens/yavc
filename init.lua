@@ -16,9 +16,6 @@ require('mappings')
 
 --█▓▒░ Plugin configurations
 require('plugins')
+
 --█▓▒░ Langauge server configuration
 require('lsp')
---█▓▒░  Colors
-require('colors')
-
--- cmd("source $HOME/.config/nvim/lib/roam.vim")
