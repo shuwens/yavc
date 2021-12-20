@@ -20,10 +20,10 @@ g.coq_settings = {
   },
 
   keymap = {
-    recommended     = false,
-    manual_complete = '<c-space>',
-    bigger_preview  = '<c-l>',
-    jump_to_mark    = '<c-w>'
+    recommended = true,
+    -- manual_complete = '<c-space>',
+    -- bigger_preview  = '<c-l>',
+    -- jump_to_mark    = '<c-w>'
   },
 
   display = {
