@@ -85,7 +85,7 @@ api.nvim_set_keymap('n', g.mapleader..'n', 'ct-', { noremap = true, silent = fal
 api.nvim_set_keymap('n', '<C-i>', 'C', opts)
 -- api.nvim_set_keymap('n', g.mapleader..'i', 'C', opts)
 
-api.nvim_set_keymap('n', ';', ':', opts)
+api.nvim_set_keymap('n', ';', ':', { noremap = true, silent = false })
 api.nvim_set_keymap('n', 'q', '<nop>', opts)
 
 -- Move by line
