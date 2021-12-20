@@ -83,7 +83,6 @@ require("packer").startup(function(use)
   -- nvim tools
   use({ 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' })
   use("rhysd/committia.vim")					-- better git commit layout
-  use({"folke/trouble.nvim", requires = "kyazdani42/nvim-web-devicons"})
   use("kdheepak/lazygit.nvim")
   use("windwp/nvim-autopairs")
   use("folke/which-key.nvim")
@@ -97,10 +96,15 @@ require("packer").startup(function(use)
 
   -- LSP support
   use("neovim/nvim-lspconfig")
-  use("glepnir/lspsaga.nvim")
-  use("nvim-lua/lsp_extensions.nvim")
-  use("ray-x/lsp_signature.nvim")               -- lsp signatures
   use("williamboman/nvim-lsp-installer")
+
+  -- LSP utils
+  use("nvim-lua/lsp_extensions.nvim")           -- info and inlay hints
+  use("ray-x/lsp_signature.nvim")               -- function signatures
+  -- use("nvim-lua/lsp-status.nvim")               -- status
+
+  -- unsure
+  use({"folke/trouble.nvim", requires = "kyazdani42/nvim-web-devicons"})
 
   -- Coq
   use({

@@ -4,18 +4,18 @@ local opt = vim.opt
 opt.nu = true
 opt.rnu = true
 
---█▓▒░ Load plugins
+-- █▓▒░ Load plugins
 require('plugin-list')
 
---█▓▒░ General configurations
+-- █▓▒░ General configurations
 require('options')
 require('globals')
 
---█▓▒░ key mappings
+-- █▓▒░ key mappings
 require('mappings')
 
---█▓▒░ Plugin configurations
+-- █▓▒░ Plugin configurations
 require('plugins')
 
---█▓▒░ Langauge server configuration
+-- █▓▒░ Langauge server configuration
 require('lsp')

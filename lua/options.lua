@@ -141,8 +141,8 @@ opt.shortmess = opt.shortmess + "c"     -- don't give |ins-completion-menu| mess
 -- menuone: popup even when there's only one match
 -- noinsert: Do not insert text until a selection is made
 -- noselect: Do not select, force user to select one from the menu
-opt.completeopt = "menuone,noinsert,noselect"
-opt.completeopt = "menu,menuone,noselect"
+-- opt.completeopt = "menuone,noinsert,noselect"
+opt.completeopt = { "menu", "menuone", "noselect" }
 vim.cmd "let g:completion_matching_strategy_list = ['exact', 'substring', 'fuzzy']"
 
 -- Make it so there are always ten lines below my cursor
