@@ -44,8 +44,8 @@ local function save_profiles(threshold)
 end
 
 time([[Luarocks path setup]], true)
-local package_path_str = "/home/jethros/.cache/nvim/packer_hererocks/2.1.0-beta3/share/lua/5.1/?.lua;/home/jethros/.cache/nvim/packer_hererocks/2.1.0-beta3/share/lua/5.1/?/init.lua;/home/jethros/.cache/nvim/packer_hererocks/2.1.0-beta3/lib/luarocks/rocks-5.1/?.lua;/home/jethros/.cache/nvim/packer_hererocks/2.1.0-beta3/lib/luarocks/rocks-5.1/?/init.lua"
-local install_cpath_pattern = "/home/jethros/.cache/nvim/packer_hererocks/2.1.0-beta3/lib/lua/5.1/?.so"
+local package_path_str = "/Users/jethros/.cache/nvim/packer_hererocks/2.1.0-beta3/share/lua/5.1/?.lua;/Users/jethros/.cache/nvim/packer_hererocks/2.1.0-beta3/share/lua/5.1/?/init.lua;/Users/jethros/.cache/nvim/packer_hererocks/2.1.0-beta3/lib/luarocks/rocks-5.1/?.lua;/Users/jethros/.cache/nvim/packer_hererocks/2.1.0-beta3/lib/luarocks/rocks-5.1/?/init.lua"
+local install_cpath_pattern = "/Users/jethros/.cache/nvim/packer_hererocks/2.1.0-beta3/lib/lua/5.1/?.so"
 if not string.find(package.path, package_path_str, 1, true) then
   package.path = package.path .. ';' .. package_path_str
 end
@@ -72,164 +72,159 @@ _G.packer_plugins = {
   ["Comment.nvim"] = {
     config = { "\27LJ\2\n5\0\0\3\0\3\0\0066\0\0\0'\2\1\0B\0\2\0029\0\2\0B\0\1\1K\0\1\0\nsetup\fComment\frequire\0" },
     loaded = true,
-    path = "/home/jethros/.local/share/nvim/site/pack/packer/start/Comment.nvim",
+    path = "/Users/jethros/.local/share/nvim/site/pack/packer/start/Comment.nvim",
     url = "https://github.com/numToStr/Comment.nvim"
   },
   ["committia.vim"] = {
     loaded = true,
-    path = "/home/jethros/.local/share/nvim/site/pack/packer/start/committia.vim",
+    path = "/Users/jethros/.local/share/nvim/site/pack/packer/start/committia.vim",
     url = "https://github.com/rhysd/committia.vim"
   },
   ["coq.artifacts"] = {
     loaded = true,
-    path = "/home/jethros/.local/share/nvim/site/pack/packer/start/coq.artifacts",
+    path = "/Users/jethros/.local/share/nvim/site/pack/packer/start/coq.artifacts",
     url = "https://github.com/ms-jpq/coq.artifacts"
   },
   ["coq.thirdparty"] = {
     loaded = true,
-    path = "/home/jethros/.local/share/nvim/site/pack/packer/start/coq.thirdparty",
+    path = "/Users/jethros/.local/share/nvim/site/pack/packer/start/coq.thirdparty",
     url = "https://github.com/ms-jpq/coq.thirdparty"
   },
   coq_nvim = {
     loaded = true,
-    path = "/home/jethros/.local/share/nvim/site/pack/packer/start/coq_nvim",
+    path = "/Users/jethros/.local/share/nvim/site/pack/packer/start/coq_nvim",
     url = "https://github.com/ms-jpq/coq_nvim"
   },
   ["editorconfig.nvim"] = {
     loaded = true,
-    path = "/home/jethros/.local/share/nvim/site/pack/packer/start/editorconfig.nvim",
+    path = "/Users/jethros/.local/share/nvim/site/pack/packer/start/editorconfig.nvim",
     url = "https://github.com/gpanders/editorconfig.nvim"
-  },
-  fzf = {
-    loaded = true,
-    path = "/home/jethros/.local/share/nvim/site/pack/packer/start/fzf",
-    url = "https://github.com/junegunn/fzf"
-  },
-  ["fzf-lua"] = {
-    loaded = true,
-    path = "/home/jethros/.local/share/nvim/site/pack/packer/start/fzf-lua",
-    url = "https://github.com/ibhagwan/fzf-lua"
-  },
-  ["fzf.vim"] = {
-    loaded = true,
-    path = "/home/jethros/.local/share/nvim/site/pack/packer/start/fzf.vim",
-    url = "https://github.com/junegunn/fzf.vim"
   },
   ["gitsigns.nvim"] = {
     config = { "\27LJ\2\n6\0\0\3\0\3\0\0066\0\0\0'\2\1\0B\0\2\0029\0\2\0B\0\1\1K\0\1\0\nsetup\rgitsigns\frequire\0" },
     loaded = true,
-    path = "/home/jethros/.local/share/nvim/site/pack/packer/start/gitsigns.nvim",
+    path = "/Users/jethros/.local/share/nvim/site/pack/packer/start/gitsigns.nvim",
     url = "https://github.com/lewis6991/gitsigns.nvim"
   },
   ["indent-blankline.nvim"] = {
     loaded = true,
-    path = "/home/jethros/.local/share/nvim/site/pack/packer/start/indent-blankline.nvim",
+    path = "/Users/jethros/.local/share/nvim/site/pack/packer/start/indent-blankline.nvim",
     url = "https://github.com/lukas-reineke/indent-blankline.nvim"
   },
   ["lazygit.nvim"] = {
     loaded = true,
-    path = "/home/jethros/.local/share/nvim/site/pack/packer/start/lazygit.nvim",
+    path = "/Users/jethros/.local/share/nvim/site/pack/packer/start/lazygit.nvim",
     url = "https://github.com/kdheepak/lazygit.nvim"
   },
   ["lsp_extensions.nvim"] = {
     loaded = true,
-    path = "/home/jethros/.local/share/nvim/site/pack/packer/start/lsp_extensions.nvim",
+    path = "/Users/jethros/.local/share/nvim/site/pack/packer/start/lsp_extensions.nvim",
     url = "https://github.com/nvim-lua/lsp_extensions.nvim"
   },
   ["lsp_signature.nvim"] = {
     loaded = true,
-    path = "/home/jethros/.local/share/nvim/site/pack/packer/start/lsp_signature.nvim",
+    path = "/Users/jethros/.local/share/nvim/site/pack/packer/start/lsp_signature.nvim",
     url = "https://github.com/ray-x/lsp_signature.nvim"
   },
   ["lua-dev.nvim"] = {
     loaded = true,
-    path = "/home/jethros/.local/share/nvim/site/pack/packer/start/lua-dev.nvim",
+    path = "/Users/jethros/.local/share/nvim/site/pack/packer/start/lua-dev.nvim",
     url = "https://github.com/folke/lua-dev.nvim"
   },
   ["lualine.nvim"] = {
     loaded = true,
-    path = "/home/jethros/.local/share/nvim/site/pack/packer/start/lualine.nvim",
+    path = "/Users/jethros/.local/share/nvim/site/pack/packer/start/lualine.nvim",
     url = "https://github.com/nvim-lualine/lualine.nvim"
   },
   ["minimap.vim"] = {
     loaded = true,
-    path = "/home/jethros/.local/share/nvim/site/pack/packer/start/minimap.vim",
+    path = "/Users/jethros/.local/share/nvim/site/pack/packer/start/minimap.vim",
     url = "https://github.com/wfxr/minimap.vim"
   },
   ["nvim-autopairs"] = {
     loaded = true,
-    path = "/home/jethros/.local/share/nvim/site/pack/packer/start/nvim-autopairs",
+    path = "/Users/jethros/.local/share/nvim/site/pack/packer/start/nvim-autopairs",
     url = "https://github.com/windwp/nvim-autopairs"
   },
   ["nvim-lsp-installer"] = {
     loaded = true,
-    path = "/home/jethros/.local/share/nvim/site/pack/packer/start/nvim-lsp-installer",
+    path = "/Users/jethros/.local/share/nvim/site/pack/packer/start/nvim-lsp-installer",
     url = "https://github.com/williamboman/nvim-lsp-installer"
   },
   ["nvim-lspconfig"] = {
     loaded = true,
-    path = "/home/jethros/.local/share/nvim/site/pack/packer/start/nvim-lspconfig",
+    path = "/Users/jethros/.local/share/nvim/site/pack/packer/start/nvim-lspconfig",
     url = "https://github.com/neovim/nvim-lspconfig"
   },
   ["nvim-treesitter"] = {
     loaded = true,
-    path = "/home/jethros/.local/share/nvim/site/pack/packer/start/nvim-treesitter",
+    path = "/Users/jethros/.local/share/nvim/site/pack/packer/start/nvim-treesitter",
     url = "https://github.com/nvim-treesitter/nvim-treesitter"
   },
   ["nvim-ts-rainbow"] = {
     loaded = true,
-    path = "/home/jethros/.local/share/nvim/site/pack/packer/start/nvim-ts-rainbow",
+    path = "/Users/jethros/.local/share/nvim/site/pack/packer/start/nvim-ts-rainbow",
     url = "https://github.com/p00f/nvim-ts-rainbow"
   },
   ["nvim-web-devicons"] = {
     loaded = true,
-    path = "/home/jethros/.local/share/nvim/site/pack/packer/start/nvim-web-devicons",
+    path = "/Users/jethros/.local/share/nvim/site/pack/packer/start/nvim-web-devicons",
     url = "https://github.com/kyazdani42/nvim-web-devicons"
   },
   orgmode = {
     config = { "\27LJ\2\n9\0\0\3\0\3\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0004\2\0\0B\0\2\1K\0\1\0\nsetup\forgmode\frequire\0" },
     loaded = true,
-    path = "/home/jethros/.local/share/nvim/site/pack/packer/start/orgmode",
+    path = "/Users/jethros/.local/share/nvim/site/pack/packer/start/orgmode",
     url = "https://github.com/nvim-orgmode/orgmode"
   },
   ["packer.nvim"] = {
     loaded = true,
-    path = "/home/jethros/.local/share/nvim/site/pack/packer/start/packer.nvim",
+    path = "/Users/jethros/.local/share/nvim/site/pack/packer/start/packer.nvim",
     url = "https://github.com/wbthomason/packer.nvim"
   },
   ["plenary.nvim"] = {
     loaded = true,
-    path = "/home/jethros/.local/share/nvim/site/pack/packer/start/plenary.nvim",
+    path = "/Users/jethros/.local/share/nvim/site/pack/packer/start/plenary.nvim",
     url = "https://github.com/nvim-lua/plenary.nvim"
   },
   ["rust-tools.nvim"] = {
     loaded = true,
-    path = "/home/jethros/.local/share/nvim/site/pack/packer/start/rust-tools.nvim",
+    path = "/Users/jethros/.local/share/nvim/site/pack/packer/start/rust-tools.nvim",
     url = "https://github.com/simrat39/rust-tools.nvim"
   },
   ["semantic-highlight.vim"] = {
     loaded = true,
-    path = "/home/jethros/.local/share/nvim/site/pack/packer/start/semantic-highlight.vim",
+    path = "/Users/jethros/.local/share/nvim/site/pack/packer/start/semantic-highlight.vim",
     url = "https://github.com/jaxbot/semantic-highlight.vim"
+  },
+  ["telescope-fzy-native.nvim"] = {
+    loaded = true,
+    path = "/Users/jethros/.local/share/nvim/site/pack/packer/start/telescope-fzy-native.nvim",
+    url = "https://github.com/nvim-telescope/telescope-fzy-native.nvim"
+  },
+  ["telescope.nvim"] = {
+    loaded = true,
+    path = "/Users/jethros/.local/share/nvim/site/pack/packer/start/telescope.nvim",
+    url = "https://github.com/nvim-telescope/telescope.nvim"
   },
   ["trouble.nvim"] = {
     loaded = true,
-    path = "/home/jethros/.local/share/nvim/site/pack/packer/start/trouble.nvim",
+    path = "/Users/jethros/.local/share/nvim/site/pack/packer/start/trouble.nvim",
     url = "https://github.com/folke/trouble.nvim"
   },
   ["vim-better-whitespace"] = {
     loaded = true,
-    path = "/home/jethros/.local/share/nvim/site/pack/packer/start/vim-better-whitespace",
+    path = "/Users/jethros/.local/share/nvim/site/pack/packer/start/vim-better-whitespace",
     url = "https://github.com/ntpeters/vim-better-whitespace"
   },
   ["vim-closetag"] = {
     loaded = true,
-    path = "/home/jethros/.local/share/nvim/site/pack/packer/start/vim-closetag",
+    path = "/Users/jethros/.local/share/nvim/site/pack/packer/start/vim-closetag",
     url = "https://github.com/alvan/vim-closetag"
   },
   ["vim-code-dark"] = {
     loaded = true,
-    path = "/home/jethros/.local/share/nvim/site/pack/packer/start/vim-code-dark",
+    path = "/Users/jethros/.local/share/nvim/site/pack/packer/start/vim-code-dark",
     url = "https://github.com/tomasiser/vim-code-dark"
   },
   ["vim-dispatch"] = {
@@ -237,86 +232,90 @@ _G.packer_plugins = {
     loaded = false,
     needs_bufread = false,
     only_cond = false,
-    path = "/home/jethros/.local/share/nvim/site/pack/packer/opt/vim-dispatch",
+    path = "/Users/jethros/.local/share/nvim/site/pack/packer/opt/vim-dispatch",
     url = "https://github.com/tpope/vim-dispatch"
   },
   ["vim-fish"] = {
     loaded = false,
     needs_bufread = true,
     only_cond = false,
-    path = "/home/jethros/.local/share/nvim/site/pack/packer/opt/vim-fish",
+    path = "/Users/jethros/.local/share/nvim/site/pack/packer/opt/vim-fish",
     url = "https://github.com/dag/vim-fish"
   },
   ["vim-fugitive"] = {
     loaded = true,
-    path = "/home/jethros/.local/share/nvim/site/pack/packer/start/vim-fugitive",
+    path = "/Users/jethros/.local/share/nvim/site/pack/packer/start/vim-fugitive",
     url = "https://github.com/tpope/vim-fugitive"
   },
   ["vim-grammarous"] = {
     loaded = false,
     needs_bufread = false,
     only_cond = false,
-    path = "/home/jethros/.local/share/nvim/site/pack/packer/opt/vim-grammarous",
+    path = "/Users/jethros/.local/share/nvim/site/pack/packer/opt/vim-grammarous",
     url = "https://github.com/rhysd/vim-grammarous"
   },
   ["vim-highlightedyank"] = {
     loaded = true,
-    path = "/home/jethros/.local/share/nvim/site/pack/packer/start/vim-highlightedyank",
+    path = "/Users/jethros/.local/share/nvim/site/pack/packer/start/vim-highlightedyank",
     url = "https://github.com/machakann/vim-highlightedyank"
   },
   ["vim-markdown"] = {
     loaded = false,
     needs_bufread = true,
     only_cond = false,
-    path = "/home/jethros/.local/share/nvim/site/pack/packer/opt/vim-markdown",
+    path = "/Users/jethros/.local/share/nvim/site/pack/packer/opt/vim-markdown",
     url = "https://github.com/plasticboy/vim-markdown"
   },
   ["vim-markdown-toc"] = {
     loaded = false,
     needs_bufread = true,
     only_cond = false,
-    path = "/home/jethros/.local/share/nvim/site/pack/packer/opt/vim-markdown-toc",
+    path = "/Users/jethros/.local/share/nvim/site/pack/packer/opt/vim-markdown-toc",
     url = "https://github.com/mzlogin/vim-markdown-toc"
   },
   ["vim-sleuth"] = {
     loaded = true,
-    path = "/home/jethros/.local/share/nvim/site/pack/packer/start/vim-sleuth",
+    path = "/Users/jethros/.local/share/nvim/site/pack/packer/start/vim-sleuth",
     url = "https://github.com/tpope/vim-sleuth"
   },
   ["vim-surround"] = {
     loaded = true,
-    path = "/home/jethros/.local/share/nvim/site/pack/packer/start/vim-surround",
+    path = "/Users/jethros/.local/share/nvim/site/pack/packer/start/vim-surround",
     url = "https://github.com/tpope/vim-surround"
   },
   ["vim-toml"] = {
     loaded = false,
     needs_bufread = true,
     only_cond = false,
-    path = "/home/jethros/.local/share/nvim/site/pack/packer/opt/vim-toml",
+    path = "/Users/jethros/.local/share/nvim/site/pack/packer/opt/vim-toml",
     url = "https://github.com/cespare/vim-toml"
   },
   ["vim-yaml"] = {
     loaded = false,
     needs_bufread = true,
     only_cond = false,
-    path = "/home/jethros/.local/share/nvim/site/pack/packer/opt/vim-yaml",
+    path = "/Users/jethros/.local/share/nvim/site/pack/packer/opt/vim-yaml",
     url = "https://github.com/stephpy/vim-yaml"
   },
   vimtex = {
     loaded = false,
     needs_bufread = true,
     only_cond = false,
-    path = "/home/jethros/.local/share/nvim/site/pack/packer/opt/vimtex",
+    path = "/Users/jethros/.local/share/nvim/site/pack/packer/opt/vimtex",
     url = "https://github.com/lervag/vimtex"
   },
   ["which-key.nvim"] = {
     loaded = true,
-    path = "/home/jethros/.local/share/nvim/site/pack/packer/start/which-key.nvim",
+    path = "/Users/jethros/.local/share/nvim/site/pack/packer/start/which-key.nvim",
     url = "https://github.com/folke/which-key.nvim"
   }
 }
 
 time([[Defining packer_plugins]], false)
+-- Config for: orgmode
+time([[Config for orgmode]], true)
+try_loadstring("\27LJ\2\n9\0\0\3\0\3\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0004\2\0\0B\0\2\1K\0\1\0\nsetup\forgmode\frequire\0", "config", "orgmode")
+time([[Config for orgmode]], false)
 -- Config for: gitsigns.nvim
 time([[Config for gitsigns.nvim]], true)
 try_loadstring("\27LJ\2\n6\0\0\3\0\3\0\0066\0\0\0'\2\1\0B\0\2\0029\0\2\0B\0\1\1K\0\1\0\nsetup\rgitsigns\frequire\0", "config", "gitsigns.nvim")
@@ -325,53 +324,49 @@ time([[Config for gitsigns.nvim]], false)
 time([[Config for Comment.nvim]], true)
 try_loadstring("\27LJ\2\n5\0\0\3\0\3\0\0066\0\0\0'\2\1\0B\0\2\0029\0\2\0B\0\1\1K\0\1\0\nsetup\fComment\frequire\0", "config", "Comment.nvim")
 time([[Config for Comment.nvim]], false)
--- Config for: orgmode
-time([[Config for orgmode]], true)
-try_loadstring("\27LJ\2\n9\0\0\3\0\3\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0004\2\0\0B\0\2\1K\0\1\0\nsetup\forgmode\frequire\0", "config", "orgmode")
-time([[Config for orgmode]], false)
 
 -- Command lazy-loads
 time([[Defining lazy-load commands]], true)
-pcall(vim.cmd, [[command -nargs=* -range -bang -complete=file Dispatch lua require("packer.load")({'vim-dispatch'}, { cmd = "Dispatch", l1 = <line1>, l2 = <line2>, bang = <q-bang>, args = <q-args>, mods = "<mods>" }, _G.packer_plugins)]])
 pcall(vim.cmd, [[command -nargs=* -range -bang -complete=file Make lua require("packer.load")({'vim-dispatch'}, { cmd = "Make", l1 = <line1>, l2 = <line2>, bang = <q-bang>, args = <q-args>, mods = "<mods>" }, _G.packer_plugins)]])
 pcall(vim.cmd, [[command -nargs=* -range -bang -complete=file Focus lua require("packer.load")({'vim-dispatch'}, { cmd = "Focus", l1 = <line1>, l2 = <line2>, bang = <q-bang>, args = <q-args>, mods = "<mods>" }, _G.packer_plugins)]])
 pcall(vim.cmd, [[command -nargs=* -range -bang -complete=file Start lua require("packer.load")({'vim-dispatch'}, { cmd = "Start", l1 = <line1>, l2 = <line2>, bang = <q-bang>, args = <q-args>, mods = "<mods>" }, _G.packer_plugins)]])
+pcall(vim.cmd, [[command -nargs=* -range -bang -complete=file Dispatch lua require("packer.load")({'vim-dispatch'}, { cmd = "Dispatch", l1 = <line1>, l2 = <line2>, bang = <q-bang>, args = <q-args>, mods = "<mods>" }, _G.packer_plugins)]])
 time([[Defining lazy-load commands]], false)
 
 vim.cmd [[augroup packer_load_aucmds]]
 vim.cmd [[au!]]
   -- Filetype lazy-loads
 time([[Defining lazy-load filetype autocommands]], true)
-vim.cmd [[au FileType markdown ++once lua require("packer.load")({'vim-grammarous', 'vim-markdown', 'vim-markdown-toc'}, { ft = "markdown" }, _G.packer_plugins)]]
-vim.cmd [[au FileType yaml ++once lua require("packer.load")({'vim-yaml'}, { ft = "yaml" }, _G.packer_plugins)]]
 vim.cmd [[au FileType toml ++once lua require("packer.load")({'vim-toml'}, { ft = "toml" }, _G.packer_plugins)]]
 vim.cmd [[au FileType fish ++once lua require("packer.load")({'vim-fish'}, { ft = "fish" }, _G.packer_plugins)]]
 vim.cmd [[au FileType tex ++once lua require("packer.load")({'vimtex', 'vim-grammarous'}, { ft = "tex" }, _G.packer_plugins)]]
 vim.cmd [[au FileType latex ++once lua require("packer.load")({'vimtex', 'vim-grammarous'}, { ft = "latex" }, _G.packer_plugins)]]
+vim.cmd [[au FileType yaml ++once lua require("packer.load")({'vim-yaml'}, { ft = "yaml" }, _G.packer_plugins)]]
+vim.cmd [[au FileType markdown ++once lua require("packer.load")({'vim-markdown', 'vim-markdown-toc', 'vim-grammarous'}, { ft = "markdown" }, _G.packer_plugins)]]
 time([[Defining lazy-load filetype autocommands]], false)
 vim.cmd("augroup END")
 vim.cmd [[augroup filetypedetect]]
-time([[Sourcing ftdetect script at: /home/jethros/.local/share/nvim/site/pack/packer/opt/vimtex/ftdetect/cls.vim]], true)
-vim.cmd [[source /home/jethros/.local/share/nvim/site/pack/packer/opt/vimtex/ftdetect/cls.vim]]
-time([[Sourcing ftdetect script at: /home/jethros/.local/share/nvim/site/pack/packer/opt/vimtex/ftdetect/cls.vim]], false)
-time([[Sourcing ftdetect script at: /home/jethros/.local/share/nvim/site/pack/packer/opt/vimtex/ftdetect/tex.vim]], true)
-vim.cmd [[source /home/jethros/.local/share/nvim/site/pack/packer/opt/vimtex/ftdetect/tex.vim]]
-time([[Sourcing ftdetect script at: /home/jethros/.local/share/nvim/site/pack/packer/opt/vimtex/ftdetect/tex.vim]], false)
-time([[Sourcing ftdetect script at: /home/jethros/.local/share/nvim/site/pack/packer/opt/vimtex/ftdetect/tikz.vim]], true)
-vim.cmd [[source /home/jethros/.local/share/nvim/site/pack/packer/opt/vimtex/ftdetect/tikz.vim]]
-time([[Sourcing ftdetect script at: /home/jethros/.local/share/nvim/site/pack/packer/opt/vimtex/ftdetect/tikz.vim]], false)
-time([[Sourcing ftdetect script at: /home/jethros/.local/share/nvim/site/pack/packer/opt/vim-fish/ftdetect/fish.vim]], true)
-vim.cmd [[source /home/jethros/.local/share/nvim/site/pack/packer/opt/vim-fish/ftdetect/fish.vim]]
-time([[Sourcing ftdetect script at: /home/jethros/.local/share/nvim/site/pack/packer/opt/vim-fish/ftdetect/fish.vim]], false)
-time([[Sourcing ftdetect script at: /home/jethros/.local/share/nvim/site/pack/packer/opt/vim-markdown/ftdetect/markdown.vim]], true)
-vim.cmd [[source /home/jethros/.local/share/nvim/site/pack/packer/opt/vim-markdown/ftdetect/markdown.vim]]
-time([[Sourcing ftdetect script at: /home/jethros/.local/share/nvim/site/pack/packer/opt/vim-markdown/ftdetect/markdown.vim]], false)
-time([[Sourcing ftdetect script at: /home/jethros/.local/share/nvim/site/pack/packer/opt/vim-markdown-toc/ftdetect/markdown.vim]], true)
-vim.cmd [[source /home/jethros/.local/share/nvim/site/pack/packer/opt/vim-markdown-toc/ftdetect/markdown.vim]]
-time([[Sourcing ftdetect script at: /home/jethros/.local/share/nvim/site/pack/packer/opt/vim-markdown-toc/ftdetect/markdown.vim]], false)
-time([[Sourcing ftdetect script at: /home/jethros/.local/share/nvim/site/pack/packer/opt/vim-toml/ftdetect/toml.vim]], true)
-vim.cmd [[source /home/jethros/.local/share/nvim/site/pack/packer/opt/vim-toml/ftdetect/toml.vim]]
-time([[Sourcing ftdetect script at: /home/jethros/.local/share/nvim/site/pack/packer/opt/vim-toml/ftdetect/toml.vim]], false)
+time([[Sourcing ftdetect script at: /Users/jethros/.local/share/nvim/site/pack/packer/opt/vim-markdown/ftdetect/markdown.vim]], true)
+vim.cmd [[source /Users/jethros/.local/share/nvim/site/pack/packer/opt/vim-markdown/ftdetect/markdown.vim]]
+time([[Sourcing ftdetect script at: /Users/jethros/.local/share/nvim/site/pack/packer/opt/vim-markdown/ftdetect/markdown.vim]], false)
+time([[Sourcing ftdetect script at: /Users/jethros/.local/share/nvim/site/pack/packer/opt/vim-markdown-toc/ftdetect/markdown.vim]], true)
+vim.cmd [[source /Users/jethros/.local/share/nvim/site/pack/packer/opt/vim-markdown-toc/ftdetect/markdown.vim]]
+time([[Sourcing ftdetect script at: /Users/jethros/.local/share/nvim/site/pack/packer/opt/vim-markdown-toc/ftdetect/markdown.vim]], false)
+time([[Sourcing ftdetect script at: /Users/jethros/.local/share/nvim/site/pack/packer/opt/vim-fish/ftdetect/fish.vim]], true)
+vim.cmd [[source /Users/jethros/.local/share/nvim/site/pack/packer/opt/vim-fish/ftdetect/fish.vim]]
+time([[Sourcing ftdetect script at: /Users/jethros/.local/share/nvim/site/pack/packer/opt/vim-fish/ftdetect/fish.vim]], false)
+time([[Sourcing ftdetect script at: /Users/jethros/.local/share/nvim/site/pack/packer/opt/vim-toml/ftdetect/toml.vim]], true)
+vim.cmd [[source /Users/jethros/.local/share/nvim/site/pack/packer/opt/vim-toml/ftdetect/toml.vim]]
+time([[Sourcing ftdetect script at: /Users/jethros/.local/share/nvim/site/pack/packer/opt/vim-toml/ftdetect/toml.vim]], false)
+time([[Sourcing ftdetect script at: /Users/jethros/.local/share/nvim/site/pack/packer/opt/vimtex/ftdetect/cls.vim]], true)
+vim.cmd [[source /Users/jethros/.local/share/nvim/site/pack/packer/opt/vimtex/ftdetect/cls.vim]]
+time([[Sourcing ftdetect script at: /Users/jethros/.local/share/nvim/site/pack/packer/opt/vimtex/ftdetect/cls.vim]], false)
+time([[Sourcing ftdetect script at: /Users/jethros/.local/share/nvim/site/pack/packer/opt/vimtex/ftdetect/tex.vim]], true)
+vim.cmd [[source /Users/jethros/.local/share/nvim/site/pack/packer/opt/vimtex/ftdetect/tex.vim]]
+time([[Sourcing ftdetect script at: /Users/jethros/.local/share/nvim/site/pack/packer/opt/vimtex/ftdetect/tex.vim]], false)
+time([[Sourcing ftdetect script at: /Users/jethros/.local/share/nvim/site/pack/packer/opt/vimtex/ftdetect/tikz.vim]], true)
+vim.cmd [[source /Users/jethros/.local/share/nvim/site/pack/packer/opt/vimtex/ftdetect/tikz.vim]]
+time([[Sourcing ftdetect script at: /Users/jethros/.local/share/nvim/site/pack/packer/opt/vimtex/ftdetect/tikz.vim]], false)
 vim.cmd("augroup END")
 if should_profile then save_profiles() end
 

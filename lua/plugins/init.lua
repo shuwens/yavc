@@ -3,8 +3,8 @@
 require("plugins.lualine")
 
 -- fuzzy finder configuration
-require("plugins.fzf")
--- require("plugins.telescope")
+-- require("plugins.fzf")
+require("plugins.telescope")
 
 -- auto pair
 require("plugins.autopairs")

@@ -75,17 +75,40 @@ wk.register({
         o = {"<cmd>:copen<CR>", "Open QuickFix list"}
     },
     d = {':Dispatch<CR>', "Dispatch"},
+    -- f = {
+    --     name = "+Fuzzy Search",
+    --     f = {"<cmd>lua require('fzf-lua').files()<CR>", "file"},
+    --     b = {"<cmd>lua require('fzf-lua').buffers()<CR>", "buffer"},
+    --     q = {"<cmd>lua require('fzf-lua').quickfix()<CR>", "quickfix"},
+    --     l = {"<cmd>lua require('fzf-lua').loclist()<CR>", "loc list"},
+    --     p = {"<cmd>lua require('fzf-lua').grep_project()<CR>", "Rg project"},
+    --     w = {"<cmd>lua require('fzf-lua').grep_cword()<CR>", "Current word"},
+    --     g = {"<cmd>lua require('fzf-lua').live_grep_native()<CR>", "Live grep"},
+    --     c = {"<cmd>lua require('fzf-lua').git_commits()<CR>", "Git commits"}
+    -- },
     f = {
         name = "+Fuzzy Search",
-        f = {"<cmd>lua require('fzf-lua').files()<CR>", "file"},
-        b = {"<cmd>lua require('fzf-lua').buffers()<CR>", "buffer"},
-        q = {"<cmd>lua require('fzf-lua').quickfix()<CR>", "quickfix"},
-        l = {"<cmd>lua require('fzf-lua').loclist()<CR>", "loc list"},
-        p = {"<cmd>lua require('fzf-lua').grep_project()<CR>", "Rg project"},
-        w = {"<cmd>lua require('fzf-lua').grep_cword()<CR>", "Current word"},
-        g = {"<cmd>lua require('fzf-lua').live_grep_native()<CR>", "Live grep"},
-        c = {"<cmd>lua require('fzf-lua').git_commits()<CR>", "Git commits"}
+        f = {"<cmd>lua require('telescope.builtin').find_files()<CR>", "file"},
+        b = {"<cmd>lua require('telescope.builtin').buffers()<CR>", "buffer"},
+        g = {"<cmd>lua require('telescope.builtin').live_grep()<CR>", "Live grep"},
+        h = {"<cmd>lua require('telescope.builtin').help_tags()<CR>", "Help tags"}
+        -- q = {"<cmd>lua require('fzf-lua').quickfix()<CR>", "quickfix"},
+        -- l = {"<cmd>lua require('fzf-lua').loclist()<CR>", "loc list"},
+        -- p = {"<cmd>lua require('fzf-lua').grep_project()<CR>", "Rg project"},
+        -- w = {"<cmd>lua require('fzf-lua').grep_cword()<CR>", "Current word"},
+        -- c = {"<cmd>lua require('fzf-lua').git_commits()<CR>", "Git commits"}
     },
+    --     " Find files using Telescope command-line sugar.
+    -- nnoremap <leader>ff <cmd>Telescope find_files<cr>
+    -- nnoremap <leader>fg <cmd>Telescope live_grep<cr>
+    -- nnoremap <leader>fb <cmd>Telescope buffers<cr>
+    -- nnoremap <leader>fh <cmd>Telescope help_tags<cr>
+    --
+    -- " Using Lua functions
+    -- nnoremap <leader>ff <cmd>lua require('telescope.builtin').find_files()<cr>
+    -- nnoremap <leader>fg <cmd>lua require('telescope.builtin').live_grep()<cr>
+    -- nnoremap <leader>fb <cmd>lua require('telescope.builtin').buffers()<cr>
+    -- nnoremap <leader>fh <cmd>lua require('telescope.builtin').help_tags()<cr>
     g = {
         name = "+Git/Grammar",
         g = {':GrammarousCheck --lang=en-US --preview<CR>', "Grammar check"},
