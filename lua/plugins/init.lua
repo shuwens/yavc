@@ -19,14 +19,14 @@ require("plugins.gitsigns")
 require("plugins.which-key")
 
 -- extra plugins(with shorter configs)
--- require("plugins.misc")
+require("plugins.misc")
 
 -- Treesitter configurations
 require("plugins.tree-sitter")
 require("plugins.orgmode")
 
 -- Error finder configurations
-require("plugins.trouble")
+-- require("plugins.trouble")
 
 -- Project management
 require("plugins.coq")
@@ -34,4 +34,5 @@ require("plugins.coq3p")
 require("plugins.rust-tools")
 -- require("plugins.project")
 
+-- require("plugins.ltex")
 -- require("plugins.notational")

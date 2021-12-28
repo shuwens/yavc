@@ -22,6 +22,10 @@ git clone --depth 1 https://github.com/wbthomason/packer.nvim ~/.local/share/nvi
 
 ![Current look of my neovim](imgs/nvim-look.png?raw=true "Title")
 
+## TODO
+- fix the pyenv issue: sometime i have it configured and installed, but
+  sometimes not
+
 ## ChangeList
 - Nov 19, 2020: [config nvim with coq and packer using lua](https://github.com/jethrosun/yavc/commit/46628fb7cd72f02c50c9faaf36bf212f8b6d8c85)
 - Nov 15, 2020: [Ditch coc.nvim and switch to nvim lsp](https://github.com/jethrosun/yavc/commit/837aa7a6e3dec6d40263d2308918124fd1e058f7)

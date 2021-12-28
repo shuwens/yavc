@@ -3,6 +3,8 @@ local lsp = require("lspconfig")
 local coq = require("coq")
 local M = {}
 
+local nvim_data_path = os.getenv("HOME") .. "/.local/share/nvim/lsp_servers/"
+
 -- Lsp customization
 --
 vim.lsp.protocol.CompletionItemKind = {
@@ -68,12 +70,12 @@ local function common_on_attach(client, bufnr)
     -- Get signatures (and _only_ signatures) when in argument lists.
     require"lsp_signature".on_attach({doc_lines = 0, handler_opts = {border = "none"}})
 
-    if client.resolved_capabilities.document_formatting then vim.cmd("autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting_sync()") end
+    if client.server_capabilities.document_formatting then vim.cmd("autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting_sync()") end
 end
 
 local lsp_installer = require("nvim-lsp-installer")
 lsp_installer.settings {ui = {icons = {server_installed = "✓", server_pending = "➜", server_uninstalled = "✗"}}}
-local servers = {"rust_analyzer", "clangd", "bash-language-server", "jsonls", "sumneko_lua", "pyright", "texlab", "efm"}
+local servers = {"rust_analyzer", "clangd", "bash-language-server", "jsonls", "sumneko_lua", "pyright", "efm", "texlab", 'ltex'}
 for _, lang in pairs(servers) do
     local ok, server = lsp_installer.get_server(lang)
     if ok then
@@ -127,6 +129,10 @@ local languages = {
     sh = {shfmt, shellcheck}
 }
 
+local path = vim.fn.stdpath("config") .. "/spell/en.utf-8.add"
+local words = {}
+for word in io.open(path, "r"):lines() do table.insert(words, word) end
+
 lsp_installer.on_server_ready(function(server)
     local opts = {on_attach = common_on_attach, capabilities = capabilities, flags = {debounce_text_changes = 150}}
 
@@ -143,6 +149,23 @@ lsp_installer.on_server_ready(function(server)
         opts.init_options = {documentFormatting = true, codeAction = false};
         opts.filetypes = vim.tbl_keys(languages);
         opts.settings = {rootMarkers = {"package.json", ".git"}, languages = languages, lintDebounce = 500}
+    end
+
+    if server.name == "ltex" then
+        opts.cmd = {nvim_data_path .. "ltex/ltex-ls/bin/ltex-ls"};
+        opts.settings = {
+            ltex = {
+                language = "en",
+                enabled = {"latex", "tex", "bib", "markdown"},
+                diagnosticSeverity = "information",
+                setenceCacheSize = 2000,
+                additionalRules = {enablePickyRules = true, motherTongue = "en"},
+                trace = {server = "verbose"},
+                disabledRules = {['en-US'] = {'PROFANITY'}},
+                dictionary = {['en-US'] = words}
+
+            }
+        }
     end
 
     -- This setup() function is exactly the same as lspconfig's setup function.

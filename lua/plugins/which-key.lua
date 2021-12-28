@@ -115,11 +115,12 @@ wk.register({
         m = {"<ESC>/\v^[<=>]{7}( .*\\|$)<CR>", "Merge Conflict"},
         l = {':LazyGit<CR>', "Lazy Git"}
     },
-    h = {':TroubleToggle<CR>', "Errors Dashboard"},
+    -- h = {':TroubleToggle<CR>', "Errors Dashboard"},
     l = {
         name = '+lsp',
         f = {':lua vim.lsp.buf.formatting()<CR>', 'format'},
         I = {':LspInfo<CR>', 'lsp info'},
+        o = {':lua vim.diagnostic.open_float()<CR>', 'lsp open float'},
         v = {':LspVirtualTextToggle<CR>', 'lsp toggle virtual text'},
         T = {':lua vim.lsp.buf.type_definition()<CR>', 'type defintion'},
         x = {':cclose<CR>', 'close quickfix'},

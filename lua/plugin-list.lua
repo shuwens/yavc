@@ -49,7 +49,7 @@ require("packer").startup(function(use)
     use("ntpeters/vim-better-whitespace")
     use("p00f/nvim-ts-rainbow")
     use("lukas-reineke/indent-blankline.nvim")
-    use({'wfxr/minimap.vim', run = ':!cargo install --locked code-minimap'})
+    -- use({'wfxr/minimap.vim', run = ':!cargo install --locked code-minimap'})
     use({"tomasiser/vim-code-dark"})
     use({'nvim-lualine/lualine.nvim', requires = {'kyazdani42/nvim-web-devicons', opt = true}})
     use({'lewis6991/gitsigns.nvim', requires = {'nvim-lua/plenary.nvim'}, config = function() require('gitsigns').setup() end})
@@ -57,7 +57,7 @@ require("packer").startup(function(use)
     -- nvim tools
     use({'nvim-treesitter/nvim-treesitter', run = ':TSUpdate'})
     use("rhysd/committia.vim") -- better git commit layout
-    use("kdheepak/lazygit.nvim")
+    -- use("kdheepak/lazygit.nvim")
     use("windwp/nvim-autopairs")
     use("folke/which-key.nvim")
     -- use({ 'ibhagwan/fzf-lua',
@@ -70,6 +70,7 @@ require("packer").startup(function(use)
     use {'nvim-telescope/telescope.nvim', requires = {{'nvim-lua/plenary.nvim'}}}
     -- use {'nvim-telescope/telescope-fzf-native.nvim', run = 'make' }
     use {'nvim-telescope/telescope-fzy-native.nvim'}
+    use {'RRethy/nvim-align'}
 
     -- LSP support
     use("neovim/nvim-lspconfig")
@@ -78,10 +79,8 @@ require("packer").startup(function(use)
     -- LSP utils
     use("nvim-lua/lsp_extensions.nvim") -- info and inlay hints
     use("ray-x/lsp_signature.nvim") -- function signatures
-    -- use("nvim-lua/lsp-status.nvim")               -- status
-
-    -- unsure
-    use({"folke/trouble.nvim", requires = "kyazdani42/nvim-web-devicons"})
+    use("j-hui/fidget.nvim") -- status
+    use("jose-elias-alvarez/null-ls.nvim") -- enable non-lsp things
 
     -- Coq
     use({"ms-jpq/coq_nvim", branch = "coq", requires = {{"ms-jpq/coq.artifacts", branch = "artifacts"}, {"ms-jpq/coq.thirdparty", branch = "3p"}}})
@@ -106,8 +105,24 @@ require("packer").startup(function(use)
     -- use("arakashic/chromatica.nvim', {'for': ['cpp', 'hpp'] }
     -- use("rhysd/vim-clang-format', {'for': ['c', 'cpp', 'hpp'] }
 
+    -- SQL 
+    use {"tami5/sql.nvim", rocks = {"sqlite", "luv"}}
+    use "tpope/vim-dadbod"
+    use {"kristijanhusak/vim-dadbod-completion"}
+    use {"kristijanhusak/vim-dadbod-ui"}
+    -- Grammars
+    -- local_use "tree-sitter-lua"
+
+    -- use { "m-novikov/tree-sitter-sql" }
+    -- use { "DerekStride/tree-sitter-sql" }
+    -- local_use "tree-sitter-sql"
     -- LaTeX
     -- https://www.reddit.com/r/neovim/comments/idthcb/vimtex_vs_texlab/
-    use({"lervag/vimtex", ft = {'tex', 'latex'}})
-    use({"rhysd/vim-grammarous", ft = {'tex', 'latex', 'markdown'}})
+    -- use({"lervag/vimtex", ft = {'tex', 'latex'}})
+    -- use({"rhysd/vim-grammarous", ft = {'tex', 'latex', 'markdown'}})
+    -- use({"brymer-meneses/grammar-guard.nvim", requires = {"neovim/nvim-lspconfig", "williamboman/nvim-lsp-installer"}})
+
+    -- unsure
+    -- use({"folke/trouble.nvim", requires = "kyazdani42/nvim-web-devicons"})
+
 end)

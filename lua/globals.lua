@@ -2,38 +2,17 @@ local g = vim.g
 
 vim.cmd "colorscheme codedark"
 
--- Ignore for indent levels
-g.indent_blankline_filetype_exclude = {
-  "help",
-  "packer",
-  "dashboard",
-  "nvim-tree",
-}
-
--- Ignore for indent levels
-g.indent_blankline_buftype_exclude = { "terminal", "nofile" }
-
 g.mapleader = " "
 g.maplocalleader = ","
 
--- mini map
-g.minimap_width = 10
-g.minimap_auto_start = 1
-g.minimap_auto_start_win_enter = 1
-g.minimap_close_filetypes = {'dashboard', 'gitcommit'}
+-- Ignore for indent levels
+g.indent_blankline_filetype_exclude = {"help", "packer", "dashboard", "nvim-tree"}
+
+-- Ignore for indent levels
+g.indent_blankline_buftype_exclude = {"terminal", "nofile"}
 
 -- Configs for LSPs
-g.lsp_config = {
-  lua = {
-    settings = {
-      Lua = {
-        diagnostics = {
-          globals = { "vim" },
-        },
-      },
-    },
-  },
-}
+g.lsp_config = {lua = {settings = {Lua = {diagnostics = {globals = {"vim"}}}}}}
 
 -- better whitespace
 -- red #FF0000, coral #FF7F50, tomato #FF6347, orangered #FF4500, orange #FFA500, darkorange #FF8C00
@@ -51,7 +30,7 @@ g.localvimrc_ask = 0
 g.rustfmt_autosave = 1 -- Format on save
 g.rustfmt_emit_files = 1
 g.rustfmt_fail_silently = 0
---g['rust_keep_autopairs_default ']= 1
+-- g.rust_keep_autopairs_default = 1
 g.rust_clip_command = 'xclip -selection clipboard'
 
 -- Markdown
@@ -67,9 +46,11 @@ g.markdown_folding = 0
 
 -- Python
 -- https://quinoa42.github.io/en/oceanus/neovim-python/
-local pyenv_root = os.getenv('PYENV_ROOT')
-g.python_host_prog = pyenv_root .. '/versions/neovim2/bin/python'
-g.python3_host_prog = pyenv_root .. '/versions/neovim3/bin/python'
+if vim.fn.isdirectory('./../../pyenv') then
+    local pyenv_root = os.getenv('PYENV_ROOT')
+    g.python_host_prog = pyenv_root .. '/versions/neovim2/bin/python'
+    g.python3_host_prog = pyenv_root .. '/versions/neovim3/bin/python'
+end
 
 -- vimtex
 g.tex_flavor = 'latex'
@@ -77,3 +58,10 @@ g.vimtex_view_method = 'zathura'
 g.vimtex_quickfix_mode = 0
 vim.cmd "set conceallevel=1"
 g.tex_conceal = 'abdmg'
+
+-- mini map
+-- g.minimap_width = 10
+-- g.minimap_auto_start = 1
+-- g.minimap_auto_start_win_enter = 1
+-- g.minimap_close_filetypes = {'dashboard', 'gitcommit'}
+
