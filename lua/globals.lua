@@ -6,13 +6,13 @@ g.mapleader = " "
 g.maplocalleader = ","
 
 -- Ignore for indent levels
-g.indent_blankline_filetype_exclude = {"help", "packer", "dashboard", "nvim-tree"}
+g.indent_blankline_filetype_exclude = { "help", "packer", "dashboard", "nvim-tree" }
 
 -- Ignore for indent levels
-g.indent_blankline_buftype_exclude = {"terminal", "nofile"}
+g.indent_blankline_buftype_exclude = { "terminal", "nofile" }
 
 -- Configs for LSPs
-g.lsp_config = {lua = {settings = {Lua = {diagnostics = {globals = {"vim"}}}}}}
+g.lsp_config = { lua = { settings = { Lua = { diagnostics = { globals = { "vim" } } } } } }
 
 -- better whitespace
 -- red #FF0000, coral #FF7F50, tomato #FF6347, orangered #FF4500, orange #FFA500, darkorange #FF8C00
@@ -48,7 +48,7 @@ g.markdown_folding = 0
 -- https://quinoa42.github.io/en/oceanus/neovim-python/
 if vim.fn.isdirectory('./../../pyenv') then
     local pyenv_root = os.getenv('PYENV_ROOT')
-    g.python_host_prog = pyenv_root .. '/versions/neovim2/bin/python'
+    -- g.python_host_prog = pyenv_root .. '/versions/neovim2/bin/python'
     g.python3_host_prog = pyenv_root .. '/versions/neovim3/bin/python'
 end
 
@@ -64,4 +64,3 @@ g.tex_conceal = 'abdmg'
 -- g.minimap_auto_start = 1
 -- g.minimap_auto_start_win_enter = 1
 -- g.minimap_close_filetypes = {'dashboard', 'gitcommit'}
-

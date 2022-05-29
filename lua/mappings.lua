@@ -2,19 +2,19 @@ local vim = vim
 local api = vim.api
 local g = vim.g
 local cmd = vim.cmd
-local opts = {noremap = true, silent = true}
+local opts = { noremap = true, silent = true }
 
 vim.diagnostic.config {
-    underline = true,
-    virtual_text = {severity = nil, source = "if_many", format = nil},
-    signs = true,
+	underline = true,
+	virtual_text = { severity = nil, source = "if_many", format = nil },
+	signs = true,
 
-    -- options for floating windows:
-    float = {show_header = true},
+	-- options for floating windows:
+	float = { show_header = true },
 
-    -- general purpose
-    severity_sort = true,
-    update_in_insert = false
+	-- general purpose
+	severity_sort = true,
+	update_in_insert = false
 }
 
 -- See `:help vim.lsp.*` for documentation on any of the below functions
@@ -29,54 +29,54 @@ api.nvim_set_keymap('n', '<C-k>', '<cmd>lua vim.diagnostic.goto_prev({wrap = tru
 
 vim.cmd [[
 " <leader>s for Rg search
-noremap <leader>s :Rg<CR>
-let g:fzf_layout = { 'down': '~30%' }
-command! -bang -nargs=* Rg
-  \ call fzf#vim#grep(
-  \   'rg --column --line-number --no-heading --color=always '.shellescape(<q-args>), 1,
-  \   <bang>0 ? fzf#vim#with_preview('up:60%')
-  \           : fzf#vim#with_preview('right:50%:hidden', '?'),
-  \   <bang>0)
-
-function! s:list_cmd()
-  let base = fnamemodify(expand('%'), ':h:.:S')
-  return base == '.' ? 'fd --type file --follow' : printf('fd --type file --follow | proximity-sort %s', shellescape(expand('%')))
-endfunction
-
-command! -bang -nargs=? -complete=dir Files
-  \ call fzf#vim#files(<q-args>, {'source': s:list_cmd(),
-  \                               'options': '--tiebreak=index'}, <bang>0)
-]]
+" noremap <leader>s :Rg<CR>
+" let g:fzf_layout = { 'down': '~30%' }
+" command! -bang -nargs=* Rg
+"   \ call fzf#vim#grep(
+"   \   'rg --column --line-number --no-heading --color=always '.shellescape(<q-args>), 1,
+"   \   <bang>0 ? fzf#vim#with_preview('up:60%')
+"   \           : fzf#vim#with_preview('right:50%:hidden', '?'),
+"   \   <bang>0)
+"
+" function! s:list_cmd()
+"   let base = fnamemodify(expand('%'), ':h:.:S')
+"   return base == '.' ? 'fd --type file --follow' : printf('fd --type file --follow | proximity-sort %s', shellescape(expand('%')))
+" endfunction
+"
+" command! -bang -nargs=? -complete=dir Files
+"   \ call fzf#vim#files(<q-args>, {'source': s:list_cmd(),
+"   \                               'options': '--tiebreak=index'}, <bang>0)
+" ]]
 
 -- files and buffers
-api.nvim_set_keymap('n', '<C-p>', ':Files<CR>', {noremap = true, silent = false})
-api.nvim_set_keymap('n', g.mapleader .. ';', ':Buffers<CR>', {noremap = true, silent = false})
+-- api.nvim_set_keymap('n', '<C-p>', ':Files<CR>', { noremap = true, silent = false })
+-- api.nvim_set_keymap('n', g.mapleader .. ';', ':Buffers<CR>', { noremap = true, silent = false })
 
 -- Neat X clipboard integration linux
 if vim.fn.has("mac") == 1 then
-    -- Paste clipboard content to current line
-    api.nvim_set_keymap('v', g.mapleader .. 'y', ':w !pbcopy<CR><CR>', opts)
-    api.nvim_set_keymap('n', g.mapleader .. 'p', ':r !pbpaste<CR>', opts)
+	-- Paste clipboard content to current line
+	api.nvim_set_keymap('v', g.mapleader .. 'y', ':w !pbcopy<CR><CR>', opts)
+	api.nvim_set_keymap('n', g.mapleader .. 'p', ':r !pbpaste<CR>', opts)
 elseif vim.fn.has("unix") == 1 then
-    api.nvim_set_keymap('v', g.mapleader .. 'y', ':w !xsel -ib<CR><CR>', opts)
-    api.nvim_set_keymap('n', g.mapleader .. 'p', ':read !xsel --clipboard --output<CR>', opts)
+	api.nvim_set_keymap('v', g.mapleader .. 'y', ':w !xsel -ib<CR><CR>', opts)
+	api.nvim_set_keymap('n', g.mapleader .. 'p', ':read !xsel --clipboard --output<CR>', opts)
 else
-    print("Unsupported system!")
+	print("Unsupported system!")
 end
 api.nvim_set_keymap('v', '<C-c>', '"*y', opts)
 
 -- Open new file adjacent to current file
-api.nvim_set_keymap('n', g.mapleader .. 'e', ':e <C-R>=expand("%:p:h") . "/" <CR>', {noremap = true, silent = false})
+api.nvim_set_keymap('n', g.mapleader .. 'e', ':e <C-R>=expand("%:p:h") . "/" <CR>', { noremap = true, silent = false })
 
 -- Keymap for replacing up to next _ or -
-api.nvim_set_keymap('n', g.mapleader .. 'm', 'ct_', {noremap = true, silent = false})
-api.nvim_set_keymap('n', g.mapleader .. 'n', 'ct-', {noremap = true, silent = false})
+api.nvim_set_keymap('n', g.mapleader .. 'm', 'ct_', { noremap = true, silent = false })
+api.nvim_set_keymap('n', g.mapleader .. 'n', 'ct-', { noremap = true, silent = false })
 
 -- detele things shortcut
 api.nvim_set_keymap('n', '<C-i>', 'C', opts)
 -- api.nvim_set_keymap('n', g.mapleader..'i', 'C', opts)
 
-api.nvim_set_keymap('n', ';', ':', {noremap = true, silent = false})
+api.nvim_set_keymap('n', ';', ':', { noremap = true, silent = false })
 api.nvim_set_keymap('n', 'q', '<nop>', opts)
 
 -- Move by line
@@ -84,17 +84,17 @@ api.nvim_set_keymap('n', 'j', 'gj', opts)
 api.nvim_set_keymap('n', 'k', 'gk', opts)
 
 -- I can type :help on my own, thanks.
-api.nvim_set_keymap('n', '<F1>', '<Esc>', {noremap = true, silent = false})
-api.nvim_set_keymap('n', '<F1>', '<Esc>', {noremap = true, silent = false})
+api.nvim_set_keymap('n', '<F1>', '<Esc>', { noremap = true, silent = false })
+api.nvim_set_keymap('n', '<F1>', '<Esc>', { noremap = true, silent = false })
 
 -- Visual mode pressing * or # searches for the current selection
 api.nvim_set_keymap('v', '*', ':call VisualSelection("f")<CR>', opts)
 api.nvim_set_keymap('v', '#', ':call VisualSelection("b")<CR>', opts)
 
 -- F3 to insert a logical clock
-api.nvim_set_keymap('i', '<F3>', '<C-R>=strftime("%Y-%m-%d %a %I:%M %p")<CR><Esc>', {noremap = true, silent = false})
-api.nvim_set_keymap('i', '<F3>', '<C-R>=strftime("%Y-%m-%d %a %I:%M %p")<CR>', {noremap = true, silent = false})
-api.nvim_set_keymap('i', '<F3>', '<c-r>=strftime("%c")<CR>', {noremap = true, silent = false})
+api.nvim_set_keymap('i', '<F3>', '<C-R>=strftime("%Y-%m-%d %a %I:%M %p")<CR><Esc>', { noremap = true, silent = false })
+api.nvim_set_keymap('i', '<F3>', '<C-R>=strftime("%Y-%m-%d %a %I:%M %p")<CR>', { noremap = true, silent = false })
+api.nvim_set_keymap('i', '<F3>', '<c-r>=strftime("%c")<CR>', { noremap = true, silent = false })
 
 -- Search results centered please
 api.nvim_set_keymap('n', 'n', 'nzz', opts)

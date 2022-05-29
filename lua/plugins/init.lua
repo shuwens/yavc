@@ -36,3 +36,5 @@ require("plugins.rust-tools")
 
 -- require("plugins.ltex")
 -- require("plugins.notational")
+
+-- require("plugins.null-ls")

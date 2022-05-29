@@ -9,8 +9,8 @@ require('telescope').setup {
         initial_mode = "insert",
         layout_strategy = "vertical",
         layout_config = {
-            horizontal = {width_padding = 0.04, height_padding = 0.1, preview_width = 0.6, width = 0.9},
-            vertical = {width_padding = 0.05, height_padding = 1, preview_width = 0.5}
+            horizontal = { width_padding = 0.04, height_padding = 0.1, preview_width = 0.6, width = 0.9 },
+            vertical = { width_padding = 0.05, height_padding = 1, preview_width = 0.5 }
         },
         -- User Telescope's defaults fuzzy file sorter(ships with it)
         file_sorter = require('telescope.sorters').get_fzy_sorter,
@@ -21,7 +21,7 @@ require('telescope').setup {
 
         winblend = 0,
         mappings = {
-            n = {["q"] = actions.close},
+            n = { ["q"] = actions.close },
             i = {
                 ["<C-q>"] = actions.send_to_qflist,
                 ["<Esc>"] = actions.close,
@@ -37,13 +37,13 @@ require('telescope').setup {
     },
     extensions = {
         -- use the native fuzzy sorter that ships with Telescope
-        fzy_native = {override_generic_sorter = false, override_file_sorter = true}
+        fzy_native = { override_generic_sorter = false, override_file_sorter = true }
     }
 }
 
 -- A default set of options for telescope pickers
 local telescope_picker_opts_default = {
-    layout_config = {width = 0.9},
+    layout_config = { width = 0.9 },
     path_display = {
         -- shorten pathnames with a number of characters speficied
         shorten = 15
@@ -53,7 +53,7 @@ local telescope_picker_opts_default = {
 
 -- Returns true if current directory is a git worktree
 function M.is_git_worktree()
-    local _, ret, stderr = require'telescope.utils'.get_os_command_output({'git', 'rev-parse', '--is-inside-work-tree'})
+    local _, ret, stderr = require 'telescope.utils'.get_os_command_output({ 'git', 'rev-parse', '--is-inside-work-tree' })
     -- print(vim.inspect(ret))
     if ret == 0 then
         return true
@@ -84,9 +84,9 @@ function M.neovim_config()
         cwd = '~/.config/nvim',
         -- cwd = cwd_neovim_config,
         prompt_prefix = '  ',
-        layout_config = {width = 0.5}
+        layout_config = { width = 0.5 }
     }
-    require'telescope.builtin'.find_files(opts)
+    require 'telescope.builtin'.find_files(opts)
 end
 
 -- Deprecated in favor of M.file_browser below
@@ -95,10 +95,10 @@ function M.find_files()
         prompt_title = "\\ Find Files /",
         follow = 'true',
         hidden = 'false',
-        layout_config = {width = 0.9}
+        layout_config = { width = 0.9 }
         -- cwd = '~/',
     }
-    require'telescope.builtin'.find_files(opts)
+    require 'telescope.builtin'.find_files(opts)
 end
 
 --[[
@@ -117,21 +117,21 @@ function M.file_browser()
             -- hidden = 'false',
             -- layout_strategy = "vertical",
             layout_strategy = "horizontal",
-            layout_config = {width = 0.95}
+            layout_config = { width = 0.95 }
             -- cwd = '%p',
         }
-        require'telescope.builtin'.file_browser(opts)
+        require 'telescope.builtin'.file_browser(opts)
     end
 end
 
 function M.grep_string()
-    local opts = {prompt_title = "\\ Secondary Grep /", layout_strategy = "horizontal", layout_config = {width = 0.9}, search = vim.fn.input('Rg> ')}
-    require'telescope.builtin'.grep_string(opts)
+    local opts = { prompt_title = "\\ Secondary Grep /", layout_strategy = "horizontal", layout_config = { width = 0.9 }, search = vim.fn.input('Rg> ') }
+    require 'telescope.builtin'.grep_string(opts)
 end
 
 function M.live_grep()
-    local opts = {prompt_title = "\\ Live Grep /", layout_strategy = "horizontal", layout_config = {width = 0.9}}
-    require'telescope.builtin'.live_grep(opts)
+    local opts = { prompt_title = "\\ Live Grep /", layout_strategy = "horizontal", layout_config = { width = 0.9 } }
+    require 'telescope.builtin'.live_grep(opts)
 end
 
 function M.git_files()
@@ -141,17 +141,17 @@ function M.git_files()
         -- hidden = 'false',
         -- layout_strategy = "vertical",
         layout_strategy = "horizontal",
-        layout_config = {width = 0.95}
+        layout_config = { width = 0.95 }
         -- cwd = '~/',
     }
-    require'telescope.builtin'.git_files(opts)
+    require 'telescope.builtin'.git_files(opts)
 end
 
 function M.git_branches()
-    local opts = {prompt_title = "\\ Git Branches /", layout_strategy = "horizontal", layout_config = {width = 0.9}, prompt_prefix = '  '}
+    local opts = { prompt_title = "\\ Git Branches /", layout_strategy = "horizontal", layout_config = { width = 0.9 }, prompt_prefix = '  ' }
     local _is_git_worktree = M.is_git_worktree()
     if _is_git_worktree then
-        require'telescope.builtin'.git_branches(opts)
+        require 'telescope.builtin'.git_branches(opts)
     else
         print('Not a git worktree directory')
         return
@@ -164,12 +164,12 @@ function M.git_commits()
         prompt_title = "\\ Git Commits /",
         layout_strategy = "horizontal",
         -- layout_strategy = "vertical",
-        layout_config = {width = 0.9},
+        layout_config = { width = 0.9 },
         prompt_prefix = '  '
     }
     local _is_git_worktree = M.is_git_worktree()
     if _is_git_worktree then
-        require'telescope.builtin'.git_commits(opts)
+        require 'telescope.builtin'.git_commits(opts)
     else
         print('Not a git worktree directory')
         return
@@ -177,33 +177,33 @@ function M.git_commits()
 end
 
 function M.command_history()
-    local opts = {prompt_title = "\\ Command History /", layout_config = {width = 0.5}, prompt_prefix = ' גּ  '}
-    require'telescope.builtin'.command_history(opts)
+    local opts = { prompt_title = "\\ Command History /", layout_config = { width = 0.5 }, prompt_prefix = ' גּ  ' }
+    require 'telescope.builtin'.command_history(opts)
 end
 
 function M.jumplist()
     local opts = {
-        layout_config = {width = 0.8},
+        layout_config = { width = 0.8 },
         -- previewer = true,
         prompt_prefix = '  '
     }
-    require'telescope.builtin'.jumplist(opts)
+    require 'telescope.builtin'.jumplist(opts)
 end
 
 function M.notes()
     local opts = {
         prompt_title = "\\ Notes - IT /",
         layout_strategy = "horizontal",
-        layout_config = {preview_width = 0.65},
+        layout_config = { preview_width = 0.65 },
         cwd = '~/bitbucket.org/mine/it/',
         prompt_prefix = '   '
     }
-    require'telescope.builtin'.file_browser(opts)
+    require 'telescope.builtin'.file_browser(opts)
 end
 
 function M.help_tags()
-    local opts = {layout_strategy = "horizontal", layout_config = {preview_width = 0.65}, prompt_prefix = '   ', prompt_title = '\\ Help Tags /'}
-    require'telescope.builtin'.help_tags(opts)
+    local opts = { layout_strategy = "horizontal", layout_config = { preview_width = 0.65 }, prompt_prefix = '   ', prompt_title = '\\ Help Tags /' }
+    require 'telescope.builtin'.help_tags(opts)
 end
 
 -- We want to be able to access utils in all our configuration files

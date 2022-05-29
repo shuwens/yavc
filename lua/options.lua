@@ -10,22 +10,22 @@ syntax on
 set nowrap
 ]])
 
-opt.ruler = true                -- Where am I?
-opt.hidden = true               -- Hides buffers instead of closing them
-opt.ignorecase = true           -- Search case insensitive...
+opt.ruler = true -- Where am I?
+opt.hidden = true -- Hides buffers instead of closing them
+opt.ignorecase = true -- Search case insensitive...
 
 -- Sane splits
-opt.splitright = true           -- Split vertical windows right to the current windows
-opt.splitbelow = true           -- Split horizontal windows below to the current windows
+opt.splitright = true -- Split vertical windows right to the current windows
+opt.splitbelow = true -- Split horizontal windows below to the current windows
 
 -- I only use VIM from the terminals
-opt.termguicolors = true        -- screen does not (yet) support truecolor
+opt.termguicolors = true -- screen does not (yet) support truecolor
 
 opt.cul = true
-opt.mouse = "a"                 -- Enable mouse usage (all modes) in terminals
-opt.signcolumn = "yes"          -- Always draw sign column. Prevent buffer moving when adding/deleting sign.
+opt.mouse = "a" -- Enable mouse usage (all modes) in terminals
+opt.signcolumn = "yes" -- Always draw sign column. Prevent buffer moving when adding/deleting sign.
 opt.cmdheight = 2
-opt.updatetime = 250            -- update interval for gitsigns
+opt.updatetime = 250 -- update interval for gitsigns
 
 -- Time out on key codes but not mappings.
 -- Basically this makes terminal Vim work sanely.
@@ -55,9 +55,9 @@ vim.cmd "set wildcharm=<Tab>"
 -- Editor settings
 -- filetype plugin indent on                   " required
 opt.autoindent = true
-opt.encoding = "utf-8"          -- default encoding to UTF-8
+opt.encoding = "utf-8" -- default encoding to UTF-8
 opt.showmode = false -- We show the mode with airline or lightline
-opt.wrap = false               -- do not wrap long lines by default
+opt.wrap = false -- do not wrap long lines by default
 opt.joinspaces = false -- Prevents inserting two spaces after punctuation on a join (J)
 opt.printfont = ":h14"
 opt.printencoding = "utf-8"
@@ -85,20 +85,20 @@ opt.wildmenu = true
 --opt.wildmode=list:longest
 opt.wildmode = "list:full"
 --opt.wildignore=.hg,.svn,*~,*.png,*.jpg,*.gif,*.settings,Thumbs.db,*.min.js,*.swp,publish/*,intermediate/*,*.o,*.hi,Zend,vendor
-opt.wildignore = "+= .hg,.git,.svn"                     --Version control
-opt.wildignore = "+=*.aux,*.out,*.toc"                  --LaTeX intermediate files
-opt.wildignore = "+=*.jpg,*.bmp,*.gif,*.png,*.jpeg"     --binary images
-opt.wildignore = "+=*.o,*.obj,*.exe,*.dll,*.manifest"   --compiled object files
-opt.wildignore = "+=*.spl"                              --compiled spelling word lists
-opt.wildignore = "+=*.sw?"                              --Vim swap files
-opt.wildignore = "+=*.DS_Store"                         --OSX bullshit
-opt.wildignore = "+=*.luac"                             --Lua byte code
-opt.wildignore = "+=migrations"                         --Django migrations
-opt.wildignore = "+=go/pkg"                             --Go static files
-opt.wildignore = "+=go/bin"                             --Go bin files
-opt.wildignore = "+=go/bin-vagrant"                     --Go bin-vagrant files
-opt.wildignore = "+=*.pyc"                              --Python byte code
-opt.wildignore = "+=*.orig"                             --Merge resolution files
+opt.wildignore = "+= .hg,.git,.svn" --Version control
+opt.wildignore = "+=*.aux,*.out,*.toc" --LaTeX intermediate files
+opt.wildignore = "+=*.jpg,*.bmp,*.gif,*.png,*.jpeg" --binary images
+opt.wildignore = "+=*.o,*.obj,*.exe,*.dll,*.manifest" --compiled object files
+opt.wildignore = "+=*.spl" --compiled spelling word lists
+opt.wildignore = "+=*.sw?" --Vim swap files
+opt.wildignore = "+=*.DS_Store" --OSX bullshit
+opt.wildignore = "+=*.luac" --Lua byte code
+opt.wildignore = "+=migrations" --Django migrations
+opt.wildignore = "+=go/pkg" --Go static files
+opt.wildignore = "+=go/bin" --Go bin files
+opt.wildignore = "+=go/bin-vagrant" --Go bin-vagrant files
+opt.wildignore = "+=*.pyc" --Python byte code
+opt.wildignore = "+=*.orig" --Merge resolution files
 
 -- Wrapping options
 opt.formatoptions = "tc" -- wrap text and comments using textwidth
@@ -111,7 +111,7 @@ opt.formatoptions = opt.formatoptions + "b" -- auto-wrap in insert mode, and do 
 opt.incsearch = true -- Shows the match while typing
 opt.ignorecase = true
 opt.smartcase = true -- ... but not when search pattern contains upper case characters
-opt.gdefault = true  -- search/replace "globally" (on a line) by default
+opt.gdefault = true -- search/replace "globally" (on a line) by default
 
 -- GUI settings
 -- opt.guioptions = opt.guioptions - "T" -- Remove toolbar
@@ -123,18 +123,18 @@ opt.cursorline = true
 opt.cursorcolumn = true
 opt.ttyfast = true
 -- https://github.com/vim/vim/issues/1735#issuecomment-383353563
-opt.lazyredraw = true                   -- don't update the display while executing macros<Paste>
-opt.synmaxcol=500
-opt.laststatus=2                        --  always have a statusline
-opt.relativenumber = true               -- Relative line numbers
-opt.number = true                       -- Also show current absolute line
-opt.diffopt = opt.diffopt + "iwhite"    -- No whitespace in vimdiff
+opt.lazyredraw = true -- don't update the display while executing macros<Paste>
+opt.synmaxcol = 500
+opt.laststatus = 2 --  always have a statusline
+opt.relativenumber = true -- Relative line numbers
+opt.number = true -- Also show current absolute line
+opt.diffopt = opt.diffopt + "iwhite" -- No whitespace in vimdiff
 -- Make diffing better: https://vimways.org/2018/the-power-of-diff/
 opt.diffopt = opt.diffopt + "internal,algorithm:patience"
 opt.diffopt = opt.diffopt + "indent-heuristic"
-opt.colorcolumn = "80"                  -- and give me a colored column
-opt.showcmd = true                      -- Show (partial) command in status line.
-opt.shortmess = opt.shortmess + "c"     -- don't give |ins-completion-menu| messages.
+opt.colorcolumn = "80" -- and give me a colored column
+opt.showcmd = true -- Show (partial) command in status line.
+opt.shortmess = opt.shortmess + "c" -- don't give |ins-completion-menu| messages.
 
 -- Completion
 -- Better completion

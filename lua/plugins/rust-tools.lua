@@ -4,7 +4,7 @@ local opts = {
         -- Automatically set inlay hints (type hints)
         autoSetHints = true,
         -- Whether to show hover actions inside the hover window
-        -- This overrides the default hover handler 
+        -- This overrides the default hover handler
         hover_with_actions = true,
         runnables = {
             -- whether to use telescope for selection menu or not
@@ -47,10 +47,10 @@ local opts = {
             -- the border that is used for the hover window
             -- see vim.api.nvim_open_win()
             border = {
-                {"╭", "FloatBorder"}, {"─", "FloatBorder"},
-                {"╮", "FloatBorder"}, {"│", "FloatBorder"},
-                {"╯", "FloatBorder"}, {"─", "FloatBorder"},
-                {"╰", "FloatBorder"}, {"│", "FloatBorder"}
+                { "╭", "FloatBorder" }, { "─", "FloatBorder" },
+                { "╮", "FloatBorder" }, { "│", "FloatBorder" },
+                { "╯", "FloatBorder" }, { "─", "FloatBorder" },
+                { "╰", "FloatBorder" }, { "│", "FloatBorder" }
             },
 
             -- whether the hover action window gets automatically focused
@@ -81,4 +81,3 @@ local opts = {
 
 rtools.setup(opts)
 -- vim.g.rustfmt_autosave = true
-
