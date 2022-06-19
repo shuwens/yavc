@@ -44,6 +44,10 @@ g.vim_markdown_math = 1
 -- Base markdown settings (tpope)
 g.markdown_folding = 0
 
+vim.wo.foldcolumn = '1'
+vim.wo.foldlevel = 99 -- feel free to decrease the value
+vim.wo.foldenable = true
+
 -- Python
 -- https://quinoa42.github.io/en/oceanus/neovim-python/
 if vim.fn.isdirectory('./../../pyenv') then

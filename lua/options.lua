@@ -1,6 +1,9 @@
 local vim = vim
 local opt = vim.opt
 
+opt.nu = true
+opt.rnu = true
+
 vim.cmd([[
 set shell=/bin/bash
 set nocompatible
@@ -8,6 +11,7 @@ filetype off
 filetype plugin indent on
 syntax on
 set nowrap
+set nofoldenable
 ]])
 
 opt.ruler = true -- Where am I?
@@ -38,13 +42,6 @@ opt.timeoutlen = 350
 opt.background = "dark"
 opt.whichwrap:append("<>hl")
 opt.pumheight = 20
-
-vim.cmd "set nofoldenable"
--- opt.foldmethod = "manual"
--- foldmethod=marker,  manual
--- opt.foldmethod = "marker"       -- Only fold on marks
--- opt.foldmethod = 'expr'
--- opt.foldexpr = 'nvim_treesitter#foldexpr()'
 
 -- Permanent undo
 opt.undofile = true

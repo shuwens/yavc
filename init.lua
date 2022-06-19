@@ -1,9 +1,3 @@
-local vim = vim
-local opt = vim.opt
-
-opt.nu = true
-opt.rnu = true
-
 -- █▓▒░ Load plugins
 require('plugin-list')
 

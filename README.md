@@ -25,6 +25,7 @@ git clone --depth 1 https://github.com/wbthomason/packer.nvim ~/.local/share/nvi
 ## TODO
 - fix the pyenv issue: sometime i have it configured and installed, but
   sometimes not
+- fix the fold thing: ufo is not working rn
 
 ## ChangeList
 - Nov 19, 2020: [config nvim with coq and packer using lua](https://github.com/jethrosun/yavc/commit/46628fb7cd72f02c50c9faaf36bf212f8b6d8c85)

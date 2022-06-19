@@ -59,6 +59,10 @@ end
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities.textDocument.completion.completionItem.snippetSupport = true
+capabilities.textDocument.foldingRange = {
+    dynamicRegistration = false,
+    lineFoldingOnly = true
+}
 
 local group = vim.api.nvim_create_augroup("DocumentFormatting", { clear = true })
 local function common_on_attach(client, bufnr)
@@ -114,12 +118,24 @@ lsp_installer.on_server_ready(function(server)
         opts.filetypes = { "sh", "zsh" };
         opts.root_dir = lsp.util.root_pattern(".git");
     end
-    -- if server.name == "efm" then
-    --     opts.init_options = {documentFormatting = true, codeAction = false};
-    --     opts.filetypes = vim.tbl_keys(languages);
-    --     opts.settings = {rootMarkers = {"package.json", ".git"}, languages = languages, lintDebounce = 500}
-    -- end
-
+    -- dual for python?
+    -- https://www.reddit.com/r/neovim/comments/sazbw6/python_language_servers/huocxpg/
+    if server.name == "pylsp" then
+        opts.settings = {
+            pylsp = {
+                plugins = {
+                    black = { enabled = true },
+                    pylint = { enabled = true, args = {
+                        "-d",
+                        "R0801,W1508,C0114,C0115,C0116,C0301,W0611,W1309",
+                    }, },
+                    pyflakes = { enabled = false },
+                    pyls_mypy = { enabled = true, live_mode = false },
+                    isort = { enabled = true },
+                }
+            }
+        }
+    end
     if server.name == "ltex" then
         opts.cmd = { nvim_data_path .. "ltex/ltex-ls/bin/ltex-ls" };
         opts.settings = {
