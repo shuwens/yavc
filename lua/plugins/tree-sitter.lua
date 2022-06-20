@@ -1,7 +1,10 @@
 require("nvim-treesitter.configs").setup({
     ensure_installed = "all", -- one of "all", "maintained" (parsers with maintainers), or a list of languages
+    -- FIXME: phpdocs not compilable on M1
+    ignore_install = { "phpdocs" },
     highlight = {
-        enable = true, -- false will disable the whole extension
+        -- false will disable the whole extension
+        enable = true,
         additional_vim_regex_highlighting = true
     },
     rainbow = {
