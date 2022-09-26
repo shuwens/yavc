@@ -91,7 +91,8 @@ local lsp_installer = require("nvim-lsp-installer")
 lsp_installer.settings { ui = { icons = { server_installed = "✓", server_pending = "➜", server_uninstalled = "✗" } } }
 -- FIXME: pyright is nice but it doesn't support code formatting which is
 -- annoying
-local servers = { "rust_analyzer", "clangd", "bash-language-server", "jsonls", "sumneko_lua", "pylsp", "texlab", 'ltex' }
+-- 'ltex'
+local servers = { "rust_analyzer", "clangd", "bash-language-server", "jsonls", "sumneko_lua", "pylsp", "texlab" }
 for _, lang in pairs(servers) do
     local ok, server = lsp_installer.get_server(lang)
     if ok then

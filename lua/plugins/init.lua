@@ -34,7 +34,7 @@ require("plugins.coq3p")
 require("plugins.rust-tools")
 -- require("plugins.project")
 
--- require("plugins.ltex")
+-- require("plugins.grammar")
 -- require("plugins.notational")
 
 -- require("plugins.null-ls")

@@ -108,6 +108,7 @@ require("packer").startup(function(use)
     -- writing
     use { "junegunn/goyo.vim" } -- Goyo, Goyo!
     use { "junegunn/limelight.vim" } -- Limelight, Limelight!
+    use { "rhysd/vim-grammarous" }
 
     -- LaTeX
     -- https://www.reddit.com/r/neovim/comments/idthcb/vimtex_vs_texlab/

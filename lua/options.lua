@@ -164,6 +164,7 @@ for d in glob('~/.config/nvim/spell/*.add', 1, 1)
     exec 'mkspell! ' . fnameescape(d)
   endif
 endfor
+set spellsuggest=best,9
 hi clear SpellBad
 " hi SpellBad ctermfg=000 guifg=#000
 hi SpellBad cterm=underline gui=undercurl

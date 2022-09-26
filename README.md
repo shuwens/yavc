@@ -22,6 +22,10 @@ git clone --depth 1 https://github.com/wbthomason/packer.nvim ~/.local/share/nvi
 
 ![Current look of my neovim](imgs/nvim-look.png?raw=true "Title")
 
+## Reference
+- [Neovim and latex](https://www.ejmastnak.com/tutorials/vim-latex/intro.html)
+
+
 ## TODO
 - fix the pyenv issue: sometime i have it configured and installed, but
   sometimes not

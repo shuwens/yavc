@@ -164,6 +164,7 @@ wk.register({
             r = { ':LspReferences<CR>', 'Goto References' }
         }
     },
+    s = { ':set spell!<CR>', "Spell checks" },
     w = { ':StripWhitespace<CR>:w<CR>', "Write and rm space" },
     W = {
         name = '+windows',
