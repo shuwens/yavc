@@ -24,7 +24,10 @@ git clone --depth 1 https://github.com/wbthomason/packer.nvim ~/.local/share/nvi
 
 ## Reference
 - [Neovim and latex](https://www.ejmastnak.com/tutorials/vim-latex/intro.html)
-
+- [Mac BigSur and packer](https://github.com/wbthomason/packer.nvim/issues/180)
+```bash
+MACOSX_DEPLOYMENT_TARGET=10.15 nvim
+```
 
 ## TODO
 - fix the pyenv issue: sometime i have it configured and installed, but
