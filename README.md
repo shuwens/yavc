@@ -28,6 +28,10 @@ git clone --depth 1 https://github.com/wbthomason/packer.nvim ~/.local/share/nvi
 ```bash
 MACOSX_DEPLOYMENT_TARGET=10.15 nvim
 ```
+- [ltex and java](): just install temurin instead of openjdk
+```bash
+brew install --cask temurin
+```
 
 ## TODO
 - fix the pyenv issue: sometime i have it configured and installed, but
