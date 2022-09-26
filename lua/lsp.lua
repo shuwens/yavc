@@ -141,7 +141,7 @@ lsp_installer.on_server_ready(function(server)
         opts.cmd = { nvim_data_path .. "ltex/ltex-ls/bin/ltex-ls" };
         opts.settings = {
             ltex = {
-                language = "en",
+                language = "en-US",
                 enabled = { "latex", "tex", "bib", "markdown" },
                 diagnosticSeverity = "information",
                 setenceCacheSize = 2000,
@@ -149,7 +149,6 @@ lsp_installer.on_server_ready(function(server)
                 trace = { server = "verbose" },
                 disabledRules = { ['en-US'] = { 'PROFANITY' } },
                 dictionary = { ['en-US'] = words }
-
             }
         }
     end
