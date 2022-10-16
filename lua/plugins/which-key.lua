@@ -118,7 +118,7 @@ wk.register({
     -- h = {':TroubleToggle<CR>', "Errors Dashboard"},
     l = {
         name = '+lsp',
-        f = { ':lua vim.lsp.buf.formatting()<CR>', 'format' },
+        f = { ':lua vim.lsp.buf.formatting_sync()<CR>', 'format' },
         I = { ':LspInfo<CR>', 'lsp info' },
         o = { ':lua vim.diagnostic.open_float()<CR>', 'lsp open float' },
         v = { ':LspVirtualTextToggle<CR>', 'lsp toggle virtual text' },

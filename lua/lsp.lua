@@ -81,7 +81,7 @@ local function common_on_attach(client, bufnr)
             group = augroup,
             buffer = bufnr,
             callback = function()
-                vim.lsp.buf.formatting({ bufnr = bufnr })
+                vim.lsp.buf.format({ bufnr = bufnr })
             end,
         })
     end
