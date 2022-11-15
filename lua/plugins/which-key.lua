@@ -72,7 +72,7 @@ wk.register({
         q = { "<cmd>:cclose<CR>", "Close QuickFix list" },
         g = { "<cmd>:cfirst<CR>", "First item in QuickFix list" },
         G = { "<cmd>:clast<CR>", "Last item in QuickFix list" },
-        o = { "<cmd>:copen<CR>", "Open QuickFix list" }
+        t = { "<cmd>:TodoQuickFix<CR>", "Open TODO QuickFix list" }
     },
     d = { ':Dispatch<CR>', "Dispatch" },
     -- f = {
@@ -134,6 +134,15 @@ wk.register({
     },
     Q = { 'g<c-g>', "Show stats" },
     -- n = "Explorer",
+    s = { ':set spell!<CR>', "Spell checks" },
+    t = {
+        name = '+TODO in comments',
+        n = { "<cmd>lua require('todo-comments').jump_next()<CR>", "Next todo comment" },
+        p = { "<cmd>lua require('todo-comments').jump_prev()<CR>", "Previous todo comment" },
+        q = { ':TodoQuickFix<CR>', 'TODO quickfix list' },
+        l = { ':TodoLocList<CR>', 'TODO location list' },
+        t = { ':TodoTelescope<CR>', 'TODO search with Telescope' },
+    },
     u = { ':UndotreeToggle<CR>', "Undo Tree" },
     v = {
         name = "+Lsp",
@@ -164,7 +173,6 @@ wk.register({
             r = { ':LspReferences<CR>', 'Goto References' }
         }
     },
-    s = { ':set spell!<CR>', "Spell checks" },
     w = { ':StripWhitespace<CR>:w<CR>', "Write and rm space" },
     W = {
         name = '+windows',

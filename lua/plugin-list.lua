@@ -58,6 +58,14 @@ require("packer").startup(function(use)
     use { "tomasiser/vim-code-dark" }
     use { 'lewis6991/gitsigns.nvim', requires = { 'nvim-lua/plenary.nvim' },
         config = function() require('gitsigns').setup() end }
+    use {
+        "folke/todo-comments.nvim",
+        requires = "nvim-lua/plenary.nvim",
+        config = function()
+            require("todo-comments").setup {
+            }
+        end
+    }
 
     -- Software dev tools
     use { "tpope/vim-fugitive" }
