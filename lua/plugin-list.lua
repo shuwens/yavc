@@ -49,7 +49,6 @@ require("packer").startup(function(use)
     use { 'RRethy/nvim-align' }
 
     -- GUI enhancements
-    use { "machakann/vim-highlightedyank" } -- highlight yank
     use { "jaxbot/semantic-highlight.vim" } -- different color for every variable
     use { "windwp/nvim-autopairs" }
     use { "ntpeters/vim-better-whitespace" }

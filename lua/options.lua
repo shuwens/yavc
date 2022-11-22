@@ -14,6 +14,14 @@ set nowrap
 set nofoldenable
 ]])
 
+-- highlight yanked text for 200ms using the "Visual" highlight group
+vim.cmd [[
+augroup highlight_yank
+autocmd!
+autocmd TextYankPost * silent! lua vim.highlight.on_yank {higroup=(vim.fn['hlexists']('HighlightedyankRegion') > 0 and 'HighlightedyankRegion' or 'IncSearch'), timeout=1000}
+augroup END
+]]
+
 opt.ruler = true -- Where am I?
 opt.hidden = true -- Hides buffers instead of closing them
 opt.ignorecase = true -- Search case insensitive...
