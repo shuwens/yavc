@@ -64,9 +64,6 @@ opt.encoding = "utf-8" -- default encoding to UTF-8
 opt.showmode = false -- We show the mode with airline or lightline
 opt.wrap = false -- do not wrap long lines by default
 opt.joinspaces = false -- Prevents inserting two spaces after punctuation on a join (J)
-opt.printfont = ":h14"
-opt.printencoding = "utf-8"
-opt.printoptions = "paper:letter"
 
 -- set the width of the tab to 4 wide
 -- This gets overridden by vim-sleuth, so that's nice

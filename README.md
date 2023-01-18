@@ -18,6 +18,9 @@ To install packer:
 `
 git clone --depth 1 https://github.com/wbthomason/packer.nvim ~/.local/share/nvim/site/pack/packer/start/packer.nvim`
 
+Setup pycodestyle: see [this](https://pycodestyle.pycqa.org/en/latest/intro.html#configuration)
+
+
 ## Current look
 
 ![Current look of my neovim](imgs/nvim-look.png?raw=true "Title")
