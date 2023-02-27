@@ -73,8 +73,13 @@ require("packer").startup(function(use)
     use { "tpope/vim-dispatch", opt = true, cmd = { 'Dispatch', 'Make', 'Focus', 'Start' } }
 
     -- LSP support
-    use { "neovim/nvim-lspconfig" }
-    use { "williamboman/nvim-lsp-installer" }
+    use {
+        "williamboman/mason.nvim",
+        "williamboman/mason-lspconfig.nvim",
+        "neovim/nvim-lspconfig",
+        'jose-elias-alvarez/null-ls.nvim',
+        'jayp0521/mason-null-ls.nvim',
+    }
 
     -- LSP utils
     use { "nvim-lua/lsp_extensions.nvim" } -- info and inlay hints
