@@ -84,7 +84,7 @@ require("packer").startup(function(use)
     -- LSP utils
     use { "nvim-lua/lsp_extensions.nvim" } -- info and inlay hints
     use { "ray-x/lsp_signature.nvim" } -- function signatures
-    use { "j-hui/fidget.nvim" } -- status
+    use { "j-hui/fidget.nvim", tag = 'legacy'} -- lsp status
     use { "SmiteshP/nvim-navic" } -- display function name etc
 
     -- Coq
@@ -105,14 +105,14 @@ require("packer").startup(function(use)
     -- Rust
     use { "simrat39/rust-tools.nvim" }
     -- C++ and Clang
-    -- use("octol/vim-cpp-enhanced-highlight', {'for': ['cpp'] }
-    -- use("drmikehenry/vim-headerguard', {'for': ['cpp', 'hpp'] }
-    -- use("bfrg/vim-cpp-modern', {'for': ['cpp', 'hpp'] }
-    -- use("arakashic/chromatica.nvim', {'for': ['cpp', 'hpp'] }
-    -- use("rhysd/vim-clang-format', {'for': ['c', 'cpp', 'hpp'] }
+    use { "octol/vim-cpp-enhanced-highlight", ft = {"c", "cpp"} }
+    use { "drmikehenry/vim-headerguard", ft = {"c", "cpp"} }
+    use { "bfrg/vim-cpp-modern", ft = {"c", "cpp"} }
+    use { "arakashic/chromatica.nvim", ft = {"c", "cpp"} }
+    use { "rhysd/vim-clang-format", ft = {"c", "cpp"} }
 
     -- SQL
-    use { "tami5/sql.nvim", rocks = { "sqlite", "luv" } }
+    -- use { "tami5/sql.nvim", rocks = { "sqlite", "luv" } }
     use { "tpope/vim-dadbod" }
     use { "kristijanhusak/vim-dadbod-completion" }
     use { "kristijanhusak/vim-dadbod-ui" }
