@@ -1,158 +1,207 @@
-local vim = vim
-local lsp = require("lspconfig")
-local coq = require("coq")
+-- Little hack for vimls to shut up on most lines. vim is technically an undefined global...
+vim = vim
 
-require("mason").setup()
-require("mason-lspconfig").setup()
--- "rust_analyzer", "clangd", "bash-language-server", "jsonls", "sumneko_lua", "pylsp", "ltex", "texlab", 'pyright
-
-local M = {}
-
-local nvim_data_path = os.getenv("HOME") .. "/.local/share/nvim/lsp_servers/"
-
--- Lsp customization
---
-vim.lsp.protocol.CompletionItemKind = {
-    " [text]", " [method]", " [function]", " [constructor]", "ﰠ [field]", " [variable]", " [class]",
-    " [interface]",
-    " [module]", " [property]", " [unit]", " [value]", " [enum]", " [key]", " [snippet]",
-    " [color]", " [file]",
-    " [reference]", " [folder]", " [enum member]", " [constant]", " [struct]", "⌘ [event]",
-    " [operator]", "♛ [type]"
+require('mason').setup {
+  registries = {
+    'lua:mason-registry.index',
+    'github:mason-org/mason-registry',
+  },
 }
+require('mason-registry').refresh()
 
-M.symbol_kind_icons = {
-    Function = "",
-    Method = "",
-    Variable = "",
-    Constant = "",
-    Interface = "",
-    Field = "ﰠ",
-    Property = "",
-    Struct = "",
-    Enum = "",
-    Class = "",
-    Snippet = " "
-}
-
-M.symbol_kind_colors = {
-    Method = "green",
-    Variable = "blue",
-    Constant = "red",
-    Interface = "cyan",
-    Field = "blue",
-    Property = "blue",
-    Struct = "cyan",
-    Enum = "yellow",
-    Class = "red",
-    Snippet = "green"
-}
-
--- Diagnostics symbols for display in the sign column.
-local signs = { Error = "", Warn = "", Hint = "", Info = "" }
-for type, icon in pairs(signs) do
-    local hl = "DiagnosticSign" .. type
-    vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
-end
-
--- vim.fn.sign_define('DiagnosticSignError', {text = '', texthl = 'LspDiagnosticsDefaultError'})
--- vim.fn.sign_define('DiagnosticSignWarn', {text = '', texthl = 'LspDiagnosticsDefaultWarning'})
--- vim.fn.sign_define('DiagnosticSignHint', {text = '', texthl = 'LspDiagnosticsDefaultHint'})
--- vim.fn.sign_define('DiagnosticSignInfo', {text = '', texthl = 'LspDiagnosticsDefaultInformation'})
-
--- Lsp setup
-
-local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities.textDocument.completion.completionItem.snippetSupport = true
-capabilities.textDocument.foldingRange = {
-    dynamicRegistration = false,
-    lineFoldingOnly = true
-}
-
--- DEPRECATED: old format
--- local group = vim.api.nvim_create_augroup("DocumentFormatting", { clear = true })
--- local function common_on_attach(client, bufnr)
---     local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
---
---     -- Enable completion triggered by <c-x><c-o>
---     -- return M
---     buf_set_option("omnifunc", "v:lua.vim.lsp.omnifunc")
---
---     -- Get signatures (and _only_ signatures) when in argument lists.
---     require "lsp_signature".on_attach({ doc_lines = 0, handler_opts = { border = "none" } })
---
---     if client.supports_method("textDocument/formatting") then
---         vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
---         vim.api.nvim_create_autocmd("BufWritePre", {
---             group = augroup,
---             buffer = bufnr,
---             callback = function()
---                 vim.lsp.buf.format({ bufnr = bufnr })
---             end,
---         })
---     end
--- end
-
-local lsp_formatting = function(bufnr)
-    vim.lsp.buf.format({
-        filter = function(client)
-            -- apply whatever logic you want (in this example, we'll only use null-ls)
-            return client.name == "null-ls"
-        end,
-        bufnr = bufnr,
-    })
-end
-
--- if you want to set up formatting on save, you can use this as a callback
-local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
-
--- add to your shared on_attach callback
-local on_attach = function(client, bufnr)
-    if client.supports_method("textDocument/formatting") then
-        vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
-        vim.api.nvim_create_autocmd("BufWritePre", {
-            group = augroup,
-            buffer = bufnr,
-            callback = function()
-                lsp_formatting(bufnr)
-            end,
-        })
-    end
-end
-
-
-local path = vim.fn.stdpath("config") .. "/spell/en.utf-8.add"
-local words = {}
-for word in io.open(path, "r"):lines() do table.insert(words, word) end
-
--- set default prefix.
-vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
-    -- virtual_text = false,
-    -- virtual_text = { prefix = "" },
-    signs = true,
-    update_in_insert = false
-})
-
--- null-ls
-require('null-ls').setup({
-  sources = {
-    require('null-ls').builtins.diagnostics.eslint_d.with({
-      condition = function(utils)
-        return utils.root_has_file({ '.eslintrc.js' })
-      end,
-    }),
-    require('null-ls').builtins.diagnostics.trail_space.with({ disabled_filetypes = { 'NvimTree' } }),
-    require('null-ls').builtins.formatting.eslint_d.with({
-      condition = function(utils)
-        return utils.root_has_file({ '.eslintrc.js' })
-      end,
-    }),
-    require('null-ls').builtins.formatting.prettierd,
+local ih = require('inlay-hints')
+ih.setup({
+  renderer = 'inlay-hints/render/eol',
+  eol = {
+    right_align = false,
   },
 })
 
--- Has to be after calling null-ls
-require('mason-null-ls').setup({ automatic_installation = true })
+local servers = {
+  -- Lua
+  lua_ls = {
+    on_attach = function(client, bufnr)
+      ih.on_attach(client, bufnr)
+    end,
+    settings = {
+      Lua = {
+        hint = {
+          enable = true,
+        },
+      },
+    },
+  },
+  -- Rust
+  rust_analyzer = {
+    on_attach = function(client, bufnr)
+      ih.on_attach(client, bufnr)
+    end,
+    settings = {
+      ['rust-analyzer'] = {
+        imports = {
+          prefix = 'self',
+        },
+        cargo = {
+          buildScripts = { enable = true },
+          features = 'all',
+        },
+        procMacro = { enable = true },
+        workspace = {
+          symbol = {
+            search = {
+              kind = 'all_symbols',
+              scope = 'workspace_and_dependencies',
+            },
+          },
+        },
+      },
+    },
+  },
+  -- JSON, JSON5
+  jsonls = {},
+  -- Shell, bash
+  bashls = {
+    on_attach = function(client, bufnr)
+      ih.on_attach(client, bufnr)
+    end,
+  },
+  -- C, C++
+  clangd = {
+    on_attach = function(client, bufnr)
+      ih.on_attach(client, bufnr)
+    end,
+  },
+  -- Dockerfile / docker-compose
+  dockerls = {},
+  -- Python
+  pyright = {
+    settings = {
+      pyright = {
+        disableLanguageServices = true,
+      },
+    },
+  },
+  jedi_language_server = {
+    on_attach = function(client, bufnr)
+      ih.on_attach(client, bufnr)
+    end,
+  },
+  -- TOML
+  taplo = {},
+  -- Golang
+  gopls = {},
+}
+local servers_keys = {}
+for k, _ in pairs(servers) do
+  table.insert(servers_keys, k)
+end
+require('mason-lspconfig').setup { ensure_installed = servers_keys }
+local lsp = require('lspconfig')
+local coq_wrap = require('coq').lsp_ensure_capabilities
 
+-- See `:help vim.diagnostic.*` for documentation on any of the below functions
+local opts = { noremap = true, silent = true }
+vim.keymap.set('n', '<Leader>q', vim.diagnostic.setloclist, opts)
 
-return M
+local function on_attach(client, bufnr)
+  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<Leader>gd', '<Cmd>lua vim.lsp.buf.declaration()<CR>', opts)
+  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<Leader>gD', '<Cmd>lua vim.lsp.buf.definition()<CR>', opts)
+  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<Leader>gi', '<Cmd>lua vim.lsp.buf.implementation()<CR>', opts)
+  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<Leader>rn', '<Cmd>lua vim.lsp.buf.rename()<CR>', opts)
+  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<Leader>f', '<Cmd>lua vim.lsp.buf.format()<CR>', opts)
+  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<Leader>ac', '<Cmd>lua vim.lsp.buf.code_action()<CR>', opts)
+  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<Leader>dj', '<Cmd>lua vim.diagnostic.goto_next()<CR>', opts)
+  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<Leader>dk', '<Cmd>lua vim.diagnostic.goto_prev()<CR>', opts)
+  vim.api.nvim_buf_set_keymap(bufnr, 'n', 'K', '<Cmd>lua vim.lsp.buf.hover()<CR>', opts)
+  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<Leader>gr', '<Cmd>Telescope live_grep<CR>', opts)
+  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<Leader>lr', '<Cmd>Telescope lsp_references<CR>', opts)
+
+  local augroup_id = vim.api.nvim_create_augroup('LSPAttach', { clear = false })
+  vim.api.nvim_clear_autocmds({ buffer = bufnr, group = augroup_id })
+  vim.api.nvim_create_autocmd('CursorHold', {
+    buffer = bufnr,
+    group = augroup_id,
+    callback = function()
+      if client.server_capabilities.documentHighlightProvider then
+        vim.lsp.buf.document_highlight()
+      end
+      -- I don't want to open a float if there is already something open (docs!).
+      for _, winid in pairs(vim.api.nvim_tabpage_list_wins(0)) do
+        if vim.api.nvim_win_get_config(winid).relative ~= '' then
+          return
+        end
+      end
+      vim.diagnostic.open_float({ bufnr = bufnr }, { focus = false })
+    end,
+  })
+  vim.api.nvim_create_autocmd('CursorHoldI', {
+    buffer = bufnr,
+    group = augroup_id,
+    callback = function()
+      if client.server_capabilities.signatureHelpProvider then
+        vim.lsp.buf.signature_help()
+      end
+    end
+  })
+  vim.api.nvim_create_autocmd('CursorMoved', {
+    buffer = bufnr,
+    group = augroup_id,
+    callback = vim.lsp.buf.clear_references,
+  })
+  vim.api.nvim_create_autocmd('CompleteDone', {
+    buffer = bufnr,
+    group = augroup_id,
+    callback = function()
+      local completed_item = vim.v.completed_item
+      if not (completed_item
+            and completed_item.user_data
+            and completed_item.user_data.nvim
+            and completed_item.user_data.nvim.lsp
+            and completed_item.user_data.nvim.lsp.completion_item) then
+        return
+      end
+
+      local item = completed_item.user_data.nvim.lsp.completion_item
+      vim.lsp.buf_request(bufnr, 'completionItem/resolve', item, function(_, _, result)
+        if (result
+              and result.params
+              and result.params.additionalTextEdits) then
+          vim.lsp.util.apply_text_edits(result.params.additionalTextEdits, bufnr, 'utf-8')
+        end
+      end)
+    end,
+  })
+end
+
+-- Stop diagnostics from taking over focus.
+vim.diagnostic.config({ float = { focusable = false } })
+
+for server, server_params in pairs(servers) do
+  local params = {
+    handlers = {
+      ['textDocument/publishDiagnostics'] = vim.lsp.with(
+        vim.lsp.diagnostic.on_publish_diagnostics, {
+          signs = false,
+          virtual_text = false,
+          underline = true,
+        }
+      ),
+      ['textDocument/signatureHelp'] = vim.lsp.with(
+        vim.lsp.handlers.signature_help, {
+          silent = true,
+          focusable = false,
+        }
+      ),
+      -- ['textDocument/hover'] = vim.lsp.with(vim.lsp.handlers.hover, { focusable = false }),
+    },
+  }
+  local effective_params = vim.tbl_deep_extend('force', params, server_params)
+  effective_params.on_attach =
+      function(client, bufnr)
+        if server_params.on_attach then
+          server_params.on_attach(client, bufnr)
+        end
+        on_attach(client, bufnr)
+      end
+  lsp[server].setup(coq_wrap(effective_params))
+end

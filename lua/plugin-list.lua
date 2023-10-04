@@ -23,8 +23,10 @@ if not present then
 end
 
 packer.init({
-    display = { open_fn = function() return require("packer.util").float({ border = "single" }) end,
-        prompt_border = "single" },
+    display = {
+        open_fn = function() return require("packer.util").float({ border = "single" }) end,
+        prompt_border = "single"
+    },
     git = {
         clone_timeout = 600 -- Timeout, in seconds, for git clones
     },
@@ -68,24 +70,24 @@ require("packer").startup(function(use)
 
     -- Software dev tools
     use { "tpope/vim-fugitive" }
-    use { "junegunn/gv.vim" } -- GV, GV!, GV?
+    use { "junegunn/gv.vim" }     -- GV, GV!, GV?
     use { "rhysd/committia.vim" } -- better git commit layout
     use { "tpope/vim-dispatch", opt = true, cmd = { 'Dispatch', 'Make', 'Focus', 'Start' } }
 
     -- LSP support
-    use {
-        "williamboman/mason.nvim",
-        "williamboman/mason-lspconfig.nvim",
-        "neovim/nvim-lspconfig",
-        'jose-elias-alvarez/null-ls.nvim',
-        'jayp0521/mason-null-ls.nvim',
-    }
+    use { 'neovim/nvim-lspconfig', requires = {
+        { 'williamboman/mason.nvim',           opt = true },
+        { 'williamboman/mason-lspconfig.nvim', opt = true },
+        { 'simrat39/inlay-hints.nvim',         opt = true },
+        { 'jose-elias-alvarez/null-ls.nvim',   opt = true },
+        { 'jayp0521/mason-null-ls.nvim',       opt = true }
+    } }
 
     -- LSP utils
-    use { "nvim-lua/lsp_extensions.nvim" } -- info and inlay hints
-    use { "ray-x/lsp_signature.nvim" } -- function signatures
-    use { "j-hui/fidget.nvim", tag = 'legacy'} -- lsp status
-    use { "SmiteshP/nvim-navic" } -- display function name etc
+    use { "nvim-lua/lsp_extensions.nvim" }     -- info and inlay hints
+    use { "ray-x/lsp_signature.nvim" }         -- function signatures
+    use { "j-hui/fidget.nvim", tag = 'legacy' } -- lsp status
+    use { "SmiteshP/nvim-navic" }              -- display function name etc
 
     -- Coq
     use { "ms-jpq/coq_nvim", branch = "coq",
@@ -105,11 +107,11 @@ require("packer").startup(function(use)
     -- Rust
     use { "simrat39/rust-tools.nvim" }
     -- C++ and Clang
-    use { "octol/vim-cpp-enhanced-highlight", ft = {"c", "cpp"} }
-    use { "drmikehenry/vim-headerguard", ft = {"c", "cpp"} }
-    use { "bfrg/vim-cpp-modern", ft = {"c", "cpp"} }
-    use { "arakashic/chromatica.nvim", ft = {"c", "cpp"} }
-    use { "rhysd/vim-clang-format", ft = {"c", "cpp"} }
+    use { "octol/vim-cpp-enhanced-highlight", ft = { "c", "cpp" } }
+    use { "drmikehenry/vim-headerguard", ft = { "c", "cpp" } }
+    use { "bfrg/vim-cpp-modern", ft = { "c", "cpp" } }
+    use { "arakashic/chromatica.nvim", ft = { "c", "cpp" } }
+    use { "rhysd/vim-clang-format", ft = { "c", "cpp" } }
 
     -- SQL
     -- use { "tami5/sql.nvim", rocks = { "sqlite", "luv" } }
@@ -118,7 +120,7 @@ require("packer").startup(function(use)
     use { "kristijanhusak/vim-dadbod-ui" }
 
     -- writing
-    use { "junegunn/goyo.vim" } -- Goyo, Goyo!
+    use { "junegunn/goyo.vim" }      -- Goyo, Goyo!
     use { "junegunn/limelight.vim" } -- Limelight, Limelight!
     use { "rhysd/vim-grammarous" }
 
