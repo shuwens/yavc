@@ -1,5 +1,4 @@
 -- lualine configuration
--- require("plugins.feline")
 require("plugins.lualine")
 
 -- fuzzy finder configuration
@@ -17,9 +16,6 @@ require("plugins.gitsigns")
 
 -- configuration to help you remember keybindings
 require("plugins.which-key")
-
--- extra plugins(with shorter configs)
-require("plugins.misc")
 
 -- Treesitter configurations
 require("plugins.tree-sitter")
