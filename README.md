@@ -20,6 +20,17 @@ git clone --depth 1 https://github.com/wbthomason/packer.nvim ~/.local/share/nvi
 
 Setup pycodestyle: see [this](https://pycodestyle.pycqa.org/en/latest/intro.html#configuration)
 
+## Setup pyenv and python environment
+```bash
+# setup pyenv first, then
+pyenv install 3.12.0
+sudo apt install libbz2-dev
+sudo apt-get install liblzma-dev libsqlite3-dev libedit-dev libncurses5-dev libreadline-dev
+
+```
+
+
+
 
 ## Current look
 
