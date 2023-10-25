@@ -8,7 +8,7 @@ let mapleader = "\<Space>"
 " Load vundle
 set nocompatible
 filetype off
-set rtp+=~/dev/others/base16/vim/
+set rtp+=~/dev/others/base16/templates/nvim/
 call plug#begin()
 
 " Load plugins
@@ -19,7 +19,6 @@ Plug 'justinmk/vim-sneak'
 
 " GUI enhancements
 Plug 'itchyny/lightline.vim'
-Plug 'machakann/vim-highlightedyank'
 Plug 'andymass/vim-matchup'
 Plug 'tomasiser/vim-code-dark'
 
@@ -42,7 +41,7 @@ Plug 'hrsh7th/cmp-vsnip', {'branch': 'main'}
 Plug 'hrsh7th/vim-vsnip'
 
 " Syntactic language support
-Plug 'cespare/vim-toml'
+Plug 'cespare/vim-toml', {'branch': 'main'}
 Plug 'stephpy/vim-yaml'
 Plug 'rust-lang/rust.vim'
 Plug 'rhysd/vim-clang-format'
@@ -68,31 +67,29 @@ if (match($TERM, "-256color") != -1) && (match($TERM, "screen-256color") == -1)
   set termguicolors
 endif
 set background=dark
+" let base16colorspace=256
+" let g:base16_shell_path="~/dev/others/base16/templates/shell/scripts/"
+" colorscheme base16-gruvbox-dark-hard
+"colorscheme quiet
 colorscheme codedark
 syntax on
 hi Normal ctermbg=NONE
 
-
-" gray
-highlight! CmpItemAbbrDeprecated guibg=NONE gui=strikethrough guifg=#808080
-" blue
-highlight! CmpItemAbbrMatch guibg=NONE guifg=#569CD6
-highlight! CmpItemAbbrMatchFuzzy guibg=NONE guifg=#569CD6
-" light blue
-highlight! CmpItemKindVariable guibg=NONE guifg=#9CDCFE
-highlight! CmpItemKindInterface guibg=NONE guifg=#9CDCFE
-highlight! CmpItemKindText guibg=NONE guifg=#9CDCFE
-" pink
-highlight! CmpItemKindFunction guibg=NONE guifg=#C586C0
-highlight! CmpItemKindMethod guibg=NONE guifg=#C586C0
-" front
-highlight! CmpItemKindKeyword guibg=NONE guifg=#D4D4D4
-highlight! CmpItemKindProperty guibg=NONE guifg=#D4D4D4
-highlight! CmpItemKindUnit guibg=NONE guifg=#D4D4D4
-
-" Enable type inlay hints
-autocmd CursorHold,CursorHoldI *.rs :lua require'lsp_extensions'.inlay_hints{ only_current_line = true }
-
+" Customize the highlight a bit.
+" Make comments more prominent -- they are important.
+lua << END
+local bools = vim.api.nvim_get_hl(0, { name = 'Boolean' })
+vim.api.nvim_set_hl(0, 'Comment', bools)
+END
+" Make it clearly visible which argument we're at.
+lua << END
+local marked = vim.api.nvim_get_hl(0, { name = 'PMenu' })
+vim.api.nvim_set_hl(0, 'LspSignatureActiveParameter', { fg = marked.fg, bg = marked.bg, ctermfg = marked.ctermfg, ctermbg = marked.ctermbg, bold = true })
+END
+" Would be nice to customize the highlighting of warnings and the like to make
+" them less glaring. But alas
+" https://github.com/nvim-lua/lsp_extensions.nvim/issues/21
+" call Base16hi("CocHintSign", g:base16_gui03, "", g:base16_cterm03, "", "", "")
 
 " LSP configuration
 lua << END
@@ -106,10 +103,13 @@ cmp.setup({
       vim.fn["vsnip#anonymous"](args.body)
     end,
   },
-  mapping = {
-    -- Tab immediately completes. C-n/C-p to select.
-    ['<Tab>'] = cmp.mapping.confirm({ select = true })
-  },
+  mapping = cmp.mapping.preset.insert({
+    ['<C-b>'] = cmp.mapping.scroll_docs(-4),
+    ['<C-f>'] = cmp.mapping.scroll_docs(4),
+    ['<C-Space>'] = cmp.mapping.complete(),
+    ['<C-e>'] = cmp.mapping.abort(),
+    ['<CR>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+  }),
   sources = cmp.config.sources({
     -- TODO: currently snippets from lsp end up getting prioritized -- stop that!
     { name = 'nvim_lsp' },
@@ -149,11 +149,15 @@ local on_attach = function(client, bufnr)
   buf_set_keymap('n', '<space>r', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
   buf_set_keymap('n', '<space>a', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
   buf_set_keymap('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
-  buf_set_keymap('n', '<space>e', '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>', opts)
-  buf_set_keymap('n', '[d', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', opts)
-  buf_set_keymap('n', ']d', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
-  buf_set_keymap('n', '<space>q', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', opts)
-  buf_set_keymap("n", "<space>f", "<cmd>lua vim.lsp.buf.formatting()<CR>", opts)
+  buf_set_keymap('n', '<space>e', '<cmd>lua vim.diagnostic.open_float()<CR>', opts)
+  buf_set_keymap('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<CR>', opts)
+  buf_set_keymap('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<CR>', opts)
+  buf_set_keymap('n', '<space>q', '<cmd>lua vim.diagnostic.set_loclist()<CR>', opts)
+  buf_set_keymap("n", "<space>f", "<cmd>lua vim.lsp.buf.format()<CR>", opts)
+
+  -- None of this semantics tokens business.
+  -- https://www.reddit.com/r/neovim/comments/143efmd/is_it_possible_to_disable_treesitter_completely/
+  client.server_capabilities.semanticTokensProvider = nil
 
   -- Get signatures (and _only_ signatures) when in argument lists.
   require "lsp_signature".on_attach({
@@ -175,17 +179,15 @@ lspconfig.rust_analyzer.setup {
       cargo = {
         allFeatures = true,
       },
+      completion = {
+	postfix = {
+	  enable = false,
+	},
+      },
     },
   },
   capabilities = capabilities,
 }
-
-if vim.fn.executable("pyright") > 0 then
-  lspconfig.pyright.setup {
-    on_attach = on_attach,
-    capabilities = capabilities,
-  }
-end
 
 vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
   vim.lsp.diagnostic.on_publish_diagnostics, {
@@ -372,6 +374,7 @@ set colorcolumn=80 " and give me a colored column
 set showcmd " Show (partial) command in status line.
 set mouse=a " Enable mouse usage (all modes) in terminals
 set shortmess+=c " don't give |ins-completion-menu| messages.
+au TextYankPost * silent! lua vim.highlight.on_yank() " Highlight yank
 
 " Show those damn hidden characters
 " Verbose: set listchars=nbsp:¬,eol:¶,extends:»,precedes:«,trail:•
@@ -423,8 +426,8 @@ map L $
 " Neat X clipboard integration
 " ,p will paste clipboard into buffer
 " ,c will copy entire buffer into clipboard
-noremap <leader>p :read !xsel --clipboard --output<cr>
-noremap <leader>c :w !xsel -ib<cr><cr>
+noremap <leader>p :read !wl-paste<cr>
+noremap <leader>c :w !wl-copy<cr><cr>
 
 " <leader>s for Rg search
 noremap <leader>s :Rg
