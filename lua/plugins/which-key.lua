@@ -193,7 +193,35 @@ wk.register({
         s = { '<C-W>s', 'split-window-below' },
         v = { '<C-W>v', 'split-window-below' },
         ['?'] = { 'Windows', 'fzf-window' }
-    }
+    },
+    z = {
+        name = '+zk notes',
+        o = { "<Cmd>ZkNotes { sort = { 'modified' } }<CR>", 'Open notes' },
+        n = { "<Cmd>ZkNew { title = vim.fn.input('Title: ') }<CR>", 'New note with title' },
+        b = { "<Cmd>ZkBacklinks<CR>", 'Back links' },
+        t = { "<Cmd>ZkTags<CR>", 'Open notes with tags' },
+        f = { ":'<,'>ZkMatch<CR>", 'Search for the notes matching the current visual selection' },
+        s = { "<Cmd>ZkNotes { sort = { 'modified' }, match = { vim.fn.input('Search: ') } }<CR>", 'Search for the notes matching a given query' },
+    },
+--   vim.api.nvim_set_keymap("n", "<leader>zf",
+--     "<Cmd>ZkNotes { sort = { 'created' }, excludeHrefs = { '" .. zk_notebook_dir .. "/diary'} }<CR>", lsp_map_opts)
+--   vim.api.nvim_set_keymap("n", "<leader>zw", "<CMD>ZkNew { dir = '" .. zk_notebook_dir .. "/diary' }<CR>", lsp_map_opts)
+--   vim.api.nvim_set_keymap(
+--     "n",
+--     "<leader>zz",
+--     "<CMD>ZkNotes { sort = { 'title' }, tags = { 'Index' } }<CR>",
+--     lsp_map_opts
+--   )
+--   vim.api.nvim_set_keymap(
+--     "n",
+--     "<leader>zd",
+--     "<CMD>ZkNotes { sort = { 'created' }, tags = { 'diary' } }<CR>",
+--     lsp_map_opts
+--   )
+-- end
+-- vim.api.nvim_set_keymap("n", "<leader>td", "<CMD>edit " .. zk_notebook_dir .. "/todo.md<CR>", lsp_map_opts)
+
+
 }, { prefix = g.mapleader })
 
 wk.register({

@@ -58,7 +58,7 @@ require("packer").startup(function(use)
     use { "p00f/nvim-ts-rainbow" }
     use { "tomasiser/vim-code-dark" }
     use { 'lewis6991/gitsigns.nvim', requires = { 'nvim-lua/plenary.nvim' },
-        config = function() require('gitsigns').setup() end }
+    config = function() require('gitsigns').setup() end }
     use {
         "folke/todo-comments.nvim",
         requires = "nvim-lua/plenary.nvim",
@@ -87,14 +87,14 @@ require("packer").startup(function(use)
     use { "nvim-lua/lsp_extensions.nvim" }      -- info and inlay hints
     use { "ray-x/lsp_signature.nvim" }          -- function signatures
     use { "j-hui/fidget.nvim",                  -- lsp status
-        config = function() require('fidget').setup {} end }
+    config = function() require('fidget').setup {} end }
 
     use { "SmiteshP/nvim-navic" } -- display function name etc
 
     -- Coq
     use { "ms-jpq/coq_nvim", branch = "coq",
-        requires = { { "ms-jpq/coq.artifacts", branch = "artifacts" },
-            { "ms-jpq/coq.thirdparty", branch = "3p" } } }
+    requires = { { "ms-jpq/coq.artifacts", branch = "artifacts" },
+    { "ms-jpq/coq.thirdparty", branch = "3p" } } }
     use { "folke/lua-dev.nvim" }
 
     -- Language support
@@ -131,6 +131,24 @@ require("packer").startup(function(use)
 
     -- note taking
     -- https://mischavandenburg.com/zet/neovim-zettelkasten/
-    use { "mickael-menu/zk-nvim" }      -- ZK?
+    use {
+        "mickael-menu/zk-nvim",
+        config = function()
+            require("zk").setup({
+                picker = "telescope",
+                lsp = {
+                    config = {
+                        cmd = { "zk", "lsp" },
+                        name = "zk",
+                    },
+
+                    auto_attach = {
+                        enabled = true,
+                        filetypes = { "markdown" },
+                    },
+                },
+            })
+        end
+    }
 
 end)

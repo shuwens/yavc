@@ -14,9 +14,6 @@ require("plugins.commentary")
 -- Git changes(showing in line number) configuration
 require("plugins.gitsigns")
 
--- configuration to help you remember keybindings
-require("plugins.which-key")
-
 -- Treesitter configurations
 require("plugins.tree-sitter")
 require("plugins.orgmode")
@@ -30,7 +27,12 @@ require("plugins.coq3p")
 require("plugins.rust-tools")
 -- require("plugins.project")
 
--- require("plugins.grammar")
--- require("plugins.notational")
+-- Note taking
+require("plugins.zk")
 
+-- require("plugins.grammar")
 -- require("plugins.todo-comments")
+
+-- configuration to help you remember keybindings
+require("plugins.which-key")
+
