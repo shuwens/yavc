@@ -10,3 +10,4 @@ mthesaur.txt
 .mypy_cache
 .DS_Store
 tags
+pack/

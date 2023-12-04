@@ -26,11 +26,7 @@ Setup pycodestyle: see [this](https://pycodestyle.pycqa.org/en/latest/intro.html
 pyenv install 3.12.0
 sudo apt install libbz2-dev
 sudo apt-get install liblzma-dev libsqlite3-dev libedit-dev libncurses5-dev libreadline-dev
-
 ```
-
-
-
 
 ## Current look
 
@@ -46,6 +42,14 @@ MACOSX_DEPLOYMENT_TARGET=10.15 nvim
 ```bash
 brew install --cask temurin
 ```
+
+## Additionally
+```
+:TSUninstall all
+:TSIntall all
+:TSUpdate
+```
+
 
 ## TODO
 - fix the pyenv issue: sometime i have it configured and installed, but

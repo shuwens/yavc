@@ -86,7 +86,7 @@ require("packer").startup(function(use)
     -- LSP utils
     use { "nvim-lua/lsp_extensions.nvim" }      -- info and inlay hints
     use { "ray-x/lsp_signature.nvim" }          -- function signatures
-    use { "j-hui/fidget.nvim", tag = 'legacy',  -- lsp status
+    use { "j-hui/fidget.nvim",                  -- lsp status
         config = function() require('fidget').setup {} end }
 
     use { "SmiteshP/nvim-navic" } -- display function name etc
@@ -128,4 +128,9 @@ require("packer").startup(function(use)
 
     -- LaTeX
     -- https://www.reddit.com/r/neovim/comments/idthcb/vimtex_vs_texlab/
+
+    -- note taking
+    -- https://mischavandenburg.com/zet/neovim-zettelkasten/
+    use { "mickael-menu/zk-nvim" }      -- ZK?
+
 end)
