@@ -13,5 +13,3 @@ end
 
 commands.add("ZkOrphans", make_edit_fn({ orphan = true }, { title = "Zk Orphans" }))
 commands.add("ZkRecents", make_edit_fn({ createdAfter = "2 weeks ago" }, { title = "Zk Recents" }))
-
-

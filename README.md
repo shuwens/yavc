@@ -46,7 +46,7 @@ brew install --cask temurin
 ## Additionally
 ```
 :TSUninstall all
-:TSIntall all
+:TSInstall all
 :TSUpdate
 ```
 

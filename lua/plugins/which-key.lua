@@ -76,179 +76,168 @@ wk.register({
     },
     d = { ':Dispatch<CR>', "Dispatch" },
     -- f = {
-    --     name = "+Fuzzy Search",
-    --     f = {"<cmd>lua require('fzf-lua').files()<CR>", "file"},
-    --     b = {"<cmd>lua require('fzf-lua').buffers()<CR>", "buffer"},
-    --     q = {"<cmd>lua require('fzf-lua').quickfix()<CR>", "quickfix"},
-    --     l = {"<cmd>lua require('fzf-lua').loclist()<CR>", "loc list"},
-    --     p = {"<cmd>lua require('fzf-lua').grep_project()<CR>", "Rg project"},
-    --     w = {"<cmd>lua require('fzf-lua').grep_cword()<CR>", "Current word"},
-    --     g = {"<cmd>lua require('fzf-lua').live_grep_native()<CR>", "Live grep"},
-    --     c = {"<cmd>lua require('fzf-lua').git_commits()<CR>", "Git commits"}
-    -- },
-    f = {
-        name = "+Fuzzy Search",
-        f = { "<cmd>lua require('telescope.builtin').find_files()<CR>", "file" },
-        b = { "<cmd>lua require('telescope.builtin').buffers()<CR>", "buffer" },
-        g = { "<cmd>lua require('telescope.builtin').live_grep()<CR>", "Live grep" },
-        h = { "<cmd>lua require('telescope.builtin').help_tags()<CR>", "Help tags" }
-        -- q = {"<cmd>lua require('fzf-lua').quickfix()<CR>", "quickfix"},
-        -- l = {"<cmd>lua require('fzf-lua').loclist()<CR>", "loc list"},
-        -- p = {"<cmd>lua require('fzf-lua').grep_project()<CR>", "Rg project"},
-        -- w = {"<cmd>lua require('fzf-lua').grep_cword()<CR>", "Current word"},
-        -- c = {"<cmd>lua require('fzf-lua').git_commits()<CR>", "Git commits"}
-    },
-    --     " Find files using Telescope command-line sugar.
-    -- nnoremap <leader>ff <cmd>Telescope find_files<cr>
-    -- nnoremap <leader>fg <cmd>Telescope live_grep<cr>
-    -- nnoremap <leader>fb <cmd>Telescope buffers<cr>
-    -- nnoremap <leader>fh <cmd>Telescope help_tags<cr>
-    --
-    -- " Using Lua functions
-    -- nnoremap <leader>ff <cmd>lua require('telescope.builtin').find_files()<cr>
-    -- nnoremap <leader>fg <cmd>lua require('telescope.builtin').live_grep()<cr>
-    -- nnoremap <leader>fb <cmd>lua require('telescope.builtin').buffers()<cr>
-    -- nnoremap <leader>fh <cmd>lua require('telescope.builtin').help_tags()<cr>
-    g = {
-        name = "+Git/Grammar",
-        g = { ':GrammarousCheck --lang=en-US --preview<CR>', "Grammar check" },
-        m = { "<ESC>/\v^[<=>]{7}( .*\\|$)<CR>", "Merge Conflict" },
-        l = { ':LazyGit<CR>', "Lazy Git" }
-    },
-    -- h = {':TroubleToggle<CR>', "Errors Dashboard"},
-    l = {
-        name = '+lsp',
-        f = { ':lua vim.lsp.buf.format({async = true})<CR>', 'format' },
-        I = { ':LspInfo<CR>', 'lsp info' },
-        o = { ':lua vim.diagnostic.open_float()<CR>', 'lsp open float' },
-        v = { ':LspVirtualTextToggle<CR>', 'lsp toggle virtual text' },
-        T = { ':lua vim.lsp.buf.type_definition()<CR>', 'type defintion' },
-        x = { ':cclose<CR>', 'close quickfix' },
-        g = {
-            name = '+goto',
-            d = { ':LspDefinition<CR>', 'Goto Definition' },
-            y = { ':LspTypeDefinition<CR>', 'Goto Type Definition' },
-            i = { ':LspImplementation<CR>', 'Goto Implementation' },
-            r = { ':LspReferences<CR>', 'Goto References' }
-        }
-    },
-    Q = { 'g<c-g>', "Show stats" },
-    -- n = "Explorer",
-    s = { ':set spell!<CR>', "Spell checks" },
-    t = {
-        name = '+TODO in comments',
-        n = { "<cmd>lua require('todo-comments').jump_next()<CR>", "Next todo comment" },
-        p = { "<cmd>lua require('todo-comments').jump_prev()<CR>", "Previous todo comment" },
-        q = { ':TodoQuickFix<CR>', 'TODO quickfix list' },
-        l = { ':TodoLocList<CR>', 'TODO location list' },
-        t = { ':TodoTelescope<CR>', 'TODO search with Telescope' },
-    },
-    u = { ':UndotreeToggle<CR>', "Undo Tree" },
-    v = {
-        name = "+Lsp",
-        d = { '<cmd>lua vim.lsp.buf.definition()<CR>', "Goto Definition" },
-        D = { '<cmd>lua vim.lsp.buf.declaration()<CR>', "Goto Declaration" },
-        i = { '<cmd>lua vim.lsp.buf.implementation()<CR>', "Goto Implementation" },
-        h = { '<cmd>lua vim.lsp.buf.hover()<CR>', "Hover Documentation" },
-        s = { '<cmd>lua vim.lsp.buf.signature_help()<CR>', "Signature help" },
-        l = { '<cmd>lua LspLocationList()<CR>', "Lsp Location" },
-        n = { '<cmd>lua vim.diagnostic.goto_next({wrap = true, float = false})<CR>', "Goto Next Diagnostics" },
-        r = {
-            name = "Reference / Rename",
-            r = { '<cmd>lua vim.lsp.buf.references()<CR>', "Reference" },
-            n = { '<cmd>lua vim.lsp.buf.rename()<CR>', "Rename" }
+        --     name = "+Fuzzy Search",
+        --     f = {"<cmd>lua require('fzf-lua').files()<CR>", "file"},
+        --     b = {"<cmd>lua require('fzf-lua').buffers()<CR>", "buffer"},
+        --     q = {"<cmd>lua require('fzf-lua').quickfix()<CR>", "quickfix"},
+        --     l = {"<cmd>lua require('fzf-lua').loclist()<CR>", "loc list"},
+        --     p = {"<cmd>lua require('fzf-lua').grep_project()<CR>", "Rg project"},
+        --     w = {"<cmd>lua require('fzf-lua').grep_cword()<CR>", "Current word"},
+        --     g = {"<cmd>lua require('fzf-lua').live_grep_native()<CR>", "Live grep"},
+        --     c = {"<cmd>lua require('fzf-lua').git_commits()<CR>", "Git commits"}
+        -- },
+        f = {
+            name = "+Fuzzy Search",
+            f = { "<cmd>lua require('telescope.builtin').find_files()<CR>", "file" },
+            b = { "<cmd>lua require('telescope.builtin').buffers()<CR>", "buffer" },
+            g = { "<cmd>lua require('telescope.builtin').live_grep()<CR>", "Live grep" },
+            h = { "<cmd>lua require('telescope.builtin').help_tags()<CR>", "Help tags" }
+            -- q = {"<cmd>lua require('fzf-lua').quickfix()<CR>", "quickfix"},
+            -- l = {"<cmd>lua require('fzf-lua').loclist()<CR>", "loc list"},
+            -- p = {"<cmd>lua require('fzf-lua').grep_project()<CR>", "Rg project"},
+            -- w = {"<cmd>lua require('fzf-lua').grep_cword()<CR>", "Current word"},
+            -- c = {"<cmd>lua require('fzf-lua').git_commits()<CR>", "Git commits"}
         },
-        c = {
-            name = "+Code Action",
-            a = { '<cmd>lua vim.lsp.buf.code_action()<CR>', "Code Actions" },
-            c = { '<cmd>lua vim.diagnostic.open_float(0, {scope = "line"})<CR>', "Line Diagnostics" }
-            -- d = {'<cmd>lua vim.diagnostic.show_cursor_diagnostics()<CR>', "Line Diagnostics"},
-        },
+        --     " Find files using Telescope command-line sugar.
+        -- nnoremap <leader>ff <cmd>Telescope find_files<cr>
+        -- nnoremap <leader>fg <cmd>Telescope live_grep<cr>
+        -- nnoremap <leader>fb <cmd>Telescope buffers<cr>
+        -- nnoremap <leader>fh <cmd>Telescope help_tags<cr>
+        --
+        -- " Using Lua functions
+        -- nnoremap <leader>ff <cmd>lua require('telescope.builtin').find_files()<cr>
+        -- nnoremap <leader>fg <cmd>lua require('telescope.builtin').live_grep()<cr>
+        -- nnoremap <leader>fb <cmd>lua require('telescope.builtin').buffers()<cr>
+        -- nnoremap <leader>fh <cmd>lua require('telescope.builtin').help_tags()<cr>
         g = {
-            name = '+goto',
-            t = { '<cmd>lua vim.lsp.buf.type_definition()<CR>', 'Goto type def' },
-            d = { ':LspDefinition<CR>', 'Goto Definition' },
-            y = { ':LspTypeDefinition<CR>', 'Goto Type Definition' },
-            i = { ':LspImplementation<CR>', 'Goto Implementation' },
-            r = { ':LspReferences<CR>', 'Goto References' }
-        }
-    },
-    w = { ':StripWhitespace<CR>:w<CR>', "Write and rm space" },
-    W = {
-        name = '+windows',
-        w = { '<C-W>w', 'other-window' },
-        d = { '<C-W>c', 'delete-window' },
-        ['-'] = { '<C-W>s', 'split-window-below' },
-        ['|'] = { '<C-W>v', 'split-window-right' },
-        ['2'] = { '<C-W>v', 'layout-double-columns' },
-        h = { '<C-W>h', 'window-left' },
-        j = { '<C-W>j', 'window-below' },
-        l = { '<C-W>l', 'window-right' },
-        k = { '<C-W>k', 'window-up' },
-        H = { '<C-W>5<', 'expand-window-left' },
-        J = { ':resize +5<CR>', 'expand-window-below' },
-        L = { '<C-W>5>', 'expand-window-right' },
-        K = { ':resize -5<CR>', 'expand-window-up' },
-        ['='] = { '<C-W>=', 'balance-window' },
-        s = { '<C-W>s', 'split-window-below' },
-        v = { '<C-W>v', 'split-window-below' },
-        ['?'] = { 'Windows', 'fzf-window' }
-    },
-    z = {
-        name = '+zk notes',
-        o = { "<Cmd>ZkNotes { sort = { 'modified' } }<CR>", 'Open notes' },
-        n = { "<Cmd>ZkNew { title = vim.fn.input('Title: ') }<CR>", 'New note with title' },
-        b = { "<Cmd>ZkBacklinks<CR>", 'Back links' },
-        t = { "<Cmd>ZkTags<CR>", 'Open notes with tags' },
-        f = { ":'<,'>ZkMatch<CR>", 'Search for the notes matching the current visual selection' },
-        s = { "<Cmd>ZkNotes { sort = { 'modified' }, match = { vim.fn.input('Search: ') } }<CR>", 'Search for the notes matching a given query' },
-    },
---   vim.api.nvim_set_keymap("n", "<leader>zf",
---     "<Cmd>ZkNotes { sort = { 'created' }, excludeHrefs = { '" .. zk_notebook_dir .. "/diary'} }<CR>", lsp_map_opts)
---   vim.api.nvim_set_keymap("n", "<leader>zw", "<CMD>ZkNew { dir = '" .. zk_notebook_dir .. "/diary' }<CR>", lsp_map_opts)
---   vim.api.nvim_set_keymap(
---     "n",
---     "<leader>zz",
---     "<CMD>ZkNotes { sort = { 'title' }, tags = { 'Index' } }<CR>",
---     lsp_map_opts
---   )
---   vim.api.nvim_set_keymap(
---     "n",
---     "<leader>zd",
---     "<CMD>ZkNotes { sort = { 'created' }, tags = { 'diary' } }<CR>",
---     lsp_map_opts
---   )
--- end
--- vim.api.nvim_set_keymap("n", "<leader>td", "<CMD>edit " .. zk_notebook_dir .. "/todo.md<CR>", lsp_map_opts)
+            name = "+Git/Grammar",
+            g = { ':GrammarousCheck --lang=en-US --preview<CR>', "Grammar check" },
+            m = { "<ESC>/\v^[<=>]{7}( .*\\|$)<CR>", "Merge Conflict" },
+            l = { ':LazyGit<CR>', "Lazy Git" }
+        },
+        -- h = {':TroubleToggle<CR>', "Errors Dashboard"},
+        l = {
+            name = '+lsp',
+            f = { ':lua vim.lsp.buf.format({async = true})<CR>', 'format' },
+            I = { ':LspInfo<CR>', 'lsp info' },
+            o = { ':lua vim.diagnostic.open_float()<CR>', 'lsp open float' },
+            v = { ':LspVirtualTextToggle<CR>', 'lsp toggle virtual text' },
+            T = { ':lua vim.lsp.buf.type_definition()<CR>', 'type defintion' },
+            x = { ':cclose<CR>', 'close quickfix' },
+            g = {
+                name = '+goto',
+                d = { ':LspDefinition<CR>', 'Goto Definition' },
+                y = { ':LspTypeDefinition<CR>', 'Goto Type Definition' },
+                i = { ':LspImplementation<CR>', 'Goto Implementation' },
+                r = { ':LspReferences<CR>', 'Goto References' }
+            }
+        },
+        Q = { 'g<c-g>', "Show stats" },
+        -- n = "Explorer",
+        s = { ':set spell!<CR>', "Spell checks" },
+        t = {
+            name = '+TODO in comments',
+            n = { "<cmd>lua require('todo-comments').jump_next()<CR>", "Next todo comment" },
+            p = { "<cmd>lua require('todo-comments').jump_prev()<CR>", "Previous todo comment" },
+            q = { ':TodoQuickFix<CR>', 'TODO quickfix list' },
+            l = { ':TodoLocList<CR>', 'TODO location list' },
+            t = { ':TodoTelescope<CR>', 'TODO search with Telescope' },
+        },
+        u = { ':UndotreeToggle<CR>', "Undo Tree" },
+        v = {
+            name = "+Lsp",
+            d = { '<cmd>lua vim.lsp.buf.definition()<CR>', "Goto Definition" },
+            D = { '<cmd>lua vim.lsp.buf.declaration()<CR>', "Goto Declaration" },
+            i = { '<cmd>lua vim.lsp.buf.implementation()<CR>', "Goto Implementation" },
+            h = { '<cmd>lua vim.lsp.buf.hover()<CR>', "Hover Documentation" },
+            s = { '<cmd>lua vim.lsp.buf.signature_help()<CR>', "Signature help" },
+            l = { '<cmd>lua LspLocationList()<CR>', "Lsp Location" },
+            n = { '<cmd>lua vim.diagnostic.goto_next({wrap = true, float = false})<CR>', "Goto Next Diagnostics" },
+            r = {
+                name = "Reference / Rename",
+                r = { '<cmd>lua vim.lsp.buf.references()<CR>', "Reference" },
+                n = { '<cmd>lua vim.lsp.buf.rename()<CR>', "Rename" }
+            },
+            c = {
+                name = "+Code Action",
+                a = { '<cmd>lua vim.lsp.buf.code_action()<CR>', "Code Actions" },
+                c = { '<cmd>lua vim.diagnostic.open_float(0, {scope = "line"})<CR>', "Line Diagnostics" }
+                -- d = {'<cmd>lua vim.diagnostic.show_cursor_diagnostics()<CR>', "Line Diagnostics"},
+            },
+            g = {
+                name = '+goto',
+                t = { '<cmd>lua vim.lsp.buf.type_definition()<CR>', 'Goto type def' },
+                d = { ':LspDefinition<CR>', 'Goto Definition' },
+                y = { ':LspTypeDefinition<CR>', 'Goto Type Definition' },
+                i = { ':LspImplementation<CR>', 'Goto Implementation' },
+                r = { ':LspReferences<CR>', 'Goto References' }
+            }
+        },
+        w = { ':StripWhitespace<CR>:w<CR>', "Write and rm space" },
+        W = {
+            name = '+windows',
+            w = { '<C-W>w', 'other-window' },
+            d = { '<C-W>c', 'delete-window' },
+            ['-'] = { '<C-W>s', 'split-window-below' },
+            ['|'] = { '<C-W>v', 'split-window-right' },
+            ['2'] = { '<C-W>v', 'layout-double-columns' },
+            h = { '<C-W>h', 'window-left' },
+            j = { '<C-W>j', 'window-below' },
+            l = { '<C-W>l', 'window-right' },
+            k = { '<C-W>k', 'window-up' },
+            H = { '<C-W>5<', 'expand-window-left' },
+            J = { ':resize +5<CR>', 'expand-window-below' },
+            L = { '<C-W>5>', 'expand-window-right' },
+            K = { ':resize -5<CR>', 'expand-window-up' },
+            ['='] = { '<C-W>=', 'balance-window' },
+            s = { '<C-W>s', 'split-window-below' },
+            v = { '<C-W>v', 'split-window-below' },
+            ['?'] = { 'Windows', 'fzf-window' }
+        },
+        z = {
+            name = '+Zettelkasten',
+            n = { "<cmd>ZkNew { title = vim.fn.input('Title: ') }<cr>", "New Note", noremap = true, silent = true },
+            o = { "<cmd>ZkNotes { sort = { 'modified' } }<cr>", "Open Notes", noremap = true, silent = true },
+            b = { "<Cmd>ZkBacklinks<CR>", 'Back links' },
+            t = { "<cmd>ZkTags<cr>", "Open by Tag", noremap = true, silent = true },
+            s = { ":'<,'>ZkMatch<CR>", 'Search for the notes matching the current visual selection' },
+            f = { "<cmd>ZkNotes { sort = { 'modified' }, match = vim.fn.input('Search: ') }<cr>", "Find Notes", noremap = true,
+            silent = true },
+            -- f = { "<Cmd>ZkNotes { sort = { 'modified' }, match = { vim.fn.input('Search: ') } }<CR>", 'Search for the notes matching a given query' },
+            d = {
+                name = "Daily Notes",
+                -- t = { "<Cmd>ZkNotes { sort = { 'modified' }, hrefs = { 'journal/daily' } }<CR>", "Today", noremap = true, silent = true },
+                t = { "<cmd>ZkNew { dir = 'journal/daily', date = 'today' }<cr>", "Today", noremap = true, silent = true },
+                y = { "<cmd>ZkNew { dir = 'journal/daily', date = 'yesterday' }<cr>", "Yesterday", noremap = true, silent = true },
+            }
+        },
+    }, { prefix = g.mapleader })
 
+    wk.register({
+        ["1"] = "Go to Buffer 1",
+        ["2"] = "Go to Buffer 2",
+        ["3"] = "Go to Buffer 3",
+        ["4"] = "Go to Buffer 4",
+        ["5"] = "Go to Buffer 5",
+        ["6"] = "Go to Buffer 6",
+        ["7"] = "Go to Buffer 7",
+        ["8"] = "Go to Buffer 8",
+        ["9"] = "Go to Buffer 9"
+    }, { prefix = g.altleader })
 
-}, { prefix = g.mapleader })
-
-wk.register({
-    ["1"] = "Go to Buffer 1",
-    ["2"] = "Go to Buffer 2",
-    ["3"] = "Go to Buffer 3",
-    ["4"] = "Go to Buffer 4",
-    ["5"] = "Go to Buffer 5",
-    ["6"] = "Go to Buffer 6",
-    ["7"] = "Go to Buffer 7",
-    ["8"] = "Go to Buffer 8",
-    ["9"] = "Go to Buffer 9"
-}, { prefix = g.altleader })
-
-wk.register({
-    ["``"] = { ':nohlsearch<CR>:call minimap#vim#ClearColorSearch()<CR>', "Clear highlighted searches" },
-    -- surround stuff
-    ys = "Surround",
-    yss = "Surround line",
-    yS = "Surround till end of line",
-    ds = "Delete surrounding",
-    dss = "Delete surrounding (line)",
-    cs = "Change surrounding",
-    css = "Change surrounding (line)",
-    ['cst"'] = "can change an html tag",
-    ['cs"\''] = "changes quotes and parens",
-    ['cs)'] = "include space around word",
-    ['ds)'] = "delete surround",
-    ['2cs"'] = "change outer quotes"
-})
+    wk.register({
+        ["``"] = { ':nohlsearch<CR>:call minimap#vim#ClearColorSearch()<CR>', "Clear highlighted searches" },
+        -- surround stuff
+        ys = "Surround",
+        yss = "Surround line",
+        yS = "Surround till end of line",
+        ds = "Delete surrounding",
+        dss = "Delete surrounding (line)",
+        cs = "Change surrounding",
+        css = "Change surrounding (line)",
+        ['cst"'] = "can change an html tag",
+        ['cs"\''] = "changes quotes and parens",
+        ['cs)'] = "include space around word",
+        ['ds)'] = "delete surround",
+        ['2cs"'] = "change outer quotes"
+    })
