@@ -1,137 +1,122 @@
 local cmd = vim.cmd
-
-cmd("packadd packer.nvim")
-
-local present, packer = pcall(require, "packer")
-
-if not present then
-    local packer_path = vim.fn.stdpath("data") .. "/site/pack/packer/opt/packer.nvim"
-
-    print("Cloning packer..")
-    -- remove the dir before cloning
-    vim.fn.delete(packer_path, "rf")
-    vim.fn.system({ "git", "clone", "https://github.com/wbthomason/packer.nvim", "--depth", "20", packer_path })
-
-    cmd("packadd packer.nvim")
-    present, packer = pcall(require, "packer")
-
-    if present then
-        print("Packer cloned successfully.")
-    else
-        error("Couldn't clone packer !\nPacker path: " .. packer_path .. "\n" .. packer)
-    end
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+if not vim.loop.fs_stat(lazypath) then
+    vim.fn.system({
+        "git",
+        "clone",
+        "--filter=blob:none",
+        "https://github.com/folke/lazy.nvim.git",
+        "--branch=stable", -- latest stable release
+        lazypath,
+    })
 end
+vim.opt.rtp:prepend(lazypath)
 
-packer.init({
-    display = {
-        open_fn = function() return require("packer.util").float({ border = "single" }) end,
-        prompt_border = "single"
-    },
-    git = {
-        clone_timeout = 600 -- Timeout, in seconds, for git clones
-    },
-    auto_clean = true,
-    compile_on_sync = true
-    --    auto_reload_compiled = true
-})
+-- Example using a list of specs with the default options
+vim.g.mapleader = " " -- Make sure to set `mapleader` before lazy so your mappings are correct
 
-require("packer").startup(function(use)
-    use { "wbthomason/packer.nvim" }
-
+require("lazy").setup({
+    -- Installer
+	{ "folke/lazy.nvim" },
     -- nvim enhancements
-    use { "tpope/vim-sleuth" } -- Auto configure indentation
-    -- use { "tpope/vim-surround" }
-    use { "gpanders/editorconfig.nvim" }
-    use { 'numToStr/Comment.nvim', config = function() require('Comment').setup() end }
-    use { 'nvim-lualine/lualine.nvim', requires = { 'kyazdani42/nvim-web-devicons', opt = true } }
-    use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
-    use { 'nvim-telescope/telescope.nvim', requires = { { 'nvim-lua/plenary.nvim' } } }
-    use { 'nvim-telescope/telescope-fzy-native.nvim' }
-    use { "folke/which-key.nvim" }
-    use { 'RRethy/nvim-align' }
+    { "tpope/vim-sleuth" }, -- Auto configure indentation
+    { "gpanders/editorconfig.nvim" },
+    { 'numToStr/Comment.nvim', config = function() require('Comment').setup() end },
+    { 'nvim-lualine/lualine.nvim', 	dependencies = { 'kyazdani42/nvim-web-devicons' } },
+    {
+      'nvim-treesitter/nvim-treesitter', 
+		event = { "BufReadPost" },
+        build = ':TSUpdate',
+    },
+    { 'nvim-telescope/telescope.nvim', dependencies = { 'nvim-lua/plenary.nvim' } },
+    { 'nvim-telescope/telescope-fzy-native.nvim' },
+    {
+		"folke/which-key.nvim",
+		event = "VeryLazy",
+	},
+    { 'RRethy/nvim-align' },
 
     -- GUI enhancements
-    use { "jaxbot/semantic-highlight.vim" } -- different color for every variable
-    use { "windwp/nvim-autopairs" }
-    use { "ntpeters/vim-better-whitespace" }
-    use { "lukas-reineke/indent-blankline.nvim" }
-    use { "p00f/nvim-ts-rainbow" }
-    use { "tomasiser/vim-code-dark" }
-    use { 'lewis6991/gitsigns.nvim', requires = { 'nvim-lua/plenary.nvim' },
-        config = function() require('gitsigns').setup() end }
-    use {
+    { "jaxbot/semantic-highlight.vim" }, -- different color for every variable
+    { "windwp/nvim-autopairs" },
+    { "ntpeters/vim-better-whitespace" },
+    { "lukas-reineke/indent-blankline.nvim" },
+    { "p00f/nvim-ts-rainbow" },
+    { "tomasiser/vim-code-dark" },
+    { 'lewis6991/gitsigns.nvim', dependencies = { 'nvim-lua/plenary.nvim' },
+        config = function() require('gitsigns').setup() end },
+    {
         "folke/todo-comments.nvim",
-        requires = "nvim-lua/plenary.nvim",
+        		event = "VeryLazy",
+        dependencies= { "nvim-lua/plenary.nvim" },
         config = function()
-            require("todo-comments").setup {
-            }
+            require("todo-comments").setup {}
         end
-    }
+    },
 
     -- Software dev tools
-    use { "tpope/vim-fugitive" }
-    use { "junegunn/gv.vim" }     -- GV, GV!, GV?
-    use { "rhysd/committia.vim" } -- better git commit layout
-    use { "tpope/vim-dispatch", opt = true, cmd = { 'Dispatch', 'Make', 'Focus', 'Start' } }
+    { "tpope/vim-fugitive" },
+    -- { "junegunn/gv.vim" },     -- GV, GV!, GV?
+    { "rhysd/committia.vim" }, -- better git commit layout
+    -- { "tpope/vim-dispatch", opt = true, cmd = { 'Dispatch', 'Make', 'Focus', 'Start' } },
 
     -- LSP support
-    use { 'neovim/nvim-lspconfig', requires = {
+    { 'neovim/nvim-lspconfig', dependencies = {
         { 'williamboman/mason.nvim', },
         { 'williamboman/mason-lspconfig.nvim', },
         { 'simrat39/inlay-hints.nvim', },
         { 'jose-elias-alvarez/null-ls.nvim', },
         { 'jayp0521/mason-null-ls.nvim', }
-    } }
+    } },
 
     -- LSP utils
-    use { "nvim-lua/lsp_extensions.nvim" } -- info and inlay hints
-    use { "ray-x/lsp_signature.nvim" }     -- function signatures
-    use { "j-hui/fidget.nvim",             -- lsp status
-        config = function() require('fidget').setup {} end }
-
-    use { "SmiteshP/nvim-navic" } -- display function name etc
+    { "nvim-lua/lsp_extensions.nvim" }, -- info and inlay hints
+    { "ray-x/lsp_signature.nvim" },     -- function signatures
+    { "j-hui/fidget.nvim",             -- lsp status
+        config = function() require('fidget').setup {} end },
+    { "SmiteshP/nvim-navic" }, -- display function name etc
 
     -- Coq
-    use { "ms-jpq/coq_nvim", branch = "coq",
-        requires = { { "ms-jpq/coq.artifacts", branch = "artifacts" },
-            { "ms-jpq/coq.thirdparty", branch = "3p" } } }
-    use { "folke/lua-dev.nvim" }
+    { "ms-jpq/coq_nvim", branch = "coq",
+        dependencies = { { "ms-jpq/coq.artifacts", branch = "artifacts" },
+    { "ms-jpq/coq.thirdparty", branch = "3p" } } },
+    { "folke/lua-dev.nvim" },
 
     -- Language support
-    use { "stephpy/vim-yaml", ft = 'yaml', opt = true }
-    use { "cespare/vim-toml", ft = 'toml', opt = true }
-    use { "dag/vim-fish", ft = 'fish', opt = true }
-    use { 'nvim-orgmode/orgmode', config = function() require('orgmode').setup {} end }
-    use { "plasticboy/vim-markdown", ft = 'markdown', opt = true }
-    use { "mzlogin/vim-markdown-toc", ft = 'markdown', opt = true }
-    use { "alvan/vim-closetag" }
+    { "stephpy/vim-yaml", ft = 'yaml', opt = true },
+    { "cespare/vim-toml", ft = 'toml', opt = true },
+    { "dag/vim-fish", ft = 'fish', opt = true },
+    { 'nvim-orgmode/orgmode', config = function() require('orgmode').setup {} end },
+    { "plasticboy/vim-markdown", ft = 'markdown', opt = true },
+    { "mzlogin/vim-markdown-toc", ft = 'markdown', opt = true },
+    { "alvan/vim-closetag" },
 
     -- Rust
-    use { "simrat39/rust-tools.nvim" }
+    { "simrat39/rust-tools.nvim" },
     -- C++ and Clang
-    use { "octol/vim-cpp-enhanced-highlight", ft = { "c", "cpp" }, opt = true }
-    use { "drmikehenry/vim-headerguard", ft = { "c", "cpp" }, opt = true }
-    use { "bfrg/vim-cpp-modern", ft = { "c", "cpp" }, opt = true }
-    use { "arakashic/chromatica.nvim", ft = { "c", "cpp" }, opt = true }
-    use { "rhysd/vim-clang-format", ft = { "c", "cpp" }, opt = true }
+    { "octol/vim-cpp-enhanced-highlight", ft = { "c", "cpp" }, opt = true },
+    { "drmikehenry/vim-headerguard", ft = { "c", "cpp" }, opt = true },
+    { "bfrg/vim-cpp-modern", ft = { "c", "cpp" }, opt = true },
+    { "arakashic/chromatica.nvim", ft = { "c", "cpp" }, opt = true },
+    { "rhysd/vim-clang-format", ft = { "c", "cpp" }, opt = true },
 
     -- SQL
-    -- use { "tami5/sql.nvim", rocks = { "sqlite", "luv" } }
-    use { "tpope/vim-dadbod" }
-    use { "kristijanhusak/vim-dadbod-completion" }
-    use { "kristijanhusak/vim-dadbod-ui" }
+    --  { "tami5/sql.nvim", rocks = { "sqlite", "luv" } }
+    { "tpope/vim-dadbod" },
+    { "kristijanhusak/vim-dadbod-completion" },
+    { "kristijanhusak/vim-dadbod-ui" },
 
     -- writing
-    use { "junegunn/goyo.vim" }      -- Goyo, Goyo!
-    use { "junegunn/limelight.vim" } -- Limelight, Limelight!
-    use { "rhysd/vim-grammarous" }
+    { "junegunn/goyo.vim" },      -- Goyo, Goyo!
+    { "junegunn/limelight.vim" }, -- Limelight, Limelight!
+    { "rhysd/vim-grammarous" },
 
     -- LaTeX
     -- https://www.reddit.com/r/neovim/comments/idthcb/vimtex_vs_texlab/
 
     -- note taking
     -- https://mischavandenburg.com/zet/neovim-zettelkasten/
-    use {
+    {
         "mickael-menu/zk-nvim",
         config = function()
             require("zk").setup({
@@ -150,4 +135,4 @@ require("packer").startup(function(use)
             })
         end
     }
-end)
+})
