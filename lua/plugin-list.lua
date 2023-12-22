@@ -24,7 +24,7 @@ require("lazy").setup({
     { 'numToStr/Comment.nvim', config = function() require('Comment').setup() end },
     { 'nvim-lualine/lualine.nvim', 	dependencies = { 'kyazdani42/nvim-web-devicons' } },
     {
-      'nvim-treesitter/nvim-treesitter', 
+      'nvim-treesitter/nvim-treesitter',
 		event = { "BufReadPost" },
         build = ':TSUpdate',
     },
@@ -83,22 +83,22 @@ require("lazy").setup({
     { "folke/lua-dev.nvim" },
 
     -- Language support
-    { "stephpy/vim-yaml", ft = 'yaml', opt = true },
-    { "cespare/vim-toml", ft = 'toml', opt = true },
-    { "dag/vim-fish", ft = 'fish', opt = true },
+    { "stephpy/vim-yaml", ft = 'yaml' },
+    { "cespare/vim-toml", ft = 'toml' },
+    { "dag/vim-fish", ft = 'fish' },
     { 'nvim-orgmode/orgmode', config = function() require('orgmode').setup {} end },
-    { "plasticboy/vim-markdown", ft = 'markdown', opt = true },
-    { "mzlogin/vim-markdown-toc", ft = 'markdown', opt = true },
+    { "plasticboy/vim-markdown", ft = 'markdown' },
+    { "mzlogin/vim-markdown-toc", ft = 'markdown' },
     { "alvan/vim-closetag" },
 
     -- Rust
     { "simrat39/rust-tools.nvim" },
     -- C++ and Clang
-    { "octol/vim-cpp-enhanced-highlight", ft = { "c", "cpp" }, opt = true },
-    { "drmikehenry/vim-headerguard", ft = { "c", "cpp" }, opt = true },
-    { "bfrg/vim-cpp-modern", ft = { "c", "cpp" }, opt = true },
-    { "arakashic/chromatica.nvim", ft = { "c", "cpp" }, opt = true },
-    { "rhysd/vim-clang-format", ft = { "c", "cpp" }, opt = true },
+    { "octol/vim-cpp-enhanced-highlight", ft = { "c", "cpp" } },
+    { "drmikehenry/vim-headerguard", ft = { "c", "cpp" } },
+    { "bfrg/vim-cpp-modern", ft = { "c", "cpp" } },
+    { "arakashic/chromatica.nvim", ft = { "c", "cpp" } },
+    { "rhysd/vim-clang-format", ft = { "c", "cpp" } },
 
     -- SQL
     --  { "tami5/sql.nvim", rocks = { "sqlite", "luv" } }
