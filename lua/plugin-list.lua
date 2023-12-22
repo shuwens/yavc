@@ -40,7 +40,7 @@ require("packer").startup(function(use)
 
     -- nvim enhancements
     use { "tpope/vim-sleuth" } -- Auto configure indentation
-    use { "tpope/vim-surround" }
+    -- use { "tpope/vim-surround" }
     use { "gpanders/editorconfig.nvim" }
     use { 'numToStr/Comment.nvim', config = function() require('Comment').setup() end }
     use { 'nvim-lualine/lualine.nvim', requires = { 'kyazdani42/nvim-web-devicons', opt = true } }
