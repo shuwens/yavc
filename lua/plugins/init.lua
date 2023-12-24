@@ -2,7 +2,6 @@
 require("plugins.lualine")
 
 -- fuzzy finder configuration
--- require("plugins.fzf")
 require("plugins.telescope")
 
 -- auto pair
@@ -22,9 +21,9 @@ require("plugins.orgmode")
 -- require("plugins.trouble")
 
 -- Project management
-require("plugins.coq")
-require("plugins.coq3p")
-require("plugins.rust-tools")
+-- require("plugins.coq")
+-- require("plugins.coq3p")
+-- require("plugins.rust-tools")
 -- require("plugins.project")
 
 -- Note taking

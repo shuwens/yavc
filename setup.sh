@@ -14,5 +14,5 @@ git clone https://github.com/pyenv/pyenv-virtualenv.git (pyenv root)/plugins/pye
 sudo apt install -y zlib1g-dev lzma-dev zip unzip
 sudo apt-get install -y build-essential zlib1g-dev libffi-dev libssl-dev libbz2-dev libreadline-dev libsqlite3-dev liblzma-dev
 
-pyenv install ${PYTHON_VERSION}
+ pyenv install ${PYTHON_VERSION}
 pyenv virtualenv ${PYTHON_VERSION} neovim3
