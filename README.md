@@ -62,6 +62,7 @@ https://github.com/GregoryAshton/dotfiles/blob/master/vim/vimrc
 https://github.com/syclops/dotfiles/blob/master/vim/post.vimrc
 
 ## ChangeList
+- Jan 02, 2024: [Major update: switch to lsp zero and lazy](https://github.com/jethrosun/yavc/commit/4cfdc5e94a770d4457f2e9fefa2a6645b643f162)
 - Nov 19, 2020: [config nvim with coq and packer using lua](https://github.com/jethrosun/yavc/commit/46628fb7cd72f02c50c9faaf36bf212f8b6d8c85)
 - Nov 15, 2020: [Ditch coc.nvim and switch to nvim lsp](https://github.com/jethrosun/yavc/commit/837aa7a6e3dec6d40263d2308918124fd1e058f7)
 - Nov 10, 2020: [Switched back to lightline from airline](https://github.com/jethrosun/yavc/commit/fa77bad8eb396ce021d313ce4d16e730ffbb5f3d)

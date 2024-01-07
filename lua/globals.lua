@@ -1,8 +1,23 @@
+local vim = vim
 local g = vim.g
 
-vim.cmd[[colorscheme kanagawa]]
--- vim.cmd "colorscheme gruvbox-material"
--- vim.cmd "colorscheme codedark"
+-- vim.cmd([[
+-- set shell=/bin/bash
+-- set nocompatible
+-- filetype off
+-- filetype plugin indent on
+-- syntax on
+-- set nowrap
+-- set nofoldenable
+--
+-- if !has('gui_running')
+-- set t_Co=256
+-- endif
+-- if (match($TERM, "-256color") != -1) && (match($TERM, "screen-256color") == -1)
+--   " screen does not (yet) support truecolor
+--   set termguicolors
+-- endif
+-- ]])
 
 -- Ignore for indent levels
 g.indent_blankline_filetype_exclude = { "help", "packer", "dashboard", "nvim-tree" }
@@ -50,9 +65,9 @@ vim.wo.foldenable = true
 -- Python
 -- https://quinoa42.github.io/en/oceanus/neovim-python/
 if vim.fn.isdirectory('./../../pyenv') then
-    local pyenv_root = os.getenv('PYENV_ROOT')
-    -- g.python_host_prog = pyenv_root .. '/versions/neovim2/bin/python'
-    g.python3_host_prog = pyenv_root .. '/versions/neovim3/bin/python'
+  local pyenv_root = os.getenv('PYENV_ROOT')
+  -- g.python_host_prog = pyenv_root .. '/versions/neovim2/bin/python'
+  g.python3_host_prog = pyenv_root .. '/versions/neovim3/bin/python'
 end
 
 -- vimtex

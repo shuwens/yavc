@@ -17,7 +17,6 @@ vim.g.mapleader = " " -- Make sure to set `mapleader` before lazy so your mappin
 vim.g.maplocalleader = ","
 
 require('lazy').setup({
-    -- Installer
     { 'folke/lazy.nvim' },
     -- nvim enhancements
     { 'tpope/vim-sleuth' }, -- Auto configure indentation
@@ -25,10 +24,6 @@ require('lazy').setup({
     {
         'numToStr/Comment.nvim',
         config = function() require('Comment').setup() end
-    },
-    {
-        'nvim-lualine/lualine.nvim',
-        dependencies = { 'kyazdani42/nvim-web-devicons' }
     },
     {
         'nvim-treesitter/nvim-treesitter',
@@ -56,10 +51,9 @@ require('lazy').setup({
         priority = 1000,
         opts = {},
     },
-    -- { 'tomasiser/vim-code-dark' },
-    -- { 'sainnhe/gruvbox-material' },
 
     -- GUI enhancements
+    { 'nvim-lualine/lualine.nvim' },
     { 'jaxbot/semantic-highlight.vim' }, -- different color for every variable
     { 'windwp/nvim-autopairs' },
     { 'ntpeters/vim-better-whitespace' },
@@ -81,10 +75,15 @@ require('lazy').setup({
     },
 
     -- Software dev tools
-    { 'tpope/vim-fugitive',               event = 'VeryLazy' },
+    { 'tpope/vim-fugitive', event = 'VeryLazy' },
     { 'rhysd/committia.vim' }, -- better git commit layout
-    -- { "junegunn/gv.vim" },     -- GV, GV!, GV?
-    -- { "tpope/vim-dispatch", opt = true, cmd = { 'Dispatch', 'Make', 'Focus', 'Start' } },
+    -- https://github.com/zbirenbaum/copilot-cmp
+    {
+        "zbirenbaum/copilot-cmp",
+        config = function()
+            require("copilot_cmp").setup()
+        end
+    },
 
     -- LSP support
     { 'VonHeikemen/lsp-zero.nvim',        branch = 'v3.x' },
@@ -95,6 +94,8 @@ require('lazy').setup({
     { 'williamboman/mason.nvim' },
     { 'williamboman/mason-lspconfig.nvim' },
     { 'simrat39/inlay-hints.nvim' },
+    { 'nvim-tree/nvim-web-devicons' },
+    { 'onsails/lspkind.nvim' },
 
     -- LSP utils
     { 'nvim-lua/lsp_extensions.nvim' }, -- info and inlay hints
@@ -122,22 +123,22 @@ require('lazy').setup({
     -- Language support
     -- LaTeX
     -- https://www.reddit.com/r/neovim/comments/idthcb/vimtex_vs_texlab/
-    { 'stephpy/vim-yaml',                 ft = 'yaml' },
-    { 'cespare/vim-toml',                 ft = 'toml' },
-    { 'dag/vim-fish',                     ft = 'fish' },
-    { 'nvim-orgmode/orgmode',             config = function() require('orgmode').setup {} end },
-    { 'plasticboy/vim-markdown',          ft = 'markdown' },
-    { 'mzlogin/vim-markdown-toc',         ft = 'markdown' },
+    { 'stephpy/vim-yaml',         ft = 'yaml' },
+    { 'cespare/vim-toml',         ft = 'toml' },
+    { 'dag/vim-fish',             ft = 'fish' },
+    { 'nvim-orgmode/orgmode',     config = function() require('orgmode').setup {} end },
+    { 'plasticboy/vim-markdown',  ft = 'markdown' },
+    { 'mzlogin/vim-markdown-toc', ft = 'markdown' },
     { 'alvan/vim-closetag' },
 
     -- Rust
-    { 'simrat39/rust-tools.nvim' },
+    -- { 'simrat39/rust-tools.nvim' },
     -- C++ and Clang
-    { 'octol/vim-cpp-enhanced-highlight', ft = { 'c', 'cpp' } },
-    { 'drmikehenry/vim-headerguard',      ft = { 'c', 'cpp' } },
-    { 'bfrg/vim-cpp-modern',              ft = { 'c', 'cpp' } },
-    { 'arakashic/chromatica.nvim',        ft = { 'c', 'cpp' } },
-    { 'rhysd/vim-clang-format',           ft = { 'c', 'cpp' } },
+    -- { 'octol/vim-cpp-enhanced-highlight', ft = { 'c', 'cpp' } },
+    -- { 'drmikehenry/vim-headerguard',      ft = { 'c', 'cpp' } },
+    -- { 'bfrg/vim-cpp-modern',              ft = { 'c', 'cpp' } },
+    -- { 'arakashic/chromatica.nvim',        ft = { 'c', 'cpp' } },
+    -- { 'rhysd/vim-clang-format',           ft = { 'c', 'cpp' } },
 
     -- SQL
     -- { "tami5/sql.nvim", rocks = { "sqlite", "luv" } }

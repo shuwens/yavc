@@ -134,7 +134,7 @@ wk.register({
         },
         Q = { 'g<c-g>', "Show stats" },
         -- n = "Explorer",
-        s = { ':set spell!<CR>', "Spell checks" },
+        -- s = { ':set spell!<CR>', "Spell checks" },
         t = {
             name = '+TODO in comments',
             n = { "<cmd>lua require('todo-comments').jump_next()<CR>", "Next todo comment" },
@@ -226,18 +226,18 @@ wk.register({
     }, { prefix = g.altleader })
 
     wk.register({
-        ["``"] = { ':nohlsearch<CR>:call minimap#vim#ClearColorSearch()<CR>', "Clear highlighted searches" },
+        -- ["``"] = { ':nohlsearch<CR>:call minimap#vim#ClearColorSearch()<CR>', "Clear highlighted searches" },
         -- surround stuff
-        ys = "Surround",
-        yss = "Surround line",
-        yS = "Surround till end of line",
-        ds = "Delete surrounding",
-        dss = "Delete surrounding (line)",
-        cs = "Change surrounding",
-        css = "Change surrounding (line)",
-        ['cst"'] = "can change an html tag",
-        ['cs"\''] = "changes quotes and parens",
-        ['cs)'] = "include space around word",
-        ['ds)'] = "delete surround",
-        ['2cs"'] = "change outer quotes"
+        -- ys = "Surround",
+        -- yss = "Surround line",
+        -- yS = "Surround till end of line",
+        -- ds = "Delete surrounding",
+        -- dss = "Delete surrounding (line)",
+        -- cs = "Change surrounding",
+        -- css = "Change surrounding (line)",
+        -- ['cst"'] = "can change an html tag",
+        -- ['cs"\''] = "changes quotes and parens",
+        -- ['cs)'] = "include space around word",
+        -- ['ds)'] = "delete surround",
+        -- ['2cs"'] = "change outer quotes"
     })
