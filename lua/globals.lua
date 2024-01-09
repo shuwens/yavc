@@ -1,23 +1,23 @@
 local vim = vim
 local g = vim.g
 
--- vim.cmd([[
--- set shell=/bin/bash
--- set nocompatible
--- filetype off
--- filetype plugin indent on
--- syntax on
--- set nowrap
--- set nofoldenable
---
--- if !has('gui_running')
--- set t_Co=256
--- endif
--- if (match($TERM, "-256color") != -1) && (match($TERM, "screen-256color") == -1)
---   " screen does not (yet) support truecolor
---   set termguicolors
--- endif
--- ]])
+vim.cmd([[
+set shell=/bin/bash
+set nocompatible
+filetype off
+filetype plugin indent on
+syntax on
+set nowrap
+set nofoldenable
+
+if !has('gui_running')
+set t_Co=256
+endif
+if (match($TERM, "-256color") != -1) && (match($TERM, "screen-256color") == -1)
+  " screen does not (yet) support truecolor
+  set termguicolors
+endif
+]])
 
 -- Ignore for indent levels
 g.indent_blankline_filetype_exclude = { "help", "packer", "dashboard", "nvim-tree" }

@@ -32,7 +32,7 @@ vim.cmd([[autocmd User LspProgressUpdate let &ro = &ro]])
 require 'lualine'.setup {
     options = {
         icons_enabled = true,
-        theme = 'gruvbox-material',
+        theme = 'palenight',
         component_separators = { left = '', right = '' },
         section_separators = { left = '', right = '' },
         disabled_filetypes = {},
