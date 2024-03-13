@@ -215,42 +215,6 @@ autocmd Filetype org nmap Q :call TeX_fmt()<CR>zz
 autocmd Filetype jemdoc nmap Q :call TeX_fmt()<CR>zz
 autocmd Filetype text nmap Q :call TeX_fmt()<CR>zz
 
-" vim-grammarous
-let g:grammarous#disabled_rules = {
-	 \ '*' : ['WHITESPACE_RULE', 'EN_QUOTES'],
-	 \ 'help' : ['WHITESPACE_RULE', 'EN_QUOTES', 'SENTENCE_WHITESPACE', 'UPPERCASE_SENTENCE_START'],
-	 \ }
-
-let g:grammarous#hooks = {}
-function! g:grammarous#hooks.on_check(errs) abort
-   nmap <buffer><C-i> <Plug>(grammarous-move-to-info-window)
-   nmap <buffer><C-j> <Plug>(grammarous-move-to-next-error)
-   nmap <buffer><C-k> <Plug>(grammarous-move-to-previous-error)
-   nmap <buffer><leader>f <Plug>(grammarous-fixit)
-   nmap <buffer><C-f> <Plug>(grammarous-fixit)
-endfunction
-function! g:grammarous#hooks.on_reset(errs) abort
-   nunmap <buffer><C-j>
-   nunmap <buffer><C-k>
-   nunmap <buffer><leader>f
-endfunction
-
-" Better commit window
-let g:committia_hooks = {}
-function! g:committia_hooks.edit_open(info)
-   " Additional settings
-   setlocal spell
-
-   " If no commit message, start with insert mode
-   if a:info.vcs ==# 'git' && getline(1) ==# ''
-      startinsert
-   endif
-
-   " Scroll the diff window from insert mode
-   " Map <C-n> and <C-p>
-   imap <buffer><C-n> <Plug>(committia-scroll-diff-down-half)
-   imap <buffer><C-p> <Plug>(committia-scroll-diff-up-half)
-endfunction
 ]]
 
 -- Deprecated things

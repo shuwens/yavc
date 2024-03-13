@@ -24,8 +24,8 @@ Setup pycodestyle: see [this](https://pycodestyle.pycqa.org/en/latest/intro.html
 ```bash
 # setup pyenv first, then
 pyenv install 3.12.0
-sudo apt install libbz2-dev
-sudo apt-get install liblzma-dev libsqlite3-dev libedit-dev libncurses5-dev libreadline-dev
+sudo apt install libbz2-dev liblzma-dev libsqlite3-dev libedit-dev libncurses5-dev libreadline-dev
+git clone https://github.com/pyenv/pyenv-virtualenv.git (pyenv root)/plugins/pyenv-virtualenv
 ```
 
 ## Current look

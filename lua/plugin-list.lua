@@ -119,6 +119,7 @@ require('lazy').setup({
     },
     { 'SmiteshP/nvim-navic' }, -- display function name etc
     { 'folke/lua-dev.nvim' },
+    { 'chrisbra/Colorizer' },
 
     -- Language support
     -- LaTeX
@@ -130,6 +131,19 @@ require('lazy').setup({
     { 'plasticboy/vim-markdown',  ft = 'markdown' },
     { 'mzlogin/vim-markdown-toc', ft = 'markdown' },
     { 'alvan/vim-closetag' },
+    {
+        "vim-pandoc/vim-pandoc",
+        ft = { "markdown", "pandoc", "latex" },
+        -- config = function()
+        --     require("plugins.pandoc")
+        -- end,
+        event = "VeryLazy",
+    },
+    {
+        "vim-pandoc/vim-pandoc-syntax",
+        ft = { "markdown", "pandoc", "latex" },
+        event = "VeryLazy",
+    },
 
     -- Rust
     -- { 'simrat39/rust-tools.nvim' },
