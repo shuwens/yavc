@@ -1,5 +1,5 @@
 -- Load custom tree-sitter grammar for org filetype
-require('orgmode').setup_ts_grammar()
+-- require('orgmode').setup_ts_grammar()
 
 -- local parser_config = require"nvim-treesitter.parsers".get_parser_configs()
 -- parser_config.org = {
