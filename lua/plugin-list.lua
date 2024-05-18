@@ -194,5 +194,7 @@ require('lazy').setup({
                 },
             })
         end
-    }
+    },
+    -- fun
+    { 'ThePrimeagen/vim-be-good' }
 })
