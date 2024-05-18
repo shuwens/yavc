@@ -74,7 +74,13 @@ wk.register({
         G = { "<cmd>:clast<CR>", "Last item in QuickFix list" },
         t = { "<cmd>:TodoQuickFix<CR>", "Open TODO QuickFix list" }
     },
-    d = { ':Dispatch<CR>', "Dispatch" },
+    d = {
+        name = "+Debug List",
+        b = { ":lua require'dap'.toggle_breakpoint() <CR>", "Set breakpoint" },
+        g = { ":DapUiToggle <CR>", "Toggle DAP GUI" },
+        n = { ":lua require'dap'.step_over() <CR>", "Step" },
+    },
+    D = { ':Dispatch<CR>', "Dispatch" },
     -- f = {
         --     name = "+Fuzzy Search",
         --     f = {"<cmd>lua require('fzf-lua').files()<CR>", "file"},
