@@ -162,12 +162,14 @@ require('mason-lspconfig').setup({
   ensure_installed = {
     "lua_ls", --brew install lua-language-server
     "rust_analyzer", --brew install rust-analyzer
-    "tsserver", -- yarn global add tsserver
+    -- "tsserver", -- yarn global add tsserver
     "clangd",
+    "clang-format",
+    "meson",
     "pyright",
     -- "bashls",
-    "terraformls",
-    "tflint",
+    -- "terraformls",
+    -- "tflint",
   },
 })
 require("mason-nvim-dap").setup({

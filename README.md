@@ -51,6 +51,27 @@ brew install --cask temurin
 :TSUpdate
 ```
 
+## C++ dev
+
+https://github.com/mfussenegger/nvim-dap/
+
+
+https://github.com/mfussenegger/nvim-dap/wiki/C-C---Rust-(gdb-via--vscode-cpptools)
+
+https://idie.ru/posts/vim-modern-cpp/
+
+- 2023
+https://woosang.io/posts/c-plus-plus-setup-for-neovim/
+
+- 2022
+
+https://github.com/NewProggie/Dev-Utils/blob/master/dotfiles/.vimrc
+
+
+- 2020
+https://chmanie.com/modern-c-development-in-neovim/
+
+https://jdhao.github.io/2020/11/29/neovim_cpp_dev_setup/
 
 ## TODO
 - fix the pyenv issue: sometime i have it configured and installed, but
