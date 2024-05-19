@@ -164,20 +164,19 @@ require('mason-lspconfig').setup({
     "rust_analyzer", --brew install rust-analyzer
     -- "tsserver", -- yarn global add tsserver
     "clangd",
-    "clang-format",
-    "meson",
+    -- "clang_format",
+    -- "meson",
     "pyright",
-    -- "bashls",
+    "bashls",
     -- "terraformls",
     -- "tflint",
   },
 })
 require("mason-nvim-dap").setup({
     automatic_setup = true,
-
     ensure_installed = {
         'codelldb',
-        'node2',
+        -- 'node2',
     },
 
     handlers = {},
