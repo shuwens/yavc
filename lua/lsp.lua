@@ -164,9 +164,9 @@ require('mason-lspconfig').setup({
     "rust_analyzer", --brew install rust-analyzer
     -- "tsserver", -- yarn global add tsserver
     "clangd",
-    -- "clang_format",
     -- "meson",
     "pyright",
+    -- "pyright",
     "bashls",
     -- "terraformls",
     -- "tflint",
