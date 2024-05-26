@@ -49,12 +49,18 @@ brew install --cask temurin
 :TSUninstall all
 :TSInstall all
 :TSUpdate
+
 ```
 
 ## C++ dev
 
+- kernel
+https://devkernel.io/posts/kernel-dev-setup-basic/#installing-the-base-packages
+https://devkernel.io/posts/kernel-dev-setup-vm/#bios-settings
+
 https://github.com/mfussenegger/nvim-dap/
 
+https://github.com/Alexis12119/nvim-config/tree/main
 
 https://github.com/mfussenegger/nvim-dap/wiki/C-C---Rust-(gdb-via--vscode-cpptools)
 
