@@ -6,28 +6,19 @@ My nvim configuration draws inspirations from from [jonhoo/config](https://githu
 
 Welcome! This is my neovim config dir!
 
-To update nvim config:
+If you set up this for the first time, chances are treesitter is acting weird.
+Do the following:
+```
+:TSUninstall all
+:TSInstall all
+:TSUpdate
+```
 
-`nvim --headless -c 'autocmd User PackerComplete quitall' -c 'PackerSync'`
-
-To install neovim:
-
-`wget https://github.com/neovim/neovim/releases/download/nightly/nvim.appimage && chmod u+x nvim.appimage && mv nvim.appimage nvim`
-
-To install packer:
-`
-git clone --depth 1 https://github.com/wbthomason/packer.nvim ~/.local/share/nvim/site/pack/packer/start/packer.nvim`
 
 Setup pycodestyle: see [this](https://pycodestyle.pycqa.org/en/latest/intro.html#configuration)
 
 ## Setup pyenv and python environment
-```bash
-git clone https://github.com/pyenv/pyenv.git ~/.pyenv
-sudo apt install libbz2-dev liblzma-dev libsqlite3-dev libedit-dev libncurses5-dev libreadline-dev
-# setup pyenv first, then
-pyenv install 3.12.0
-git clone https://github.com/pyenv/pyenv-virtualenv.git (pyenv root)/plugins/pyenv-virtualenv
-```
+Run the script `pyenv_setup.sh`
 
 ## Current look
 
@@ -42,14 +33,6 @@ MACOSX_DEPLOYMENT_TARGET=10.15 nvim
 - [ltex and java](): just install temurin instead of openjdk
 ```bash
 brew install --cask temurin
-```
-
-## Additionally
-```
-:TSUninstall all
-:TSInstall all
-:TSUpdate
-
 ```
 
 ## C++ dev

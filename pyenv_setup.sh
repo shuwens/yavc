@@ -12,8 +12,11 @@ cd ~/.pyenv && src/configure && make -C src
 
 git clone https://github.com/pyenv/pyenv-virtualenv.git $HOME/.pyenv/plugins/pyenv-virtualenv
 
-pyenv install ${PYTHON_VERSION}
-pyenv virtualenv ${PYTHON_VERSION} neovim3
+~/.pyenv/bin/pyenv install ${PYTHON_VERSION}
+~/.pyenv/bin/pyenv virtualenv ${PYTHON_VERSION} neovim3
+
+
+# pip3 install neovim pynvim
 
 
 echo "Pyenv and pyenv virtualenv is all set"
