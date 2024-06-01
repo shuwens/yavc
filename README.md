@@ -36,6 +36,7 @@ brew install --cask temurin
 ```
 
 ## C++ dev
+GOTO: https://gitlab.com/ranjithshegde/dotbare/-/tree/master?ref_type=heads
 
 - kernel
 https://devkernel.io/posts/kernel-dev-setup-basic/#installing-the-base-packages
@@ -45,9 +46,15 @@ https://github.com/mfussenegger/nvim-dap/
 
 https://github.com/Alexis12119/nvim-config/tree/main
 
+https://www.reddit.com/r/neovim/comments/r4fb70/neovim_c_development/
+
 https://github.com/mfussenegger/nvim-dap/wiki/C-C---Rust-(gdb-via--vscode-cpptools)
 
 https://idie.ru/posts/vim-modern-cpp/
+
+https://github.com/optimizacija/neovim-config
+
+https://github.com/ganquan/neovim-config
 
 - 2023
 https://woosang.io/posts/c-plus-plus-setup-for-neovim/
