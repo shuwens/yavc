@@ -59,12 +59,12 @@ require('lazy').setup({
     { 'ntpeters/vim-better-whitespace' },
     { 'lukas-reineke/indent-blankline.nvim' },
     { 'HiPhish/rainbow-delimiters.nvim' },
-    {
-        'lewis6991/gitsigns.nvim',
-        event = { 'BufReadPost', 'BufNewFile' },
-        dependencies = { 'nvim-lua/plenary.nvim' },
-        config = function() require('gitsigns').setup() end
-    },
+    -- {
+    --     'lewis6991/gitsigns.nvim',
+    --     event = { 'BufReadPost', 'BufNewFile' },
+    --     dependencies = { 'nvim-lua/plenary.nvim' },
+    --     config = function() require('gitsigns').setup() end
+    -- },
     {
         'folke/todo-comments.nvim',
         event = 'VeryLazy',

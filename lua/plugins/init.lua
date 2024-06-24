@@ -11,7 +11,7 @@ require("plugins.autopairs")
 require("plugins.commentary")
 
 -- Git changes(showing in line number) configuration
-require("plugins.gitsigns")
+-- require("plugins.gitsigns")
 
 -- Treesitter configurations
 require("plugins.tree-sitter")
