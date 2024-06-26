@@ -7,6 +7,97 @@
 -- https://github.com/brw/dotfiles/blob/81acff3c6e18dd73ceed55cd7331ab31cb0a9649/nvim/.config/nvim/lua/plugins.lua#L266
 -- https://github.com/nodev19/dotfiles/blob/b871745614121edd3c8044031319c7e17387fdc0/init.lua#L123
 
+-- Enable these language servers
+--
+-- Add any additional override configuration in the following tables.
+-- Available keys are:
+-- - cmd (table): Override the default command used to start the server
+-- - filetypes (table): Override the default list of associated file types
+-- - capabilities (table): Override fields in capabilitied
+-- - settings (table): Overrid the default settings passed when
+-- initializing the server
+local servers = {
+  bashls = {},
+  dockerls = {},
+  clangd = {},
+  mesonlsp = {},
+  jsonls = {},
+  lua_ls = {
+    -- Get the language server to recognize the 'vim' global
+    settings = { Lua = { diagnostics = { globals = { 'vim' } } } }
+  },
+  pyright = {},
+  rust_analyzer = {
+    settings = {
+      ["rust-analyzer"] = {
+        procMacro = { enable = true },
+        cargo = { allFeatures = true },
+        checkOnSave = {
+          command = "clippy",
+          extraArgs = { "--no-deps" },
+        },
+      },
+    },
+  },
+  tsserver = {},
+
+  yamlls = {
+    -- cmd = { "yamls" },
+    cmd = { 'yaml-language-server', '--stdio' },
+    filetypes = { "yaml", "yml" },
+    -- root_dir = util.find_git_ancestor,
+    settings = {
+      yaml = {
+        -- schemaStore = { enable = true },
+        format = { enable = true },
+        hover = true,
+        completion = true,
+
+        customTags = {
+          "!And",
+          "!And sequence",
+          "!Base64",
+          "!Cidr",
+          "!Cidr sequence",
+          "!Condition",
+          "!Equals",
+          "!Equals sequence",
+          "!FindInMap",
+          "!FindInMap sequence",
+          "!GetAtt",
+          "!GetAZ",
+          "!If",
+          "!If sequence",
+          "!ImportValue",
+          "!ImportValue sequence",
+          "!Join",
+          "!Join sequence",
+          "!Not",
+          "!Not sequence",
+          "!Or",
+          "!Or sequence",
+          "!Ref",
+          "!Select",
+          "!Select sequence",
+          "!Split",
+          "!Split sequence",
+          "!Sub",
+          "!Sub sequence",
+        },
+      },
+    },
+  },
+}
+
+
+-- LSP servers and clients are able to communicate to each other what
+-- features they support. By default, neovim doesn't support everything
+-- that is in the LSP specfication. When you add nvim-cmp, luasnip, etc.
+-- Neovim now has *more* capabilities. So we create new capabilities with
+-- nvim_cmp, and then broadast that to the servers.
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+capabilities = vim.tbl_deep_extend('force', capabilities, require('cmp_nvim_lsp').default_capabilities())
+
 vim.diagnostic.config({
   virtual_text = true,
   -- for nightly builds
@@ -69,117 +160,116 @@ end)
 -- see :help lsp-zero-guide:integrate-with-mason-nvim
 -- to learn how to use mason.nvim with lsp-zero
 require('mason').setup({})
+
+-- You can add other tools here that you want Mason to install for you, so
+-- that they are available from within Neovim.
+local ensure_installed = vim.tbl_keys(servers or {})
+vim.list_extend(ensure_installed, {
+  'stylua', -- used to format Lua code
+})
+require('mason-tool-installer').setup { ensure_installed = ensure_installed }
+
 require('mason-lspconfig').setup({
   handlers = {
     lsp_zero.default_setup,
-    clangd = function()
-      require("lspconfig").clangd.setup({
-        keys = { -- TODO: move it to which key
-          { "<leader>cR", "<cmd>ClangdSwitchSourceHeader<cr>", desc = "Switch Source/Header (C/C++)" },
-        },
-        root_dir = function(fname)
-          return require("lspconfig.util").root_pattern(
-          "Makefile",
-          "configure.ac",
-          "configure.in",
-          "config.h.in",
-          "meson.build",
-          "meson_options.txt",
-          "build.ninja"
-          )(fname) or require("lspconfig.util").root_pattern("compile_commands.json", "compile_flags.txt")(
-          fname
-          ) or require("lspconfig.util").find_git_ancestor(fname)
-        end, 
-        -- ft = consts.lsp.clangd_fts,
-        capabilities = {
-          offsetEncoding = { "utf-16" },
-        },
-        cmd = {
-          "clangd",
-          '--enable-config',
-          "--background-index",
-          -- by default, clang-tidy use -checks=clang-diagnostic-*,clang-analyzer-*
-          -- to add more checks, create .clang-tidy file in the root directory
-          -- and add Checks key, see https://clang.llvm.org/extra/clang-tidy/
-          "--clang-tidy",
-          -- "--completion-style=bundled",
-          "--completion-style=detailed",
-          "--cross-file-rename",
-          "--header-insertion=iwyu",
-          "--function-arg-placeholders",
-          "--fallback-style=llvm",
-          -- "--pch-storage=memory",
-          -- "--suggest-missing-includes",
-          -- "--all-scopes-completion",
-          "--log=verbose",
-          "--pretty",
-        },
-        init_options = {
-          usePlaceholders = true,
-          completeUnimported = true,
-          clangdFileStatus = true,
-        },
-      })
-    end,
-
-    cmake = function()
-      require("lspconfig").cmake.setup({ capabilities = capabilities })
-    end,
-
-    dockerls = function()
-      require("lspconfig").dockerls.setup({ capabilities = capabilities })
-    end,
-
-    pyright = function()
-      require("lspconfig").pyright.setup({
-        capabilities = capabilities,
-        settings = {
-          python = {
-            analysis = {
-              typeCheckingMode = "on",
-            },
-          },
-        },
-      })
-    end,
-
-    rust_analyzer = function()
-      require("lspconfig").rust_analyzer.setup({
-        capabilities = capabilities,
-        settings = {
-          ["rust-analyzer"] = {
-            check = {
-              command = "clippy",
-            },
-            diagnostics = {
-              enable = true,
-            },
-          },
-        },
-      })
+    function(server_name)
+      local server = servers[server_name] or {}
+      -- Handle overriding only values explicitly passed by the server
+      -- configuration above. Useful when disabling certain features of an
+      -- LSP.
+      server.capabilities = vim.tbl_deep_extend('force', {}, capabilities, server.capabilities or {})
+      require('lspconfig')[server_name].setup(server)
     end,
   },
-  ensure_installed = {
-    "lua_ls", --brew install lua-language-server
-    "rust_analyzer", --brew install rust-analyzer
-    -- "tsserver", -- yarn global add tsserver
-    "clangd",
-    -- "meson",
-    "pyright",
-    -- "pyright",
-    "bashls",
-    -- "terraformls",
-    -- "tflint",
-  },
+  -- handlers = {
+  -- lsp_zero.default_setup,
+  --   clangd = function()
+  --     require("lspconfig").clangd.setup({
+  --       keys = { -- TODO: move it to which key
+  --         { "<leader>cR", "<cmd>ClangdSwitchSourceHeader<cr>", desc = "Switch Source/Header (C/C++)" },
+  --       },
+  --       root_dir = function(fname)
+  --         return require("lspconfig.util").root_pattern(
+  --           "Makefile",
+  --           "configure.ac",
+  --           "configure.in",
+  --           "config.h.in",
+  --           "meson.build",
+  --           "meson_options.txt",
+  --           "build.ninja"
+  --         )(fname) or require("lspconfig.util").root_pattern("compile_commands.json", "compile_flags.txt")(
+  --           fname
+  --         ) or require("lspconfig.util").find_git_ancestor(fname)
+  --       end,
+  --       -- ft = consts.lsp.clangd_fts,
+  --       capabilities = {
+  --         offsetEncoding = { "utf-16" },
+  --       },
+  --       cmd = {
+  --         "clangd",
+  --         '--enable-config',
+  --         "--background-index",
+  --         -- by default, clang-tidy use -checks=clang-diagnostic-*,clang-analyzer-*
+  --         -- to add more checks, create .clang-tidy file in the root directory
+  --         -- and add Checks key, see https://clang.llvm.org/extra/clang-tidy/
+  --         "--clang-tidy",
+  --         -- "--completion-style=bundled",
+  --         "--completion-style=detailed",
+  --         "--cross-file-rename",
+  --         "--header-insertion=iwyu",
+  --         "--function-arg-placeholders",
+  --         "--fallback-style=llvm",
+  --         -- "--pch-storage=memory",
+  --         -- "--suggest-missing-includes",
+  --         -- "--all-scopes-completion",
+  --         "--log=verbose",
+  --         "--pretty",
+  --       },
+  --       init_options = {
+  --         usePlaceholders = true,
+  --         completeUnimported = true,
+  --         clangdFileStatus = true,
+  --       },
+  --     })
+  --   end,
+  --   pyright = function()
+  --     require("lspconfig").pyright.setup({
+  --       capabilities = capabilities,
+  --       settings = {
+  --         python = {
+  --           analysis = {
+  --             typeCheckingMode = "on",
+  --           },
+  --         },
+  --       },
+  --     })
+  --   end,
+  --
+  --   rust_analyzer = function()
+  --     require("lspconfig").rust_analyzer.setup({
+  --       capabilities = capabilities,
+  --       settings = {
+  --         ["rust-analyzer"] = {
+  --           check = {
+  --             command = "clippy",
+  --           },
+  --           diagnostics = {
+  --             enable = true,
+  --           },
+  --         },
+  --       },
+  --     })
+  --   end,
+  -- },
 })
 require("mason-nvim-dap").setup({
-    automatic_setup = true,
-    ensure_installed = {
-        'codelldb',
-        -- 'node2',
-    },
+  automatic_setup = true,
+  ensure_installed = {
+    'codelldb',
+    -- 'node2',
+  },
 
-    handlers = {},
+  handlers = {},
 })
 
 local has_words_before = function()
@@ -194,8 +284,8 @@ local cmp = require("cmp")
 -- If you want insert `(` after select function or method item
 local cmp_autopairs = require('nvim-autopairs.completion.cmp')
 cmp.event:on(
-'confirm_done',
-cmp_autopairs.on_confirm_done()
+  'confirm_done',
+  cmp_autopairs.on_confirm_done()
 )
 
 cmp.setup({
@@ -263,9 +353,8 @@ vim.api.nvim_create_autocmd("LspAttach", {
       buffer = args.buf,
       callback = function()
         -- 4 + 5
-        vim.lsp.buf.format {async = false, id = args.data.client_id }
+        vim.lsp.buf.format { async = false, id = args.data.client_id }
       end,
     })
   end
 })
-

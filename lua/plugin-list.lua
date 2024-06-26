@@ -102,6 +102,7 @@ require('lazy').setup({
     { 'L3MON4D3/LuaSnip' },
     { 'williamboman/mason.nvim' },
     { 'williamboman/mason-lspconfig.nvim' },
+        {'WhoIsSethDaniel/mason-tool-installer.nvim'},
     { 'simrat39/inlay-hints.nvim' },
     { 'nvim-tree/nvim-web-devicons' },
     { 'onsails/lspkind.nvim' },
