@@ -10,6 +10,7 @@ require('mappings')
 
 -- █▓▒░ Plugin configurations
 require('plugins')
+require('autocommands')
 require('bindings')
 
 -- █▓▒░ Langauge server configuration
