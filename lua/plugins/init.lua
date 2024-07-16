@@ -29,9 +29,10 @@ require("plugins.orgmode")
 -- Note taking
 require("plugins.zk")
 
+require("plugins.snippet")
+
 -- require("plugins.grammar")
 -- require("plugins.todo-comments")
 
 -- configuration to help you remember keybindings
-require("plugins.which-key")
-
+require("plugins.whichkey")
