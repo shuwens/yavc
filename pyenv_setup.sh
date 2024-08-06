@@ -6,6 +6,7 @@ sudo apt-get install -y build-essential zlib1g-dev libffi-dev libssl-dev libbz2-
 
 
 PYTHON_VERSION=3.12.0
+PYTHON2_VERSION=2.18.0
 
 git clone https://github.com/pyenv/pyenv.git ~/.pyenv
 cd ~/.pyenv && src/configure && make -C src
@@ -15,6 +16,7 @@ git clone https://github.com/pyenv/pyenv-virtualenv.git $HOME/.pyenv/plugins/pye
 ~/.pyenv/bin/pyenv install ${PYTHON_VERSION}
 ~/.pyenv/bin/pyenv virtualenv ${PYTHON_VERSION} neovim3
 
+~/.pyenv/bin/pyenv install ${PYTHON2_VERSION}
 
 # pip3 install neovim pynvim
 

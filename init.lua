@@ -11,7 +11,7 @@ require('mappings')
 -- █▓▒░ Plugin configurations
 require('plugins')
 require('autocommands')
-require('bindings')
+-- require('bindings')
 
 -- █▓▒░ Langauge server configuration
 require('lsp')

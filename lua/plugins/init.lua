@@ -35,4 +35,4 @@ require("plugins.snippet")
 -- require("plugins.todo-comments")
 
 -- configuration to help you remember keybindings
-require("plugins.whichkey")
+require("plugins.which-key")
