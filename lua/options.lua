@@ -237,6 +237,7 @@ for _, plugin in pairs(disabled_built_ins) do
 end
 
 opt.termguicolors = true
-vim.cmd [[colorscheme kanagawa]]
+-- vim.cmd [[colorscheme kanagawa]]
+vim.cmd [[colorscheme cyberdream]]
 -- vim.cmd "colorscheme gruvbox-material"
 -- vim.cmd "colorscheme codedark"

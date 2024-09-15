@@ -53,6 +53,12 @@ require('lazy').setup({
         opts = {},
     },
 
+    {
+        'scottmckendry/cyberdream.nvim',
+        lazy = false,
+        priority = 1000,
+    },
+
     -- GUI enhancements
     { 'nvim-lualine/lualine.nvim' },
     { 'jaxbot/semantic-highlight.vim' }, -- different color for every variable
@@ -136,12 +142,14 @@ require('lazy').setup({
     -- Language support
     -- LaTeX
     -- https://www.reddit.com/r/neovim/comments/idthcb/vimtex_vs_texlab/
-    { 'stephpy/vim-yaml',         ft = 'yaml' },
-    { 'cespare/vim-toml',         ft = 'toml' },
-    { 'dag/vim-fish',             ft = 'fish' },
-    { 'nvim-orgmode/orgmode',     config = function() require('orgmode').setup {} end },
-    { 'plasticboy/vim-markdown',  ft = 'markdown' },
-    { 'mzlogin/vim-markdown-toc', ft = 'markdown' },
+    { 'stephpy/vim-yaml',                   ft = 'yaml' },
+    { 'cespare/vim-toml',                   ft = 'toml' },
+    { 'dag/vim-fish',                       ft = 'fish' },
+    { 'nvim-orgmode/orgmode',               config = function() require('orgmode').setup {} end },
+    -- { 'plasticboy/vim-markdown',  ft = 'markdown' },
+    -- { 'mzlogin/vim-markdown-toc', ft = 'markdown' },
+    { 'MeanderingProgrammer/markdown.nvim', ft = 'markdown' },
+
     { 'alvan/vim-closetag' },
     {
         "vim-pandoc/vim-pandoc",
