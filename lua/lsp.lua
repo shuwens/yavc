@@ -288,6 +288,17 @@ cmp.event:on(
   cmp_autopairs.on_confirm_done()
 )
 
+require("copilot").setup({
+  suggestion = { enabled = false },
+  panel = { enabled = false },
+})
+
+local has_words_before = function()
+  if vim.api.nvim_buf_get_option(0, "buftype") == "prompt" then return false end
+  local line, col = unpack(vim.api.nvim_win_get_cursor(0))
+  return col ~= 0 and vim.api.nvim_buf_get_text(0, line - 1, 0, line - 1, col, {})[1]:match("^%s*$") == nil
+end
+
 cmp.setup({
   sources = {
     -- Copilot Source
@@ -299,8 +310,9 @@ cmp.setup({
   },
   mapping = {
     ["<Tab>"] = cmp.mapping(function(fallback)
-      if cmp.visible() then
-        cmp.select_next_item()
+      if cmp.visible() and has_words_before() then
+        -- cmp.select_next_item()
+        cmp.select_next_item({ behavior = cmp.SelectBehavior.Select })
         -- You could replace the expand_or_jumpable() calls with expand_or_locally_jumpable()
         -- that way you will only jump inside the snippet region
       elseif luasnip.expand_or_jumpable() then

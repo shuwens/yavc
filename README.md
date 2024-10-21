@@ -36,7 +36,12 @@ brew install --cask temurin
 ```
 ## copilot setup
 
+
+
+
 https://www.reddit.com/r/neovim/comments/1cuzrlw/how_do_you_use_your_copilot/
+
+- copilot cmp: https://tamerlan.dev/setting-up-copilot-in-neovim-with-sane-settings/
 
 
 ## C++ dev
@@ -82,6 +87,11 @@ https://jdhao.github.io/2020/11/29/neovim_cpp_dev_setup/
 
 https://github.com/GregoryAshton/dotfiles/blob/master/vim/vimrc
 https://github.com/syclops/dotfiles/blob/master/vim/post.vimrc
+
+## dotfiles
+- https://github.com/ErdajtSopjani/nvim/tree/main
+
+
 
 ## ChangeList
 - Jan 02, 2024: [Major update: switch to lsp zero and lazy](https://github.com/jethrosun/yavc/commit/4cfdc5e94a770d4457f2e9fefa2a6645b643f162)

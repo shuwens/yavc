@@ -77,6 +77,7 @@ require('lazy').setup({
     -- Software dev tools
     { 'tpope/vim-fugitive', event = 'VeryLazy' },
     { 'rhysd/committia.vim' }, -- better git commit layout
+    -- { 'github/copilot.vim' },
     -- https://github.com/zbirenbaum/copilot-cmp
     {
         "zbirenbaum/copilot.lua",
