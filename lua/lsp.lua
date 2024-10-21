@@ -39,7 +39,7 @@ local servers = {
       },
     },
   },
-  tsserver = {},
+  -- tsserver = {},
 
   yamlls = {
     -- cmd = { "yamls" },
