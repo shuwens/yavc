@@ -74,23 +74,27 @@ require('lazy').setup({
         end
     },
 
+
+    { 'github/copilot.vim' },
+    -- -- https://github.com/zbirenbaum/copilot-cmp
+    -- {
+    --     "zbirenbaum/copilot.lua",
+    --     cmd = "Copilot",
+    --     event = "InsertEnter",
+    -- },
+    -- {
+    --     "zbirenbaum/copilot-cmp",
+    --     config = function()
+    --         require("copilot_cmp").setup()
+    --     end
+    -- },
+
+
     -- Software dev tools
     { 'tpope/vim-fugitive', event = 'VeryLazy' },
     { 'rhysd/committia.vim' }, -- better git commit layout
-    -- { 'github/copilot.vim' },
-    -- https://github.com/zbirenbaum/copilot-cmp
-    {
-        "zbirenbaum/copilot.lua",
-        cmd = "Copilot",
-        event = "InsertEnter",
-    },
-    {
-        "zbirenbaum/copilot-cmp",
-        config = function()
-            require("copilot_cmp").setup()
-        end
-    },
-    { "folke/neodev.nvim",                        opts = {} },
+
+    { "folke/neodev.nvim",  opts = {} },
     -- DAP Support
     {
         "mfussenegger/nvim-dap",

@@ -181,86 +181,6 @@ require('mason-lspconfig').setup({
       require('lspconfig')[server_name].setup(server)
     end,
   },
-  -- handlers = {
-  -- lsp_zero.default_setup,
-  --   clangd = function()
-  --     require("lspconfig").clangd.setup({
-  --       keys = { -- TODO: move it to which key
-  --         { "<leader>cR", "<cmd>ClangdSwitchSourceHeader<cr>", desc = "Switch Source/Header (C/C++)" },
-  --       },
-  --       root_dir = function(fname)
-  --         return require("lspconfig.util").root_pattern(
-  --           "Makefile",
-  --           "configure.ac",
-  --           "configure.in",
-  --           "config.h.in",
-  --           "meson.build",
-  --           "meson_options.txt",
-  --           "build.ninja"
-  --         )(fname) or require("lspconfig.util").root_pattern("compile_commands.json", "compile_flags.txt")(
-  --           fname
-  --         ) or require("lspconfig.util").find_git_ancestor(fname)
-  --       end,
-  --       -- ft = consts.lsp.clangd_fts,
-  --       capabilities = {
-  --         offsetEncoding = { "utf-16" },
-  --       },
-  --       cmd = {
-  --         "clangd",
-  --         '--enable-config',
-  --         "--background-index",
-  --         -- by default, clang-tidy use -checks=clang-diagnostic-*,clang-analyzer-*
-  --         -- to add more checks, create .clang-tidy file in the root directory
-  --         -- and add Checks key, see https://clang.llvm.org/extra/clang-tidy/
-  --         "--clang-tidy",
-  --         -- "--completion-style=bundled",
-  --         "--completion-style=detailed",
-  --         "--cross-file-rename",
-  --         "--header-insertion=iwyu",
-  --         "--function-arg-placeholders",
-  --         "--fallback-style=llvm",
-  --         -- "--pch-storage=memory",
-  --         -- "--suggest-missing-includes",
-  --         -- "--all-scopes-completion",
-  --         "--log=verbose",
-  --         "--pretty",
-  --       },
-  --       init_options = {
-  --         usePlaceholders = true,
-  --         completeUnimported = true,
-  --         clangdFileStatus = true,
-  --       },
-  --     })
-  --   end,
-  --   pyright = function()
-  --     require("lspconfig").pyright.setup({
-  --       capabilities = capabilities,
-  --       settings = {
-  --         python = {
-  --           analysis = {
-  --             typeCheckingMode = "on",
-  --           },
-  --         },
-  --       },
-  --     })
-  --   end,
-  --
-  --   rust_analyzer = function()
-  --     require("lspconfig").rust_analyzer.setup({
-  --       capabilities = capabilities,
-  --       settings = {
-  --         ["rust-analyzer"] = {
-  --           check = {
-  --             command = "clippy",
-  --           },
-  --           diagnostics = {
-  --             enable = true,
-  --           },
-  --         },
-  --       },
-  --     })
-  --   end,
-  -- },
 })
 require("mason-nvim-dap").setup({
   automatic_setup = true,
@@ -268,15 +188,15 @@ require("mason-nvim-dap").setup({
     'codelldb',
     -- 'node2',
   },
-
   handlers = {},
 })
 
 local has_words_before = function()
-  unpack = unpack or table.unpack
+  if vim.api.nvim_buf_get_option(0, "buftype") == "prompt" then return false end
   local line, col = unpack(vim.api.nvim_win_get_cursor(0))
-  return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
+  return col ~= 0 and vim.api.nvim_buf_get_text(0, line - 1, 0, line - 1, col, {})[1]:match("^%s*$") == nil
 end
+
 
 local luasnip = require("luasnip")
 local cmp = require("cmp")
@@ -288,26 +208,42 @@ cmp.event:on(
   cmp_autopairs.on_confirm_done()
 )
 
-require("copilot").setup({
-  suggestion = { enabled = false },
-  panel = { enabled = false },
-})
-
-local has_words_before = function()
-  if vim.api.nvim_buf_get_option(0, "buftype") == "prompt" then return false end
-  local line, col = unpack(vim.api.nvim_win_get_cursor(0))
-  return col ~= 0 and vim.api.nvim_buf_get_text(0, line - 1, 0, line - 1, col, {})[1]:match("^%s*$") == nil
-end
-
 cmp.setup({
-  sources = {
-    -- Copilot Source
-    { name = "copilot",  group_index = 2 },
-    -- Other Sources
-    { name = "nvim_lsp", group_index = 2 },
-    { name = "path",     group_index = 2 },
-    { name = "luasnip",  group_index = 2 },
-  },
+  sources = cmp.config.sources({
+    { name = 'nvim_lsp' },
+    { name = 'luasnip' },
+    { name = 'path' },
+    { name = 'buffer' },
+    { name = 'nvim_lsp_signature_help' },
+    { name = 'emoji' },
+    -- https://github.com/hrsh7th/nvim-cmp/issues/1310
+    -- { name = 'cmdline' },
+    { name = 'copilot' },
+  }),
+
+  -- mapping = {
+  --   ['<C-e>'] = cmp.mapping.abort(),
+  --   ['<C-b>'] = cmp.mapping.scroll_docs(-4),
+  --   ['<C-f>'] = cmp.mapping.scroll_docs(4),
+  --   ['<C-k>'] = cmp.mapping.complete(),
+  --   ['<C-n>'] = cmp.mapping.select_next_item(),
+  --   ['<C-p>'] = cmp.mapping.select_prev_item(),
+  --   ['<Down>'] = cmp.mapping.select_next_item(),
+  --   ['<Up>'] = cmp.mapping.select_prev_item(),
+  --   ['<CR>'] = cmp.mapping.confirm({ select = true }),
+  --   ['<Tab>'] = vim.schedule_wrap(function(fallback)
+  --     if cmp.visible() and has_words_before() then
+  --       cmp.select_next_item({ behavior = cmp.SelectBehavior.Select })
+  --     else
+  --       fallback()
+  --     end
+  --   end),
+  --   ['<C-g>'] = cmp.mapping(function(fallback)
+  --     vim.api.nvim_feedkeys(vim.fn['copilot#Accept'](vim.api.nvim_replace_termcodes('<Tab>', true, true, true)), 'n',
+  --       true)
+  --   end)
+  -- },
+
   mapping = {
     ["<Tab>"] = cmp.mapping(function(fallback)
       if cmp.visible() and has_words_before() then
@@ -323,6 +259,11 @@ cmp.setup({
         fallback()
       end
     end, { "i", "s" }),
+
+    ['<C-g>'] = cmp.mapping(function(fallback)
+      vim.api.nvim_feedkeys(vim.fn['copilot#Accept'](vim.api.nvim_replace_termcodes('<Tab>', true, true, true)), 'n',
+        true)
+    end),
 
     ["<S-Tab>"] = cmp.mapping(function(fallback)
       if cmp.visible() then
@@ -357,22 +298,15 @@ cmp.setup({
           return vim_item
         end
       end
-      -- return require('lspkind').cmp_format({ with_text = false })(entry, vim_item)
-      return require('lspkind').cmp_format({
-        mode = "symbol",
-        max_width = 50,
-        symbol_map = { Copilot = "" }
-      })(entry, vim_item)
+      return require('lspkind').cmp_format({ with_text = false })(entry, vim_item)
+      -- return require('lspkind').cmp_format({
+      --   mode = "symbol",
+      --   max_width = 50,
+      --   symbol_map = { Copilot = "" }
+      -- })(entry, vim_item)
     end
   }
 })
-
-require("copilot").setup({
-  suggestion = { enabled = false },
-  panel = { enabled = false },
-})
-
-
 
 -- 1
 vim.api.nvim_create_autocmd("LspAttach", {
