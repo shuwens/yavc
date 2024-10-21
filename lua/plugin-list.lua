@@ -79,30 +79,35 @@ require('lazy').setup({
     { 'rhysd/committia.vim' }, -- better git commit layout
     -- https://github.com/zbirenbaum/copilot-cmp
     {
+        "zbirenbaum/copilot.lua",
+        cmd = "Copilot",
+        event = "InsertEnter",
+    },
+    {
         "zbirenbaum/copilot-cmp",
         config = function()
             require("copilot_cmp").setup()
         end
     },
-    { "folke/neodev.nvim", opts = {} },
+    { "folke/neodev.nvim",                        opts = {} },
     -- DAP Support
     {
         "mfussenegger/nvim-dap",
         config = function() end,
     },
     { "nvim-neotest/nvim-nio" },
-    {'jay-babu/mason-nvim-dap.nvim'},
-    {'rcarriga/nvim-dap-ui'},
+    { 'jay-babu/mason-nvim-dap.nvim' },
+    { 'rcarriga/nvim-dap-ui' },
 
     -- LSP support
-    { 'VonHeikemen/lsp-zero.nvim',        branch = 'v3.x' },
+    { 'VonHeikemen/lsp-zero.nvim',                branch = 'v3.x' },
     { 'neovim/nvim-lspconfig' },
     { 'hrsh7th/cmp-nvim-lsp' },
     { 'hrsh7th/nvim-cmp' },
     { 'L3MON4D3/LuaSnip' },
     { 'williamboman/mason.nvim' },
     { 'williamboman/mason-lspconfig.nvim' },
-        {'WhoIsSethDaniel/mason-tool-installer.nvim'},
+    { 'WhoIsSethDaniel/mason-tool-installer.nvim' },
     { 'simrat39/inlay-hints.nvim' },
     { 'nvim-tree/nvim-web-devicons' },
     { 'onsails/lspkind.nvim' },
@@ -145,66 +150,66 @@ require('lazy').setup({
         "vim-pandoc/vim-pandoc",
         ft = { "markdown", "pandoc", "latex" },
         -- config = function()
-            --     require("plugins.pandoc")
-            -- end,
-            event = "VeryLazy",
-        },
-        {
-            "vim-pandoc/vim-pandoc-syntax",
-            ft = { "markdown", "pandoc", "latex" },
-            event = "VeryLazy",
-        },
+        --     require("plugins.pandoc")
+        -- end,
+        event = "VeryLazy",
+    },
+    {
+        "vim-pandoc/vim-pandoc-syntax",
+        ft = { "markdown", "pandoc", "latex" },
+        event = "VeryLazy",
+    },
 
-        -- Rust
-        -- { 'simrat39/rust-tools.nvim' },
-        -- C++ and Clang
-        -- { 'octol/vim-cpp-enhanced-highlight', ft = { 'c', 'cpp' } },
-        -- { 'drmikehenry/vim-headerguard',      ft = { 'c', 'cpp' } },
-        -- { 'bfrg/vim-cpp-modern',              ft = { 'c', 'cpp' } },
-        -- { 'arakashic/chromatica.nvim',        ft = { 'c', 'cpp' } },
-        -- { 'rhysd/vim-clang-format',           ft = { 'c', 'cpp' } },
+    -- Rust
+    -- { 'simrat39/rust-tools.nvim' },
+    -- C++ and Clang
+    -- { 'octol/vim-cpp-enhanced-highlight', ft = { 'c', 'cpp' } },
+    -- { 'drmikehenry/vim-headerguard',      ft = { 'c', 'cpp' } },
+    -- { 'bfrg/vim-cpp-modern',              ft = { 'c', 'cpp' } },
+    -- { 'arakashic/chromatica.nvim',        ft = { 'c', 'cpp' } },
+    -- { 'rhysd/vim-clang-format',           ft = { 'c', 'cpp' } },
 
-        -- SQL
-        -- { "tami5/sql.nvim", rocks = { "sqlite", "luv" } }
-        -- { 'tpope/vim-dadbod' },
-        -- { 'kristijanhusak/vim-dadbod-completion' },
-        -- { 'kristijanhusak/vim-dadbod-ui' },
+    -- SQL
+    -- { "tami5/sql.nvim", rocks = { "sqlite", "luv" } }
+    -- { 'tpope/vim-dadbod' },
+    -- { 'kristijanhusak/vim-dadbod-completion' },
+    -- { 'kristijanhusak/vim-dadbod-ui' },
 
-        -- writing
-        {
-            'junegunn/goyo.vim', -- Goyo, Goyo!
-            lazy = false,
-            config = function()
-                vim.g.goyo_width = '55%' -- Default width
-                -- vim.g.goyo_height = '90%' -- Default height
-            end
-        },
-        { 'junegunn/limelight.vim' }, -- Limelight, Limelight!
-        { 'rhysd/vim-grammarous' },
-        -- https://github.com/airbornelamb/vim-academic
-        { 'airbornelamb/vim-academic' },
+    -- writing
+    {
+        'junegunn/goyo.vim', -- Goyo, Goyo!
+        lazy = false,
+        config = function()
+            vim.g.goyo_width = '55%' -- Default width
+            -- vim.g.goyo_height = '90%' -- Default height
+        end
+    },
+    { 'junegunn/limelight.vim' }, -- Limelight, Limelight!
+    { 'rhysd/vim-grammarous' },
+    -- https://github.com/airbornelamb/vim-academic
+    { 'airbornelamb/vim-academic' },
 
-        -- note taking
-        -- https://mischavandenburg.com/zet/neovim-zettelkasten/
-        {
-            'mickael-menu/zk-nvim',
-            event = { 'BufReadPre', 'BufNewFile' },
-            config = function()
-                require('zk').setup({
-                    picker = 'telescope',
-                    lsp = {
-                        config = {
-                            cmd = { 'zk', 'lsp' },
-                            name = 'zk',
-                        },
-                        auto_attach = {
-                            enabled = true,
-                            filetypes = { 'markdown' },
-                        },
+    -- note taking
+    -- https://mischavandenburg.com/zet/neovim-zettelkasten/
+    {
+        'mickael-menu/zk-nvim',
+        event = { 'BufReadPre', 'BufNewFile' },
+        config = function()
+            require('zk').setup({
+                picker = 'telescope',
+                lsp = {
+                    config = {
+                        cmd = { 'zk', 'lsp' },
+                        name = 'zk',
                     },
-                })
-            end
-        },
-        -- fun
-        { 'ThePrimeagen/vim-be-good' }
-    })
+                    auto_attach = {
+                        enabled = true,
+                        filetypes = { 'markdown' },
+                    },
+                },
+            })
+        end
+    },
+    -- fun
+    { 'ThePrimeagen/vim-be-good' }
+})

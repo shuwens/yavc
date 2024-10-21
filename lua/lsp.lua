@@ -289,6 +289,14 @@ cmp.event:on(
 )
 
 cmp.setup({
+  sources = {
+    -- Copilot Source
+    { name = "copilot",  group_index = 2 },
+    -- Other Sources
+    { name = "nvim_lsp", group_index = 2 },
+    { name = "path",     group_index = 2 },
+    { name = "luasnip",  group_index = 2 },
+  },
   mapping = {
     ["<Tab>"] = cmp.mapping(function(fallback)
       if cmp.visible() then
@@ -337,11 +345,22 @@ cmp.setup({
           return vim_item
         end
       end
-      return require('lspkind').cmp_format({ with_text = false })(entry, vim_item)
+      -- return require('lspkind').cmp_format({ with_text = false })(entry, vim_item)
+      return require('lspkind').cmp_format({
+        mode = "symbol",
+        max_width = 50,
+        symbol_map = { Copilot = "" }
+      })(entry, vim_item)
     end
   }
-
 })
+
+require("copilot").setup({
+  suggestion = { enabled = false },
+  panel = { enabled = false },
+})
+
+
 
 -- 1
 vim.api.nvim_create_autocmd("LspAttach", {

@@ -34,6 +34,10 @@ MACOSX_DEPLOYMENT_TARGET=10.15 nvim
 ```bash
 brew install --cask temurin
 ```
+## copilot setup
+
+https://www.reddit.com/r/neovim/comments/1cuzrlw/how_do_you_use_your_copilot/
+
 
 ## C++ dev
 GOTO: https://gitlab.com/ranjithshegde/dotbare/-/tree/master?ref_type=heads
