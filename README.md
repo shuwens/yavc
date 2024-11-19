@@ -34,13 +34,11 @@ MACOSX_DEPLOYMENT_TARGET=10.15 nvim
 ```bash
 brew install --cask temurin
 ```
+https://www.reddit.com/r/neovim/comments/1g380b0/what_key_combinations_do_you_wish_you_learned/
+
 ## copilot setup
 
-
-
-
 https://www.reddit.com/r/neovim/comments/1cuzrlw/how_do_you_use_your_copilot/
-
 - copilot cmp: https://tamerlan.dev/setting-up-copilot-in-neovim-with-sane-settings/
 
 
