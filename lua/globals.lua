@@ -76,3 +76,27 @@ g.vimtex_view_method = 'zathura'
 g.vimtex_quickfix_mode = 0
 vim.cmd "set conceallevel=1"
 g.tex_conceal = 'abdmg'
+
+
+-- also, produce "flowed text" wrapping
+-- https://brianbuccola.com/line-breaks-in-mutt-and-vim/
+vim.api.nvim_create_autocmd('Filetype', {
+  pattern = 'mail',
+  group = email,
+  command = 'setlocal formatoptions+=w',
+})
+-- shorter columns in text because it reads better that way
+local text = vim.api.nvim_create_augroup('text', { clear = true })
+for _, pat in ipairs({ 'text', 'markdown', 'mail', 'gitcommit' }) do
+  vim.api.nvim_create_autocmd('Filetype', {
+    pattern = pat,
+    group = text,
+    command = 'setlocal spell tw=72 colorcolumn=73',
+  })
+end
+--- tex has so much syntax that a little wider is ok
+vim.api.nvim_create_autocmd('Filetype', {
+  pattern = 'tex',
+  group = text,
+  command = 'setlocal spell tw=80 colorcolumn=81',
+})
