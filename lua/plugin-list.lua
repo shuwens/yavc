@@ -193,13 +193,13 @@ require('lazy').setup({
     { 'rhysd/vim-grammarous' },
     -- https://github.com/airbornelamb/vim-academic
     { 'airbornelamb/vim-academic' },
-    { "benlubas/wrapping-paper.nvim" },
-    {
-        "andrewferrier/wrapping.nvim",
-        config = function()
-            require("wrapping").setup()
-        end
-    },
+    -- { "benlubas/wrapping-paper.nvim" },
+    -- {
+    --     "andrewferrier/wrapping.nvim",
+    --     config = function()
+    --         require("wrapping").setup()
+    --     end
+    -- },
 
     -- note taking
     -- https://mischavandenburg.com/zet/neovim-zettelkasten/

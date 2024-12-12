@@ -171,11 +171,11 @@ opt.wildignore = "+=*.pyc"                            --Python byte code
 opt.wildignore = "+=*.orig"                           --Merge resolution files
 
 -- Wrapping options
--- opt.formatoptions = "tc"                    -- wrap text and comments using textwidth
--- opt.formatoptions = opt.formatoptions + "r" -- continue comments when pressing ENTER in I mode
--- opt.formatoptions = opt.formatoptions + "q" -- enable formatting of comments with gq
--- opt.formatoptions = opt.formatoptions + "n" -- detect lists for formatting
--- opt.formatoptions = opt.formatoptions + "b" -- auto-wrap in insert mode, and do not wrap old long lines
+opt.formatoptions = "tc"                    -- wrap text and comments using textwidth
+opt.formatoptions = opt.formatoptions + "r" -- continue comments when pressing ENTER in I mode
+opt.formatoptions = opt.formatoptions + "q" -- enable formatting of comments with gq
+opt.formatoptions = opt.formatoptions + "n" -- detect lists for formatting
+opt.formatoptions = opt.formatoptions + "b" -- auto-wrap in insert mode, and do not wrap old long lines
 
 -- Completion
 -- Better completion

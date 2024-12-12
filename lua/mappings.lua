@@ -65,6 +65,10 @@ else
 end
 api.nvim_set_keymap('v', '<C-c>', '"*y', opts)
 
+
+-- format paragraph
+api.nvim_set_keymap('n', 'Q', 'gq{', { noremap = true, silent = false })
+
 -- Open new file adjacent to current file
 api.nvim_set_keymap('n', g.mapleader .. 'e', ':e <C-R>=expand("%:p:h") . "/" <CR>', { noremap = true, silent = false })
 
@@ -77,7 +81,7 @@ api.nvim_set_keymap('n', '<C-i>', 'C', opts)
 -- api.nvim_set_keymap('n', g.mapleader..'i', 'C', opts)
 
 api.nvim_set_keymap('n', ';', ':', { noremap = true, silent = false })
-api.nvim_set_keymap('n', 'q', '<nop>', opts)
+-- api.nvim_set_keymap('n', 'q', '<nop>', opts)
 
 -- Move by line
 api.nvim_set_keymap('n', 'j', 'gj', opts)
@@ -182,40 +186,42 @@ func! DeleteTrailingWS()
    exe "normal `z"
 endfunc
 
-" A second kind of re-wrap
-" Reformat lines (getting the spacing correct)
-"
-" https://tex.stackexchange.com/questions/1548/intelligent-paragraph-reflowing-in-vim
-fun! TeX_fmt()
-   if (getline(".") != "")
-      let save_cursor = getpos(".")
-      let op_wrapscan = &wrapscan
-      set nowrapscan
-      let par_begin = '^\(%D\)\=\s*\($\||\\begin\|\\end\|\\[\|\\]\|\\\(sub\)*section\>\|\\item\>\|\\NC\>\|\\blank\>\|\\noindent\>\)'
-      let par_end   = '^\(%D\)\=\s*\($\||\\begin\|\\end\|\\[\|\\]\|\\place\|\\\(sub\)*section\>\|\\item\>\|\\NC\>\|\\blank\>\)'
-      try
-	 exe '?'.par_begin.'?+'
-      catch /E384/
-	 1
-      endtry
-      norm V
-      try
-	 exe '/'.par_end.'/-'
-      catch /E385/
-	 $
-      endtry
-      norm gq
-      let &wrapscan = op_wrapscan
-      call setpos('.', save_cursor)
-   endif
-endfun
-autocmd Filetype markdown nmap Q :call TeX_fmt()<CR>zz
-autocmd Filetype tex nmap Q :call TeX_fmt()<CR>zz
-autocmd Filetype org nmap Q :call TeX_fmt()<CR>zz
-autocmd Filetype jemdoc nmap Q :call TeX_fmt()<CR>zz
-autocmd Filetype text nmap Q :call TeX_fmt()<CR>zz
-
 ]]
+
+-- " A second kind of re-wrap
+-- " Reformat lines (getting the spacing correct)
+-- "
+-- " https://tex.stackexchange.com/questions/1548/intelligent-paragraph-reflowing-in-vim
+-- fun! TeX_fmt()
+--    if (getline(".") != "")
+--       let save_cursor = getpos(".")
+--       let op_wrapscan = &wrapscan
+--       set nowrapscan
+--       let par_begin = '^\(%D\)\=\s*\($\||\\begin\|\\end\|\\[\|\\]\|\\\(sub\)*section\>\|\\item\>\|\\NC\>\|\\blank\>\|\\noindent\>\)'
+--       let par_end   = '^\(%D\)\=\s*\($\||\\begin\|\\end\|\\[\|\\]\|\\place\|\\\(sub\)*section\>\|\\item\>\|\\NC\>\|\\blank\>\)'
+--       try
+-- 	 exe '?'.par_begin.'?+'
+--       catch /E384/
+-- 	 1
+--       endtry
+--       norm V
+--       try
+-- 	 exe '/'.par_end.'/-'
+--       catch /E385/
+-- 	 $
+--       endtry
+--       norm gq
+--       let &wrapscan = op_wrapscan
+--       call setpos('.', save_cursor)
+--    endif
+-- endfun
+-- autocmd Filetype markdown nmap Q :call TeX_fmt()<CR>zz
+-- autocmd Filetype tex nmap Q :call TeX_fmt()<CR>zz
+-- autocmd Filetype org nmap Q :call TeX_fmt()<CR>zz
+-- autocmd Filetype jemdoc nmap Q :call TeX_fmt()<CR>zz
+-- autocmd Filetype text nmap Q :call TeX_fmt()<CR>zz
+
+
 
 -- Deprecated things
 
