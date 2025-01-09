@@ -1,12 +1,3 @@
--- https://github.com/snowp/dotfiles/blob/cf5fcc0262c4c7681ede8c6eb2834bbd48693375/config/nvim/lua/plugins/lsp_zero.lua#L121
--- https://github.com/Waterwolf9910/nvim-init.lua/blob/4b60287f69c5dbf8cf310fcc7baf264c88c8100d/lua/plugins/lsp_dap.lua#L110
--- https://github.com/CrumblyLiquid/dotfiles/blob/169d75a2223643da0f4a0855ec015a9f6d62137e/nvim/nvim-old/lua/plug.lua#L194
--- https://github.com/Ivan-Wang-J-W/nvim/blob/b9c81d7329058b0efcf12b9b4de2c5a0fd9783d4/lua/core/plugins.lua#L102
--- https://github.com/jackhwalters/dotfiles/blob/7a7897f32d1e0404f5199ab858249d0fba61d39f/nvim/after/plugin/lsp.lua#L44
--- https://github.com/felipeprov/nvim.config/blob/97c395e6fcb6760b55a2d7d7817b5fd7b98ab6e4/lua/plugins/lsp.lua#L86
--- https://github.com/brw/dotfiles/blob/81acff3c6e18dd73ceed55cd7331ab31cb0a9649/nvim/.config/nvim/lua/plugins.lua#L266
--- https://github.com/nodev19/dotfiles/blob/b871745614121edd3c8044031319c7e17387fdc0/init.lua#L123
-
 -- Enable these language servers
 --
 -- Add any additional override configuration in the following tables.
@@ -26,7 +17,8 @@ local servers = {
     -- Get the language server to recognize the 'vim' global
     settings = { Lua = { diagnostics = { globals = { 'vim' } } } }
   },
-  pyright = {},
+  -- pyright = {},
+  ruff = {},
   rust_analyzer = {
     settings = {
       ["rust-analyzer"] = {
@@ -323,3 +315,12 @@ vim.api.nvim_create_autocmd("LspAttach", {
     })
   end
 })
+
+-- https://github.com/snowp/dotfiles/blob/cf5fcc0262c4c7681ede8c6eb2834bbd48693375/config/nvim/lua/plugins/lsp_zero.lua#L121
+-- https://github.com/Waterwolf9910/nvim-init.lua/blob/4b60287f69c5dbf8cf310fcc7baf264c88c8100d/lua/plugins/lsp_dap.lua#L110
+-- https://github.com/CrumblyLiquid/dotfiles/blob/169d75a2223643da0f4a0855ec015a9f6d62137e/nvim/nvim-old/lua/plug.lua#L194
+-- https://github.com/Ivan-Wang-J-W/nvim/blob/b9c81d7329058b0efcf12b9b4de2c5a0fd9783d4/lua/core/plugins.lua#L102
+-- https://github.com/jackhwalters/dotfiles/blob/7a7897f32d1e0404f5199ab858249d0fba61d39f/nvim/after/plugin/lsp.lua#L44
+-- https://github.com/felipeprov/nvim.config/blob/97c395e6fcb6760b55a2d7d7817b5fd7b98ab6e4/lua/plugins/lsp.lua#L86
+-- https://github.com/brw/dotfiles/blob/81acff3c6e18dd73ceed55cd7331ab31cb0a9649/nvim/.config/nvim/lua/plugins.lua#L266
+-- https://github.com/nodev19/dotfiles/blob/b871745614121edd3c8044031319c7e17387fdc0/init.lua#L123

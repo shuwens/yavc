@@ -73,28 +73,14 @@ require('lazy').setup({
             require('todo-comments').setup {}
         end
     },
-
-
+    { 'sainnhe/gruvbox-material' },
     { 'github/copilot.vim' },
-    -- -- https://github.com/zbirenbaum/copilot-cmp
-    -- {
-    --     "zbirenbaum/copilot.lua",
-    --     cmd = "Copilot",
-    --     event = "InsertEnter",
-    -- },
-    -- {
-    --     "zbirenbaum/copilot-cmp",
-    --     config = function()
-    --         require("copilot_cmp").setup()
-    --     end
-    -- },
-
 
     -- Software dev tools
-    { 'tpope/vim-fugitive', event = 'VeryLazy' },
+    { 'tpope/vim-fugitive',      event = 'VeryLazy' },
     { 'rhysd/committia.vim' }, -- better git commit layout
 
-    { "folke/neodev.nvim",  opts = {} },
+    { "folke/neodev.nvim",       opts = {} },
     -- DAP Support
     {
         "mfussenegger/nvim-dap",
@@ -168,11 +154,11 @@ require('lazy').setup({
     -- Rust
     -- { 'simrat39/rust-tools.nvim' },
     -- C++ and Clang
-    -- { 'octol/vim-cpp-enhanced-highlight', ft = { 'c', 'cpp' } },
-    -- { 'drmikehenry/vim-headerguard',      ft = { 'c', 'cpp' } },
-    -- { 'bfrg/vim-cpp-modern',              ft = { 'c', 'cpp' } },
-    -- { 'arakashic/chromatica.nvim',        ft = { 'c', 'cpp' } },
-    -- { 'rhysd/vim-clang-format',           ft = { 'c', 'cpp' } },
+    { 'octol/vim-cpp-enhanced-highlight', ft = { 'c', 'cpp' } },
+    { 'drmikehenry/vim-headerguard',      ft = { 'c', 'cpp' } },
+    { 'bfrg/vim-cpp-modern',              ft = { 'c', 'cpp' } },
+    { 'arakashic/chromatica.nvim',        ft = { 'c', 'cpp' } },
+    { 'rhysd/vim-clang-format',           ft = { 'c', 'cpp' } },
 
     -- SQL
     -- { "tami5/sql.nvim", rocks = { "sqlite", "luv" } }
@@ -193,13 +179,6 @@ require('lazy').setup({
     { 'rhysd/vim-grammarous' },
     -- https://github.com/airbornelamb/vim-academic
     { 'airbornelamb/vim-academic' },
-    -- { "benlubas/wrapping-paper.nvim" },
-    -- {
-    --     "andrewferrier/wrapping.nvim",
-    --     config = function()
-    --         require("wrapping").setup()
-    --     end
-    -- },
 
     -- note taking
     -- https://mischavandenburg.com/zet/neovim-zettelkasten/

@@ -67,7 +67,8 @@ api.nvim_set_keymap('v', '<C-c>', '"*y', opts)
 
 
 -- format paragraph
-api.nvim_set_keymap('n', 'Q', 'gq{', { noremap = true, silent = false })
+-- api.nvim_set_keymap('n', 'Q', 'gq{', { noremap = true, silent = false })
+api.nvim_set_keymap('n', 'Q', 'gq}', { noremap = true, silent = false })
 
 -- Open new file adjacent to current file
 api.nvim_set_keymap('n', g.mapleader .. 'e', ':e <C-R>=expand("%:p:h") . "/" <CR>', { noremap = true, silent = false })

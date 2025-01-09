@@ -21,8 +21,6 @@ require("plugins.orgmode")
 -- require("plugins.trouble")
 
 -- Project management
--- require("plugins.coq")
--- require("plugins.coq3p")
 -- require("plugins.rust-tools")
 -- require("plugins.project")
 
@@ -34,4 +32,3 @@ require("plugins.zk")
 
 -- configuration to help you remember keybindings
 require("plugins.which-key")
-
