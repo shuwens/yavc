@@ -9,7 +9,7 @@ require('globals')
 require('mappings')
 
 -- █▓▒░ Plugin configurations
-require('plugins')
+require('config')
 
 -- █▓▒░ Langauge server configuration
 require('lsp')
