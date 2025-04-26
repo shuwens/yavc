@@ -15,7 +15,7 @@ require("config.autopairs")
 
 -- Treesitter configurations
 require("config.tree-sitter")
-require("config.orgmode")
+-- require("config.orgmode")
 
 -- Error finder configurations
 -- require("config.trouble")

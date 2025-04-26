@@ -133,7 +133,7 @@ require('lazy').setup({
     { 'stephpy/vim-yaml',         ft = 'yaml' },
     { 'cespare/vim-toml',         ft = 'toml' },
     { 'dag/vim-fish',             ft = 'fish' },
-    { 'nvim-orgmode/orgmode',     config = function() require('orgmode').setup {} end },
+    -- { 'nvim-orgmode/orgmode',     config = function() require('orgmode').setup {} end },
     { 'plasticboy/vim-markdown',  ft = 'markdown' },
     { 'mzlogin/vim-markdown-toc', ft = 'markdown' },
     { 'alvan/vim-closetag' },
