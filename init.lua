@@ -1,15 +1,15 @@
 -- █▓▒░ Load plugins
-require('plugin-list')
+require("plugin-list")
 
 -- █▓▒░ General configurations
-require('options')
-require('globals')
+require("options")
+require("globals")
 
 -- █▓▒░ key mappings
-require('mappings')
+require("mappings")
 
 -- █▓▒░ Plugin configurations
-require('config')
+require("config")
 
 -- █▓▒░ Langauge server configuration
-require('lsp')
+require("lsp")
